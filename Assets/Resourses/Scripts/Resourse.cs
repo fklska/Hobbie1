@@ -17,6 +17,7 @@ public class Resourse : MonoBehaviour
     public Characteristic ch;
 
 
+
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
