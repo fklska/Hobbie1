@@ -160,12 +160,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sr: {fileID: 75281600395393340}
   selectedColor: {r: 0.4720873, g: 1, b: 0.41037738, a: 1}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  currentColor: {r: 0, g: 0, b: 0, a: 0}
   isClear: 0
-  inv: {fileID: 0}
-  ch: {fileID: 0}
   PlayerArea: 0
   HEALTH: 5
   STORAGE: 100
+  inv: {fileID: 0}
+  ch: {fileID: 0}
 --- !u!114 &-1733797808734138896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,22 +204,6 @@ MonoBehaviour:
         - m_Target: {fileID: -2951748992077730191}
           m_TargetAssemblyTypeName: Resourse, Assembly-CSharp
           m_MethodName: OnExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: -2951748992077730191}
-          m_TargetAssemblyTypeName: Resourse, Assembly-CSharp
-          m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

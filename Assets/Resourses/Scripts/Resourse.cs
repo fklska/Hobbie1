@@ -12,17 +12,11 @@ public class Resourse : MonoBehaviour
     public Color currentColor;
     public bool isClear;
 
-    [Header("Inventory")]
-    public Inventory inv;
-    public Characteristic ch;
-
 
 
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        inv = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        ch = GameObject.FindGameObjectWithTag("Player").GetComponent<Characteristic>();
         currentColor = defaultColor;
     }
 
@@ -41,24 +35,6 @@ public class Resourse : MonoBehaviour
         isClear = false;
     }
 
-    public void OnClick()
-    {
-        if (PlayerArea)
-        {
-            if(inv.Add(gameObject, ch.STRENGHT*20))
-            {
-                HEALTH -= ch.STRENGHT;
-                STORAGE = HEALTH * 20;
-                defaultColor.b = defaultColor.b - 0.2f;
-                defaultColor.g = defaultColor.g - 0.2f;
-            }
-        }
-        if (HEALTH <= 0)
-        {
-            Destroy (gameObject);
-        }
-    }
-
     public void OnExit()
     {
         isClear = true;
@@ -69,11 +45,17 @@ public class Resourse : MonoBehaviour
     public int HEALTH = 5;
     public int STORAGE = 100;
 
+
+    [Header("Inventory")]
+    public Inventory inv;
+    public Characteristic ch;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 7)
         {
             PlayerArea = true;
+            ch = collision.gameObject.GetComponent<Characteristic>();
+            inv = collision.gameObject.GetComponent<Inventory>();
         }
     }
 
@@ -82,6 +64,8 @@ public class Resourse : MonoBehaviour
         if (collision.gameObject.layer == 7)
         {
             PlayerArea = false;
+            ch = null;
+            inv = null;
         }
     }
 }
