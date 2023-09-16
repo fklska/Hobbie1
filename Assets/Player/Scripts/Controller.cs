@@ -6,6 +6,7 @@ using static Inventory;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 using NavMeshPlus.Components;
+using System.Threading;
 
 public class Controller : MonoBehaviour
 {
@@ -84,21 +85,24 @@ public class Controller : MonoBehaviour
             targetAnim.SetBool("Hit", true);
         }
 
-        if (resourse[0] != null)
+        else
         {
-            Resourse stats = resourse[0].GetComponent<Resourse>();
-            if (inv.Add(resourse[0], CH.STRENGHT * 20))
+            if (resourse[0] != null)
             {
-                stats.HEALTH -= CH.STRENGHT;
-                stats.STORAGE = stats.HEALTH * 20;
-                stats.defaultColor.b = stats.defaultColor.b - 0.2f;
-                stats.defaultColor.g = stats.defaultColor.g - 0.2f;
-            }
+                Resourse stats = resourse[0].GetComponent<Resourse>();
+                if (inv.Add(resourse[0], CH.STRENGHT * 20))
+                {
+                    stats.HEALTH -= CH.STRENGHT;
+                    stats.STORAGE = stats.HEALTH * 20;
+                    stats.defaultColor.b = stats.defaultColor.b - 0.2f;
+                    stats.defaultColor.g = stats.defaultColor.g - 0.2f;
+                }
 
-            if (stats.HEALTH <= 0)
-            {
-                Destroy(resourse[0]);
-                navMesh.UpdateNavMesh(navMesh.navMeshData);
+                if (stats.HEALTH <= 0)
+                {
+                    Destroy(resourse[0]);
+                    navMesh.UpdateNavMesh(navMesh.navMeshData);
+                }
             }
         }
     }
@@ -116,6 +120,11 @@ public class Controller : MonoBehaviour
                 targetAnim.SetBool("Death", true);
             }
         }
+    }
+
+    public void Death()
+    {
+        Destroy(gameObject);
     }
 
 

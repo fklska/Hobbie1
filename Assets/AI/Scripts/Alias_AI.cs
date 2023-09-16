@@ -112,6 +112,11 @@ public class Alias_AI : MonoBehaviour
     }
 
 
+    public void Death()
+    {
+        Destroy(gameObject);
+    }
+
     public bool InArea;
     public GameObject currentObj;
     public List<GameObject> collisionObjects;
