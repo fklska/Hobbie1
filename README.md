@@ -50,5 +50,6 @@
 Генерация карты
   --- 
 <div id="header" align="center">
-  <img src="https://i.imgur.com/o1H7OdR.gif" width="800"/>
+  <img src="https://i.imgur.com/SIV6W9p.gif" width="800"/>
+  <img src="https://i.imgur.com/qPkMZmT.gif" width="800"/>
 </div>
