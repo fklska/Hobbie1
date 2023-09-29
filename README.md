@@ -44,3 +44,11 @@
   <a href=https://free-game-assets.itch.io/free-3-character-sprite-pixel-art> 
     <img src="https://img.craftpix.net/2020/01/Free-3-Character-Sprite-Sheets-Pixel-Art.gif" width="400"/>
   </a>
+</div>
+
+
+Генерация карты
+  --- 
+<div id="header" align="center">
+  <img src="https://i.imgur.com/o1H7OdR.gif" width="800"/>
+</div>
