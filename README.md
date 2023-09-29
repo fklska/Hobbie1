@@ -46,10 +46,13 @@
   </a>
 </div>
 
+---
 
-Генерация карты
-  --- 
+## Генерация карты
+Качество гифки пришлось сильно урезать
+
+
 <div id="header" align="center">
   <img src="https://i.imgur.com/SIV6W9p.gif" width="800"/>
-  <img src="https://i.imgur.com/qPkMZmT.gif" width="800"/>
+  <img src="https://i.imgur.com/bxGGFRo.gif" width="800"/>
 </div>
