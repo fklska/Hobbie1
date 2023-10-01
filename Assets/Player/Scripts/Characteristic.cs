@@ -9,7 +9,8 @@ public class Characteristic : MonoBehaviour
     [Header("HeroStats")]
     [SerializeField] public int STRENGHT = 1;
     [SerializeField] public int AGILITY = 1;
-    [SerializeField] public int HEALTH = 1;
+    [Range(0,100)]
+    [SerializeField] public int HEALTH;
     public float RoadBonus;
 
 
