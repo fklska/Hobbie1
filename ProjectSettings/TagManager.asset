@@ -12,6 +12,7 @@ TagManager:
   - Iron
   - UI
   - Skeleton
+  - Healthbar
   layers:
   - Default
   - TransparentFX

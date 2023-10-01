@@ -21,10 +21,7 @@ public class UI : MonoBehaviour
 
     [Header("Inventory")]
     public Transform inventory;
-    public Transform slot1;
-    public Transform slot2;    
-    public Transform slot3;
-    public Transform slot4;
+    public List<Transform> slots;
 
     private void Start()
     {
@@ -39,10 +36,10 @@ public class UI : MonoBehaviour
         avatar = stats.transform.GetChild(3).gameObject.GetComponent<Image>();
 
         inventory = gameObject.transform.GetChild(2);
-        slot1 = inventory.transform.GetChild(0);
-        slot2 = inventory.transform.GetChild(1);
-        slot3 = inventory.transform.GetChild(2);
-        slot4 = inventory.transform.GetChild(3);
+        for (int i = 0; i < inventory.childCount; i++)
+        {
+            slots.Add(inventory.GetChild(i));
+        }
     }
 
 
@@ -68,15 +65,34 @@ public class UI : MonoBehaviour
             bonus.text = Convert.ToString(ch.RoadBonus);
             avatar.sprite = selected[0].GetComponent<SpriteRenderer>().sprite;
 
-            bool is_get = selected[0].TryGetComponent<Inventory>(out inv);
+            bool is_inv = selected[0].TryGetComponent<Inventory>(out inv);
 
-            if (is_get)
+            if (is_inv)
             {
-                foreach (var item in inv.inventory)
-                {
-                    slot1.gameObject.GetComponentInChildren<Text>().text = Convert.ToString(item.Value);
-                    slot1.gameObject.GetComponentInChildren<Image>().sprite = item.Key.GetComponent<SpriteRenderer>().sprite;
-                }
+                DrawInventoryInterface(inv.frontInv);
+            }
+        }
+    }
+
+    public void DrawInventoryInterface(Inventory.Inv[] inventory)
+    {
+        int count = 0;
+        foreach (var item in slots)
+        {
+            if (inventory[count].res != null)
+            {
+                item.gameObject.SetActive(true);
+                item.GetComponentInChildren<Text>().text = inventory[count].amount.ToString();
+                slots[count].GetComponentInChildren<Image>().sprite = inventory[count].res.GetComponent<SpriteRenderer>().sprite;
+
+                count++;
+            }
+
+            else
+            {
+                item.gameObject.SetActive(false);
+
+                count++;
             }
         }
     }

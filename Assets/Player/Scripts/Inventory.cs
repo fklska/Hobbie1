@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Inventory : MonoBehaviour
     [Header("Inventory")]
     public Dictionary<GameObject, int> inventory = new Dictionary<GameObject, int>();
     public Inv[] frontInv = new Inv[4];
-    
+
     public GameObject selectPrefab(GameObject res)
     {
         if (res.tag == "Wood") return woodPrefab;
@@ -56,6 +57,7 @@ public class Inventory : MonoBehaviour
         {
             frontInv[i].res = item.Key; 
             frontInv[i].amount = item.Value;
+
             i++;
         }
     }
