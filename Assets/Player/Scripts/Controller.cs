@@ -87,7 +87,7 @@ public class Controller : MonoBehaviour
 
         else
         {
-            if (resourse[0] != null)
+            if (resourse.Count != 0)
             {
                 Resourse stats = resourse[0].GetComponent<Resourse>();
                 if (inv.Add(resourse[0], CH.STRENGHT * 20))

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
@@ -13,12 +15,13 @@ public class SelectManager : MonoBehaviour
     public bool draw;
 
     [Header("Objects")]
-    public GameObject[] objs;
+    public List<GameObject> objs;
     public List<GameObject> selectedObjects;
 
     private void Awake()
     {
-        objs = GameObject.FindGameObjectsWithTag("Player");
+        objs = GameObject.FindGameObjectsWithTag("Player").ToList<GameObject>();
+        objs.AddRange(GameObject.FindGameObjectsWithTag("Skeleton").ToList<GameObject>());
     }
 
     public bool IsSelected(GameObject obj)
