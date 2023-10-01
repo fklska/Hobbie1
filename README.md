@@ -45,6 +45,7 @@
     <img src="https://img.craftpix.net/2020/01/Free-3-Character-Sprite-Sheets-Pixel-Art.gif" width="400"/>
   </a>
 </div>
+
 Поведение ИИ основано на [NavMesh](https://docs.unity3d.com/Packages/com.unity.ai.navigation@2.0/manual/index.html) в частности на алгоритме [A*](https://ru.wikipedia.org/wiki/A*)
 
 ---
@@ -52,7 +53,7 @@
 ## Генерация карты
 Качество гифки пришлось сильно урезать
 
-В игре присутствует процедурная генерация карты, основанная на [Шуме Перлина](https://ru.wikipedia.org/wiki/%D0%A8%D1%83%D0%BC_%D0%9F%D0%B5%D1%80%D0%BB%D0%B8%D0%BD%D0%B0), каждая целочисленная координата на карте имеет свою высоту (от 0f до 1f), все виды ресурсов распологаются на высоте до 0.35, чтобы оставались пустоты
+В игре присутствует процедурная генерация карты, основанная на [Шуме Перлина](https://ru.wikipedia.org/wiki/%D0%A8%D1%83%D0%BC%D0%9F%D0%B5%D1%80%D0%BB%D0%B8%D0%BD%D0%B0) , каждая целочисленная координата на карте имеет свою высоту (от 0f до 1f), все виды ресурсов распологаются на высоте до 0.35, чтобы оставались пустоты
 
 <div id="header" align="center">
   <img src="https://i.imgur.com/SIV6W9p.gif" width="800"/>
