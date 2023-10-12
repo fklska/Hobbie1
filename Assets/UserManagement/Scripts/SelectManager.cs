@@ -24,6 +24,12 @@ public class SelectManager : MonoBehaviour
         objs.AddRange(GameObject.FindGameObjectsWithTag("Skeleton").ToList<GameObject>());
     }
 
+    public UI UserInterface;
+    private void Start()
+    {
+        UserInterface = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
+    }
+
     public bool IsSelected(GameObject obj)
     {
         if (selectedObjects.Contains(obj))
@@ -80,6 +86,10 @@ public class SelectManager : MonoBehaviour
                 }
             }
 
+            if (selectedObjects.Count == 1)
+            {
+                UserInterface.DrawInventoryInterface(selectedObjects[0].GetComponent<Inventory>().frontInv);
+            }
         }
 
         if(Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d"))

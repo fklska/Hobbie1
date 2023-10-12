@@ -16,6 +16,15 @@ public class Inventory : MonoBehaviour
     public Dictionary<GameObject, int> inventory = new Dictionary<GameObject, int>();
     public Inv[] frontInv = new Inv[4];
 
+    [Header("UI")]
+    public SelectManager selector;
+    public UI UserInterface;
+    private void Start()
+    {
+        selector = Camera.main.GetComponent<SelectManager>();
+        UserInterface = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
+    }
+
     public GameObject selectPrefab(GameObject res)
     {
         if (res.tag == "Wood") return woodPrefab;
@@ -59,6 +68,11 @@ public class Inventory : MonoBehaviour
             frontInv[i].amount = item.Value;
 
             i++;
+        }
+
+        if(selector.IsSelected(gameObject))
+        {
+            UserInterface.DrawInventoryInterface(frontInv);
         }
     }
 

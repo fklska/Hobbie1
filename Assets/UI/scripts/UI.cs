@@ -69,7 +69,7 @@ public class UI : MonoBehaviour
 
             if (is_inv)
             {
-                DrawInventoryInterface(inv.frontInv);
+                //DrawInventoryInterface(inv.frontInv);
             }
         }
     }
