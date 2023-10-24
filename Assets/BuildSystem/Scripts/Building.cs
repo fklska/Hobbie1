@@ -23,10 +23,12 @@ public class Building : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         interfers.Add(collision.gameObject);
+        Status();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         interfers.Remove(collision.gameObject);
+        Status();
     }
 }
