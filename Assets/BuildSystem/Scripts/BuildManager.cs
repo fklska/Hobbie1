@@ -61,7 +61,8 @@ public class BuildManager : MonoBehaviour
         var coor = new Vector3Int(x / 2, y / 2, 0);
         Debug.Log(coor);
 
-        ground.SetColor(coor, Color.Lerp(new Color(1, 1, 0, 0.2f), new Color(1, 1, 1, 1), Time.deltaTime));
+        ground.SetColor(coor, Color.red);
+        //ground.SetColor(coor, Color.Lerp(new Color(1, 1, 0, 0.2f), new Color(1, 1, 1, 1), Time.deltaTime));
         if (Input.GetMouseButton(0))
         {
             tilemap.SetTile(coor, roadTile);

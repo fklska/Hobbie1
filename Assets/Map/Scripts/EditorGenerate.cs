@@ -22,7 +22,7 @@ public class EditorGenerate : Editor
 
         if (GUILayout.Button("Clear"))
         {
-            mapGenerator.Clear();
+            mapGenerator.ClearMap();
         }
     }
 }

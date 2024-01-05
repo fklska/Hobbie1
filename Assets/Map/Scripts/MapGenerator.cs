@@ -6,13 +6,10 @@ using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+
 public class MapGenerator : MonoBehaviour
 {
-    public Tile tile;
-    public Tilemap tilemap;
-
     public NavMeshSurface navMesh;
-
     private void Start()
     {
         //tilemap = GetComponent<Tilemap>();
@@ -23,21 +20,25 @@ public class MapGenerator : MonoBehaviour
     [Header("Ground")]
     public Vector2Int size;
     public int Chunks;
+    public GameObject[,] map = new GameObject[10,10];
+    public GameObject GroundPrefab;
     public void GenerateGround()
     {
         int chunkoffset = 0;
-        tilemap.ClearAllTiles();
         for (int i = 0; i < Chunks; i++)
         {
             for (int x = -size.x; x < size.x; x++)
             {
                 for (int y = -size.y; y < size.y; y++)
                 {
-                    tilemap.SetTile(new Vector3Int(x + chunkoffset, y, 0), tile);
+                    GameObject tile = Instantiate(GroundPrefab, new Vector3Int(x + chunkoffset, y, 0), Quaternion.identity, gameObject.transform);
+                    //tilemap.SetTile(new Vector3Int(x + chunkoffset, y, 0), tile);
+                    map[x, y] = tile;
                 }
             }
             chunkoffset += 20;
         }
+        Debug.Log(map[1, 2].transform.position);
     }
 
     [Header("PerlinNoise")]
@@ -52,7 +53,7 @@ public class MapGenerator : MonoBehaviour
     public ResourseType[] resTypes;
     public void PerlinNoiseGeneration()
     {
-        Clear();
+        ClearMap();
         seed = Random.Range(-100000, 100000);
         maxHeight = 0;
         minHeight = 1f;
@@ -80,7 +81,7 @@ public class MapGenerator : MonoBehaviour
         navMesh.BuildNavMesh();
     }
 
-    public void Clear()
+    public void ClearMap()
     {
         var objects = gameObject.GetComponentsInChildren<Transform>();
         foreach (var obj in objects)
