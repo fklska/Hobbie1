@@ -20,10 +20,11 @@ public class MapGenerator : MonoBehaviour
     [Header("Ground")]
     public Vector2Int size;
     public int Chunks;
-    public GameObject[,] map = new GameObject[10,10];
+    public Dictionary<Vector2Int, GameObject> map = new Dictionary<Vector2Int, GameObject>();
     public GameObject GroundPrefab;
     public void GenerateGround()
     {
+        GameObject tile;
         int chunkoffset = 0;
         for (int i = 0; i < Chunks; i++)
         {
@@ -31,14 +32,13 @@ public class MapGenerator : MonoBehaviour
             {
                 for (int y = -size.y; y < size.y; y++)
                 {
-                    GameObject tile = Instantiate(GroundPrefab, new Vector3Int(x + chunkoffset, y, 0), Quaternion.identity, gameObject.transform);
-                    //tilemap.SetTile(new Vector3Int(x + chunkoffset, y, 0), tile);
-                    map[x, y] = tile;
+                    tile = Instantiate(GroundPrefab, new Vector3Int(x + chunkoffset, y, 0), Quaternion.identity, gameObject.transform);
+                    map.Add(new Vector2Int(x, y), tile);
                 }
             }
             chunkoffset += 20;
         }
-        Debug.Log(map[1, 2].transform.position);
+        Debug.Log(map[new Vector2Int(1,3)].transform.position);
     }
 
     [Header("PerlinNoise")]
