@@ -24,5 +24,10 @@ public class EditorGenerate : Editor
         {
             mapGenerator.ClearMap();
         }
+
+        if (GUILayout.Button("ClearGround"))
+        {
+            mapGenerator.ClearGround();
+        }
     }
 }

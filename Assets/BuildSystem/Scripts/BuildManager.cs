@@ -48,7 +48,7 @@ public class BuildManager : MonoBehaviour
     [Header("Road")]
     public Color defaultcolor = Color.white;
     public Color currentcolor;
-    public Color selectedcolor = new Color(1, 1, 1, 0.2f);
+    public Color selectedcolor = new Color(1, 1, 0, 0.2f);
     public GameObject roadPrefab;
     public void BuildRoad()
     {
@@ -63,17 +63,19 @@ public class BuildManager : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         int x = Mathf.FloorToInt(worldPos.x);
         int y = Mathf.FloorToInt(worldPos.y);
-
         var coor = new Vector2Int(x, y);
-        map[coor].GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(1, 1, 0, 0.2f), new Color(1, 1, 1, 1), Time.deltaTime);
+
+        // map[coor].GetComponent<SpriteRenderer>().color = selectedcolor;
+        // map[coor].GetComponent<SpriteRenderer>().color = Color.Lerp(selectedcolor, defaultcolor, Time.deltaTime);
 
         //ground.SetColor(coor, Color.Lerp(new Color(1, 1, 0, 0.2f), new Color(1, 1, 1, 1), Time.deltaTime));
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Instantiate(roadPrefab, new Vector3Int(x, y, 0), Quaternion.identity, gameObject.transform);
         }
         if (Input.GetMouseButtonDown(1))
         {
+            Destroy(flyingObject);
             flyingObject = null;
         }
     }

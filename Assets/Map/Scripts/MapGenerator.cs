@@ -14,7 +14,6 @@ public class MapGenerator : MonoBehaviour
     private void Start()
     {
         Groundparent = GameObject.FindGameObjectWithTag("GroundParent").GetComponent<Transform>();
-        GenerateGround();
         navMesh = GetComponentInParent<NavMeshSurface>();
     }
 
