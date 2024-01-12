@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Principal;
 using UnityEngine;
-using UnityEngine.TerrainUtils;
-using UnityEngine.Tilemaps;
+
 
 public class BuildManager : MonoBehaviour
 {
+    [Header("MainMap")]
+    public Dictionary<Vector2Int, GameObject> map;
+    private void Start()
+    {
+        map = GameObject.FindGameObjectWithTag("MapGenerator").GetComponent<MapGenerator>().map;
+    }
+
     private void FixedUpdate()
     {
         Builder();
@@ -40,9 +45,10 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    public Tilemap tilemap;
-    public Tilemap ground;
-    public Tile roadTile;
+    [Header("Road")]
+    public Color defaultcolor = Color.white;
+    public Color currentcolor;
+    public Color selectedcolor = new Color(1, 1, 1, 0.2f);
     public GameObject roadPrefab;
     public void BuildRoad()
     {
@@ -58,14 +64,13 @@ public class BuildManager : MonoBehaviour
         int x = Mathf.FloorToInt(worldPos.x);
         int y = Mathf.FloorToInt(worldPos.y);
 
-        var coor = new Vector3Int(x / 2, y / 2, 0);
-        Debug.Log(coor);
+        var coor = new Vector2Int(x, y);
+        map[coor].GetComponent<SpriteRenderer>().color = Color.Lerp(new Color(1, 1, 0, 0.2f), new Color(1, 1, 1, 1), Time.deltaTime);
 
-        ground.SetColor(coor, Color.red);
         //ground.SetColor(coor, Color.Lerp(new Color(1, 1, 0, 0.2f), new Color(1, 1, 1, 1), Time.deltaTime));
         if (Input.GetMouseButton(0))
         {
-            tilemap.SetTile(coor, roadTile);
+            Instantiate(roadPrefab, new Vector3Int(x, y, 0), Quaternion.identity, gameObject.transform);
         }
         if (Input.GetMouseButtonDown(1))
         {

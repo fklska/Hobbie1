@@ -10,10 +10,11 @@ using UnityEngine.UI;
 public class MapGenerator : MonoBehaviour
 {
     public NavMeshSurface navMesh;
+    public Transform Groundparent;
     private void Start()
     {
-        //tilemap = GetComponent<Tilemap>();
-        //GenerateGround();
+        Groundparent = GameObject.FindGameObjectWithTag("GroundParent").GetComponent<Transform>();
+        GenerateGround();
         navMesh = GetComponentInParent<NavMeshSurface>();
     }
 
@@ -24,6 +25,8 @@ public class MapGenerator : MonoBehaviour
     public GameObject GroundPrefab;
     public void GenerateGround()
     {
+        map.Clear();
+        ClearGround();
         GameObject tile;
         int chunkoffset = 0;
         for (int i = 0; i < Chunks; i++)
@@ -32,13 +35,12 @@ public class MapGenerator : MonoBehaviour
             {
                 for (int y = -size.y; y < size.y; y++)
                 {
-                    tile = Instantiate(GroundPrefab, new Vector3Int(x + chunkoffset, y, 0), Quaternion.identity, gameObject.transform);
+                    tile = Instantiate(GroundPrefab, new Vector3Int(x + chunkoffset, y, 0), Quaternion.identity, Groundparent);
                     map.Add(new Vector2Int(x, y), tile);
                 }
             }
             chunkoffset += 20;
         }
-        Debug.Log(map[new Vector2Int(1,3)].transform.position);
     }
 
     [Header("PerlinNoise")]
@@ -87,6 +89,18 @@ public class MapGenerator : MonoBehaviour
         foreach (var obj in objects)
         {
             if (obj.gameObject.layer == 6)
+            {
+                DestroyImmediate(obj.gameObject);
+            }
+        }
+    }
+
+    public void ClearGround()
+    {
+        var objects = Groundparent.GetComponentsInChildren<Transform>();
+        foreach (var obj in objects)
+        {
+            if (obj.gameObject.layer == 8)
             {
                 DestroyImmediate(obj.gameObject);
             }
