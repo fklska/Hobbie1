@@ -13,6 +13,8 @@ TagManager:
   - UI
   - Skeleton
   - Healthbar
+  - MapGenerator
+  - GroundParent
   layers:
   - Default
   - TransparentFX
@@ -24,7 +26,7 @@ TagManager:
   - Player
   - Ground
   - Enemy
-  - 
+  - Buildings
   - 
   - 
   - 

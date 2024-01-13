@@ -15,7 +15,7 @@ public class BuildManager : MonoBehaviour
     private void FixedUpdate()
     {
         Builder();
-        BuildRoad();
+        //BuildRoad();
     }
 
     public GameObject prefab;
@@ -38,10 +38,14 @@ public class BuildManager : MonoBehaviour
 
             flyingObject.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
 
-            if (Input.GetKeyDown(KeyCode.B))
+            if (flyingObject.GetComponent<Building>().Status())
             {
-                flyingObject = null;
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    flyingObject = null;
+                } 
             }
+            
         }
     }
 

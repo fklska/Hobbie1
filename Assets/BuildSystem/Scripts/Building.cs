@@ -10,25 +10,30 @@ public class Building : MonoBehaviour
         sr = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    public void Status()
+    public bool Status()
     {
         if (interfers.Count > 1 && interfers[0].gameObject.tag != "Ground")
         {
             sr.color = new Color(1, 0.5f, 0.5f, 1);
+            return false;
         }
-        else sr.color = new Color(1, 1, 1, 1);
+        else 
+        {
+            sr.color = new Color(1, 1, 1, 1);
+            return true;
+        }
     }
 
     public List<GameObject> interfers;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         interfers.Add(collision.gameObject);
-        Status();
+        //Status();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         interfers.Remove(collision.gameObject);
-        Status();
+        //Status();
     }
 }
