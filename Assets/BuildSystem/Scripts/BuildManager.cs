@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UIElements;
 
 public class BuildManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class BuildManager : MonoBehaviour
 
     public GameObject prefab;
     public GameObject flyingObject;
+    
     public void Builder()
     {
         if(flyingObject == null)
@@ -27,6 +29,11 @@ public class BuildManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.N))
             {
                 flyingObject = Instantiate(prefab);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                flyingObject = Instantiate(roadPrefab);
             }
         }
 
@@ -44,6 +51,12 @@ public class BuildManager : MonoBehaviour
                 {
                     flyingObject = null;
                 } 
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                Destroy(flyingObject);
+                flyingObject = null;
             }
             
         }
@@ -77,6 +90,7 @@ public class BuildManager : MonoBehaviour
         {
             Instantiate(roadPrefab, new Vector3Int(x, y, 0), Quaternion.identity, gameObject.transform);
         }
+
         if (Input.GetMouseButtonDown(1))
         {
             Destroy(flyingObject);

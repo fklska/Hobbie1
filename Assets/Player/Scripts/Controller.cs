@@ -57,7 +57,7 @@ public class Controller : MonoBehaviour
         {
             spr.flipX = true;
         }
-        else
+        if (movement.x < 0)
         {
             spr.flipX = false;
         }
@@ -90,10 +90,10 @@ public class Controller : MonoBehaviour
             if (resourse.Count != 0)
             {
                 Resourse stats = resourse[0].GetComponent<Resourse>();
-                if (inv.Add(resourse[0], CH.STRENGHT * 20))
+                if (inv.Add(resourse[0], CH.STRENGHT * 2))
                 {
                     stats.HEALTH -= CH.STRENGHT;
-                    stats.STORAGE = stats.HEALTH * 20;
+                    stats.STORAGE = stats.HEALTH * 2;
                     stats.defaultColor.b = stats.defaultColor.b - 0.2f;
                     stats.defaultColor.g = stats.defaultColor.g - 0.2f;
                 }

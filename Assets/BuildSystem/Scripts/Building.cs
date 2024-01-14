@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Building : MonoBehaviour
@@ -12,7 +13,7 @@ public class Building : MonoBehaviour
 
     public bool Status()
     {
-        if (interfers.Count > 1 && interfers[0].gameObject.tag != "Ground")
+        if (interfers.Count > 1)
         {
             sr.color = new Color(1, 0.5f, 0.5f, 1);
             return false;
@@ -24,16 +25,21 @@ public class Building : MonoBehaviour
         }
     }
 
+    public int[] layers;
     public List<GameObject> interfers;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        interfers.Add(collision.gameObject);
-        //Status();
+        if (layers.Contains(collision.gameObject.layer))
+        {
+            interfers.Add(collision.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        interfers.Remove(collision.gameObject);
-        //Status();
+        if (layers.Contains(collision.gameObject.layer))
+        {
+            interfers.Remove(collision.gameObject);
+        }
     }
 }
