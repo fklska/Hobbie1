@@ -92,6 +92,7 @@ public class Controller : MonoBehaviour
                 Resourse stats = resourse[0].GetComponent<Resourse>();
                 if (inv.Add(resourse[0], CH.STRENGHT * 2))
                 {
+                    stats.UpgradeStatus();
                     stats.HEALTH -= CH.STRENGHT;
                     stats.STORAGE = stats.HEALTH * 2;
                     stats.defaultColor.b = stats.defaultColor.b - 0.2f;

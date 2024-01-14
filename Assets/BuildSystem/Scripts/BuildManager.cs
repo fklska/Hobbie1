@@ -43,12 +43,13 @@ public class BuildManager : MonoBehaviour
             int x = Mathf.FloorToInt(worldPos.x);
             int y = Mathf.FloorToInt(worldPos.y);
 
-            flyingObject.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
+            flyingObject.transform.position = new Vector3(worldPos.x , worldPos.y, 0);
 
             if (flyingObject.GetComponent<Building>().Status())
             {
                 if (Input.GetKeyDown(KeyCode.B))
                 {
+                    flyingObject.transform.position = new Vector3(x + 0.5f, y + 0.5f, 0);
                     flyingObject = null;
                 } 
             }
