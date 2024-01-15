@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    public int Cost;
+    public GameObject resourseCost;
     public SpriteRenderer sr;
     private void Awake()
     {
