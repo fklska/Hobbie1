@@ -19,3 +19,11 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	modulate = Color8(255, 255, 255, 255) # Replace with function body.
+
+
+func _on_area_2d_body_entered(body):
+	print_debug(body) # Replace with function body.
+
+
+func _on_area_2d_input_event(viewport, event, shape_idx):
+	pass # Replace with function body.

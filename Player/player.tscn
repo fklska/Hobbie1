@@ -1,9 +1,39 @@
-[gd_scene load_steps=32 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=39 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7qahw"]
+radius = 12.0
+height = 42.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtybq"]
+atlas = ExtResource("1_soyia")
+region = Rect2(1008, 532, 112, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4a3o"]
+atlas = ExtResource("1_soyia")
+region = Rect2(1120, 532, 112, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpcvy"]
+atlas = ExtResource("1_soyia")
+region = Rect2(1232, 532, 112, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i00k"]
+atlas = ExtResource("1_soyia")
+region = Rect2(0, 665, 112, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwgxj"]
+atlas = ExtResource("1_soyia")
+region = Rect2(112, 665, 112, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srar6"]
+atlas = ExtResource("1_soyia")
+region = Rect2(224, 665, 112, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b778h"]
+atlas = ExtResource("1_soyia")
+region = Rect2(336, 665, 112, 133)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5aob0"]
 atlas = ExtResource("1_soyia")
@@ -117,6 +147,32 @@ region = Rect2(0, 266, 112, 133)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_mtybq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4a3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpcvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4i00k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwgxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srar6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b778h")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5aob0")
 }, {
 "duration": 1.0,
@@ -214,9 +270,7 @@ script = ExtResource("1_q72hs")
 shape = SubResource("CapsuleShape2D_7qahw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -14)
+position = Vector2(-1, -14)
 sprite_frames = SubResource("SpriteFrames_2vylw")
-animation = &"run"
+animation = &"idle"
 autoplay = "idle"
-frame = 7
-frame_progress = 0.819093
