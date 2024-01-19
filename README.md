@@ -55,11 +55,13 @@
 
 В игре присутствует процедурная генерация карты, основанная на [Шуме Перлина](https://ru.wikipedia.org/wiki/%D0%A8%D1%83%D0%BC%D0%9F%D0%B5%D1%80%D0%BB%D0%B8%D0%BD%D0%B0) , каждая целочисленная координата на карте имеет свою высоту (от 0f до 1f), все виды ресурсов распологаются на высоте до 0.35, чтобы оставались пустоты
 
+### Генерация на Unity
 <div id="header" align="center">
-  <img src="https://i.imgur.com/SIV6W9p.gif" width="800"/>
-  <img src="https://i.imgur.com/bxGGFRo.gif" width="800"/>
+  <img src="https://i.imgur.com/SIV6W9p.gif" width="400"/>
+  <img src="https://i.imgur.com/bxGGFRo.gif" width="400"/>
 </div>
 
+### Генерация на Godot
 При переносе игры на другой движок изменились некоторые тайлы, а в общем и целом все также
 <div id="header" align="center">
   <img src="https://imgur.com/iTpaBIo.gif" width="800"/>
