@@ -60,6 +60,12 @@
   <img src="https://i.imgur.com/bxGGFRo.gif" width="800"/>
 </div>
 
+При переносе игры на другой движок изменились некоторые тайлы, а в общем и целом все также
+<div id="header" align="center">
+  <img src="https://imgur.com/iTpaBIo.gif" width="800"/>
+  <img src="https://imgur.com/ckrUHsF.gif" width="800"/>
+  <img src="https://imgur.com/esOvI57.gif" width="800"/>
+</div>
 
 ## Внутриигровой интерфейс
 
