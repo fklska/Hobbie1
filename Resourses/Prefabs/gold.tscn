@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddox3crpcxdgn"]
+
+[ext_resource type="PackedScene" uid="uid://divdmmdc1574d" path="res://Resourses/Prefabs/resourse_prefab.tscn" id="1_008bd"]
+[ext_resource type="Texture2D" uid="uid://k8v3t7pxhf4u" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_12.png" id="1_patfn"]
+
+[node name="Gold" instance=ExtResource("1_008bd")]
+collision_mask = 7
+
+[node name="collider" type="CollisionPolygon2D" parent="." index="0"]
+position = Vector2(-1, -1)
+polygon = PackedVector2Array(-16, 14, -14, 9, -9, 7, -8, -1, 1, -11, 11, -10, 17, -3, 17, 8, 10, 15, -1, 15, -5, 19, -15, 19)
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+position = Vector2(0, 1)
+texture = ExtResource("1_patfn")

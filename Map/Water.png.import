@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vhbctcju6bbf"
-path="res://.godot/imported/medieval_tilesheet.png-92a9ea6971ca89bd40afb4f0f78777f2.ctex"
+uid="uid://vktf0gduh0lw"
+path="res://.godot/imported/Water.png-da98e4466be6b77c3bb5a22603ee840b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://medieval_tilesheet.png"
-dest_files=["res://.godot/imported/medieval_tilesheet.png-92a9ea6971ca89bd40afb4f0f78777f2.ctex"]
+source_file="res://Map/Water.png"
+dest_files=["res://.godot/imported/Water.png-da98e4466be6b77c3bb5a22603ee840b.ctex"]
 
 [params]
 

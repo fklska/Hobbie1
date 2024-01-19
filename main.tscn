@@ -1,19 +1,36 @@
-[gd_scene load_steps=5 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=6 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
-[ext_resource type="Script" path="res://scripts/Generator.gd" id="2_1vrvt"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 
-[node name="Main" type="Node2D"]
-script = ExtResource("1_x33w5")
-noise_scale = 378.0
-lacunarity = 5.0
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
+frequency = 0.0084
+fractal_octaves = 6
+fractal_lacunarity = 2.145
 
-[node name="TileMap" type="TileMap" parent="."]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i4vyh"]
+noise_type = 3
+frequency = 0.7239
+fractal_octaves = 1
+fractal_lacunarity = 3.075
+
+[node name="Main" type="Node2D"]
+z_index = 1
+script = ExtResource("1_x33w5")
+noise = SubResource("FastNoiseLite_o5d00")
+res_noise = SubResource("FastNoiseLite_i4vyh")
+water_height = -0.292
+sand_height = -0.106
+wood_height = 0.2
+rock_height = 0.035
+gold_height = 0.009
+iron_height = 0.015
+
+[node name="Tilemap" type="TileMap" parent="."]
+texture_filter = 1
 tile_set = ExtResource("2_77wjo")
 format = 2
-script = ExtResource("2_1vrvt")
 
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
-position = Vector2(659, 393)
+position = Vector2(545, 385)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccs02lyy5wput"
-path="res://.godot/imported/Grassland Tileset.png-5815ecaa2b050943875bdd14e7e5bf0a.ctex"
+uid="uid://b46faxpgckila"
+path="res://.godot/imported/Tilemap_Flat.png-896dd3cb79e056aab174e4ea20ccc8c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Grassland Tileset.png"
-dest_files=["res://.godot/imported/Grassland Tileset.png-5815ecaa2b050943875bdd14e7e5bf0a.ctex"]
+source_file="res://Map/Tilemap_Flat.png"
+dest_files=["res://.godot/imported/Tilemap_Flat.png-896dd3cb79e056aab174e4ea20ccc8c0.ctex"]
 
 [params]
 

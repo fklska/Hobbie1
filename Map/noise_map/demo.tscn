@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd3kgohgcx46y"]
+
+[sub_resource type="Gradient" id="Gradient_t65mu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.37013, 0.525974, 0.714286, 0.824675)
+colors = PackedColorArray(0, 0, 1, 1, 0.670178, 0.703305, 0.334726, 1, 0, 0.824904, 0.216447, 1, 0.455961, 0.415166, 0.202066, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_io6is"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wdbop"]
+color_ramp = SubResource("Gradient_t65mu")
+noise = SubResource("FastNoiseLite_io6is")
+
+[node name="Demo" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(256, 259)
+texture = SubResource("NoiseTexture2D_wdbop")

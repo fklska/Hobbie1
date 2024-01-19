@@ -12,18 +12,38 @@ func _ready():
 func _process(delta):
 	pass
 
-
+@export var current_color = Color8(255, 255, 255, 255,)
 func _on_mouse_entered():
 	modulate = Color8(155, 155, 155) # Replace with function body.
 
 
 func _on_mouse_exited():
-	modulate = Color8(255, 255, 255, 255) # Replace with function body.
+	modulate = current_color # Replace with function body.
 
+		
+@onready var anim = $AnimationPlayer
+func get_damage():
+	HEALTH -= 25
+	current_color.a8 -= 5
+	anim.play("get_hit")
+	update_healthbar()
+	poup()
 
-func _on_area_2d_body_entered(body):
-	print_debug(body) # Replace with function body.
+	if HEALTH <= 0:
+		queue_free()
 
+@onready var hb = $healthbar
+func update_healthbar():
+	hb.value = HEALTH
 
-func _on_area_2d_input_event(viewport, event, shape_idx):
-	pass # Replace with function body.
+	if hb.value == 100:
+		hb.visible = false
+	else:
+		hb.visible = true
+
+@export var damage_node: PackedScene
+func poup():
+	var damage = damage_node.instantiate()
+	damage.position = global_position
+	damage.get_node("Label").text = "25"
+	get_tree().current_scene.add_child(damage)

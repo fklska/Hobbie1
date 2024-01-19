@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccppdgqk5yuir"]
+
+[ext_resource type="PackedScene" uid="uid://divdmmdc1574d" path="res://Resourses/Prefabs/resourse_prefab.tscn" id="1_5yqjd"]
+[ext_resource type="Texture2D" uid="uid://b06ojyuwegde" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_10.png" id="2_3y0j2"]
+
+[node name="Stone" instance=ExtResource("1_5yqjd")]
+collision_mask = 7
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
+polygon = PackedVector2Array(-3, 13, 0, 13, 9, 13, 18, 5, 14, -7, 6, -15, -5, -10, -11, 4, -18, 12, -14, 17, -5, 17)
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_3y0j2")
