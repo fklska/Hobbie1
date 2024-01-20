@@ -11,3 +11,6 @@ polygon = PackedVector2Array(-3, 13, 0, 13, 9, 13, 18, 5, 14, -7, 6, -15, -5, -1
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="1"]
 texture = ExtResource("2_3y0j2")
+
+[node name="healthbar" parent="." index="2"]
+visible = false

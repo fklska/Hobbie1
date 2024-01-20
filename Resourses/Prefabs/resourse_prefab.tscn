@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://divdmmdc1574d"]
+[gd_scene load_steps=8 format=3 uid="uid://divdmmdc1574d"]
 
 [ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="1_outc6"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/popup.tscn" id="2_1n43t"]
+[ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="3_iuoay"]
+[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="3_k8bi8"]
 
 [sub_resource type="Animation" id="Animation_d3bnw"]
 length = 0.001
@@ -55,6 +57,8 @@ offset_top = -28.0
 offset_right = 314.0
 offset_bottom = 12.0
 scale = Vector2(0.1, 0.1)
+theme = ExtResource("3_k8bi8")
+theme_override_fonts/font = ExtResource("3_iuoay")
 value = 100.0
 rounded = true
 show_percentage = false

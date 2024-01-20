@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://cedhnxugilj7g"]
+
+[ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="1_d41uq"]
+[ext_resource type="Texture2D" uid="uid://bm1413x0u0xki" path="res://Bar.png" id="1_pnrrd"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o461a"]
+texture = ExtResource("1_pnrrd")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ido5"]
+bg_color = Color(0.756863, 0.505882, 0.682353, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 1
+
+[resource]
+default_font = ExtResource("1_d41uq")
+default_font_size = 18
+ProgressBar/styles/background = SubResource("StyleBoxTexture_o461a")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_1ido5")

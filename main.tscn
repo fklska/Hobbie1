@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=7 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
+[ext_resource type="PackedScene" uid="uid://uy8hqgeyxytc" path="res://UI/ui.tscn" id="2_hjqs6"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
@@ -26,6 +27,8 @@ wood_height = 0.2
 rock_height = 0.035
 gold_height = 0.009
 iron_height = 0.015
+
+[node name="UI" parent="." instance=ExtResource("2_hjqs6")]
 
 [node name="Tilemap" type="TileMap" parent="."]
 texture_filter = 1
