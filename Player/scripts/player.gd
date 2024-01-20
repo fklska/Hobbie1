@@ -1,6 +1,10 @@
 extends CharacterBody2D
 
 
+@export_range(1, 100) var AGILITY = 1
+@export_range(1, 100) var STRENCH = 1
+@export_range(1, 100) var INTELECT = 1
+
 const SPEED = 500.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
@@ -13,7 +17,7 @@ enum {
 var state = RUN
 
 func _ready():
-	var sprite = $Minimap
+	pass
 
 func _physics_process(delta):
 	match state:
@@ -29,8 +33,8 @@ func run():
 	var direction_y = Input.get_axis("ui_up", "ui_down")
 	
 	if direction or direction_y and state == RUN:
-		velocity.y = direction_y * SPEED / 2
-		velocity.x = direction * SPEED
+		velocity.y = direction_y * SPEED * AGILITY / 2
+		velocity.x = direction * SPEED * AGILITY
 		animPlayer.play("run")
 		
 		if direction > 0:
@@ -53,7 +57,9 @@ func attack():
 
 
 func clearing():
-	for obj in targets:
+	for obj: ActiveResourses in targets:
+		var damage = STRENCH / 10
+		obj.HEALTH -= damage
 		obj.get_damage()
 
 
@@ -64,3 +70,7 @@ func _on_area_2d_body_entered(body: StaticBody2D):
 
 func _on_area_2d_body_exited(body):
 	targets.pop_back()
+
+var Inventory: Dictionary = {}
+func Add_Items(amount: int, sprite: Sprite2D):
+	Inventory[sprite] = amount

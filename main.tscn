@@ -28,12 +28,12 @@ rock_height = 0.035
 gold_height = 0.009
 iron_height = 0.015
 
-[node name="UI" parent="." instance=ExtResource("2_hjqs6")]
-
 [node name="Tilemap" type="TileMap" parent="."]
 texture_filter = 1
 tile_set = ExtResource("2_77wjo")
 format = 2
 
+[node name="UI" parent="." instance=ExtResource("2_hjqs6")]
+
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
-position = Vector2(545, 385)
+position = Vector2(580, 326)

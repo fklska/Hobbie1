@@ -1,5 +1,5 @@
 extends StaticBody2D
-
+class_name ActiveResourses
 
 @export var HEALTH = 100
 @export var STORAGE = 100
@@ -23,7 +23,6 @@ func _on_mouse_exited():
 		
 @onready var anim = $AnimationPlayer
 func get_damage():
-	HEALTH -= 25
 	current_color.a8 -= 5
 	anim.play("get_hit")
 	update_healthbar()

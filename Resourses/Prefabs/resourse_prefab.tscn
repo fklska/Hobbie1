@@ -51,6 +51,7 @@ script = ExtResource("1_outc6")
 damage_node = ExtResource("2_1n43t")
 
 [node name="healthbar" type="ProgressBar" parent="."]
+visible = false
 modulate = Color(0.996078, 0, 0, 1)
 offset_left = -16.0
 offset_top = -28.0
