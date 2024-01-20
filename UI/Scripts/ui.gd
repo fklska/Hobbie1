@@ -26,8 +26,8 @@ func update_ui():
 	
 	for obj: Texture2D in player.Inventory:
 		var prefab: TextureRect = slot.instantiate()
-		prefab.texture = obj
-		prefab.get_child(0).text = str(player.Inventory[obj])
+		prefab.get_child(0).texture = obj
+		prefab.get_child(1).text = str(player.Inventory[obj])
 		inv.add_child(prefab)
 
 

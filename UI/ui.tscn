@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_naes5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uphh0"]
-bg_color = Color(0.592157, 0.286275, 0.160784, 0.380392)
+bg_color = Color(0.6, 0.6, 0.6, 0.443137)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
@@ -47,6 +47,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Portret" type="TextureRect" parent="MarginContainer/Panel/SelectorInfo"]
 layout_mode = 2
 size_flags_horizontal = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="STR" type="Label" parent="MarginContainer/Panel/SelectorInfo"]
 layout_mode = 2
