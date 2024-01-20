@@ -3,6 +3,21 @@
 [ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="1_outc6"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/popup.tscn" id="2_1n43t"]
 
+[sub_resource type="Animation" id="Animation_d3bnw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_rpu3h"]
 resource_name = "get_hit"
 length = 0.3
@@ -20,21 +35,6 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.4, 1.4), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_d3bnw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eq8xt"]
 _data = {
 "RESET": SubResource("Animation_d3bnw"),
@@ -49,7 +49,6 @@ script = ExtResource("1_outc6")
 damage_node = ExtResource("2_1n43t")
 
 [node name="healthbar" type="ProgressBar" parent="."]
-visible = false
 modulate = Color(0.996078, 0, 0, 1)
 offset_left = -16.0
 offset_top = -28.0
