@@ -26,7 +26,6 @@ func get_damage():
 	current_color.a8 -= 5
 	anim.play("get_hit")
 	update_healthbar()
-	poup()
 
 	if HEALTH <= 0:
 		queue_free()
@@ -41,8 +40,8 @@ func update_healthbar():
 		hb.visible = true
 
 @export var damage_node: PackedScene
-func poup():
+func poup(amount: String):
 	var damage = damage_node.instantiate()
 	damage.position = global_position
-	damage.get_node("Label").text = "25"
+	damage.get_node("Label").text = amount
 	get_tree().current_scene.add_child(damage)

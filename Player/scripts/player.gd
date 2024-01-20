@@ -1,11 +1,11 @@
 extends CharacterBody2D
+class_name Player
 
+@export_range(10, 100) var AGILITY = 10
+@export_range(10, 100) var STRENCH = 10
+@export_range(10, 100) var INTELECT = 10
 
-@export_range(1, 100) var AGILITY = 1
-@export_range(1, 100) var STRENCH = 1
-@export_range(1, 100) var INTELECT = 1
-
-const SPEED = 500.0
+const SPEED = 50.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -59,8 +59,11 @@ func attack():
 func clearing():
 	for obj: ActiveResourses in targets:
 		var damage = STRENCH / 10
+		print_debug(damage)
+		add_Items(damage, obj.get_node("Sprite2D").texture)
 		obj.HEALTH -= damage
 		obj.get_damage()
+		obj.poup(str(damage))
 
 
 var targets = []
@@ -71,6 +74,13 @@ func _on_area_2d_body_entered(body: StaticBody2D):
 func _on_area_2d_body_exited(body):
 	targets.pop_back()
 
+@onready var Interface: UI = $"../UI"
 var Inventory: Dictionary = {}
-func Add_Items(amount: int, sprite: Sprite2D):
-	Inventory[sprite] = amount
+
+func add_Items(amount: int, texture: Texture2D):
+	if Inventory.has(texture):
+		Inventory[texture] = Inventory[texture] + amount
+	else:
+		Inventory[texture] = amount
+	Interface.update_ui()
+	print_debug(Inventory)
