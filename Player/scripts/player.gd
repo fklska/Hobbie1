@@ -34,7 +34,7 @@ func run():
 	
 	if direction or direction_y and state == RUN:
 		velocity.y = direction_y * SPEED * AGILITY / 2
-		velocity.x = direction * SPEED * AGILITY
+		velocity.x = direction * SPEED * AGILITY 
 		animPlayer.play("run")
 		
 		if direction > 0:
@@ -82,5 +82,4 @@ func add_Items(amount: int, texture: Texture2D):
 		Inventory[texture] = Inventory[texture] + amount
 	else:
 		Inventory[texture] = amount
-	Interface.update_ui()
-	print_debug(Inventory)
+	Interface.update_ui(Inventory)
