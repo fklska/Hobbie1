@@ -71,4 +71,12 @@
 
 ## Внутриигровой интерфейс
 
-Праобраз - интерфейс из [Age of empires](https://ru.wikipedia.org/wiki/Age_of_Empires_II:_The_Age_of_Kings) или той же [Dota 2](https://ru.wikipedia.org/wiki/Dota_2), основанный на селекторе существ
+Праобраз - интерфейс из [Age of empires](https://ru.wikipedia.org/wiki/Age_of_Empires_II:_The_Age_of_Kings) или той же [Dota 2](https://ru.wikipedia.org/wiki/Dota_2), основанный на селекторе существ. Есть 1 основная плашка ,которая показывает всю необходимую информацию выбранного существа или объекта.
+
+UPD: Скорее всего буду отказываться от этого. Основная плашка будет показывать только запасы ресурсов в деревне, а информация по инвентарю и характеристике только про главного персонажа.
+<div id="header" align="center">
+  <img src="https://imgur.com/oitsuVW.png" width="400"/>
+  <img src="https://imgur.com/R9GQl0K.png" width="400"/>
+  <img src="https://imgur.com/Qeb2Xuh.png" width="1000"/>
+  <img src="https://imgur.com/7zeSmi3.gif" width="800"/>
+</div>
