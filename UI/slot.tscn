@@ -1,49 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://77ux20wss2m2"]
+[gd_scene load_steps=5 format=3 uid="uid://77ux20wss2m2"]
 
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_0i4ni"]
 [ext_resource type="Texture2D" uid="uid://vhw2k8km47od" path="res://UI/UIAssets/Buttons/Button_Disable.png" id="1_wus26"]
 [ext_resource type="Script" path="res://UI/Scripts/slot.gd" id="2_6twaj"]
 
-[node name="Container" type="MarginContainer"]
-anchors_preset = -1
-anchor_right = 0.0555554
-anchor_bottom = 0.0987656
-theme = ExtResource("1_0i4ni")
-script = ExtResource("2_6twaj")
-metadata/_edit_use_anchors_ = true
-
-[node name="SlotImage" type="TextureRect" parent="."]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4j0mt"]
 texture = ExtResource("1_wus26")
-stretch_mode = 4
-metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="SlotImage"]
+[node name="Slot" type="Panel"]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+theme = ExtResource("1_0i4ni")
+theme_override_styles/panel = SubResource("StyleBoxTexture_4j0mt")
+script = ExtResource("2_6twaj")
+
+[node name="Texture" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.140625
-anchor_top = 0.078125
-anchor_right = 0.840625
-anchor_bottom = 0.778125
-offset_right = 19.2
-offset_bottom = 19.2
-scale = Vector2(0.7, 0.7)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-metadata/_edit_use_anchors_ = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
 
-[node name="Amount" type="Label" parent="SlotImage"]
+[node name="Amount" type="Label" parent="."]
 layout_mode = 2
-anchor_left = 0.720703
-anchor_top = 0.397461
-anchor_right = 0.830078
-anchor_bottom = 0.631836
-offset_left = -3.125
-offset_top = 6.5625
-offset_right = -3.125
-offset_bottom = 6.5625
+anchor_left = 0.673356
+anchor_top = 0.496892
+anchor_right = 0.782731
+anchor_bottom = 0.731267
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8

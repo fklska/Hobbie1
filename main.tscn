@@ -37,6 +37,7 @@ format = 2
 [node name="UI" parent="." instance=ExtResource("2_hjqs6")]
 
 [node name="Inventory" parent="." instance=ExtResource("4_1aj53")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
 position = Vector2(580, 326)
