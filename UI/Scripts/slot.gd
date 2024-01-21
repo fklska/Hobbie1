@@ -85,5 +85,5 @@ func _on_mouse_exited():
 
 func _on_gui_input(event: InputEvent):
 	if InArea:
-		if event.is_action_pressed("attack"):
-			print_debug("Pressed")
+		if event.is_action_pressed("attack"):  # Если держу -> перетаскиваю предмет
+			print_debug("Pressed") # Как только отпустил (проверка) -> засунь предмет в этот слот State должен быть SELECTED
