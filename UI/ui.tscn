@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_naes5"]
 [ext_resource type="PackedScene" uid="uid://77ux20wss2m2" path="res://UI/slot.tscn" id="2_s1f4c"]
 
-[node name="UI" type="CanvasLayer"]
+[node name="Hotbar" type="CanvasLayer"]
 script = ExtResource("1_1tur5")
 metadata/_edit_use_anchors_ = true
 

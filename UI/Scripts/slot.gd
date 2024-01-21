@@ -23,6 +23,11 @@ func is_empty():
 func update_info(new_amount: int):
 	label_amount.text = str(new_amount)
 
+	if label_amount.text == "1":
+		label_amount.visible = false
+	else: 
+		label_amount.visible = true
+
 func show_status():
 	print_debug(texture.texture)
 	print_debug(label_amount.text)
