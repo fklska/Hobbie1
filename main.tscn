@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=8 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
 [ext_resource type="PackedScene" uid="uid://uy8hqgeyxytc" path="res://UI/ui.tscn" id="2_hjqs6"]
+[ext_resource type="PackedScene" uid="uid://ciff3yjv8rbp" path="res://UI/inventory.tscn" id="4_1aj53"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
@@ -34,6 +35,8 @@ tile_set = ExtResource("2_77wjo")
 format = 2
 
 [node name="UI" parent="." instance=ExtResource("2_hjqs6")]
+
+[node name="Inventory" parent="." instance=ExtResource("4_1aj53")]
 
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
 position = Vector2(580, 326)

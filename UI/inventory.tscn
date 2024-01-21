@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ciff3yjv8rbp"]
+[gd_scene load_steps=7 format=3 uid="uid://ciff3yjv8rbp"]
 
-[ext_resource type="Texture2D" uid="uid://ndojxkembxpa" path="res://UI/UIAssets/Banners/Banner_Connection_Left.png" id="1_mm256"]
+[ext_resource type="Script" path="res://UI/Scripts/inventory.gd" id="1_uupql"]
 [ext_resource type="Texture2D" uid="uid://bfnd08la3xrjf" path="res://UI/UIAssets/Banners/Carved_9Slides.png" id="2_648om"]
 [ext_resource type="PackedScene" uid="uid://77ux20wss2m2" path="res://UI/slot.tscn" id="3_pfct3"]
+[ext_resource type="Texture2D" uid="uid://bn11vc3md3suo" path="res://UI/UIAssets/Banners/Banner_Connection_Up.png" id="4_r5h7j"]
 
 [sub_resource type="Animation" id="Animation_aiupj"]
 resource_name = "appear"
@@ -13,31 +14,24 @@ _data = {
 }
 
 [node name="Inventory" type="CanvasLayer"]
+script = ExtResource("1_uupql")
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = -1
-anchor_left = 0.309028
-anchor_top = 0.148148
-anchor_right = 0.475694
-anchor_bottom = 0.444444
-texture = ExtResource("1_mm256")
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect" type="TextureRect" parent="TextureRect2"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.635417
-anchor_top = 0.182292
-anchor_right = 2.36979
-anchor_bottom = 1.91667
-grow_horizontal = 2
+anchor_left = 0.717014
+anchor_top = 0.351852
+anchor_right = 1.0
+anchor_bottom = 0.854938
+offset_top = -78.0
+offset_bottom = -78.0
+grow_horizontal = 0
 grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 10
+size_flags_vertical = 8
 texture = ExtResource("2_648om")
 metadata/_edit_use_anchors_ = true
 
-[node name="GridContainer" type="GridContainer" parent="TextureRect2/TextureRect"]
+[node name="GridContainer" type="GridContainer" parent="TextureRect"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0975976
@@ -50,56 +44,84 @@ offset_right = -9.00842
 offset_bottom = -9.00842
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
 columns = 4
 metadata/_edit_use_anchors_ = true
 
-[node name="Container" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container2" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container2" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container3" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container3" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container4" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container4" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container5" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container5" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container6" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container6" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container7" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container7" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container8" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container8" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container9" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container9" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container10" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container10" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container11" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container11" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container12" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container12" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container13" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container13" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container14" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container14" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container15" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container15" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
 
-[node name="Container16" parent="TextureRect2/TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
+[node name="Container16" parent="TextureRect/GridContainer" instance=ExtResource("3_pfct3")]
 layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -137.0
+offset_top = -87.0
+offset_right = 55.0
+offset_bottom = 105.0
+grow_vertical = 2
+texture = ExtResource("4_r5h7j")
+
+[node name="Avatar" type="TextureRect" parent="TextureRect/TextureRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
