@@ -17,16 +17,6 @@ func _ready():
 	}
 	generate()
 
-
-func _process(delta):
-	if Input.is_action_just_pressed("zoom+"):
-		var cam: Camera2D = player.get_node("Camera2D")
-		cam.zoom = Vector2(cam.zoom.x + 0.1, cam.zoom.y + 0.1)
-		
-	if Input.is_action_just_pressed("zoom-"):
-		var cam: Camera2D = player.get_node("Camera2D")
-		cam.zoom = Vector2(cam.zoom.x - 0.1, cam.zoom.y - 0.1)
-
 @export var SIZE = Vector2i(128, 128)
 
 @onready var tilemap: TileMap = $Tilemap

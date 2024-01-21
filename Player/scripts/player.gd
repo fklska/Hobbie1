@@ -73,7 +73,7 @@ func _on_area_2d_body_entered(body: StaticBody2D):
 func _on_area_2d_body_exited(body):
 	targets.pop_back()
 
-@onready var Interface: UI = $"../UI"
+@onready var Interface: UI = $Camera2D/Hotbar
 var Inventory: Dictionary = {}
 
 func add_Items(amount: int, texture: Texture2D):

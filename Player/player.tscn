@@ -1,7 +1,8 @@
-[gd_scene load_steps=43 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=44 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
+[ext_resource type="PackedScene" uid="uid://cuu8agnq5ro00" path="res://Camera/main_cam.tscn" id="3_7v0dy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7qahw"]
 radius = 12.0
@@ -438,8 +439,7 @@ libraries = {
 "": SubResource("AnimationLibrary_fub84")
 }
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.05, 0.05)
+[node name="Camera2D" parent="." instance=ExtResource("3_7v0dy")]
 
 [connection signal="body_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]
