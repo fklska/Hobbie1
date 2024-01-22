@@ -45,3 +45,6 @@ func poup(amount: String):
 	damage.position = global_position
 	damage.get_node("Label").text = amount
 	get_tree().current_scene.add_child(damage)
+	
+func get_texture():
+	return get_node("Sprite2D").texture

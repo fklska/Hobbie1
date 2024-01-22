@@ -17,7 +17,7 @@ var state = EMPTY
 static var flying_obj = null
 static var slot_amount = 0
 var current_slot_number = 0
-var current_item: Control = null
+var current_item: Item = null
 
 func _init():
 	current_slot_number = slot_amount
@@ -26,9 +26,14 @@ func _init():
 func _process(delta):
 	state_machine()
 	if state == SELECTED:
+		if Input.is_action_just_pressed("attack"):
+			flying_obj = current_item
+			clear_slot()
+			show_status()
 			
 		if Input.is_action_just_released("attack"):
-			print_debug("Otpustil ", current_slot_number)
+			add_item(flying_obj)
+			flying_obj = null
 
 func _ready():
 	slot_number_label.text = str(current_slot_number)
@@ -46,7 +51,6 @@ func add_item(item: Control):
 	add_child(item)
 	current_item = item
 	state = FILL
-
 
 func clear_slot():
 	remove_child(get_node("Item"))
@@ -82,7 +86,9 @@ func set_selected_style():
 	modulate = selected_color
 
 func show_status():
-	print_debug(current_item)
+	print_debug("Item: ", current_item)
+	print_debug("flyingobj = ", flying_obj)
+	print_debug("slotnumber = ", current_slot_number)
 
 
 func _on_mouse_entered():
@@ -100,5 +106,3 @@ func drag():
 	
 func drop():
 	pass # Ставлю flying obj в слот
-# Если держу -> перетаскиваю предмет 
-# Как только отпустил (проверка) -> засунь предмет в этот слот State должен быть SELECTED

@@ -59,7 +59,7 @@ func attack():
 func clearing():
 	for obj: ActiveResourses in targets:
 		var damage = STRENCH / 10
-		add_Items(damage, obj.get_node("Sprite2D").texture)
+		add_Items(damage, obj.get_texture())
 		obj.HEALTH -= damage
 		obj.get_damage()
 		obj.poup(str(damage))

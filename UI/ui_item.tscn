@@ -16,7 +16,7 @@ theme = ExtResource("1_gwtdn")
 script = ExtResource("2_sw4dv")
 metadata/_edit_use_anchors_ = true
 
-[node name="Texture" type="TextureRect" parent="."]
+[node name="Image" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
 anchors_preset = -1

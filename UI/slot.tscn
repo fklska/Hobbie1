@@ -12,6 +12,7 @@ custom_minimum_size = Vector2(64, 64)
 anchors_preset = -1
 anchor_right = 0.0555556
 anchor_bottom = 0.0987654
+offset_bottom = -1.90735e-05
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_0i4ni")
