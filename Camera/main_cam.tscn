@@ -7,6 +7,6 @@
 [node name="Camera2D" type="Camera2D"]
 script = ExtResource("1_36buq")
 
-[node name="Inventory" parent="." instance=ExtResource("2_4avp2")]
-
 [node name="Hotbar" parent="." instance=ExtResource("3_asih8")]
+
+[node name="Inventory" parent="." instance=ExtResource("2_4avp2")]

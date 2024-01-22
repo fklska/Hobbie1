@@ -16,6 +16,7 @@ var state = EMPTY
 
 static var flying_obj = null
 static var slot_amount = 0
+static var Inventory: Dictionary = {}
 var current_slot_number = 0
 var current_item: Item = null
 
@@ -47,13 +48,15 @@ func state_machine():
 		SELECTED:
 			set_selected_style()
 
-func add_item(item: Control):
+func add_item(item: Item):
 	add_child(item)
 	current_item = item
 	state = FILL
+	Inventory[item.current_texture] = get_node(".")
 
 func clear_slot():
 	remove_child(get_node("Item"))
+	Inventory.erase(current_item.current_texture)
 	current_item = null
 	state = EMPTY
 
