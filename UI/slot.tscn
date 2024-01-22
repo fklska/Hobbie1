@@ -12,38 +12,25 @@ custom_minimum_size = Vector2(64, 64)
 anchors_preset = -1
 anchor_right = 0.0555556
 anchor_bottom = 0.0987654
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("1_0i4ni")
 theme_override_styles/panel = SubResource("StyleBoxTexture_4j0mt")
 script = ExtResource("2_6twaj")
 metadata/_edit_use_anchors_ = true
 
-[node name="Item" type="Node2D" parent="."]
-
-[node name="Texture" type="TextureRect" parent="Item"]
-custom_minimum_size = Vector2(48, 48)
-offset_left = 8.0
-offset_top = 4.5
-offset_right = 56.0
-offset_bottom = 52.5
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Amount" type="Label" parent="Item"]
-offset_left = 43.0948
-offset_top = 31.8011
-offset_right = 44.0948
-offset_bottom = 51.8011
+[node name="SlotNumber" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.640624
+anchor_top = 0.125
+anchor_right = 0.796874
+anchor_bottom = 0.40625
 grow_horizontal = 0
 grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 16
 metadata/_edit_use_anchors_ = true
 
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]

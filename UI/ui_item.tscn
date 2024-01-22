@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy72tlm6et03y"]
+
+[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_gwtdn"]
+[ext_resource type="Script" path="res://UI/Scripts/ui_item.gd" id="2_sw4dv"]
+
+[node name="Item" type="Control"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchor_left = 0.486111
+anchor_top = 0.475309
+anchor_right = 0.513889
+anchor_bottom = 0.524691
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_gwtdn")
+script = ExtResource("2_sw4dv")
+metadata/_edit_use_anchors_ = true
+
+[node name="Texture" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.625
+anchor_top = 0.5625
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+metadata/_edit_use_anchors_ = true

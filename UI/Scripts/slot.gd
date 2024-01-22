@@ -1,8 +1,8 @@
 extends Panel
 class_name Slot
 
-@onready var texture: TextureRect = $Item/Texture
-@onready var label_amount: Label = $Item/Amount
+@onready var slot_number_label: Label = $SlotNumber
+
 const empty_style = Color8(255, 255, 255, 145)
 const defualt_style = Color8(255, 255, 255, 255)
 const selected_color = Color8(255, 255, 145, 255)
@@ -14,9 +14,24 @@ enum {
 }
 var state = EMPTY
 
+static var flying_obj = null
+static var slot_amount = 0
+var current_slot_number = 0
+var current_item: Control = null
+
+func _init():
+	current_slot_number = slot_amount
+	slot_amount += 1
+	
 func _process(delta):
 	state_machine()
+	if state == SELECTED:
+			
+		if Input.is_action_just_released("attack"):
+			print_debug("Otpustil ", current_slot_number)
 
+func _ready():
+	slot_number_label.text = str(current_slot_number)
 
 func state_machine():
 	match state:
@@ -27,35 +42,35 @@ func state_machine():
 		SELECTED:
 			set_selected_style()
 
-func add_item(item_texture: Texture2D, amount: int):
-	texture.texture = item_texture
-	label_amount.text = str(amount)
+func add_item(item: Control):
+	add_child(item)
+	current_item = item
 	state = FILL
 
 
 func clear_slot():
-	texture.texture = null
-	label_amount.text = ""
+	remove_child(get_node("Item"))
+	current_item = null
 	state = EMPTY
 
-func curent_item():
-	return [texture, label_amount]
+func get_curr_item():
+	return current_item
 
 func is_empty():
-	if texture.texture != null:
+	if current_item != null:
 		state = FILL
 		return false
-
 	state = EMPTY
 	return true
 
 func update_info(new_amount: int):
-	label_amount.text = str(new_amount)
+	var item_label: Label = current_item.get_child(1)
+	item_label.text = str(new_amount)
 
-	if label_amount.text == "1":
-		label_amount.visible = false
+	if item_label.text == "1":
+		item_label.visible = false
 	else: 
-		label_amount.visible = true
+		item_label.visible = true
 
 func set_empty_style():
 	modulate = empty_style
@@ -67,11 +82,9 @@ func set_selected_style():
 	modulate = selected_color
 
 func show_status():
-	print_debug(texture.texture)
-	print_debug(label_amount.text)
+	print_debug(current_item)
 
 
-var InArea: bool = false
 func _on_mouse_entered():
 	state = SELECTED
 	
@@ -82,8 +95,10 @@ func _on_mouse_exited():
 		return null
 	state = FILL
 
-
-func _on_gui_input(event: InputEvent):
-	if InArea:
-		if event.is_action_pressed("attack"):  # Если держу -> перетаскиваю предмет
-			print_debug("Pressed") # Как только отпустил (проверка) -> засунь предмет в этот слот State должен быть SELECTED
+func drag():
+	pass # Убираю flying obj из слота
+	
+func drop():
+	pass # Ставлю flying obj в слот
+# Если держу -> перетаскиваю предмет 
+# Как только отпустил (проверка) -> засунь предмет в этот слот State должен быть SELECTED

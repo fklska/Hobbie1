@@ -41,6 +41,9 @@ var res_height_val =[]
 @onready var iron = preload("res://Resourses/Prefabs/iron.tscn")
 @onready var rock = preload("res://Resourses/Prefabs/rock.tscn")
 
+func test():
+	wood.instantiate()
+
 var gap = 64
 func generate():
 	for x in range(-SIZE.x / 2, SIZE.x / 2):
