@@ -443,6 +443,11 @@ libraries = {
 [node name="Camera2D" parent="." instance=ExtResource("3_7v0dy")]
 
 [node name="InventoryUI" parent="." instance=ExtResource("5_e2ikj")]
+offset_left = 316.0
+offset_top = -129.0
+offset_right = 316.0
+offset_bottom = -129.0
+pivot_offset = Vector2(0, 130)
 
 [connection signal="body_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]

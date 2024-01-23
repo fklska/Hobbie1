@@ -14,7 +14,7 @@ enum {
 }
 var state = EMPTY
 
-static var flying_obj: Control = null
+static var flying_obj: InventoryItem = null
 static var slot_amount = 0
 static var slots: Array[Slot]
 
@@ -22,7 +22,7 @@ var current_slot_number = 0
 var current_item: InventoryItem = null
 
 @onready var item_sprite: Sprite2D = $CenterContainer/item_display
-@onready var item_amount: Label = $Label
+@onready var item_amount: Label = $CenterContainer/item_display/item_amount
 
 func _init():
 	current_slot_number = slot_amount
@@ -42,6 +42,13 @@ func update(item: InventoryItem):
 	current_item = item
 	item_amount.text = str(item.amount)
 	item_sprite.texture = item.image
+
+	refresh_state()
+
+func clear_slot():
+	current_item = null
+	item_amount.text = ""
+	item_sprite.texture = null
 
 	refresh_state()
 
@@ -86,8 +93,19 @@ func _on_mouse_exited():
 	state = FILL
 
 func _to_string():
-	return ("Slot #: " + str(current_slot_number) + "\n")
+	return ("Slot #" + str(current_slot_number))
 
 func _on_gui_input(event: InputEvent):
 	if event.is_action_pressed("RightMouseButton"):
 		print_debug(self)
+		
+	if event.is_action_released("LeftMouseButton"):
+		if flying_obj == null:  # Take Item
+			flying_obj = current_item
+			InventoryData.remove_item_from_slot(self)
+			clear_slot()
+		else:  # Put Item
+			InventoryData.add_item(self, flying_obj)
+			update(flying_obj)
+			flying_obj = null
+			InventoryUI.disable_display = true

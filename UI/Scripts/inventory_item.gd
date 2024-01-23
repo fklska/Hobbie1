@@ -11,5 +11,5 @@ func _init(_texture: Texture2D, _name: String, _amount: int):
 	amount = _amount
 
 func _to_string():
-	return ("Name: " + name + "\n" + "Amount: " + str(amount) + "\n" + "Image: " + image.resource_path)
+	return ("Name: " + name  + " Amount: " + str(amount) + " Image: " + image.resource_path)
 	
