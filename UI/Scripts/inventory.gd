@@ -1,14 +1,8 @@
-extends CanvasLayer
+extends Resource
+class_name InventoryData
 
+@export var inventory: Dictionary
 
-@onready var anim = $AnimationPlayer
-
-func _input(event: InputEvent):
-	if event.is_action_pressed("inventory"):
-		print_debug("Pressed")
-		if visible == false:		
-			anim.play("appear")
-		else:
-			anim.play("disapear")
-			await anim.animation_finished
-		visible = !visible
+func _init():
+	for i in Slot.slots:
+		inventory[i] = null

@@ -1,37 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://77ux20wss2m2"]
+[gd_scene load_steps=4 format=3 uid="uid://dn3w0t2raes5j"]
 
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_0i4ni"]
 [ext_resource type="Texture2D" uid="uid://vhw2k8km47od" path="res://UI/UIAssets/Buttons/Button_Disable.png" id="1_wus26"]
 [ext_resource type="Script" path="res://UI/Scripts/slot.gd" id="2_6twaj"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4j0mt"]
-texture = ExtResource("1_wus26")
-
 [node name="Slot" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(64, 64)
-anchors_preset = -1
-anchor_right = 0.0555556
-anchor_bottom = 0.0987654
-size_flags_horizontal = 6
-size_flags_vertical = 4
+offset_right = 64.0
+offset_bottom = 64.0
 theme = ExtResource("1_0i4ni")
-theme_override_styles/panel = SubResource("StyleBoxTexture_4j0mt")
 script = ExtResource("2_6twaj")
-metadata/_edit_use_anchors_ = true
 
-[node name="SlotNumber" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.640624
-anchor_top = 0.125
-anchor_right = 0.796874
-anchor_bottom = 0.40625
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 16
-metadata/_edit_use_anchors_ = true
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_wus26")
+centered = false
 
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(40, 20)
+offset_left = 12.0
+offset_top = 30.0
+offset_right = 52.0
+offset_bottom = 50.0
+horizontal_alignment = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="item_display" type="Sprite2D" parent="CenterContainer"]
+centered = false
+offset = Vector2(0, -4)

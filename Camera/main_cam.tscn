@@ -1,12 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuu8agnq5ro00"]
+[gd_scene load_steps=3 format=3 uid="uid://cuu8agnq5ro00"]
 
 [ext_resource type="Script" path="res://Camera/Scripts/main_cam.gd" id="1_36buq"]
-[ext_resource type="PackedScene" uid="uid://bthscyhk5lmtn" path="res://UI/inventory.tscn" id="2_4avp2"]
-[ext_resource type="PackedScene" uid="uid://cekljo04kb7va" path="res://UI/hotbar.tscn" id="3_56y4y"]
+[ext_resource type="PackedScene" uid="uid://byvxmah5abmtu" path="res://UI/UI_MAIN.tscn" id="2_1qwm6"]
 
 [node name="Camera2D" type="Camera2D"]
 script = ExtResource("1_36buq")
 
-[node name="inventory" parent="." instance=ExtResource("2_4avp2")]
-
-[node name="HotBar" parent="." instance=ExtResource("3_56y4y")]
+[node name="UI" parent="." instance=ExtResource("2_1qwm6")]

@@ -5,10 +5,12 @@ class_name Player
 @export_range(10, 100) var STRENCH = 10
 @export_range(10, 100) var INTELECT = 10
 
+@export var inv: InventoryData
+
 const SPEED = 50.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+
 
 enum {
 	RUN,
@@ -55,30 +57,30 @@ func attack():
 	await animPlayer.animation_finished
 	state = RUN
 
-
 func clearing():
 	for obj: ActiveResourses in targets:
 		var damage = STRENCH / 10
-		add_Items(damage, obj.get_texture())
+		add_item(obj.get_texture(), obj.name, damage)
 		obj.HEALTH -= damage
 		obj.get_damage()
 		obj.poup(str(damage))
-
 
 var targets = []
 func _on_area_2d_body_entered(body: StaticBody2D):
 	targets.push_back(body)
 
-
 func _on_area_2d_body_exited(body):
 	targets.pop_back()
 
-@onready var Interface: UI = get_node("Camera2D/HotBar")
-var Inventory: Dictionary = {}
+func add_item(_texture: Texture2D, _name: String, _amount: int):
+	for i: Slot in inv.inventory:
+		var item: InventoryItem = inv.inventory[i]
+		if item.name == _name:
+			item.amount += _amount
+			return "Updated!"
 
-func add_Items(amount: int, texture: Texture2D):
-	if Inventory.has(texture):
-		Inventory[texture] = Inventory[texture] + amount
-	else:
-		Inventory[texture] = amount
-	Interface.update_ui(Inventory)
+	for i: Slot in inv.inventory:
+		if i.is_empty():
+			inv.inventory[i] = InventoryItem.new(_texture, _name, _amount)
+			return "Added"
+	
