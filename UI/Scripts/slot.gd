@@ -42,15 +42,7 @@ func update(item: InventoryItem):
 	item_sprite.texture = item.image
 
 	refresh_state()
-	
-func refresh_state():
-	if is_empty():
-		state = EMPTY
-	elif state == SELECTED:
-		state = SELECTED
-	else:
-		state = FILL
-	
+
 func state_machine():
 	match state:
 		EMPTY:
@@ -60,6 +52,14 @@ func state_machine():
 		SELECTED:
 			set_selected_style()
 
+func refresh_state():
+	if is_empty():
+		state = EMPTY
+	elif state == SELECTED:
+		state = SELECTED
+	else:
+		state = FILL
+
 func is_empty():
 	if current_item == null:
 		return true
@@ -67,7 +67,7 @@ func is_empty():
 
 func set_empty_style():
 	modulate = empty_style
-	
+
 func set_default_style():
 	modulate = defualt_style
 

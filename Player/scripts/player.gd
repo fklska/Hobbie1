@@ -10,7 +10,7 @@ class_name Player
 const SPEED = 50.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
-
+@onready var inv_ui: InventoryUI = $InventoryUI
 
 enum {
 	RUN,
@@ -60,7 +60,7 @@ func attack():
 func clearing():
 	for obj: ActiveResourses in targets:
 		var damage = STRENCH / 10
-		add_item(obj.get_texture(), obj.name, damage)
+		print_debug(add_item(obj.get_texture(), obj.name, damage))
 		obj.HEALTH -= damage
 		obj.get_damage()
 		obj.poup(str(damage))
@@ -77,10 +77,12 @@ func add_item(_texture: Texture2D, _name: String, _amount: int):
 		var item: InventoryItem = inv.inventory[i]
 		if item.name == _name:
 			item.amount += _amount
+			inv_ui.update_slots()
 			return "Updated!"
 
 	for i: Slot in inv.inventory:
 		if i.is_empty():
 			inv.inventory[i] = InventoryItem.new(_texture, _name, _amount)
+			inv_ui.update_slots()
 			return "Added"
 	
