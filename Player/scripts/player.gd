@@ -5,8 +5,6 @@ class_name Player
 @export_range(10, 100) var STRENCH = 10
 @export_range(10, 100) var INTELECT = 10
 
-@export var inv: InventoryData
-
 const SPEED = 50.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
@@ -73,16 +71,20 @@ func _on_area_2d_body_exited(body):
 	targets.pop_back()
 
 func add_item(_texture: Texture2D, _name: String, _amount: int):
-	for i: Slot in inv.inventory:
-		var item: InventoryItem = inv.inventory[i]
-		if item.name == _name:
-			item.amount += _amount
-			inv_ui.update_slots()
-			return "Updated!"
+	print_debug(InventoryData.inventory)
+	for i: Slot in InventoryData.inventory:
+		print_debug("Start 1 cycle")
+		var item: InventoryItem = InventoryData.inventory[i]
+		if not i.is_empty():
+			if item.image == _texture:
+				item.amount += _amount
+				inv_ui.update_slots()
+				return "Updated!"
 
-	for i: Slot in inv.inventory:
+	for i: Slot in InventoryData.inventory:
+		print_debug("Start 2 cycle")
 		if i.is_empty():
-			inv.inventory[i] = InventoryItem.new(_texture, _name, _amount)
+			InventoryData.inventory[i] = InventoryItem.new(_texture, _name, _amount)
 			inv_ui.update_slots()
 			return "Added"
 	

@@ -1,9 +1,13 @@
 extends Control
 class_name InventoryUI
 
-@export var inv: InventoryData
 
 func update_slots():
-	for i: Slot in inv.inventory:
-		if inv.inventory[i] != null:
-			i.update(inv.inventory[i])
+	for i: Slot in InventoryData.inventory:
+		if InventoryData.inventory[i] != null:
+			i.update(InventoryData.inventory[i])
+	print_debug(InventoryData.inventory)
+
+func _on_gui_input(event: InputEvent):
+	if event.is_action_pressed("inventory"):
+		visible = !visible

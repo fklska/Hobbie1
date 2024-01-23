@@ -1,7 +1,7 @@
 extends Panel
 class_name Slot
 
-@onready var slot_number_label: Label = $SlotNumber
+var slot_number_label: Label
 
 const empty_style = Color8(255, 255, 255, 145)
 const defualt_style = Color8(255, 255, 255, 255)
@@ -34,7 +34,9 @@ func _process(delta):
 	
 
 func _ready():
+	slot_number_label = get_node("Label")
 	slot_number_label.text = str(current_slot_number)
+	InventoryData.initialize()
 	
 func update(item: InventoryItem):
 	current_item = item
@@ -84,4 +86,8 @@ func _on_mouse_exited():
 	state = FILL
 
 func _to_string():
-	return "Slot #: " + current_slot_number
+	return ("Slot #: " + str(current_slot_number) + "\n")
+
+func _on_gui_input(event: InputEvent):
+	if event.is_action_pressed("RightMouseButton"):
+		print_debug(self)
