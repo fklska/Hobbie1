@@ -12,6 +12,8 @@ anchor_right = 0.513889
 anchor_bottom = 0.524691
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("1_gwtdn")
 script = ExtResource("2_sw4dv")
 metadata/_edit_use_anchors_ = true
@@ -45,3 +47,5 @@ size_flags_vertical = 8
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 12
 metadata/_edit_use_anchors_ = true
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

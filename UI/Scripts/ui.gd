@@ -6,7 +6,7 @@ var slots
 var null_item = preload("res://UI/ui_item.tscn")
 
 func _ready():
-	slots = get_node("MarginContainer/BoxContainer").get_children()
+	slots = get_node("HBoxContainer").get_children()
 
 
 func update_ui(Inventory: Dictionary):

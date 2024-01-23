@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cekljo04kb7va"]
+
+[ext_resource type="Script" path="res://UI/Scripts/ui.gd" id="1_v6sqa"]
+[ext_resource type="PackedScene" uid="uid://77ux20wss2m2" path="res://UI/slot.tscn" id="2_xlld7"]
+
+[node name="HotBar" type="CanvasLayer"]
+script = ExtResource("1_v6sqa")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.383681
+anchor_top = 0.901235
+anchor_right = 0.616319
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot" parent="HBoxContainer" instance=ExtResource("2_xlld7")]
+layout_mode = 2
+
+[node name="Slot2" parent="HBoxContainer" instance=ExtResource("2_xlld7")]
+layout_mode = 2
+
+[node name="Slot3" parent="HBoxContainer" instance=ExtResource("2_xlld7")]
+layout_mode = 2
+
+[node name="Slot4" parent="HBoxContainer" instance=ExtResource("2_xlld7")]
+layout_mode = 2

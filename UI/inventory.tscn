@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ciff3yjv8rbp"]
+[gd_scene load_steps=7 format=3 uid="uid://bthscyhk5lmtn"]
 
 [ext_resource type="Script" path="res://UI/Scripts/inventory.gd" id="1_r5xap"]
 [ext_resource type="PackedScene" uid="uid://77ux20wss2m2" path="res://UI/slot.tscn" id="2_durln"]
@@ -8,14 +8,14 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
+tracks/0/path = NodePath("GridContainer:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(300, 0)]
+"values": [Vector2(1200, 190)]
 }
 
 [sub_resource type="Animation" id="Animation_kgqb3"]
@@ -25,14 +25,14 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
+tracks/0/path = NodePath("GridContainer:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.2),
+"times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(300, 0), Vector2(-50, 0), Vector2(0, 0)]
+"values": [Vector2(1200, 190), Vector2(834, 190), Vector2(884, 190)]
 }
 
 [sub_resource type="Animation" id="Animation_ldnk2"]
@@ -42,14 +42,14 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
+tracks/0/path = NodePath("GridContainer:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.2),
+"times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-50, 0), Vector2(300, 0)]
+"values": [Vector2(884, 190), Vector2(834, 190), Vector2(1200, 190)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1kq34"]
@@ -59,24 +59,23 @@ _data = {
 "disapear": SubResource("Animation_ldnk2")
 }
 
-[node name="Inventory" type="CanvasLayer"]
-offset = Vector2(300, 0)
-transform = Transform2D(1, 0, 0, 1, 300, 0)
+[node name="inventory" type="CanvasLayer"]
 script = ExtResource("1_r5xap")
+metadata/_edit_use_anchors_ = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
-anchors_preset = -1
-anchor_left = 0.767361
-anchor_top = 0.29321
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.70679
-offset_bottom = -3.05176e-05
+anchor_bottom = 0.5
+offset_left = 1200.0
+offset_top = 190.0
+offset_right = 1468.0
+offset_bottom = 458.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/h_separation = 4
-theme_override_constants/v_separation = 4
 columns = 4
-metadata/_edit_use_anchors_ = true
 
 [node name="Container" parent="GridContainer" instance=ExtResource("2_durln")]
 layout_mode = 2

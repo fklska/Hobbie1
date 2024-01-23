@@ -12,8 +12,7 @@ custom_minimum_size = Vector2(64, 64)
 anchors_preset = -1
 anchor_right = 0.0555556
 anchor_bottom = 0.0987654
-offset_bottom = -1.90735e-05
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = ExtResource("1_0i4ni")
 theme_override_styles/panel = SubResource("StyleBoxTexture_4j0mt")
@@ -32,6 +31,7 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 16
 metadata/_edit_use_anchors_ = true
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]

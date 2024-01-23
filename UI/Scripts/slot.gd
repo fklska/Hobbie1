@@ -14,7 +14,7 @@ enum {
 }
 var state = EMPTY
 
-static var flying_obj = null
+static var flying_obj: Control = null
 static var slot_amount = 0
 static var Inventory: Dictionary = {}
 var current_slot_number = 0
@@ -26,19 +26,20 @@ func _init():
 	
 func _process(delta):
 	state_machine()
-	if state == SELECTED:
-		if Input.is_action_just_pressed("attack"):
-			flying_obj = current_item
-			clear_slot()
-			show_status()
-			
-		if Input.is_action_just_released("attack"):
-			add_item(flying_obj)
-			flying_obj = null
+	#if Input.is_action_just_pressed("attack"):
+	#	if state == SELECTED:
+	#		show_status()
+	
+	if flying_obj != null:
+		flying_obj.get_node(".").global_position = get_global_mouse_position()
+	
+	
 
 func _ready():
 	slot_number_label.text = str(current_slot_number)
-
+	current_item = $Item
+	state = FILL
+	
 func state_machine():
 	match state:
 		EMPTY:
@@ -109,3 +110,14 @@ func drag():
 	
 func drop():
 	pass # Ставлю flying obj в слот
+
+
+func _on_gui_input(event: InputEvent):
+	if event.is_action_pressed("attack"):
+		if state == SELECTED and not is_empty():
+			flying_obj = current_item.get_node(".")
+			print_debug(flying_obj.get_tree())
+			print_debug(flying_obj.get_node(".").position)
+
+		#print_debug("Global: ", get_global_mouse_position())
+		#print_debug("Local: ", get_local_mouse_position()) # Replace with function body.

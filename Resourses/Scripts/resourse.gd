@@ -48,3 +48,6 @@ func poup(amount: String):
 	
 func get_texture():
 	return get_node("Sprite2D").texture
+
+func _on_input_event(viewport, event: InputEvent, shape_idx):
+	pass

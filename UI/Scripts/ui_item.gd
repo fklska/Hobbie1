@@ -1,6 +1,8 @@
 extends Control
 class_name Item
 
+func _process(delta):
+	pass
 
 var current_texture: Texture2D = null
 func set_data(res_texture: Texture2D, amount: int):
@@ -9,4 +11,8 @@ func set_data(res_texture: Texture2D, amount: int):
 	current_texture = res_texture
 
 func get_texture():
-	return current_texture
+	return current_texture 
+
+
+func _on_gui_input(event: InputEvent):
+	pass
