@@ -8,7 +8,7 @@ class_name Player
 const SPEED = 50.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
-@onready var inv_ui: InventoryUI = $InventoryUI
+@onready var inv_ui: InventoryUI = $CanvasLayer/InventoryUI
 
 enum {
 	RUN,

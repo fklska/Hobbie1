@@ -2,8 +2,11 @@ extends Control
 class_name InventoryUI
 
 var display_flying_obj: Sprite2D
+var anim: AnimationPlayer
+
 func _ready():
 	display_flying_obj = get_node("FlyingObj")
+	anim = $"../AnimationPlayer"
 
 
 func _process(delta):
@@ -33,3 +36,7 @@ func disable_display_fly_obj():
 func _input(event: InputEvent):
 	if event.is_action_pressed("inventory"):
 		visible = !visible
+		if visible:
+			anim.play("appear")
+		else:
+			anim.play("disapear")

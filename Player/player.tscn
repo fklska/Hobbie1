@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=49 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
@@ -412,6 +412,62 @@ _data = {
 "run": SubResource("Animation_8iueh")
 }
 
+[sub_resource type="Animation" id="Animation_pbysg"]
+resource_name = "appear"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1158, 0), Vector2(692, 0), Vector2(732, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cjiqj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(732, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ocjkk"]
+resource_name = "disapear"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(732, 0), Vector2(692, 0), Vector2(1158, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eqrv7"]
+_data = {
+"RESET": SubResource("Animation_cjiqj"),
+"appear": SubResource("Animation_pbysg"),
+"disapear": SubResource("Animation_ocjkk")
+}
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 29
@@ -442,12 +498,25 @@ libraries = {
 
 [node name="Camera2D" parent="." instance=ExtResource("3_7v0dy")]
 
-[node name="InventoryUI" parent="." instance=ExtResource("5_e2ikj")]
-offset_left = 316.0
-offset_top = -129.0
-offset_right = 316.0
-offset_bottom = -129.0
-pivot_offset = Vector2(0, 130)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("5_e2ikj")]
+anchors_preset = -1
+anchor_left = 0.768229
+anchor_top = 0.268519
+anchor_right = 1.0
+anchor_bottom = 0.679012
+offset_left = -153.0
+offset_top = -174.0
+offset_right = 131.0
+offset_bottom = 102.0
+grow_horizontal = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+root_node = NodePath("../InventoryUI")
+libraries = {
+"": SubResource("AnimationLibrary_eqrv7")
+}
 
 [connection signal="body_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]

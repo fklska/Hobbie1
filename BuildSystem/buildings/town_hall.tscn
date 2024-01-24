@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq63ulxk8g6gt"]
+
+[ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="1_gyvcq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq0ah"]
+size = Vector2(52, 30)
+
+[node name="TownHall" type="StaticBody2D"]
+z_index = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gyvcq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_rq0ah")
