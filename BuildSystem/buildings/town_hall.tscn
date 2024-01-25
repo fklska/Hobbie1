@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cq63ulxk8g6gt"]
+[gd_scene load_steps=5 format=3 uid="uid://cq63ulxk8g6gt"]
 
 [ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="1_gyvcq"]
+[ext_resource type="Script" path="res://BuildSystem/scripts/town_hall.gd" id="1_p3ud0"]
+[ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="2_7hqpg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rq0ah"]
 size = Vector2(52, 30)
 
 [node name="TownHall" type="StaticBody2D"]
 z_index = 5
+script = ExtResource("1_p3ud0")
+data = ExtResource("2_7hqpg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_gyvcq")

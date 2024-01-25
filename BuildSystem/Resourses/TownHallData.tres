@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="StorageDataClass" load_steps=2 format=3 uid="uid://dsoblcqn2trh0"]
+
+[ext_resource type="Script" path="res://BuildSystem/scripts/storage.gd" id="1_mcqm4"]
+
+[resource]
+script = ExtResource("1_mcqm4")
+storage_data = Array[Resource("res://UI/Scripts/inventory_item.gd")]([null, null, null, null])

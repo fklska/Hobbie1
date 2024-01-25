@@ -10,6 +10,8 @@ const SPEED = 50.0
 @onready var animPlayer = $AnimationPlayer
 @onready var inv_ui: InventoryUI = $CanvasLayer/InventoryUI
 
+#static var inventory: InventoryData
+
 enum {
 	RUN,
 	ATTACK,
