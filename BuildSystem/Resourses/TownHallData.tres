@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_mcqm4")
-storage_data = Array[Resource("res://UI/Scripts/inventory_item.gd")]([null, null, null, null])
+data = [null, null, null, null]

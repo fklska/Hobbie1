@@ -1,20 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://cq63ulxk8g6gt"]
+[gd_scene load_steps=6 format=3 uid="uid://cq63ulxk8g6gt"]
 
 [ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="1_gyvcq"]
+[ext_resource type="PackedScene" uid="uid://cm4bw0v6r0ni2" path="res://BaseClasses/ScenePrefabs/active_object.tscn" id="1_hpnya"]
 [ext_resource type="Script" path="res://BuildSystem/scripts/town_hall.gd" id="1_p3ud0"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="2_7hqpg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq0ah"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvsao"]
 size = Vector2(52, 30)
 
-[node name="TownHall" type="StaticBody2D"]
-z_index = 5
+[node name="TownHall" instance=ExtResource("1_hpnya")]
 script = ExtResource("1_p3ud0")
 data = ExtResource("2_7hqpg")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." index="0"]
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" index="0"]
 texture = ExtResource("1_gyvcq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" index="1"]
 position = Vector2(0, 15)
-shape = SubResource("RectangleShape2D_rq0ah")
+shape = SubResource("RectangleShape2D_hvsao")
+
+[node name="Selector" parent="." index="1"]
+z_index = -1
+position = Vector2(0, 11)
+scale = Vector2(1.3125, 1.3125)
+
+[node name="Ebutton" parent="." index="2"]
+z_index = 2
+position = Vector2(0, -50)

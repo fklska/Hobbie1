@@ -87,3 +87,14 @@ func add_item(_texture: Texture2D, _name: String, _amount: int):
 			InventoryData.add_item(slot, InventoryItem.new(_texture, _name, _amount))
 			inv_ui.update_slots()
 			return "Added"
+
+
+func _on_trigger_body_entered(body):
+	# Квадратный селектор
+	# Буковка е над обектом
+	# В инпуте сделать если нажал е рядом с активным объектом то вызывай его функцию взаимодействия
+	pass # Replace with function body.
+
+
+func _on_trigger_body_exited(body):
+	pass # Replace with function body.

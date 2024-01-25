@@ -1,7 +1,6 @@
-extends StaticBody2D
+extends ActiveClass
 class_name Building
 
-@export var data: StorageDataClass
 
 func put_in_storage(items: Dictionary):
 	for item in items:
