@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="1_outc6"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/popup.tscn" id="2_1n43t"]
-[ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="3_iuoay"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="3_k8bi8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmwpk"]
+bg_color = Color(0.854902, 0.560784, 0.0784314, 1)
 
 [sub_resource type="Animation" id="Animation_d3bnw"]
 length = 0.001
@@ -53,16 +55,31 @@ damage_node = ExtResource("2_1n43t")
 [node name="healthbar" type="ProgressBar" parent="."]
 visible = false
 modulate = Color(0.996078, 0, 0, 1)
+z_index = 1
 offset_left = -16.0
-offset_top = -28.0
+offset_top = -25.0
 offset_right = 314.0
-offset_bottom = 12.0
+offset_bottom = 5.0
 scale = Vector2(0.1, 0.1)
 theme = ExtResource("3_k8bi8")
-theme_override_fonts/font = ExtResource("3_iuoay")
 value = 100.0
-rounded = true
 show_percentage = false
+
+[node name="damage_bar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -16.0
+offset_top = -25.0
+offset_right = 314.0
+offset_bottom = 5.0
+scale = Vector2(0.1, 0.1)
+theme = ExtResource("3_k8bi8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tmwpk")
+value = 100.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="damage_bar"]
+wait_time = 0.3
+one_shot = true
 
 [node name="PopUpLocation" type="Marker2D" parent="."]
 position = Vector2(0, -32)
@@ -75,3 +92,4 @@ libraries = {
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="timeout" from="damage_bar/Timer" to="." method="_on_timer_timeout"]

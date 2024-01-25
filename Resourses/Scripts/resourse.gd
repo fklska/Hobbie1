@@ -3,22 +3,15 @@ class_name ActiveResourses
 
 @export var HEALTH = 100
 @export var STORAGE = 100
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	#name = "Iron" # Replace with function body.
-	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 @export var current_color = Color8(255, 255, 255, 255,)
 func _on_mouse_entered():
-	modulate = Color8(155, 155, 155) # Replace with function body.
+	modulate = Color8(155, 155, 155)
 
 
 func _on_mouse_exited():
-	modulate = current_color # Replace with function body.
+	modulate = current_color
 
 		
 @onready var anim = $AnimationPlayer
@@ -31,13 +24,19 @@ func get_damage():
 		queue_free()
 
 @onready var hb = $healthbar
+@onready var damage_bar = $damage_bar
+@onready var timer: Timer = $damage_bar/Timer
 func update_healthbar():
 	hb.value = HEALTH
-
+	timer.start()
+	print_debug(damage_bar.visible)
+	print_debug(damage_bar.value)
 	if hb.value == 100:
 		hb.visible = false
+		damage_bar.visible = false
 	else:
 		hb.visible = true
+		damage_bar.visible = true
 
 @export var damage_node: PackedScene
 func poup(amount: String):
@@ -51,3 +50,8 @@ func get_texture():
 
 func _on_input_event(viewport, event: InputEvent, shape_idx):
 	pass
+
+
+func _on_timer_timeout():
+	damage_bar.value = HEALTH
+	print_debug(damage_bar.value)

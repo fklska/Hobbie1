@@ -59,7 +59,7 @@ func attack():
 
 func clearing():
 	for obj: ActiveResourses in targets:
-		var damage = STRENCH / 10
+		var damage = STRENCH / 2
 		add_item(obj.get_texture(), obj.name, damage)
 		obj.HEALTH -= damage
 		obj.get_damage()
