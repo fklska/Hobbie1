@@ -1,17 +1,15 @@
-extends BaseDataClass
+extends Resource
 class_name StorageDataClass
 
+@export var data_items: Dictionary
 
 func add_item(item: InventoryItem):
-	var index = data_items.find(item)
-	var value = 0
-
-	if index == -1:
-		data_items.append(item)
+	if data_items.has(item.image):
+		data_items[item.image] += item.amount
 	else:
-		value = data_items[index].amount + item.amount
-		data_items[index].amount = value
-	
+		data_items[item.image] = item.amount
+
+
 func delete_item(item: InventoryItem):
 	#var index: int = storage_data.find(item)
 	#storage_data.pop_at(index)

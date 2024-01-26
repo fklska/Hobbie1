@@ -38,3 +38,4 @@ position = Vector2(580, 326)
 
 [node name="TownHall" parent="." instance=ExtResource("4_fc61l")]
 position = Vector2(690, 319)
+data = null

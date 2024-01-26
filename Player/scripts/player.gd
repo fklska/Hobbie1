@@ -90,6 +90,7 @@ func add_item(_texture: Texture2D, _name: String, _amount: int):
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("action"):
+		print_debug(InventoryData.inventory)
 		selected.action(InventoryData.inventory)
 
 var selected: ActiveClass

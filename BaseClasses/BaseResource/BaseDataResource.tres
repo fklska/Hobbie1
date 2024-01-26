@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="BaseDataClass" load_steps=2 format=3 uid="uid://p3vfrk0btlld"]
-
-[ext_resource type="Script" path="res://BaseClasses/DataClasses/base_data_class.gd" id="1_o8j40"]
-
-[resource]
-script = ExtResource("1_o8j40")
-data_items = []
