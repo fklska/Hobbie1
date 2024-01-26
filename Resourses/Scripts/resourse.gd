@@ -29,8 +29,6 @@ func get_damage():
 func update_healthbar():
 	hb.value = HEALTH
 	timer.start()
-	print_debug(damage_bar.visible)
-	print_debug(damage_bar.value)
 	if hb.value == 100:
 		hb.visible = false
 		damage_bar.visible = false
@@ -54,4 +52,3 @@ func _on_input_event(viewport, event: InputEvent, shape_idx):
 
 func _on_timer_timeout():
 	damage_bar.value = HEALTH
-	print_debug(damage_bar.value)
