@@ -88,9 +88,15 @@ func add_item(_texture: Texture2D, _name: String, _amount: int):
 			inv_ui.update_slots()
 			return "Added"
 
+func _input(event: InputEvent):
+	if event.is_action_pressed("action"):
+		selected.action(InventoryData.inventory)
 
+var selected: ActiveClass
 func _on_trigger_body_entered(body):
-	body.set_selected()
+	if body is Building:
+		body.set_selected()
+		selected = body
 	# Квадратный селектор
 	# Буковка е над обектом
 	# В инпуте сделать если нажал е рядом с активным объектом то вызывай его функцию взаимодействия
@@ -98,4 +104,6 @@ func _on_trigger_body_entered(body):
 
 
 func _on_trigger_body_exited(body):
-	body.hide_selected()
+	if body is Building:
+		body.hide_selected()
+		selected = null

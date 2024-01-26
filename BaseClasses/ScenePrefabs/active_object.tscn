@@ -11,10 +11,12 @@ data = ExtResource("2_tvwgg")
 
 [node name="Selector" type="Sprite2D" parent="."]
 visible = false
+z_index = 1
 texture = ExtResource("3_fg6u6")
 
 [node name="Ebutton" type="Sprite2D" parent="."]
 visible = false
+z_index = 1
 position = Vector2(0, -124)
 texture = ExtResource("4_yh5to")
 hframes = 2

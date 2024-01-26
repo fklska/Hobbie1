@@ -2,9 +2,8 @@ extends Node2D
 class_name ActiveClass
 
 @export var data: BaseDataClass
-var active_func: Callable = active
 
-func active():
+func action(args):
 	pass
 	
 

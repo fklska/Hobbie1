@@ -15,7 +15,7 @@ func _ready():
 		rock_height: rock,
 		wood_height: wood,
 	}
-	#generate()
+	generate()
 
 @export var SIZE = Vector2i(128, 128)
 

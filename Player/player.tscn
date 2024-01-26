@@ -514,16 +514,18 @@ libraries = {
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("5_e2ikj")]
-anchors_preset = -1
-anchor_left = 0.768229
-anchor_top = 0.268519
-anchor_right = 1.0
-anchor_bottom = 0.679012
-offset_left = -153.0
-offset_top = -174.0
-offset_right = 1466.0
-offset_bottom = 1432.0
-grow_horizontal = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 732.0
+offset_top = 0.0
+offset_right = 1121.0
+offset_bottom = 386.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
 root_node = NodePath("../InventoryUI")

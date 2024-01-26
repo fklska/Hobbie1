@@ -2,7 +2,11 @@ extends ActiveClass
 class_name Building
 
 
-func put_in_storage(items: Dictionary):
+func action(items: Dictionary):
 	for item in items:
 		if items[item] != null:
-			data.add_item(items[item])
+			data.data.append(items[item])
+
+	for i in data.data:
+		print_debug(i)
+	print_debug(data)
