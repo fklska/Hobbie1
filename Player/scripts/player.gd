@@ -90,11 +90,12 @@ func add_item(_texture: Texture2D, _name: String, _amount: int):
 
 
 func _on_trigger_body_entered(body):
+	body.set_selected()
 	# Квадратный селектор
 	# Буковка е над обектом
 	# В инпуте сделать если нажал е рядом с активным объектом то вызывай его функцию взаимодействия
-	pass # Replace with function body.
+	# Replace with function body.
 
 
 func _on_trigger_body_exited(body):
-	pass # Replace with function body.
+	body.hide_selected()

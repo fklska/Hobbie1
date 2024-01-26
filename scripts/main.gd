@@ -15,7 +15,7 @@ func _ready():
 		rock_height: rock,
 		wood_height: wood,
 	}
-	generate()
+	#generate()
 
 @export var SIZE = Vector2i(128, 128)
 
@@ -40,9 +40,6 @@ var res_height_val =[]
 @onready var gold = preload("res://Resourses/Prefabs/gold.tscn")
 @onready var iron = preload("res://Resourses/Prefabs/iron.tscn")
 @onready var rock = preload("res://Resourses/Prefabs/rock.tscn")
-
-func test():
-	wood.instantiate()
 
 var gap = 64
 func generate():

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=7 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
+[ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
@@ -34,3 +35,6 @@ format = 2
 
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
 position = Vector2(580, 326)
+
+[node name="TownHall" parent="." instance=ExtResource("4_fc61l")]
+position = Vector2(690, 319)

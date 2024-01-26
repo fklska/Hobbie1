@@ -105,7 +105,13 @@ func _on_gui_input(event: InputEvent):
 			InventoryData.remove_item_from_slot(self)
 			clear_slot()
 		else:  # Put Item
-			InventoryData.add_item(self, flying_obj)
-			update(flying_obj)
-			flying_obj = null
-			InventoryUI.disable_display = true
+			if is_empty():
+				InventoryData.add_item(self, flying_obj)
+				update(flying_obj)
+				flying_obj = null
+				InventoryUI.disable_display = true
+			else:
+				if current_item == flying_obj:
+					print_debug("Stack")
+				else:
+					print_debug("Slot zanyat!")
