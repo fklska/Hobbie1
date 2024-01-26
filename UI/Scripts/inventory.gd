@@ -10,8 +10,8 @@ static func initialize():
 
 static func add_item(slot: Slot, item: InventoryItem):
 	inventory[slot] = item
-	print_debug("Add: ", inventory)
+	#print_debug("Add: ", inventory)
 
 static func remove_item_from_slot(slot: Slot):
 	inventory[slot] = null
-	print_debug("Take: ", inventory)
+	#print_debug("Take: ", inventory)

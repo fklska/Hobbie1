@@ -1,4 +1,4 @@
 extends Resource
 class_name BaseDataClass
 
-@export var data: Array
+@export var data_items: Array

@@ -1,12 +1,11 @@
 extends ActiveClass
 class_name Building
 
+@onready var storage_ui: StorageUI = $CanvasLayer/storage_ui
 
-func action(items: Dictionary):
-	for item in items:
-		if items[item] != null:
-			data.data.append(items[item])
-
-	for i in data.data:
-		print_debug(i)
-	print_debug(data)
+func action(inventory: Dictionary):
+	for slot in inventory:
+		if inventory[slot] != null:
+			data.add_item(inventory[slot])
+			
+	storage_ui.update_ui(data.data_items)

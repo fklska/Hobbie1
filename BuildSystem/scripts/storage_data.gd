@@ -3,8 +3,14 @@ class_name StorageDataClass
 
 
 func add_item(item: InventoryItem):
-	#storage_data.append(item)
-	pass
+	var index = data_items.find(item)
+	var value = 0
+
+	if index == -1:
+		data_items.append(item)
+	else:
+		value = data_items[index].amount + item.amount
+		data_items[index].amount = value
 	
 func delete_item(item: InventoryItem):
 	#var index: int = storage_data.find(item)
