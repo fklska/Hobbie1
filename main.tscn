@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=17 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
 [ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
+[ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/inventory_ui.tscn" id="4_rins4"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
+[ext_resource type="PackedScene" uid="uid://bq2jvgxrp2es6" path="res://BuildSystem/UI/storage_ui.tscn" id="6_o614m"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 frequency = 0.0084
@@ -15,6 +17,118 @@ noise_type = 3
 frequency = 0.7239
 fractal_octaves = 1
 fractal_lacunarity = 3.075
+
+[sub_resource type="Animation" id="Animation_cjiqj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(732, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pbysg"]
+resource_name = "appear"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1158, 0), Vector2(692, 0), Vector2(732, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ocjkk"]
+resource_name = "disapear"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(732, 0), Vector2(692, 0), Vector2(1158, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eqrv7"]
+_data = {
+"RESET": SubResource("Animation_cjiqj"),
+"appear": SubResource("Animation_pbysg"),
+"disapear": SubResource("Animation_ocjkk")
+}
+
+[sub_resource type="Animation" id="Animation_au1dd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("storage_ui:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1120, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_j6qlq"]
+resource_name = "hide"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("storage_ui:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(860, 0), Vector2(820, 0), Vector2(1120, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ps8li"]
+resource_name = "show"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("storage_ui:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1120, 0), Vector2(820, 0), Vector2(860, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7l2pq"]
+_data = {
+"RESET": SubResource("Animation_au1dd"),
+"hide": SubResource("Animation_j6qlq"),
+"show": SubResource("Animation_ps8li")
+}
 
 [node name="Main" type="Node2D"]
 z_index = 1
@@ -36,6 +150,46 @@ format = 2
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
 position = Vector2(580, 326)
 
+[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
+
+[node name="InventoryUI" parent="Player/CanvasLayer" instance=ExtResource("4_rins4")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 732.0
+offset_top = 0.0
+offset_right = 1121.0
+offset_bottom = 386.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/CanvasLayer"]
+root_node = NodePath("../InventoryUI")
+libraries = {
+"": SubResource("AnimationLibrary_eqrv7")
+}
+
 [node name="TownHall" parent="." instance=ExtResource("4_fc61l")]
-position = Vector2(690, 319)
-data = null
+position = Vector2(452, 317)
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="TownHall"]
+
+[node name="storage_ui" parent="TownHall/CanvasLayer2" instance=ExtResource("6_o614m")]
+anchors_preset = -1
+anchor_left = 0.971354
+anchor_top = -0.0262346
+anchor_right = 1.22569
+anchor_bottom = 0.25463
+offset_left = 1.00024
+offset_top = 17.0
+offset_right = 2051.97
+offset_bottom = 1291.0
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TownHall/CanvasLayer2"]
+libraries = {
+"": SubResource("AnimationLibrary_7l2pq")
+}
