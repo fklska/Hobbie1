@@ -79,7 +79,7 @@
 UPD: Скорее всего буду отказываться от этого. Основная плашка будет показывать только запасы ресурсов в деревне, а информация по инвентарю и характеристике только про главного персонажа.
 <div id="header" align="center">
   <img src="https://imgur.com/YKmwCY2.png" width="800"/>
-  <img src="https://imgur.com/Gb56aLT.png" width="400"/>
+  <img src="https://imgur.com/Gb56aLT.png" width="300"/>
   <img src="https://imgur.com/uiZ8HPg.png" width="400"/>
-  <img src="https://imgur.com/7zeSmi3.gif" width="800"/>
+  <img src="https://imgur.com/qwrvV9B.gif" width="800"/>
 </div>
