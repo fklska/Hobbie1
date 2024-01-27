@@ -7,8 +7,9 @@ class_name Building
 func action(inventory: Dictionary):
 	for slot: Slot in inventory:
 		if inventory[slot] != null:
-			data.add_item(inventory[slot])
-			InventoryData.remove_item_from_slot(slot)
-			slot.clear_slot()
+			if inventory[slot] is InventoryItem:
+				data.put_in_storage(inventory[slot])
+				InventoryData.remove_item_from_slot(slot)
+				slot.clear_slot()
 			
 	storage_ui.update_ui(data.data_items)

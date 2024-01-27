@@ -111,7 +111,7 @@ func _on_gui_input(event: InputEvent):
 				flying_obj = null
 				InventoryUI.disable_display = true
 			else:
-				if current_item == flying_obj:
+				if current_item.image == flying_obj.image:
 					print_debug("Stack")
 				else:
 					print_debug("Slot zanyat!")

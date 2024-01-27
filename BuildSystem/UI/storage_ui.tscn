@@ -45,6 +45,7 @@ offset_left = 28.0
 offset_top = 26.0
 offset_right = 47.0
 offset_bottom = 49.0
+text = "0"
 horizontal_alignment = 2
 
 [node name="TextureRect2" type="TextureRect" parent="TextureButton/HBoxContainer"]
@@ -60,6 +61,7 @@ offset_left = 28.0
 offset_top = 26.0
 offset_right = 47.0
 offset_bottom = 49.0
+text = "0"
 horizontal_alignment = 2
 
 [node name="TextureRect3" type="TextureRect" parent="TextureButton/HBoxContainer"]
@@ -75,6 +77,7 @@ offset_left = 28.0
 offset_top = 26.0
 offset_right = 47.0
 offset_bottom = 49.0
+text = "0"
 horizontal_alignment = 2
 
 [node name="TextureRect4" type="TextureRect" parent="TextureButton/HBoxContainer"]
@@ -90,6 +93,7 @@ offset_left = 28.0
 offset_top = 26.0
 offset_right = 47.0
 offset_bottom = 49.0
+text = "0"
 horizontal_alignment = 2
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

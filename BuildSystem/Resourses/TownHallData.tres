@@ -1,7 +1,16 @@
-[gd_resource type="Resource" script_class="StorageDataClass" load_steps=2 format=3 uid="uid://dsoblcqn2trh0"]
+[gd_resource type="Resource" script_class="StorageDataClass" load_steps=6 format=3 uid="uid://dsoblcqn2trh0"]
 
+[ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="1_4bxfq"]
 [ext_resource type="Script" path="res://BuildSystem/scripts/storage_data.gd" id="1_hco4f"]
+[ext_resource type="Texture2D" uid="uid://b06ojyuwegde" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_10.png" id="2_4ot3b"]
+[ext_resource type="Texture2D" uid="uid://dkd27jxqd6ork" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_11.png" id="3_jfb78"]
+[ext_resource type="Texture2D" uid="uid://k8v3t7pxhf4u" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_12.png" id="4_a48kb"]
 
 [resource]
 script = ExtResource("1_hco4f")
-data_items = {}
+data_items = {
+ExtResource("1_4bxfq"): 0,
+ExtResource("2_4ot3b"): 0,
+ExtResource("3_jfb78"): 0,
+ExtResource("4_a48kb"): 0
+}

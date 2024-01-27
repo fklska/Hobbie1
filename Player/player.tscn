@@ -1,8 +1,9 @@
-[gd_scene load_steps=45 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=50 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
 [ext_resource type="PackedScene" uid="uid://cuu8agnq5ro00" path="res://Camera/main_cam.tscn" id="3_7v0dy"]
+[ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/inventory_ui.tscn" id="4_h0fti"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7qahw"]
 radius = 12.0
@@ -414,6 +415,62 @@ _data = {
 "run": SubResource("Animation_8iueh")
 }
 
+[sub_resource type="Animation" id="Animation_r2imb"]
+resource_name = "appear"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(350, 0), Vector2(-50, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_apiuc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(350, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_422wi"]
+resource_name = "disapear"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-50, 0), Vector2(350, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_32phd"]
+_data = {
+"RESET": SubResource("Animation_apiuc"),
+"appear": SubResource("Animation_r2imb"),
+"disapear": SubResource("Animation_422wi")
+}
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 29
@@ -453,6 +510,32 @@ libraries = {
 }
 
 [node name="Camera2D" parent="." instance=ExtResource("3_7v0dy")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(350, 0)
+transform = Transform2D(1, 0, 0, 1, 350, 0)
+
+[node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_h0fti")]
+visible = false
+anchors_preset = -1
+anchor_left = 0.670139
+anchor_top = 0.399691
+anchor_right = 1.00781
+anchor_bottom = 0.99537
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+root_node = NodePath("../InventoryUI")
+libraries = {
+"": SubResource("AnimationLibrary_32phd")
+}
 
 [connection signal="body_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]

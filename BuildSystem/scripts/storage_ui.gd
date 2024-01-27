@@ -13,8 +13,6 @@ func _on_texture_button_pressed():
 		anim.play("hide")
 
 @onready var ui_elemnts = $TextureButton/HBoxContainer.get_children()
-func update_ui(data: Array[InventoryItem]):
+func update_ui(data: Dictionary):
 	for image: TextureRect in ui_elemnts:
-		for i in data:
-			if image.texture == i.image:
-				image.get_child(0).text = str(i.amount)
+		image.get_child(0).text = str(data[image.texture])

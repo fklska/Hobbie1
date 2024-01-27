@@ -35,8 +35,10 @@ func disable_display_fly_obj():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("inventory"):
-		visible = !visible
-		if visible:
+		if !visible:
+			visible = true
 			anim.play("appear")
 		else:
 			anim.play("disapear")
+			await anim.animation_finished
+			visible = false
