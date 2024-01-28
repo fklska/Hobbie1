@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://og0gspwamlvi"]
+
+[ext_resource type="Texture2D" uid="uid://dbegdph3wxdfv" path="res://UI/UIAssets/Banners/Banner_Connection_Down.png" id="1_3pc4i"]
+[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_lbm5b"]
+[ext_resource type="Script" path="res://Selector/selector.gd" id="2_rgdjr"]
+
+[node name="Selector" type="Control"]
+layout_mode = 3
+anchor_right = 0.166667
+anchor_bottom = 0.327161
+offset_bottom = -1.52588e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_lbm5b")
+script = ExtResource("2_rgdjr")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.90566
+texture = ExtResource("1_3pc4i")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.416667
+anchor_right = 0.583333
+anchor_bottom = 0.166667
+grow_horizontal = 2
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.265625
+anchor_top = 0.552083
+anchor_right = 0.729167
+anchor_bottom = 0.807292
+theme_override_colors/font_color = Color(0, 0, 0, 0.960784)
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+text_overrun_behavior = 2
+metadata/_edit_use_anchors_ = true

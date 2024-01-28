@@ -110,3 +110,18 @@ func _on_trigger_body_exited(body):
 	if body is Building:
 		body.hide_selected()
 		selected = null
+
+
+func show_selected_info():
+	return [
+		anim.sprite_frames.get_frame_texture("idle", 0),
+		("   Stats    \n Agility: " + str(AGILITY) + 
+		"\n Strench: " + str(STRENCH) + 
+		"\n Intelect: " + str(INTELECT) + "\n")
+	]
+
+
+func _on_mouse_entered():
+	if Input.is_action_pressed("LeftMouseButton"):
+		print_debug("Pressed")
+		SelectorClass.selected_object = self

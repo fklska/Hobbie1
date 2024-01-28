@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=8 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
 [ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
+[ext_resource type="PackedScene" uid="uid://og0gspwamlvi" path="res://Selector/selector.tscn" id="5_vlk01"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 frequency = 0.0084
@@ -12,9 +13,9 @@ fractal_lacunarity = 2.145
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_i4vyh"]
 noise_type = 3
-frequency = 0.7239
-fractal_octaves = 1
-fractal_lacunarity = 3.075
+frequency = 0.0806
+fractal_octaves = 3
+fractal_lacunarity = 5.0
 
 [node name="Main" type="Node2D"]
 z_index = 1
@@ -23,10 +24,10 @@ noise = SubResource("FastNoiseLite_o5d00")
 res_noise = SubResource("FastNoiseLite_i4vyh")
 water_height = -0.292
 sand_height = -0.106
-wood_height = 0.2
-rock_height = 0.035
-gold_height = 0.009
-iron_height = 0.015
+wood_height = 0.097
+rock_height = 0.048
+gold_height = 0.022
+iron_height = 0.036
 
 [node name="Tilemap" type="TileMap" parent="."]
 texture_filter = 1
@@ -38,3 +39,7 @@ position = Vector2(580, 326)
 
 [node name="TownHall" parent="." instance=ExtResource("4_fc61l")]
 position = Vector2(452, 317)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Selector" parent="CanvasLayer" instance=ExtResource("5_vlk01")]

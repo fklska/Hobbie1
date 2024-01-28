@@ -67,6 +67,8 @@ _data = {
 }
 
 [node name="TownHall" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 6
 script = ExtResource("1_p3ud0")
 data = ExtResource("2_7hqpg")
 

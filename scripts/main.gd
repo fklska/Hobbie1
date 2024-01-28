@@ -8,6 +8,7 @@ extends Node2D
 var RES_TYPES = {}
 func _ready():
 	noise.seed = randi()
+	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
 	print_debug(noise.seed)
 	RES_TYPES = {
 		gold_height: gold,
@@ -70,8 +71,8 @@ func generate():
 
 	#print_debug("max: ", height_val.max())
 	#print_debug("min: ", height_val.min())
-	#print_debug("Resmax: ", res_height_val.max())
-	#print_debug("Resmin: ", res_height_val.min())
+	print_debug("Resmax: ", res_height_val.max())
+	print_debug("Resmin: ", res_height_val.min())
 
 	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
