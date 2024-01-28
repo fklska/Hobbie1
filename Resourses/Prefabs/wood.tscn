@@ -7,6 +7,7 @@
 [node name="Wood" instance=ExtResource("1_fn3xb")]
 collision_mask = 7
 script = ExtResource("2_njwln")
+type = "Wood"
 
 [node name="collider" type="CollisionPolygon2D" parent="." index="0"]
 polygon = PackedVector2Array(-11, 11, -5, 15, -3, 21, 3, 21, 5, 16, 12, 14, 9, 4, 6, -8, -6, -8)

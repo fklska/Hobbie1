@@ -7,6 +7,7 @@
 [node name="Stone" instance=ExtResource("1_5yqjd")]
 collision_mask = 7
 script = ExtResource("2_0j7ew")
+type = "Stone"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 polygon = PackedVector2Array(-3, 13, 0, 13, 9, 13, 18, 5, 14, -7, 6, -15, -5, -10, -11, 4, -18, 12, -14, 17, -5, 17)

@@ -7,6 +7,7 @@
 [node name="Gold" instance=ExtResource("1_008bd")]
 collision_mask = 7
 script = ExtResource("2_wk81d")
+type = "Gold"
 
 [node name="collider" type="CollisionPolygon2D" parent="." index="0"]
 position = Vector2(-1, -1)

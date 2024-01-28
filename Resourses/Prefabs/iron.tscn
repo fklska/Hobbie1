@@ -7,6 +7,7 @@
 [node name="Iron" instance=ExtResource("1_a3cum")]
 collision_mask = 7
 script = ExtResource("2_5pxcs")
+type = "Iron"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 polygon = PackedVector2Array(0, 12, 10, 12, 17, 5, 15, -2, 14, -8, 4, -15, -6, -9, -10, 1, -15, 7, -17, 12, -13, 16, -6, 16, -3, 12)

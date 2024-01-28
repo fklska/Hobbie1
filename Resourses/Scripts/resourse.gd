@@ -3,11 +3,13 @@ class_name ActiveResourses
 
 @export var HEALTH = 100
 @export var STORAGE = 100
-
+@export var type: String
 
 @export var current_color = Color8(255, 255, 255, 255,)
 func _on_mouse_entered():
 	modulate = Color8(155, 155, 155)
+	if Input.is_action_pressed("LeftMouseButton"):
+		SelectorClass.selected_object = self
 
 
 func _on_mouse_exited():
@@ -52,3 +54,10 @@ func _on_input_event(viewport, event: InputEvent, shape_idx):
 
 func _on_timer_timeout():
 	damage_bar.value = HEALTH
+
+
+func show_selected_info():
+	return [
+		get_node("Sprite2D").texture,
+		("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
+	]

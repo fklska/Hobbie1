@@ -13,3 +13,14 @@ func action(inventory: Dictionary):
 				slot.clear_slot()
 			
 	storage_ui.update_ui(data.data_items)
+
+func show_selected_info():
+	return [
+		get_node("Sprite2D").texture,
+		("Building")
+	]
+
+
+func _on_mouse_entered():
+	if Input.is_action_pressed("LeftMouseButton"):
+		SelectorClass.selected_object = self
