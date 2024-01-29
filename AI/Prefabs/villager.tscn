@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cvc0anycxd5pt"]
+[gd_scene load_steps=23 format=3 uid="uid://cvc0anycxd5pt"]
 
 [ext_resource type="Script" path="res://AI/Scripts/villager.gd" id="1_w77xm"]
 [ext_resource type="Resource" uid="uid://bc5mk7ly2vnds" path="res://AI/Resourses/ai_data_res.tres" id="2_y1wp5"]
@@ -138,16 +138,35 @@ animations = [{
 radius = 4.0
 height = 12.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_fw3hk"]
+radius = 25.0
+
 [node name="Villager" type="CharacterBody2D"]
+scale = Vector2(2, 2)
 script = ExtResource("1_w77xm")
 data = ExtResource("2_y1wp5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kc6rs")
-animation = &"attack"
-frame = 1
-frame_progress = 0.356953
+animation = &"idle"
+offset = Vector2(1, -11)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 9)
 shape = SubResource("CapsuleShape2D_0tvce")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+debug_enabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 31
+
+[node name="Trigger" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_fw3hk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

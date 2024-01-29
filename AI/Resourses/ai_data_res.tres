@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("1_kit5j")
-HEALTH = 0
-STRENCH = 0
-INTELECT = 0
+HEALTH = 1
+STRENCH = 1
+AGILITY = 1
+INTELECT = 1
 name = ""
 weapon = ExtResource("2_v7p1m")

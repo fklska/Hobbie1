@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=10 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
+[ext_resource type="PackedScene" uid="uid://cvc0anycxd5pt" path="res://AI/Prefabs/villager.tscn" id="2_eq3fp"]
 [ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://og0gspwamlvi" path="res://Selector/selector.tscn" id="5_vlk01"]
@@ -16,6 +17,13 @@ noise_type = 3
 frequency = 0.0806
 fractal_octaves = 3
 fractal_lacunarity = 5.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_pdjan"]
+vertices = PackedVector2Array(1148, 638, 12, 631, 11, 12, 1147, 8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, 3, 3, 641, 1159, 649, 1157, -2)])
+parsed_geometry_type = 1
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="Main" type="Node2D"]
 z_index = 1
@@ -33,6 +41,15 @@ iron_height = 0.036
 texture_filter = 1
 tile_set = ExtResource("2_77wjo")
 format = 2
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_pdjan")
+navigation_layers = 31
+
+[node name="Villager" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_eq3fp")]
+position = Vector2(121, 341)
+input_pickable = true
+player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
 position = Vector2(580, 326)
