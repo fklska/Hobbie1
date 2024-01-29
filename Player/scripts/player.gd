@@ -60,7 +60,7 @@ func attack():
 func clearing():
 	for obj: ActiveResourses in targets:
 		var damage = STRENCH / 2
-		add_item(obj.get_texture(), obj.name, damage)
+		add_item(obj.get_texture(), obj.name, damage, obj.type)
 		obj.HEALTH -= damage
 		obj.get_damage()
 		obj.poup(str(damage))
@@ -72,7 +72,7 @@ func _on_area_2d_body_entered(body: StaticBody2D):
 func _on_area_2d_body_exited(body):
 	targets.pop_back()
 
-func add_item(_texture: Texture2D, _name: String, _amount: int):
+func add_item(_texture: Texture2D, _name: String, _amount: int, _type: String):
 	#print_debug(InventoryData.inventory)
 	for slot: Slot in InventoryData.inventory:
 		var item: InventoryItem = InventoryData.inventory[slot]
@@ -84,7 +84,7 @@ func add_item(_texture: Texture2D, _name: String, _amount: int):
 
 	for slot: Slot in InventoryData.inventory:
 		if slot.is_empty():
-			InventoryData.add_item(slot, InventoryItem.new(_texture, _name, _amount))
+			InventoryData.add_item(slot, InventoryItem.new(_texture, _name, _amount, _type))
 			inv_ui.update_slots()
 			return "Added"
 

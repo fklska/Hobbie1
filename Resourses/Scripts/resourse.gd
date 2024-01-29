@@ -3,7 +3,7 @@ class_name ActiveResourses
 
 @export var HEALTH = 100
 @export var STORAGE = 100
-@export var type: String
+@export var type: String = "Resourse"
 
 @export var current_color = Color8(255, 255, 255, 255,)
 func _on_mouse_entered():
