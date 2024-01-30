@@ -14,8 +14,8 @@ func _ready():
 	nav.target_position = player.global_position
 
 func _physics_process(delta):
-	var current_pos = global_position
-	velocity = current_pos.direction_to(nav.get_next_path_position()) * SPEED 
+	var dir = to_local(nav.get_next_path_position()).normalized()
+	velocity = dir * SPEED 
 	#animPlayer.play("run")
 		
 	#if direction.x > 0:
@@ -25,6 +25,9 @@ func _physics_process(delta):
 	#if direction.x < 0:
 		#anim.scale.x = 1
 	#	pass
+	
+	if Input.is_action_just_pressed("LeftMouseButton"):
+		nav.target_position = get_global_mouse_position()
 	
 	move_and_slide()
 

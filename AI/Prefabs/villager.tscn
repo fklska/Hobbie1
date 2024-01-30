@@ -157,6 +157,10 @@ shape = SubResource("CapsuleShape2D_0tvce")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
 debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.25098, 0.262745, 0.8, 1)
+debug_path_custom_point_size = 10.0
+debug_path_custom_line_width = 2.0
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2

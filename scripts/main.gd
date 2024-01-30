@@ -6,19 +6,32 @@ extends Node2D
 @export var res_noise: FastNoiseLite
 
 var RES_TYPES = {}
+
 func _ready():
 	noise.seed = randi()
 	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
 	print_debug(noise.seed)
 	RES_TYPES = {
-		gold_height: gold,
-		iron_height: iron,
-		rock_height: rock,
-		wood_height: wood,
+		gold_height: {
+			"prefab": gold,
+			"sourse_id": 3
+			},
+		iron_height: {
+			"prefab": iron,
+			"sourse_id": 4
+			},
+		rock_height: {
+			"prefab": rock,
+			"sourse_id": 5
+			},
+		wood_height: {
+			"prefab": wood,
+			"sourse_id": 2
+			},
 	}
 	generate()
 
-@export var SIZE = Vector2i(128, 128)
+@export var SIZE = Vector2i(64, 64)
 
 @onready var tilemap: TileMap = $Tilemap
 
@@ -60,9 +73,10 @@ func generate():
 				
 				for res in RES_TYPES:
 					if res_height < res:
-						var prefab = RES_TYPES[res].instantiate()
+						var prefab = RES_TYPES[res].get("prefab").instantiate()
 						prefab.position = Vector2i(x*gap, y*gap)
 						add_child(prefab)
+						#tilemap.set_cell(1, Vector2i(x, y), RES_TYPES[res].get("sourse_id"), Vector2i(0, 0))
 						break
 
 				grass_tiles.append(Vector2i(x, y))
@@ -76,4 +90,4 @@ func generate():
 
 	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
-	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)
+	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)	

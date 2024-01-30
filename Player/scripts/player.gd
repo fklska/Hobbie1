@@ -100,10 +100,6 @@ func _on_trigger_body_entered(body):
 	if body is Building:
 		body.set_selected()
 		selected = body
-	# Квадратный селектор
-	# Буковка е над обектом
-	# В инпуте сделать если нажал е рядом с активным объектом то вызывай его функцию взаимодействия
-	# Replace with function body.
 
 
 func _on_trigger_body_exited(body):

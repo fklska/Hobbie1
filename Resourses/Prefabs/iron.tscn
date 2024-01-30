@@ -9,8 +9,9 @@ collision_mask = 7
 script = ExtResource("2_5pxcs")
 type = "Iron"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
-polygon = PackedVector2Array(0, 12, 10, 12, 17, 5, 15, -2, 14, -8, 4, -15, -6, -9, -10, 1, -15, 7, -17, 12, -13, 16, -6, 16, -3, 12)
-
-[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_uwnvi")
+
+[node name="collider" type="CollisionPolygon2D" parent="." index="1"]
+position = Vector2(2.5, 3)
+polygon = PackedVector2Array(-13.5, 2, -19.5, 8, -15.5, 14, -8.5, 14, -5.5, 10, 8.5, 10, 14.5, 3, 14.5, -1, 10.5, -10, 2.5, -17, -1.5, -17, -10.5, -11)

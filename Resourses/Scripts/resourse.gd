@@ -55,7 +55,6 @@ func _on_input_event(viewport, event: InputEvent, shape_idx):
 func _on_timer_timeout():
 	damage_bar.value = HEALTH
 
-
 func show_selected_info():
 	return [
 		get_node("Sprite2D").texture,
