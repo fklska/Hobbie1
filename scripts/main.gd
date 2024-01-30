@@ -29,11 +29,13 @@ func _ready():
 			"sourse_id": 2
 			},
 	}
+	await setup_polygon()
 	generate()
+	nav_mesh.bake_navigation_polygon()
 
-@export var SIZE = Vector2i(64, 64)
-
-@onready var tilemap: TileMap = $Tilemap
+@export var SIZE = Vector2i(32, 32)
+@export var nav_mesh: NavigationRegion2D
+@onready var tilemap: TileMap = $NavigationRegion2D/Tilemap
 
 var sand_tiles = []
 var grass_tiles = []
@@ -75,12 +77,11 @@ func generate():
 					if res_height < res:
 						var prefab = RES_TYPES[res].get("prefab").instantiate()
 						prefab.position = Vector2i(x*gap, y*gap)
-						add_child(prefab)
+						nav_mesh.add_child(prefab)
 						#tilemap.set_cell(1, Vector2i(x, y), RES_TYPES[res].get("sourse_id"), Vector2i(0, 0))
 						break
 
 				grass_tiles.append(Vector2i(x, y))
-			
 
 
 	#print_debug("max: ", height_val.max())
@@ -91,3 +92,10 @@ func generate():
 	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
 	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)	
+
+
+func setup_polygon():
+	var nav_polygon: NavigationPolygon = nav_mesh.navigation_polygon
+	var bounding_outline = PackedVector2Array([Vector2(-SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32, SIZE.y * 32), Vector2(-SIZE.x * 32, SIZE.y * 32)])
+	nav_polygon.add_outline(bounding_outline)
+	nav_mesh.navigation_polygon = nav_polygon
