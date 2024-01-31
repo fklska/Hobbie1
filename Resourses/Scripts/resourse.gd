@@ -5,15 +5,17 @@ class_name ActiveResourses
 @export var STORAGE = 100
 @export var type: String = "Resourse"
 
-@export var current_color = Color8(255, 255, 255, 255,)
+@export var current_color = Color8(255, 255, 255, 255)
+
+var mouse_enter: bool = false
 func _on_mouse_entered():
-	modulate = Color8(155, 155, 155)
-	if Input.is_action_pressed("LeftMouseButton"):
-		SelectorClass.selected_object = self
+	modulate = Color8(155, 155, 155, 255)
+	mouse_enter = true
 
 
 func _on_mouse_exited():
 	modulate = current_color
+	mouse_enter = false
 
 		
 @onready var anim = $AnimationPlayer
@@ -49,14 +51,16 @@ func get_texture():
 	return get_node("Sprite2D").texture
 
 func _on_input_event(viewport, event: InputEvent, shape_idx):
-	pass
+	if event.is_action_pressed("LeftMouseButton"):
+		if mouse_enter:
+			SelectorClass.selected_object = self
 
 
 func _on_timer_timeout():
 	damage_bar.value = HEALTH
 
 func show_selected_info():
-	return [
-		get_node("Sprite2D").texture,
-		("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
-	]
+	return {
+		"texture": get_node("Sprite2D").texture,
+		"text": ("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
+	}

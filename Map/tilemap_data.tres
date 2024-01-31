@@ -1,7 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bnlli45mbgs86"]
-
-[ext_resource type="Script" path="res://Map/tilemap_data.gd" id="1_vl64v"]
-
-[resource]
-script = ExtResource("1_vl64v")
-Health = 100

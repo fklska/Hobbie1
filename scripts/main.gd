@@ -5,30 +5,29 @@ extends Node2D
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
 
-var RES_TYPES = {}
+@onready var RES_TYPES = {
+		gold_height: {
+			"prefab": preload("res://Resourses/Prefabs/gold.tscn"),
+			"sourse_id": 3
+			},
+		iron_height: {
+			"prefab": preload("res://Resourses/Prefabs/iron.tscn"),
+			"sourse_id": 4
+			},
+		rock_height: {
+			"prefab": preload("res://Resourses/Prefabs/rock.tscn"),
+			"sourse_id": 5
+			},
+		wood_height: {
+			"prefab": preload("res://Resourses/Prefabs/wood.tscn"),
+			"sourse_id": 2
+			},
+	}
 
 func _ready():
 	noise.seed = randi()
 	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
 	print_debug(noise.seed)
-	RES_TYPES = {
-		gold_height: {
-			"prefab": gold,
-			"sourse_id": 3
-			},
-		iron_height: {
-			"prefab": iron,
-			"sourse_id": 4
-			},
-		rock_height: {
-			"prefab": rock,
-			"sourse_id": 5
-			},
-		wood_height: {
-			"prefab": wood,
-			"sourse_id": 2
-			},
-	}
 	await setup_polygon()
 	generate()
 	nav_mesh.bake_navigation_polygon()
@@ -51,11 +50,6 @@ var res_height_val =[]
 @export_range(0, 0.3) var rock_height: float
 @export_range(0, 0.3) var gold_height: float
 @export_range(0, 0.3) var iron_height: float
-
-@onready var wood = preload("res://Resourses/Prefabs/wood.tscn")
-@onready var gold = preload("res://Resourses/Prefabs/gold.tscn")
-@onready var iron = preload("res://Resourses/Prefabs/iron.tscn")
-@onready var rock = preload("res://Resourses/Prefabs/rock.tscn")
 
 var gap = 64
 func generate():

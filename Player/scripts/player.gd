@@ -109,15 +109,24 @@ func _on_trigger_body_exited(body):
 
 
 func show_selected_info():
-	return [
-		anim.sprite_frames.get_frame_texture("idle", 0),
-		("   Stats    \n Agility: " + str(AGILITY) + 
+	return {
+		"texture": anim.sprite_frames.get_frame_texture("idle", 0),
+		"text": ("   Stats    \n Agility: " + str(AGILITY) + 
 		"\n Strench: " + str(STRENCH) + 
 		"\n Intelect: " + str(INTELECT) + "\n")
-	]
+	}
 
 
+var mouse_enter: bool = false
 func _on_mouse_entered():
-	if Input.is_action_pressed("LeftMouseButton"):
-		print_debug("Pressed")
-		SelectorClass.selected_object = self
+	modulate = Color8(155, 155, 155, 255)
+	mouse_enter = true
+
+func _on_mouse_exited():
+	modulate = Color8(255, 255, 255, 255)
+	mouse_enter = false
+
+func _on_input_event(viewport, event: InputEvent, shape_idx):
+	if event.is_action_pressed("LeftMouseButton"):
+		if mouse_enter:
+			SelectorClass.selected_object = self
