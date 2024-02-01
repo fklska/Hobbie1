@@ -1,9 +1,11 @@
 extends Node2D
+class_name MapGenerator
 
-# Called when the node enters the scene tree for the first time.
 @onready var player = $Player
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
+
+@export var nav_mesh: NavigationRegion2D
 
 @onready var RES_TYPES = {
 		gold_height: {
@@ -28,12 +30,11 @@ func _ready():
 	noise.seed = randi()
 	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
 	print_debug(noise.seed)
-	await setup_polygon()
 	generate()
-	nav_mesh.bake_navigation_polygon()
+	
+	setup_polygon()
 
-@export var SIZE = Vector2i(32, 32)
-@export var nav_mesh: NavigationRegion2D
+static var SIZE = Vector2i(64, 64)
 @onready var tilemap: TileMap = $NavigationRegion2D/Tilemap
 
 var sand_tiles = []
@@ -43,9 +44,11 @@ var water_tiles = []
 var height_val =[]
 var res_height_val =[]
 
+@export_category("Land Biomes")
 @export_range(-0.8, 0) var water_height: float
 @export_range(-0.4, 0.8) var sand_height: float
 
+@export_category("Farm Resourse")
 @export_range(0, 0.3) var wood_height: float
 @export_range(0, 0.3) var rock_height: float
 @export_range(0, 0.3) var gold_height: float
@@ -69,10 +72,10 @@ func generate():
 				
 				for res in RES_TYPES:
 					if res_height < res:
-						var prefab = RES_TYPES[res].get("prefab").instantiate()
+						var prefab: Node2D = RES_TYPES[res].get("prefab").instantiate()
 						prefab.position = Vector2i(x*gap, y*gap)
+						prefab.add_to_group("navigation_polygon_source_geometry_group")
 						nav_mesh.add_child(prefab)
-						#tilemap.set_cell(1, Vector2i(x, y), RES_TYPES[res].get("sourse_id"), Vector2i(0, 0))
 						break
 
 				grass_tiles.append(Vector2i(x, y))
@@ -85,11 +88,15 @@ func generate():
 
 	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
-	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)	
+	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)
 
 
 func setup_polygon():
-	var nav_polygon: NavigationPolygon = nav_mesh.navigation_polygon
 	var bounding_outline = PackedVector2Array([Vector2(-SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32, SIZE.y * 32), Vector2(-SIZE.x * 32, SIZE.y * 32)])
-	nav_polygon.add_outline(bounding_outline)
-	nav_mesh.navigation_polygon = nav_polygon
+	nav_mesh.navigation_polygon.add_outline(bounding_outline)
+	print_debug("Start Baking")
+	nav_mesh.bake_navigation_polygon()
+
+
+func _on_navigation_region_2d_bake_finished():
+	print_debug("bake FInished")

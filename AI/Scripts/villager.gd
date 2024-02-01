@@ -2,7 +2,6 @@ extends CharacterBody2D
 class_name VillagerClass
 
 @export var data: AIBackData
-@export var player: Player
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
@@ -17,8 +16,6 @@ enum {
 }
 
 var state = RUN
-func _ready():
-	nav.target_position = player.global_position
 
 func _physics_process(delta):
 	match state:
@@ -32,22 +29,21 @@ func run():
 	var dir = to_local(nav.get_next_path_position()).normalized()
 	velocity = dir * SPEED * data.AGILITY
 	
+	if Input.is_action_just_pressed("LeftMouseButton"):
+		if SelectorClass.selected_object == self:
+			nav.target_position = get_global_mouse_position()
+			state = RUN
+
+	if nav.is_navigation_finished():
+		velocity = Vector2(0, 0)
+
 	move_and_slide()
 
+@onready var trigger_area: Area2D = $Area2D
 func grind():
-	pass
+	var targets: Array[Node2D] = trigger_area.get_overlapping_bodies()
+	print_debug(targets)
 
-#var targets: Array[ActiveResourses] = []
-#func _on_area_2d_body_entered(body: ActiveResourses):
-#	print_debug(body)
-#	if body.collision_layer == 4:
-#		targets.append(body)
-#	nav.target_position = targets[0].global_position
-
-
-#func _on_area_2d_body_exited(body):
-#	if body.collision_layer == 4:
-#		targets.erase(body)
 
 var mouse_enter: bool = false
 func _on_mouse_entered():
@@ -64,9 +60,6 @@ func _on_input_event(viewport, event: InputEvent, shape_idx):
 	if event.is_action_pressed("LeftMouseButton"):
 		if mouse_enter:
 			SelectorClass.selected_object = self
-		
-		if SelectorClass.selected_object == self:
-			nav.target_position = get_global_mouse_position()
 			
 func show_selected_info():
 	return {
@@ -74,6 +67,5 @@ func show_selected_info():
 		"text": ("")
 	}
 
-
-
-
+func _to_string():
+	return "Villager"

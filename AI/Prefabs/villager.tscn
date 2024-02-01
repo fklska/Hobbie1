@@ -144,7 +144,7 @@ radius = 25.0
 [node name="Villager" type="CharacterBody2D"]
 scale = Vector2(2, 2)
 collision_layer = 2
-collision_mask = 29
+collision_mask = 8
 script = ExtResource("1_w77xm")
 data = ExtResource("2_y1wp5")
 
@@ -165,7 +165,7 @@ debug_path_custom_line_width = 2.0
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
-collision_mask = 31
+collision_mask = 8
 
 [node name="Trigger" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_fw3hk")

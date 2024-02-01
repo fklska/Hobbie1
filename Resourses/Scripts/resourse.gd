@@ -64,3 +64,6 @@ func show_selected_info():
 		"texture": get_node("Sprite2D").texture,
 		"text": ("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
 	}
+	
+func _to_string():
+	return ("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
