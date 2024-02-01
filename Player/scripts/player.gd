@@ -31,25 +31,23 @@ func _physics_process(delta):
 	move_and_slide()	
 
 func run():
-	var direction = Input.get_axis("ui_left", "ui_right")
-	var direction_y = Input.get_axis("ui_up", "ui_down")
+	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
 	
-	if direction or direction_y and state == RUN:
-		velocity.y = direction_y * SPEED * AGILITY / 2
-		velocity.x = direction * SPEED * AGILITY 
+	if direction:
+		velocity = direction * SPEED * AGILITY 
 		animPlayer.play("run")
 		
-		if direction > 0:
+		if direction > Vector2(0, 0):
 			anim.scale.x = -1
 		
-		if direction < 0:
+		if direction < Vector2(0, 0):
 			anim.scale.x = 1
 	else:
-		velocity.y = move_toward(velocity.y, 0, SPEED)
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity = Vector2(0, 0)
 		animPlayer.play("idle")
 		
 	if Input.is_action_just_pressed("attack"):
+		velocity = Vector2(0, 0)
 		state = ATTACK
 		
 func attack():

@@ -7,6 +7,7 @@ class_name VillagerClass
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+@onready var trigger_area: Area2D = $Area2D
 
 const SPEED = 50
 
@@ -16,6 +17,8 @@ enum {
 }
 
 var state = RUN
+
+var mouse_enter: bool = false
 
 func _physics_process(delta):
 	match state:
@@ -39,13 +42,10 @@ func run():
 
 	move_and_slide()
 
-@onready var trigger_area: Area2D = $Area2D
 func grind():
 	var targets: Array[Node2D] = trigger_area.get_overlapping_bodies()
 	print_debug(targets)
 
-
-var mouse_enter: bool = false
 func _on_mouse_entered():
 	modulate = Color8(155, 155, 155, 255)
 	mouse_enter = true
@@ -57,7 +57,7 @@ func _on_mouse_exited():
 
 
 func _on_input_event(viewport, event: InputEvent, shape_idx):
-	if event.is_action_pressed("LeftMouseButton"):
+	if event.is_action_pressed("RightMouseButton"):
 		if mouse_enter:
 			SelectorClass.selected_object = self
 			
