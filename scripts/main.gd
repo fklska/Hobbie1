@@ -1,7 +1,7 @@
 extends Node2D
 class_name MapGenerator
 
-static var SIZE = Vector2i(32, 32)
+static var SIZE = Vector2i(16, 16)
 
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite

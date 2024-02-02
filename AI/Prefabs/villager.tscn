@@ -264,7 +264,6 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_fq47i"]
 length = 0.666667
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -349,8 +348,7 @@ circle_detector = NodePath("Panel")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kc6rs")
-animation = &"walk"
-frame = 1
+animation = &"idle"
 offset = Vector2(1, -11)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
