@@ -7,6 +7,8 @@ class_name VillagerClass
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var nav_mesh: NavigationRegion2D = $"../NavigationRegion2D"
 
+@onready var storage: Building = $"../NavigationRegion2D/TownHall"
+
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -18,7 +20,8 @@ enum {
 	IDLE,
 	GRINDING,
 	SET_TARGET,
-	DETECTING
+	DETECTING,
+	GO_TO_STORAGE
 }
 
 var state = IDLE
@@ -37,6 +40,8 @@ func _physics_process(delta):
 			detecting()
 		GRINDING:
 			grind()
+		GO_TO_STORAGE:
+			run()
 
 func idle():
 	anim.play("idle")
@@ -54,7 +59,12 @@ func run():
 			anim_sprite.scale.x = -1
 
 	if nav.is_navigation_finished():
-		state = DETECTING
+		if state == GO_TO_STORAGE:
+			for i: InventoryItem in data.Inventory:
+				storage.data.put_in_storage(i)
+			state = IDLE
+		else:
+			state = DETECTING
 
 	move_and_slide()
 
@@ -78,6 +88,10 @@ func farm():
 	var res: ActiveResourses = objects[0]
 	data.add_item(InventoryItem.new(res.get_texture(), res.name, damage, res.type))
 	res.get_damage(damage)
+	
+	if data.max_weight() <= data.total_resourse_amount():
+		nav.target_position = storage.global_position
+		state = GO_TO_STORAGE
 
 func detect_objects():
 	var targets: Array[Node2D] = trigger_area.get_overlapping_bodies()

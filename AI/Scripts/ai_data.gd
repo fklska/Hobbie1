@@ -10,7 +10,6 @@ class_name AIBackData
 
 @export_category("Items")
 @export var WEAPON: WeaponClass
-
 @export var Inventory: Array[InventoryItem]
 
 func add_item(item: InventoryItem):
@@ -27,3 +26,12 @@ func has(item: InventoryItem):
 		if i._compare(item.type):
 			return i
 	return null
+	
+func total_resourse_amount():
+	var value = 0
+	for i: InventoryItem in Inventory:
+		value += i.amount
+	return value
+
+func max_weight():
+	return STRENCH * 4
