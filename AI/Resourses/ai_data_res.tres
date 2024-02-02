@@ -6,8 +6,9 @@
 [resource]
 script = ExtResource("1_kit5j")
 HEALTH = 1
-STRENCH = 1
+STRENCH = 25
 AGILITY = 1
 INTELECT = 1
 name = ""
-weapon = ExtResource("2_v7p1m")
+WEAPON = ExtResource("2_v7p1m")
+Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])

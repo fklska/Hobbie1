@@ -9,4 +9,21 @@ class_name AIBackData
 @export var name: String
 
 @export_category("Items")
-@export var weapon: WeaponClass
+@export var WEAPON: WeaponClass
+
+@export var Inventory: Array[InventoryItem]
+
+func add_item(item: InventoryItem):
+	var el: InventoryItem = has(item)
+	if el == null:
+		Inventory.append(item)
+		return item
+
+	el.increase_amount(item.amount)
+	return el
+		
+func has(item: InventoryItem):
+	for i: InventoryItem in Inventory:
+		if i._compare(item.type):
+			return i
+	return null

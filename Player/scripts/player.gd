@@ -10,7 +10,7 @@ const SPEED = 50.0
 @onready var animPlayer = $AnimationPlayer
 @onready var inv_ui: InventoryUI = $CanvasLayer/InventoryUI
 
-#static var inventory: InventoryData
+#static var inventory: InvenoryData
 
 enum {
 	RUN,
@@ -59,9 +59,7 @@ func clearing():
 	for obj: ActiveResourses in targets:
 		var damage = STRENCH / 2
 		add_item(obj.get_texture(), obj.name, damage, obj.type)
-		obj.HEALTH -= damage
-		obj.get_damage()
-		obj.poup(str(damage))
+		obj.get_damage(damage)
 
 var targets = []
 func _on_area_2d_body_entered(body: StaticBody2D):

@@ -1,11 +1,14 @@
-[gd_resource type="Resource" script_class="WeaponClass" load_steps=2 format=3 uid="uid://c3jjtfrko2j5q"]
+[gd_resource type="Resource" script_class="WeaponClass" load_steps=3 format=3 uid="uid://c3jjtfrko2j5q"]
 
 [ext_resource type="Script" path="res://AI/Scripts/weapon_item.gd" id="1_avnag"]
 
+[sub_resource type="ImageTexture" id="ImageTexture_2pdfk"]
+
 [resource]
 script = ExtResource("1_avnag")
-damage = 0
-required_strench = 0
-name = ""
-amount = 0
-type = ""
+damage = 5
+required_strench = 1
+image = SubResource("ImageTexture_2pdfk")
+name = "Noname"
+amount = 1
+type = "Weapon"

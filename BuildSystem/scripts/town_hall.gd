@@ -15,11 +15,10 @@ func action(inventory: Dictionary):
 	storage_ui.update_ui(data.data_items)
 
 func show_selected_info():
-	return [
-		get_node("Sprite2D").texture,
-		("Building")
-	]
-
+	return {
+		"texture": get_node("Sprite2D").texture,
+		"text": "Building"
+		}
 
 func _on_mouse_entered():
 	if Input.is_action_pressed("LeftMouseButton"):
