@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://imkgdt01hauu"
-path="res://.godot/imported/E-Key.png-957ea1162d09265ff1f5c01e22a59352.ctex"
+uid="uid://t1qt3bqwc0yw"
+path="res://.godot/imported/Male4.png-849b49638144485b075fb4bac052d38c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://E-Key.png"
-dest_files=["res://.godot/imported/E-Key.png-957ea1162d09265ff1f5c01e22a59352.ctex"]
+source_file="res://AI/BaseClasses/Male4.png"
+dest_files=["res://.godot/imported/Male4.png-849b49638144485b075fb4bac052d38c.ctex"]
 
 [params]
 

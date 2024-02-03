@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://cvc0anycxd5pt"]
 
-[ext_resource type="Script" path="res://AI/Scripts/villager.gd" id="1_w77xm"]
+[ext_resource type="Script" path="res://AI/Scripts/lumberjack.gd" id="1_mjo43"]
 [ext_resource type="Resource" uid="uid://bc5mk7ly2vnds" path="res://AI/Resourses/ai_data_res.tres" id="2_y1wp5"]
 [ext_resource type="Texture2D" uid="uid://c5ec8hivh74gx" path="res://AI/MiniLumberjack.png" id="3_1n2to"]
 
@@ -338,11 +338,11 @@ shadow_size = 2
 anti_aliasing = false
 anti_aliasing_size = 0.01
 
-[node name="Villager" type="CharacterBody2D" node_paths=PackedStringArray("circle_detector")]
+[node name="LumberJack" type="CharacterBody2D" node_paths=PackedStringArray("circle_detector")]
 scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 24
-script = ExtResource("1_w77xm")
+script = ExtResource("1_mjo43")
 data = ExtResource("2_y1wp5")
 circle_detector = NodePath("Panel")
 

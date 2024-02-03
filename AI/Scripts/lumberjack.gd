@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name VillagerClass
+class_name LumberjackClass
 
 @export var data: AIBackData
 @export var circle_detector: Panel
@@ -89,7 +89,8 @@ func farm():
 	data.add_item(InventoryItem.new(res.get_texture(), res.name, damage, res.type))
 	res.get_damage(damage)
 	
-	if data.max_weight() <= data.total_resourse_amount():
+	if data.max_carry_weight <= data.total_resourse_amount():
+		print_debug(data.max_carry_weight)
 		nav.target_position = storage.global_position
 		state = GO_TO_STORAGE
 

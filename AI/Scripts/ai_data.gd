@@ -12,6 +12,12 @@ class_name AIBackData
 @export var WEAPON: WeaponClass
 @export var Inventory: Array[InventoryItem]
 
+@export var max_carry_weight: int = 10 :
+	set(value):
+		return STRENCH * 4 + value
+	get:
+		return STRENCH * 4 + max_carry_weight
+
 func add_item(item: InventoryItem):
 	var el: InventoryItem = has(item)
 	if el == null:
@@ -32,6 +38,3 @@ func total_resourse_amount():
 	for i: InventoryItem in Inventory:
 		value += i.amount
 	return value
-
-func max_weight():
-	return STRENCH * 4

@@ -1,0 +1,285 @@
+[gd_scene load_steps=25 format=3 uid="uid://b71gt3p1pd1yt"]
+
+[ext_resource type="Script" path="res://AI/BaseClasses/villager.gd" id="1_2k0kf"]
+[ext_resource type="Texture2D" uid="uid://t1qt3bqwc0yw" path="res://AI/BaseClasses/Male4.png" id="1_3vbqf"]
+[ext_resource type="Script" path="res://AI/Scripts/weapon_item.gd" id="2_1cqu1"]
+[ext_resource type="Texture2D" uid="uid://cq76esqb51ykk" path="res://AI/sword 1.png" id="2_ju872"]
+[ext_resource type="Script" path="res://AI/Scripts/ai_data.gd" id="3_xycgl"]
+
+[sub_resource type="Resource" id="Resource_lj36q"]
+script = ExtResource("2_1cqu1")
+damage = 5
+required_strench = 2
+image = ExtResource("2_ju872")
+name = "test"
+amount = 1
+type = "Weapon"
+
+[sub_resource type="Resource" id="Resource_8321e"]
+script = ExtResource("3_xycgl")
+HEALTH = 0
+STRENCH = 10
+AGILITY = 1
+INTELECT = 0
+name = ""
+WEAPON = SubResource("Resource_lj36q")
+Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])
+max_carry_weight = 10
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x43jr"]
+radius = 87.0057
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2qru"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0vot"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(32, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltc4w"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(64, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46fg8"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(96, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jffa"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwvxp"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6owu7"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(192, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1barj"]
+atlas = ExtResource("1_3vbqf")
+region = Rect2(224, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tl5xl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2qru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0vot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltc4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46fg8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8jffa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwvxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6owu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1barj")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wlqtl"]
+radius = 40.0
+height = 320.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3gm4s"]
+radius = 6.0
+height = 18.0
+
+[sub_resource type="Animation" id="Animation_1wi0h"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
+}
+
+[sub_resource type="Animation" id="Animation_ngkh0"]
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["walk"]
+}
+
+[sub_resource type="Animation" id="Animation_bgqpn"]
+resource_name = "attack"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/Weapon:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -2.87979]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/Weapon:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_o8kxf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/Weapon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.87979]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D/Weapon:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dlad1"]
+_data = {
+"RESET": SubResource("Animation_o8kxf"),
+"attack": SubResource("Animation_bgqpn"),
+"idle": SubResource("Animation_1wi0h"),
+"walk": SubResource("Animation_ngkh0")
+}
+
+[node name="Villager" type="CharacterBody2D"]
+z_index = -1
+collision_layer = 2
+collision_mask = 31
+input_pickable = true
+script = ExtResource("1_2k0kf")
+data = SubResource("Resource_8321e")
+
+[node name="EnemyTrigger" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTrigger"]
+shape = SubResource("CircleShape2D_x43jr")
+debug_color = Color(0.933333, 0.0745098, 0.615686, 0.419608)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tl5xl")
+animation = &"idle"
+
+[node name="Weapon" type="Sprite2D" parent="AnimatedSprite2D"]
+visible = false
+position = Vector2(-9, 0)
+rotation = 2.87979
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_ju872")
+offset = Vector2(-3.8147e-06, -170)
+
+[node name="weapon_area" type="Area2D" parent="AnimatedSprite2D/Weapon"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Weapon/weapon_area"]
+position = Vector2(0, -180)
+shape = SubResource("CapsuleShape2D_wlqtl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_3gm4s")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.376471, 0.164706, 0.933333, 1)
+debug_path_custom_point_size = 10.0
+debug_path_custom_line_width = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dlad1")
+}
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="body_entered" from="EnemyTrigger" to="." method="_on_enemy_trigger_body_entered"]
+[connection signal="body_exited" from="EnemyTrigger" to="." method="_on_enemy_trigger_body_exited"]
+[connection signal="body_entered" from="AnimatedSprite2D/Weapon/weapon_area" to="." method="_on_weapon_area_body_entered"]

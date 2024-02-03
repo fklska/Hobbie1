@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
-[ext_resource type="PackedScene" uid="uid://cvc0anycxd5pt" path="res://AI/Prefabs/villager.tscn" id="2_eq3fp"]
 [ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
 [ext_resource type="Script" path="res://ComputerStats.gd" id="5_4my3v"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://og0gspwamlvi" path="res://Selector/selector.tscn" id="5_vlk01"]
+[ext_resource type="PackedScene" uid="uid://b71gt3p1pd1yt" path="res://AI/BaseClasses/villager.tscn" id="7_t8jbv"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 frequency = 0.0084
@@ -83,9 +83,8 @@ autostart = true
 [node name="Player" parent="." instance=ExtResource("5_b88ed")]
 position = Vector2(580, 326)
 
-[node name="Villager" parent="." instance=ExtResource("2_eq3fp")]
-position = Vector2(121, 341)
-input_pickable = true
+[node name="Villager" parent="." instance=ExtResource("7_t8jbv")]
+position = Vector2(300, 339)
 
 [connection signal="bake_finished" from="NavigationRegion2D" to="." method="_on_navigation_region_2d_bake_finished"]
 [connection signal="timeout" from="CanvasLayer/Stats/Timer" to="CanvasLayer/Stats" method="_on_timer_timeout"]

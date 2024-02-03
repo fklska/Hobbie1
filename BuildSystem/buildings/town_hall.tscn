@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://BuildSystem/scripts/town_hall.gd" id="1_p3ud0"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="2_7hqpg"]
 [ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="4_1u47d"]
-[ext_resource type="Texture2D" uid="uid://imkgdt01hauu" path="res://E-Key.png" id="5_ei5cw"]
+[ext_resource type="Texture2D" uid="uid://imkgdt01hauu" path="res://UI/UIAssets/E-Key.png" id="5_ei5cw"]
 [ext_resource type="PackedScene" uid="uid://bq2jvgxrp2es6" path="res://BuildSystem/UI/storage_ui.tscn" id="6_7yu40"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvsao"]
