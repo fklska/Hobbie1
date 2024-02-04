@@ -15,7 +15,6 @@ class_name ActiveResourses
 @onready var anim = $AnimationPlayer
 
 var mouse_enter: bool = false
-@onready var nav_mesh: NavigationRegion2D = get_parent()
 
 func _on_mouse_entered():
 	modulate = Color8(155, 155, 155, 255)

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="1_tvyi4"]
 [ext_resource type="Script" path="res://Resourses/Scripts/wood.gd" id="2_njwln"]
 
-[node name="Wood" instance=ExtResource("1_fn3xb")]
+[node name="Wood" groups=["navigation"] instance=ExtResource("1_fn3xb")]
 collision_mask = 7
 script = ExtResource("2_njwln")
 type = "Wood"
@@ -12,6 +12,7 @@ type = "Wood"
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 texture = ExtResource("1_tvyi4")
 
-[node name="collider" type="CollisionPolygon2D" parent="." index="1"]
-position = Vector2(0, 6.5)
-polygon = PackedVector2Array(-3, 14.5, 3, 14.5, 5, 10.5, 13, 6.5, 8, -3.5, -7, -3.5, -12, 6.5, -6, 9.5)
+[node name="collider" type="CollisionPolygon2D" parent="." index="5"]
+z_index = 1
+position = Vector2(1.75, 2)
+polygon = PackedVector2Array(-10.75, 12, -1.75, -3, 8.25, 12)

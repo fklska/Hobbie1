@@ -13,5 +13,5 @@ type = "Iron"
 texture = ExtResource("2_uwnvi")
 
 [node name="collider" type="CollisionPolygon2D" parent="." index="1"]
-position = Vector2(2.5, 3)
-polygon = PackedVector2Array(-13.5, 2, -19.5, 8, -15.5, 14, -8.5, 14, -5.5, 10, 8.5, 10, 14.5, 3, 14.5, -1, 10.5, -10, 2.5, -17, -1.5, -17, -10.5, -11)
+position = Vector2(1.75, 2)
+polygon = PackedVector2Array(-16.75, 12, -1.75, -14, 12.25, 5)

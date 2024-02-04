@@ -1,11 +1,10 @@
 extends Node2D
 class_name MapGenerator
 
-static var SIZE = Vector2i(16, 16)
+static var SIZE = Vector2i(64, 64)
 
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
-@export var nav_mesh: NavigationRegion2D
 
 @export_category("Biomes Height")
 @export_range(-0.8, 0) var water_height: float
@@ -17,8 +16,9 @@ static var SIZE = Vector2i(16, 16)
 @export_range(0, 0.3) var gold_height: float
 @export_range(0, 0.3) var iron_height: float
 
-@onready var tilemap: TileMap = $NavigationRegion2D/Tilemap
+@onready var tilemap: TileMap = $Tilemap
 @onready var player = $Player
+@onready var villager = $Villager
 @onready var RES_TYPES = {
 		gold_height: {
 			"prefab": preload("res://Resourses/Prefabs/gold.tscn"),
@@ -38,6 +38,8 @@ static var SIZE = Vector2i(16, 16)
 			},
 	}
 
+@onready var root_node = $"."
+
 var sand_tiles = []
 var grass_tiles = []
 var water_tiles = []
@@ -50,10 +52,11 @@ var gap = 64
 func _ready():
 	noise.seed = randi()
 	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
-	print_debug(noise.seed)
 	generate()
+	#custom_server()
+	#new_setup_polygon()
+	#setup_polygon(villager.global_position)
 	
-	setup_polygon()
 
 func generate():
 	for x in range(-SIZE.x / 2, SIZE.x / 2):
@@ -77,7 +80,7 @@ func generate():
 						var prefab: Node2D = RES_TYPES[res].get("prefab").instantiate()
 						prefab.position = Vector2i(x*gap, y*gap)
 						prefab.add_to_group("navigation_polygon_source_group")
-						nav_mesh.add_child(prefab)
+						root_node.add_child(prefab)
 						break
 					
 				grass_tiles.append(Vector2i(x, y))
@@ -85,20 +88,97 @@ func generate():
 
 	#print_debug("max: ", height_val.max())
 	#print_debug("min: ", height_val.min())
-	print_debug("Resmax: ", res_height_val.max())
-	print_debug("Resmin: ", res_height_val.min())
+	#print_debug("Resmax: ", res_height_val.max())
+	#print_debug("Resmin: ", res_height_val.min())
 
 	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
 	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)
 
-
-func setup_polygon():
-	var bounding_outline = PackedVector2Array([Vector2(-SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32, SIZE.y * 32), Vector2(-SIZE.x * 32, SIZE.y * 32)])
-	nav_mesh.navigation_polygon.add_outline(bounding_outline)
+func setup_polygon(current_position: Vector2):
+	#nav_mesh.navigation_polygon.clear_polygons()
+	#nav_mesh.navigation_polygon.clear_outlines()
+	var coor = current_position
+	#var bounding_outline = PackedVector2Array([Vector2(-SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32 / 8, -SIZE.y * 32), Vector2(SIZE.x * 32 / 8, SIZE.y * 32 / 8), Vector2(-SIZE.x * 32, SIZE.y * 32 / 8)])
+	var bounding_outline = PackedVector2Array([Vector2(coor.x - 256, coor.y - 256), Vector2(coor.x + 256, coor.y - 256), Vector2(coor.x + 256, coor.y + 256), Vector2(coor.x - 256, coor.y + 256)])
+	#nav_mesh.navigation_polygon.add_outline(bounding_outline)
 	print_debug("Start Baking")
-	nav_mesh.bake_navigation_polygon(true)
+	#nav_mesh.bake_navigation_polygon(true)
 
+@onready var nav_mesh: NavigationRegion2D = $NavigationRegion2D
+var chunkSize: int = 32
+var chunck: int = 16
+func new_setup_polygon():
+	var count = 0
+	var x_offset = 0
+	var y_offset = 0
+	for i in chunck:
+		var rectangle = PackedVector2Array(
+			[
+				Vector2((-SIZE.x + x_offset) * 32, (-SIZE.y + y_offset) * 32),
+				Vector2((-SIZE.x + chunkSize + x_offset) * 32, (-SIZE.y + y_offset) * 32),
+				Vector2((-SIZE.x + chunkSize + x_offset) * 32, (-SIZE.y  + chunkSize + y_offset) * 32),
+				Vector2((-SIZE.x + x_offset) * 32, (-SIZE.y  + chunkSize + y_offset) * 32),
+			]
+		)
+		x_offset += chunkSize
+		count += 1
+		if count == 4:
+			count = 0
+			y_offset += chunkSize
+			x_offset = 0
+		nav_mesh.navigation_polygon.add_outline(rectangle)
+	nav_mesh.bake_navigation_polygon()
 
-func _on_navigation_region_2d_bake_finished():
-	print_debug("bake FInished")
+var navigation_mesh: NavigationPolygon
+var source_geometry : NavigationMeshSourceGeometryData2D
+var callback_parsing : Callable
+var callback_baking : Callable
+var region_rid: RID
+
+func custom_server():
+	navigation_mesh = NavigationPolygon.new()
+	navigation_mesh.agent_radius = 10.0
+	source_geometry = NavigationMeshSourceGeometryData2D.new()
+
+	callback_parsing = on_parsing_done
+	callback_baking = on_baking_done
+	
+	region_rid = NavigationServer2D.region_create()
+	NavigationServer2D.region_set_enabled(region_rid, true)
+	NavigationServer2D.region_set_map(region_rid, get_world_2d().get_navigation_map())
+	NavigationServer2D.set_debug_enabled(true)
+
+	parse_source_geometry.call_deferred()
+
+func parse_source_geometry() -> void:
+	source_geometry.clear()
+	var _root_node: Node2D = get_node("NavigationMesh")
+
+	NavigationServer2D.parse_source_geometry_data(
+		navigation_mesh,
+		source_geometry,
+		_root_node,
+		callback_parsing
+	)
+
+func on_parsing_done() -> void:
+	source_geometry.add_traversable_outline(
+		PackedVector2Array(
+			[
+				Vector2(-SIZE.x * 32, -SIZE.y * 32),
+				Vector2(SIZE.x * 32, -SIZE.y * 32),
+				Vector2(SIZE.x * 32, SIZE.y * 32),
+				Vector2(-SIZE.x * 32, SIZE.y * 32)
+			]
+		)
+	)
+	NavigationServer2D.bake_from_source_geometry_data_async(
+		navigation_mesh,
+		source_geometry,
+		callback_baking
+	)
+
+func on_baking_done() -> void:
+	# Update the region with the updated navigation mesh.
+	NavigationServer2D.region_set_navigation_polygon(region_rid, navigation_mesh)

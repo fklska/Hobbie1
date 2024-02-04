@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=10 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://ComputerStats.gd" id="5_4my3v"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://og0gspwamlvi" path="res://Selector/selector.tscn" id="5_vlk01"]
-[ext_resource type="PackedScene" uid="uid://b71gt3p1pd1yt" path="res://AI/BaseClasses/villager.tscn" id="7_t8jbv"]
+[ext_resource type="PackedScene" uid="uid://dppx3u6n7jilu" path="res://Map/test_dynamic update.tscn" id="7_2yfn8"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 frequency = 0.0084
@@ -19,17 +19,11 @@ frequency = 0.0806
 fractal_octaves = 3
 fractal_lacunarity = 5.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_0fgft"]
-parsed_geometry_type = 1
-parsed_collision_mask = 15
-source_geometry_group_name = &"navigation_polygon_source_group"
-
-[node name="Main" type="Node2D" node_paths=PackedStringArray("nav_mesh") groups=["navigation_polygon_source_geometry_group"]]
+[node name="Main" type="Node2D" groups=["navigation_polygon_source_geometry_group"]]
 z_index = 1
 script = ExtResource("1_x33w5")
 noise = SubResource("FastNoiseLite_o5d00")
 res_noise = SubResource("FastNoiseLite_i4vyh")
-nav_mesh = NodePath("NavigationRegion2D")
 water_height = -0.709
 sand_height = -0.32
 wood_height = 0.097
@@ -37,23 +31,8 @@ rock_height = 0.048
 gold_height = 0.022
 iron_height = 0.036
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." groups=["navigation_polygon_source_geometry_group"]]
-scale = Vector2(0.982194, 1.00272)
-navigation_polygon = SubResource("NavigationPolygon_0fgft")
-
-[node name="Tilemap" type="TileMap" parent="NavigationRegion2D" groups=["navigation_polygon_source_geometry_group"]]
-z_index = -1
-texture_filter = 1
-scale = Vector2(1.01813, 0.997291)
-tile_set = ExtResource("2_77wjo")
-format = 2
-layer_0/name = "Ground"
-layer_1/name = "Resourses"
-layer_1/tile_data = PackedInt32Array()
-
-[node name="TownHall" parent="NavigationRegion2D" groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
-position = Vector2(460.194, 316.141)
-scale = Vector2(1.01813, 0.997291)
+[node name="Player" parent="." instance=ExtResource("5_b88ed")]
+position = Vector2(580, 326)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -80,11 +59,24 @@ metadata/_edit_use_anchors_ = true
 wait_time = 2.0
 autostart = true
 
-[node name="Player" parent="." instance=ExtResource("5_b88ed")]
-position = Vector2(580, 326)
+[node name="Tilemap" type="TileMap" parent="." groups=["navigation_polygon_source_geometry_group"]]
+z_index = -1
+texture_filter = 1
+scale = Vector2(1.01813, 0.997291)
+tile_set = ExtResource("2_77wjo")
+format = 2
+layer_0/name = "Ground"
+layer_1/name = "Resourses"
+layer_1/tile_data = PackedInt32Array()
 
-[node name="Villager" parent="." instance=ExtResource("7_t8jbv")]
-position = Vector2(300, 339)
+[node name="TownHall" parent="." groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
+position = Vector2(452, 317.001)
+scale = Vector2(1, 1)
 
-[connection signal="bake_finished" from="NavigationRegion2D" to="." method="_on_navigation_region_2d_bake_finished"]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+
+[node name="Node2D" parent="." instance=ExtResource("7_2yfn8")]
+
+[node name="Node2D2" parent="." instance=ExtResource("7_2yfn8")]
+
 [connection signal="timeout" from="CanvasLayer/Stats/Timer" to="CanvasLayer/Stats" method="_on_timer_timeout"]
