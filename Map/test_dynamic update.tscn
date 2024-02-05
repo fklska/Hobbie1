@@ -1,8 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dppx3u6n7jilu"]
 
-[ext_resource type="PackedScene" uid="uid://b71gt3p1pd1yt" path="res://AI/BaseClasses/villager.tscn" id="1_7n3wn"]
+[ext_resource type="PackedScene" uid="uid://b71gt3p1pd1yt" path="res://AI/BaseClasses/BaseVillager.tscn" id="1_7n3wn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_45ie8"]
+source_geometry_mode = 1
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="Node2D" type="Node2D"]

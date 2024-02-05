@@ -7,14 +7,13 @@ class_name AIBackData
 @export_range(1, 100) var AGILITY: int
 @export_range(1, 100) var INTELECT: int
 @export var name: String
+@export_enum("Villager", "Collector", "Lumberjack") var type: String = "Villager"
 
 @export_category("Items")
 @export var WEAPON: WeaponClass
 @export var Inventory: Array[InventoryItem]
 
 @export var max_carry_weight: int = 10 :
-	set(value):
-		return STRENCH * 4 + value
 	get:
 		return STRENCH * 4 + max_carry_weight
 

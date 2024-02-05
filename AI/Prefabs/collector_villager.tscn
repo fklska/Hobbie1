@@ -1,0 +1,118 @@
+[gd_scene load_steps=17 format=3 uid="uid://d1utxvblnfv2d"]
+
+[ext_resource type="PackedScene" uid="uid://b71gt3p1pd1yt" path="res://AI/BaseClasses/BaseVillager.tscn" id="1_djkry"]
+[ext_resource type="Texture2D" uid="uid://kpdlk2pter1g" path="res://AI/Prefabs/Male1.png" id="2_ad782"]
+[ext_resource type="Script" path="res://AI/Scripts/collector_villager.gd" id="2_vcd7y"]
+[ext_resource type="Script" path="res://AI/Scripts/ai_data.gd" id="3_oq7tj"]
+[ext_resource type="Texture2D" uid="uid://c75ewspb38miu" path="res://AI/axe 1.png" id="5_4ycxj"]
+
+[sub_resource type="Resource" id="Resource_e8euf"]
+script = ExtResource("3_oq7tj")
+HEALTH = 5
+STRENCH = 10
+AGILITY = 2
+INTELECT = 0
+name = ""
+type = "Collector"
+Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])
+max_carry_weight = 10
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_is0ga"]
+atlas = ExtResource("2_ad782")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxjnp"]
+atlas = ExtResource("2_ad782")
+region = Rect2(32, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lbrkr"]
+atlas = ExtResource("2_ad782")
+region = Rect2(64, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oqwif"]
+atlas = ExtResource("2_ad782")
+region = Rect2(96, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j24du"]
+atlas = ExtResource("2_ad782")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q36de"]
+atlas = ExtResource("2_ad782")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bb0tx"]
+atlas = ExtResource("2_ad782")
+region = Rect2(192, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nro3"]
+atlas = ExtResource("2_ad782")
+region = Rect2(224, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1uk0h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_is0ga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxjnp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lbrkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oqwif")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j24du")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q36de")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bb0tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nro3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hxl1o"]
+radius = 39.5601
+
+[node name="CollectorVillager" node_paths=PackedStringArray("resourse_trigger") instance=ExtResource("1_djkry")]
+script = ExtResource("2_vcd7y")
+searching_resourse_type = "Wood"
+start_collect = false
+resourse_trigger = NodePath("ResourseTrigger/CollisionShape2D")
+data = SubResource("Resource_e8euf")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_1uk0h")
+frame = 0
+
+[node name="Weapon" parent="AnimatedSprite2D" index="0"]
+collision_layer = 2
+collision_mask = 8
+
+[node name="WeaponSprite" parent="AnimatedSprite2D/Weapon" index="0"]
+scale = Vector2(-0.1, 0.1)
+texture = ExtResource("5_4ycxj")
+
+[node name="ResourseTrigger" type="Area2D" parent="." index="5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ResourseTrigger" index="0"]
+shape = SubResource("CircleShape2D_hxl1o")
+disabled = true
+debug_color = Color(0, 0.631373, 0.454902, 0.419608)
+
+[connection signal="body_entered" from="ResourseTrigger" to="." method="_on_resourse_trigger_body_entered"]

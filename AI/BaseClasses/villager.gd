@@ -23,12 +23,15 @@ var enemy_target
 
 var firs_pos: Vector2
 
+#@onready var nav_mesh: NavigationRegion2D
+
 func _ready():
-	var new_polygon: NavigationPolygon = NavigationPolygon.new()
-	new_polygon.source_geometry_mode = NavigationPolygon.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN
-	new_polygon.agent_radius = 10
-	nav_mesh.navigation_polygon = new_polygon
-	setup_polygon()
+	#nav_mesh = $"../NavigationRegion2D"
+	#var new_polygon: NavigationPolygon = NavigationPolygon.new()
+	#new_polygon.source_geometry_mode = NavigationPolygon.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN
+	#new_polygon.agent_radius = 10
+	#nav_mesh.navigation_polygon = new_polygon
+	#setup_polygon()
 	firs_pos = global_position
 
 func _physics_process(delta):
@@ -59,24 +62,28 @@ func run():
 			velocity = Vector2(0, 0)
 			anim.play("idle")
 			
-	if abs(global_position.x - firs_pos.x) + abs(global_position.y - firs_pos.y) >= 170:
-		setup_polygon()
-		firs_pos = global_position
+	#if abs(global_position.x - firs_pos.x) + abs(global_position.y - firs_pos.y) >= 170:
+	#	setup_polygon()
+	#	firs_pos = global_position
 
 	move_and_slide()
 
 func attack():
 	anim.play("attack")
 
-
-@onready var nav_mesh = $"../NavigationRegion2D"
+var index: int = 0
 func setup_polygon():
-	nav_mesh.navigation_polygon.clear_outlines()
 	var coor = global_position
 	var bounding_outline = PackedVector2Array([Vector2(coor.x - 256, coor.y - 256), Vector2(coor.x + 256, coor.y - 256), Vector2(coor.x + 256, coor.y + 256), Vector2(coor.x - 256, coor.y + 256)])
-	nav_mesh.navigation_polygon.add_outline(bounding_outline)
+	#nav_mesh.navigation_polygon.add_outline_at_index(bounding_outline, index)
 	print_debug("Start Baking")
-	nav_mesh.bake_navigation_polygon(true)
+	#nav_mesh.bake_navigation_polygon(true)
+	
+	#if index != 0:
+		#nav_mesh.navigation_polygon.remove_outline(index-1)
+	#print_debug(nav_mesh.navigation_polygon.get_outline(index))
+	index += 1
+	
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("LeftMouseButton"):
@@ -105,5 +112,5 @@ func _on_enemy_trigger_body_exited(body):
 	await anim.animation_finished
 	state = RUN
 
-func _on_weapon_area_body_entered(body):
+func _on_weapon_body_entered(body):
 	print_debug("Get Hit")

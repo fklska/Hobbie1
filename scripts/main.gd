@@ -1,7 +1,7 @@
 extends Node2D
 class_name MapGenerator
 
-static var SIZE = Vector2i(64, 64)
+static var SIZE = Vector2i(32, 32)
 
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
@@ -18,7 +18,6 @@ static var SIZE = Vector2i(64, 64)
 
 @onready var tilemap: TileMap = $Tilemap
 @onready var player = $Player
-@onready var villager = $Villager
 @onready var RES_TYPES = {
 		gold_height: {
 			"prefab": preload("res://Resourses/Prefabs/gold.tscn"),
@@ -38,7 +37,7 @@ static var SIZE = Vector2i(64, 64)
 			},
 	}
 
-@onready var root_node = $"."
+@onready var root_node = $Navigation
 
 var sand_tiles = []
 var grass_tiles = []
@@ -53,10 +52,7 @@ func _ready():
 	noise.seed = randi()
 	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
 	generate()
-	#custom_server()
-	#new_setup_polygon()
-	#setup_polygon(villager.global_position)
-	
+	custom_server()
 
 func generate():
 	for x in range(-SIZE.x / 2, SIZE.x / 2):
@@ -105,31 +101,6 @@ func setup_polygon(current_position: Vector2):
 	print_debug("Start Baking")
 	#nav_mesh.bake_navigation_polygon(true)
 
-@onready var nav_mesh: NavigationRegion2D = $NavigationRegion2D
-var chunkSize: int = 32
-var chunck: int = 16
-func new_setup_polygon():
-	var count = 0
-	var x_offset = 0
-	var y_offset = 0
-	for i in chunck:
-		var rectangle = PackedVector2Array(
-			[
-				Vector2((-SIZE.x + x_offset) * 32, (-SIZE.y + y_offset) * 32),
-				Vector2((-SIZE.x + chunkSize + x_offset) * 32, (-SIZE.y + y_offset) * 32),
-				Vector2((-SIZE.x + chunkSize + x_offset) * 32, (-SIZE.y  + chunkSize + y_offset) * 32),
-				Vector2((-SIZE.x + x_offset) * 32, (-SIZE.y  + chunkSize + y_offset) * 32),
-			]
-		)
-		x_offset += chunkSize
-		count += 1
-		if count == 4:
-			count = 0
-			y_offset += chunkSize
-			x_offset = 0
-		nav_mesh.navigation_polygon.add_outline(rectangle)
-	nav_mesh.bake_navigation_polygon()
-
 var navigation_mesh: NavigationPolygon
 var source_geometry : NavigationMeshSourceGeometryData2D
 var callback_parsing : Callable
@@ -153,12 +124,11 @@ func custom_server():
 
 func parse_source_geometry() -> void:
 	source_geometry.clear()
-	var _root_node: Node2D = get_node("NavigationMesh")
 
 	NavigationServer2D.parse_source_geometry_data(
 		navigation_mesh,
 		source_geometry,
-		_root_node,
+		root_node,
 		callback_parsing
 	)
 

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://ComputerStats.gd" id="5_4my3v"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://og0gspwamlvi" path="res://Selector/selector.tscn" id="5_vlk01"]
-[ext_resource type="PackedScene" uid="uid://dppx3u6n7jilu" path="res://Map/test_dynamic update.tscn" id="7_2yfn8"]
+[ext_resource type="PackedScene" uid="uid://d1utxvblnfv2d" path="res://AI/Prefabs/collector_villager.tscn" id="7_g83uw"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 frequency = 0.0084
@@ -37,6 +37,12 @@ position = Vector2(580, 326)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Selector" parent="CanvasLayer" instance=ExtResource("5_vlk01")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Stats" type="PanelContainer" parent="CanvasLayer"]
 custom_minimum_size = Vector2(32, 32)
@@ -71,12 +77,11 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="TownHall" parent="." groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
 position = Vector2(452, 317.001)
-scale = Vector2(1, 1)
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+[node name="Navigation" type="Node2D" parent="."]
 
-[node name="Node2D" parent="." instance=ExtResource("7_2yfn8")]
-
-[node name="Node2D2" parent="." instance=ExtResource("7_2yfn8")]
+[node name="CollectorVillager" parent="." instance=ExtResource("7_g83uw")]
+position = Vector2(301, 317)
+start_collect = true
 
 [connection signal="timeout" from="CanvasLayer/Stats/Timer" to="CanvasLayer/Stats" method="_on_timer_timeout"]
