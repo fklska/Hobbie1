@@ -90,29 +90,40 @@ animations = [{
 radius = 39.5601
 
 [node name="CollectorVillager" node_paths=PackedStringArray("resourse_trigger") instance=ExtResource("1_djkry")]
+position = Vector2(262, 141)
 script = ExtResource("2_vcd7y")
 searching_resourse_type = "Wood"
-start_collect = false
 resourse_trigger = NodePath("ResourseTrigger/CollisionShape2D")
 data = SubResource("Resource_e8euf")
 
 [node name="AnimatedSprite2D" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_1uk0h")
+animation = &"idle"
 frame = 0
 
 [node name="Weapon" parent="AnimatedSprite2D" index="0"]
 collision_layer = 2
-collision_mask = 8
+collision_mask = 12
 
 [node name="WeaponSprite" parent="AnimatedSprite2D/Weapon" index="0"]
 scale = Vector2(-0.1, 0.1)
 texture = ExtResource("5_4ycxj")
 
 [node name="ResourseTrigger" type="Area2D" parent="." index="5"]
+collision_layer = 2
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ResourseTrigger" index="0"]
 shape = SubResource("CircleShape2D_hxl1o")
 disabled = true
 debug_color = Color(0, 0.631373, 0.454902, 0.419608)
 
+[node name="CheckButton" type="CheckButton" parent="." index="6"]
+offset_left = -23.0
+offset_top = -47.0
+offset_right = 21.0
+offset_bottom = -23.0
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="ResourseTrigger" to="." method="_on_resourse_trigger_body_entered"]
+[connection signal="pressed" from="CheckButton" to="." method="_on_check_button_pressed"]

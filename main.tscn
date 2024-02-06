@@ -82,6 +82,5 @@ position = Vector2(452, 317.001)
 
 [node name="CollectorVillager" parent="." instance=ExtResource("7_g83uw")]
 position = Vector2(301, 317)
-start_collect = true
 
 [connection signal="timeout" from="CanvasLayer/Stats/Timer" to="CanvasLayer/Stats" method="_on_timer_timeout"]

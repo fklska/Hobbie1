@@ -14,7 +14,8 @@ const SPEED = 50
 
 enum {
 	RUN,
-	ATTACK
+	ATTACK,
+	SEARCH
 }
 
 var state = RUN
