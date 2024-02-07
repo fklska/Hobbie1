@@ -1,17 +1,18 @@
 [gd_resource type="Theme" load_steps=5 format=3 uid="uid://cedhnxugilj7g"]
 
+[ext_resource type="Texture2D" uid="uid://cpip13tl2142p" path="res://UI/UIAssets/GUI_4x.png" id="1_2ap5q"]
 [ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="1_d41uq"]
-[ext_resource type="Texture2D" uid="uid://bm1413x0u0xki" path="res://UI/UIAssets/Bar.png" id="1_oq3pc"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o461a"]
-texture = ExtResource("1_oq3pc")
-expand_margin_left = 6.0
-expand_margin_top = 4.0
-expand_margin_right = 6.0
-expand_margin_bottom = 4.0
+texture = ExtResource("1_2ap5q")
+expand_margin_left = 23.0
+expand_margin_top = 23.0
+expand_margin_right = 23.0
+expand_margin_bottom = 27.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ido5"]
-bg_color = Color(0.756863, 0.505882, 0.682353, 1)
+bg_color = Color(0.705882, 0, 0.180392, 1)
+corner_detail = 6
 
 [resource]
 default_font = ExtResource("1_d41uq")
