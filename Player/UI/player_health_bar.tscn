@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://beia5xtps3hg8"]
+
+[ext_resource type="Texture2D" uid="uid://pcy5bax8vpto" path="res://Player/UI/Assets/exp background.png" id="1_kvix7"]
+[ext_resource type="Texture2D" uid="uid://bdbeq7n06ec54" path="res://Player/UI/Assets/exp.png" id="2_bmvaa"]
+[ext_resource type="Texture2D" uid="uid://kj500k8v07au" path="res://Player/UI/Assets/hp background.png" id="3_1b8cr"]
+[ext_resource type="Texture2D" uid="uid://bd68nv7q1pufo" path="res://Player/UI/Assets/HP.png" id="4_r2lxg"]
+[ext_resource type="Texture2D" uid="uid://fjwbiqedknwg" path="res://Player/UI/Assets/mana background.png" id="5_j0lq1"]
+[ext_resource type="Texture2D" uid="uid://lruuof0dxgi" path="res://Player/UI/Assets/mana.png" id="6_0vyu0"]
+[ext_resource type="Texture2D" uid="uid://cwhjtfb2i2et5" path="res://Player/UI/Assets/stamina background.png" id="7_ti7eu"]
+[ext_resource type="Texture2D" uid="uid://bhur1cakxcwov" path="res://Player/UI/Assets/Stamina.png" id="8_mtbpp"]
+
+[node name="PlayerHealthBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6, 0.6)
+
+[node name="ExpBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.0729167
+anchor_bottom = 0.12963
+value = 53.0
+fill_mode = 4
+texture_under = ExtResource("1_kvix7")
+texture_progress = ExtResource("2_bmvaa")
+metadata/_edit_use_anchors_ = true
+
+[node name="HPbar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 2.0
+offset_right = 441.0
+offset_bottom = 42.0
+value = 71.0
+texture_under = ExtResource("3_1b8cr")
+texture_progress = ExtResource("4_r2lxg")
+
+[node name="ManaBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 23.0
+offset_right = 441.0
+offset_bottom = 63.0
+value = 26.0
+texture_under = ExtResource("5_j0lq1")
+texture_progress = ExtResource("6_0vyu0")
+
+[node name="StaminaBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 50.0
+offset_right = 440.0
+offset_bottom = 90.0
+value = 26.0
+texture_under = ExtResource("7_ti7eu")
+texture_progress = ExtResource("8_mtbpp")

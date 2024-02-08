@@ -37,6 +37,7 @@ position = Vector2(580, 326)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Selector" parent="CanvasLayer" instance=ExtResource("5_vlk01")]
+visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0

@@ -3,7 +3,7 @@ class_name Slot
 
 var slot_number_label: Label
 
-const empty_style = Color8(255, 255, 255, 145)
+const empty_style = Color8(255, 255, 255, 215)
 const defualt_style = Color8(255, 255, 255, 255)
 const selected_color = Color8(255, 255, 145, 255)
 
@@ -15,7 +15,7 @@ enum {
 var state = EMPTY
 
 static var flying_obj: InventoryItem = null
-static var slot_amount = 0
+static var slot_amount = 1
 static var slots: Array[Slot]
 
 var current_slot_number = 0

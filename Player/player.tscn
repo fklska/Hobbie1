@@ -1,9 +1,11 @@
-[gd_scene load_steps=50 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=52 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
 [ext_resource type="PackedScene" uid="uid://cuu8agnq5ro00" path="res://Camera/main_cam.tscn" id="3_7v0dy"]
 [ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/inventory_ui.tscn" id="4_h0fti"]
+[ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://UI/hot_bar.tscn" id="4_ubnck"]
+[ext_resource type="PackedScene" uid="uid://beia5xtps3hg8" path="res://Player/UI/player_health_bar.tscn" id="5_gfsoj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7qahw"]
 radius = 6.0
@@ -427,7 +429,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(350, 0)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_r2imb"]
@@ -514,11 +516,26 @@ libraries = {
 [node name="Camera2D" parent="." instance=ExtResource("3_7v0dy")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-offset = Vector2(350, 0)
-transform = Transform2D(1, 0, 0, 1, 350, 0)
+
+[node name="HotBar" parent="CanvasLayer" instance=ExtResource("4_ubnck")]
+z_index = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 25.0
+offset_top = 100.0
+offset_right = 25.0
+offset_bottom = 100.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="PlayerHealthBar" parent="CanvasLayer" instance=ExtResource("5_gfsoj")]
+offset_left = 25.0
+offset_top = 23.0
+offset_right = -1127.0
+offset_bottom = -625.0
 
 [node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_h0fti")]
-visible = false
 anchors_preset = -1
 anchor_left = 0.670139
 anchor_top = 0.399691
