@@ -36,17 +36,17 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="item_display" type="Sprite2D" parent="CenterContainer"]
-position = Vector2(10, 9)
-scale = Vector2(0.7, 0.7)
-centered = false
-offset = Vector2(0, -4)
+[node name="item_display" type="TextureRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 4
 
 [node name="item_amount" type="Label" parent="CenterContainer/item_display"]
-offset_left = 4.28571
-offset_top = 37.1429
-offset_right = 60.2857
-offset_bottom = 60.1429
+layout_mode = 0
+offset_left = -5.0
+offset_top = 15.0
+offset_right = 37.0
+offset_bottom = 38.0
 theme = ExtResource("1_0i4ni")
 horizontal_alignment = 2
 

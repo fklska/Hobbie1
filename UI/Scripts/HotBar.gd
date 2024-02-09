@@ -3,6 +3,8 @@ class_name HotBarClass
 
 @export var slot_selector: TextureRect
 
+#@export var test_weapon: InventoryItem
+
 static var current_selected_slot: Slot 
 
 var hotbar_slots: Array
@@ -18,6 +20,20 @@ func _input(event: InputEvent):
 		var slot = key_slot_map[event.as_text()]
 		current_selected_slot = slot
 		set_slot_selector(slot)
+	
+	if event.is_action_pressed("test"):
+		var texture = load("res://AI/sword 1.png")
+		var test_weapon = WeaponClass.new(
+			texture,
+			"test_name",
+			1,
+			"Weapon",
+			5,
+			1
+		)
+		InventoryData.add_item(current_selected_slot, test_weapon)
+		current_selected_slot.update(test_weapon)
+		print_debug(InventoryData.inventory)
 
 func set_slot_selector(slot: Slot):
 	slot_selector.reparent(slot)

@@ -19,9 +19,10 @@ static var slot_amount = 1
 static var slots: Array[Slot]
 
 var current_slot_number = 0
-var current_item: InventoryItem = null
 
-@onready var item_sprite: Sprite2D = $CenterContainer/item_display
+@export var current_item: InventoryItem
+
+@onready var item_sprite: TextureRect = $CenterContainer/item_display
 @onready var item_amount: Label = $CenterContainer/item_display/item_amount
 
 func _init():

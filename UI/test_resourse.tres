@@ -8,3 +8,4 @@ script = ExtResource("2_eehnb")
 image = ExtResource("1_62qh0")
 name = "test_wood"
 amount = 5
+type = "Wood"
