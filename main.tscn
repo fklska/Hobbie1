@@ -76,12 +76,13 @@ layer_0/name = "Ground"
 layer_1/name = "Resourses"
 layer_1/tile_data = PackedInt32Array()
 
-[node name="TownHall" parent="." groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
-position = Vector2(452, 317.001)
-
 [node name="Navigation" type="Node2D" parent="."]
 
-[node name="CollectorVillager" parent="." instance=ExtResource("7_g83uw")]
+[node name="CollectorVillager" parent="." node_paths=PackedStringArray("resourse_trigger") instance=ExtResource("7_g83uw")]
 position = Vector2(301, 317)
+resourse_trigger = NodePath("ResourseTrigger/CollisionShape2D")
+
+[node name="TownHall" parent="." groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
+position = Vector2(452, 317.001)
 
 [connection signal="timeout" from="CanvasLayer/Stats/Timer" to="CanvasLayer/Stats" method="_on_timer_timeout"]

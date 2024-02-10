@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=53 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/inventory_ui.tscn" id="4_h0fti"]
 [ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://UI/hot_bar.tscn" id="4_ubnck"]
 [ext_resource type="PackedScene" uid="uid://beia5xtps3hg8" path="res://Player/UI/player_health_bar.tscn" id="5_gfsoj"]
+[ext_resource type="Texture2D" uid="uid://c75ewspb38miu" path="res://AI/axe 1.png" id="7_a3r1f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7qahw"]
 radius = 6.0
@@ -555,6 +556,20 @@ root_node = NodePath("../InventoryUI")
 libraries = {
 "": SubResource("AnimationLibrary_32phd")
 }
+
+[node name="Weapon" type="Area2D" parent="."]
+position = Vector2(-7, 1.90735e-06)
+collision_layer = 2
+collision_mask = 12
+
+[node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
+scale = Vector2(-0.1, 0.1)
+texture = ExtResource("7_a3r1f")
+offset = Vector2(0, -170)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon"]
+position = Vector2(4.76837e-07, -19)
+disabled = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

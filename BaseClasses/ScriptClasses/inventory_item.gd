@@ -22,5 +22,7 @@ func decrease_amount(value: int):
 func _compare(other_obj_type: String):
 	return type == other_obj_type
 
+
+
 func _to_string():
 	return ("Name: " + name  + " Amount: " + str(amount) + " Image: " + image.resource_path + " Type: " + type)
