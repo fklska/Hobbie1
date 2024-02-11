@@ -569,6 +569,7 @@ offset = Vector2(0, -170)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon"]
 position = Vector2(4.76837e-07, -19)
+disabled = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
@@ -577,4 +578,3 @@ position = Vector2(4.76837e-07, -19)
 [connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="AnimatedSprite2D/Trigger" to="." method="_on_trigger_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite2D/Trigger" to="." method="_on_trigger_body_exited"]
-[connection signal="body_entered" from="Weapon" to="." method="_on_weapon_body_entered"]

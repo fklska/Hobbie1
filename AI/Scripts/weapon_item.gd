@@ -5,13 +5,15 @@ class_name WeaponClass
 @export var damage: int
 @export var required_strench: int
 
-@export var shape: CapsuleShape2D
+@export var shape: CapsuleShape2D = CapsuleShape2D.new()
 
 func _init(_texture: Texture2D, _name: String, _amount: int, _type: String, _damage: int, _required_strench: int):
 	damage = _damage
 	required_strench = _required_strench
 	super._init(_texture, _name, _amount, _type)
+	set_collider_shape()
 	
 
 func set_collider_shape():
-	pass
+	shape.height = 40.0
+	shape.radius = 3.0

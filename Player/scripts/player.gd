@@ -5,6 +5,10 @@ class_name Player
 @export_range(10, 100) var STRENCH = 10
 @export_range(10, 100) var INTELECT = 10
 
+
+@export var selected_HB_item: Sprite2D
+@export var selected_HB_weapon_shape: CollisionShape2D
+
 const SPEED = 50.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
@@ -84,12 +88,38 @@ func add_item(_texture: Texture2D, _name: String, _amount: int, _type: String):
 			inv_ui.update_slots()
 			return "Added"
 
+func get_item_from_selected_HB_slot():
+	var item = HotBarClass.current_selected_slot.current_item
+	if item == null:
+		print_debug("Nothin in slot")
+	
+	if item is WeaponClass:
+		var shape: CapsuleShape2D = CapsuleShape2D.new()
+		shape.height = 40.0
+		shape.radius = 3.0
+		selected_HB_item.texture = item.image
+		selected_HB_weapon_shape.shape = shape
+	
+	if item is InventoryItem:
+		selected_HB_item.texture = item.image
+
+func hide_item_from_hand():
+	selected_HB_item.texture = null
+	selected_HB_weapon_shape.shape = null
+
 func _input(event: InputEvent):
 	if event.is_action_pressed("action"):
 		#print_debug(InventoryData.inventory)
 		if selected != null:
 			selected.action(InventoryData.inventory)
 			inv_ui.update_slots()
+	
+	if event.is_action_pressed("LeftMouseButton"):
+		print_debug("Pressed")
+		get_item_from_selected_HB_slot()
+	
+	if event.is_action_released("LeftMouseButton"):
+		hide_item_from_hand()
 
 var selected: ActiveClass
 func _on_trigger_body_entered(body):
@@ -97,12 +127,10 @@ func _on_trigger_body_entered(body):
 		body.set_selected()
 		selected = body
 
-
 func _on_trigger_body_exited(body):
 	if body is Building:
 		body.hide_selected()
 		selected = null
-
 
 func show_selected_info():
 	return {
@@ -111,7 +139,6 @@ func show_selected_info():
 		"\n Strench: " + str(STRENCH) + 
 		"\n Intelect: " + str(INTELECT) + "\n")
 	}
-
 
 var mouse_enter: bool = false
 func _on_mouse_entered():
@@ -126,3 +153,7 @@ func _on_input_event(viewport, event: InputEvent, shape_idx):
 	if event.is_action_pressed("LeftMouseButton"):
 		if mouse_enter:
 			SelectorClass.selected_object = self
+
+
+func _on_weapon_body_entered(body):
+	print_debug("Weapon Enter")
