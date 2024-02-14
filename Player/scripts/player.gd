@@ -6,7 +6,7 @@ class_name Player
 @export_range(10, 100) var INTELECT = 10
 
 
-@export var selected_HB_item: Sprite2D
+@export var selected_HB_item: TextureRect
 @export var selected_HB_weapon_shape: CollisionShape2D
 
 const SPEED = 50.0
@@ -19,6 +19,7 @@ const SPEED = 50.0
 enum {
 	RUN,
 	ATTACK,
+	ITEM_ACTION,
 }
 var state = RUN
 
@@ -31,6 +32,8 @@ func _physics_process(delta):
 			run()
 		ATTACK:
 			attack()
+		ITEM_ACTION:
+			get_item_from_selected_HB_slot()
 	
 	move_and_slide()	
 
@@ -92,16 +95,21 @@ func get_item_from_selected_HB_slot():
 	var item = HotBarClass.current_selected_slot.current_item
 	if item == null:
 		print_debug("Nothin in slot")
+		return
 	
 	if item is WeaponClass:
+		animPlayer.play("item_action")
 		var shape: CapsuleShape2D = CapsuleShape2D.new()
 		shape.height = 40.0
 		shape.radius = 3.0
 		selected_HB_item.texture = item.image
 		selected_HB_weapon_shape.shape = shape
+		return
 	
 	if item is InventoryItem:
 		selected_HB_item.texture = item.image
+		selected_HB_weapon_shape.shape = null
+		return
 
 func hide_item_from_hand():
 	selected_HB_item.texture = null
@@ -115,11 +123,12 @@ func _input(event: InputEvent):
 			inv_ui.update_slots()
 	
 	if event.is_action_pressed("LeftMouseButton"):
-		print_debug("Pressed")
-		get_item_from_selected_HB_slot()
+		state = ITEM_ACTION
 	
 	if event.is_action_released("LeftMouseButton"):
+		await animPlayer.animation_finished
 		hide_item_from_hand()
+		state = RUN
 
 var selected: ActiveClass
 func _on_trigger_body_entered(body):
@@ -156,4 +165,7 @@ func _on_input_event(viewport, event: InputEvent, shape_idx):
 
 
 func _on_weapon_body_entered(body):
-	print_debug("Weapon Enter")
+	if body is ActiveResourses:
+		var damage: int = 10 + STRENCH
+		body.get_damage(damage)
+		add_item(body.get_texture(), body.name, damage, body.type)

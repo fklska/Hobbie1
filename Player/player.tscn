@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=53 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
@@ -301,6 +301,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/Weapon:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.14159]
+}
 
 [sub_resource type="Animation" id="Animation_0twvm"]
 length = 0.6
@@ -409,11 +421,29 @@ tracks/1/keys = {
 "values": ["run"]
 }
 
+[sub_resource type="Animation" id="Animation_y1nu4"]
+resource_name = "item_action"
+length = 0.45
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/Weapon:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -3.14159]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fub84"]
 _data = {
 "RESET": SubResource("Animation_8t733"),
 "attack": SubResource("Animation_0twvm"),
 "idle": SubResource("Animation_5m2fn"),
+"item_action": SubResource("Animation_y1nu4"),
 "run": SubResource("Animation_8iueh")
 }
 
@@ -479,8 +509,8 @@ collision_mask = 31
 input_pickable = true
 script = ExtResource("1_q72hs")
 STRENCH = 50
-selected_HB_item = NodePath("Weapon/WeaponSprite")
-selected_HB_weapon_shape = NodePath("Weapon/CollisionShape2D")
+selected_HB_item = NodePath("AnimatedSprite2D/Weapon/WeaponSprite")
+selected_HB_weapon_shape = NodePath("AnimatedSprite2D/Weapon/CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 2)
@@ -509,6 +539,33 @@ input_pickable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Trigger"]
 position = Vector2(1, 14)
 shape = SubResource("CircleShape2D_yys4w")
+
+[node name="Weapon" type="Area2D" parent="AnimatedSprite2D"]
+position = Vector2(-7, 11)
+rotation = -3.14159
+collision_layer = 2
+collision_mask = 12
+
+[node name="WeaponSprite" type="TextureRect" parent="AnimatedSprite2D/Weapon"]
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -53.0
+offset_right = 57.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(-1, 1)
+pivot_offset = Vector2(7.52908, 34.9504)
+expand_mode = 4
+stretch_mode = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Weapon"]
+position = Vector2(4.76837e-07, -19)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -558,18 +615,6 @@ libraries = {
 "": SubResource("AnimationLibrary_32phd")
 }
 
-[node name="Weapon" type="Area2D" parent="."]
-position = Vector2(-7, 1.90735e-06)
-collision_layer = 2
-collision_mask = 12
-
-[node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
-scale = Vector2(-0.1, 0.1)
-offset = Vector2(0, -170)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon"]
-position = Vector2(4.76837e-07, -19)
-
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
@@ -577,4 +622,4 @@ position = Vector2(4.76837e-07, -19)
 [connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="AnimatedSprite2D/Trigger" to="." method="_on_trigger_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite2D/Trigger" to="." method="_on_trigger_body_exited"]
-[connection signal="body_entered" from="Weapon" to="." method="_on_weapon_body_entered"]
+[connection signal="body_entered" from="AnimatedSprite2D/Weapon" to="." method="_on_weapon_body_entered"]
