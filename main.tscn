@@ -77,10 +77,9 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="Navigation" type="Node2D" parent="."]
 
-[node name="CollectorVillager" parent="." instance=ExtResource("7_g83uw")]
+[node name="CollectorVillager" parent="." node_paths=PackedStringArray("resourse_trigger") instance=ExtResource("7_g83uw")]
 position = Vector2(301, 317)
-resourse_trigger = Object(CollisionShape2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"shape":null,"disabled":true,"one_way_collision":false,"one_way_collision_margin":1.0,"debug_color":Color(0, 0.631373, 0.454902, 0.419608),"script":null)
-
+resourse_trigger = NodePath("")
 
 [node name="TownHall" parent="." groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
 position = Vector2(452, 317.001)

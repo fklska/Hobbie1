@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_lbm5b"]
 [ext_resource type="Script" path="res://Selector/selector.gd" id="2_rgdjr"]
 
-[node name="Selector" type="Control" node_paths=PackedStringArray("panel_rect")]
+[node name="Selector" type="Control"]
 layout_mode = 3
 anchor_right = 0.166667
 anchor_bottom = 0.327161
@@ -13,7 +13,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_lbm5b")
 script = ExtResource("2_rgdjr")
-panel_rect = NodePath("Panel")
 rect_color = Color(0.219608, 0.27451, 0.72549, 1)
 metadata/_edit_use_anchors_ = true
 

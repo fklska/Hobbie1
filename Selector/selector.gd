@@ -1,11 +1,12 @@
 extends Control
 class_name SelectorClass
 
-@export var panel_rect: Panel
 @export var rect_color: Color
 
 @onready var label: Label = $Background/Label
 @onready var image: TextureRect = $Background/PanelContainer/TextureRect
+
+@onready var panel_rect: Panel = $Panel
 
 static var selected_object: Array
 
@@ -30,6 +31,7 @@ func update_selector():
 		else:
 			label.text = "Selected: " + str(selected_object.size()) + "objects"
 		prev_selected = selected_object
+
 func clear():
 	selected_object.clear()
 
@@ -39,13 +41,14 @@ func draw_selector_rect():
 	if Input.is_action_just_pressed("RightMouseButton"):
 		clear()
 		start_pos = get_global_mouse_position()
-		panel_rect.global_position = start_pos
+		panel_rect.position = start_pos
 		is_draw = true
 	
 	if Input.is_action_just_released("RightMouseButton"):
 		is_draw = false
+		panel_rect.size = Vector2(0, 0)
 	
 	if is_draw:
 		end_pos = get_global_mouse_position()
-		var size = Vector2(start_pos.x - end_pos.x, start_pos.y - end_pos.y)
+		var size = Vector2(end_pos.x - start_pos.x, end_pos.y - start_pos.y)
 		panel_rect.size = size
