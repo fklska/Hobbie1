@@ -58,4 +58,6 @@ stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+metadata/_edit_use_anchors_ = true

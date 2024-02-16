@@ -50,5 +50,16 @@ func draw_selector_rect():
 	
 	if is_draw:
 		end_pos = get_global_mouse_position()
-		var size = Vector2(end_pos.x - start_pos.x, end_pos.y - start_pos.y)
+		
+		if start_pos.x > end_pos.x:
+			panel_rect.scale.x = -1
+		else:
+			panel_rect.scale.x = 1
+			
+		if start_pos.y > end_pos.y:
+			panel_rect.scale.y = -1
+		else:
+			panel_rect.scale.y = 1
+
+		var size = Vector2(abs(start_pos.x - end_pos.x), abs(start_pos.y - end_pos.y))
 		panel_rect.size = size
