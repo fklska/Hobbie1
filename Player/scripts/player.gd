@@ -122,8 +122,9 @@ func _input(event: InputEvent):
 			selected.action(InventoryData.inventory)
 			inv_ui.update_slots()
 	
-	if event.is_action_pressed("LeftMouseButton"):
-		state = ITEM_ACTION
+	if inv_ui.visible == false:
+		if event.is_action_pressed("LeftMouseButton"):
+			state = ITEM_ACTION
 	
 	if event.is_action_released("LeftMouseButton"):
 		await animPlayer.animation_finished
@@ -162,7 +163,6 @@ func _on_input_event(viewport, event: InputEvent, shape_idx):
 	if event.is_action_pressed("LeftMouseButton"):
 		if mouse_enter:
 			SelectorClass.selected_object = self
-
 
 func _on_weapon_body_entered(body):
 	if body is ActiveResourses:

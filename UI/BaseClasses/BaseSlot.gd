@@ -1,7 +1,12 @@
 extends Panel
 class_name Slot
 
-var slot_number_label: Label
+@export var current_item: InventoryItem
+
+@onready var item_sprite: TextureRect = $CenterContainer/item_display
+@onready var item_amount: Label = $CenterContainer/item_display/item_amount
+
+static var flying_obj: InventoryItem = null
 
 const empty_style = Color8(255, 255, 255, 215)
 const defualt_style = Color8(255, 255, 255, 255)
@@ -12,31 +17,17 @@ enum {
 	FILL,
 	SELECTED
 }
+
 var state = EMPTY
+var slot_number_label: Label
 
-static var flying_obj: InventoryItem = null
-static var slot_amount = 1
-static var slots: Array[Slot]
 
-var current_slot_number = 0
-
-@export var current_item: InventoryItem
-
-@onready var item_sprite: TextureRect = $CenterContainer/item_display
-@onready var item_amount: Label = $CenterContainer/item_display/item_amount
-
-func _init():
-	current_slot_number = slot_amount
-	slot_amount += 1
-	slots.append(self)
-	
 func _process(delta):
 	state_machine()
 	
 
 func _ready():
 	slot_number_label = get_node("Label")
-	slot_number_label.text = str(current_slot_number)
 	InventoryData.initialize()
 	
 func update(item: InventoryItem):
@@ -92,9 +83,6 @@ func _on_mouse_exited():
 		state = EMPTY
 		return null
 	state = FILL
-
-func _to_string():
-	return ("Slot #" + str(current_slot_number))
 
 func _on_gui_input(event: InputEvent):
 	if event.is_action_pressed("RightMouseButton"):

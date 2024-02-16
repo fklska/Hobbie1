@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://divdmmdc1574d"]
 
 [ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="1_outc6"]
-[ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/popup.tscn" id="2_1n43t"]
+[ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="2_1n43t"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="3_k8bi8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmwpk"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bx4ha6i7br5tk"]
+[gd_scene load_steps=5 format=3 uid="uid://bx4ha6i7br5tk"]
 
 [ext_resource type="Script" path="res://UI/Scripts/HotBar.gd" id="1_8ct3h"]
-[ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/slot.tscn" id="2_o4s85"]
+[ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/prefabs/slot.tscn" id="2_o4s85"]
 [ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="3_ii1k0"]
+[ext_resource type="Script" path="res://UI/Scripts/hb_slots.gd" id="3_pe505"]
 
 [node name="HotBar" type="Control" node_paths=PackedStringArray("slot_selector")]
 layout_mode = 3
@@ -21,6 +22,7 @@ offset_bottom = 40.0
 
 [node name="Slot" parent="HBoxContainer" instance=ExtResource("2_o4s85")]
 layout_mode = 2
+script = ExtResource("3_pe505")
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/Slot"]
 z_index = 1
@@ -32,9 +34,12 @@ texture = ExtResource("3_ii1k0")
 
 [node name="Slot2" parent="HBoxContainer" instance=ExtResource("2_o4s85")]
 layout_mode = 2
+script = ExtResource("3_pe505")
 
 [node name="Slot3" parent="HBoxContainer" instance=ExtResource("2_o4s85")]
 layout_mode = 2
+script = ExtResource("3_pe505")
 
 [node name="Slot4" parent="HBoxContainer" instance=ExtResource("2_o4s85")]
 layout_mode = 2
+script = ExtResource("3_pe505")

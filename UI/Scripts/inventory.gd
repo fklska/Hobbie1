@@ -5,7 +5,7 @@ static var inventory: Dictionary
 static var need_to_update_ui: bool = false
 
 static func initialize():
-	for i in Slot.slots:
+	for i in InventorySlot.slots:
 		inventory[i] = null
 
 static func add_item(slot: Slot, item: InventoryItem):

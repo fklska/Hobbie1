@@ -1,19 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://dn3w0t2raes5j"]
 
-[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_0i4ni"]
-[ext_resource type="Texture2D" uid="uid://vhw2k8km47od" path="res://UI/UIAssets/Buttons/Button_Disable.png" id="1_wus26"]
-[ext_resource type="Script" path="res://UI/Scripts/slot.gd" id="2_6twaj"]
+[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_ram7y"]
+[ext_resource type="Script" path="res://UI/BaseClasses/BaseSlot.gd" id="2_280ok"]
+[ext_resource type="Texture2D" uid="uid://vhw2k8km47od" path="res://UI/UIAssets/Buttons/Button_Disable.png" id="3_qsbo0"]
 
 [node name="Slot" type="Panel"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(64, 64)
 offset_right = 64.0
 offset_bottom = 64.0
-theme = ExtResource("1_0i4ni")
-script = ExtResource("2_6twaj")
+theme = ExtResource("1_ram7y")
+script = ExtResource("2_280ok")
 
 [node name="Background" type="Sprite2D" parent="."]
-texture = ExtResource("1_wus26")
+texture = ExtResource("3_qsbo0")
 centered = false
 
 [node name="Label" type="Label" parent="."]
@@ -47,7 +47,7 @@ offset_left = -5.0
 offset_top = 15.0
 offset_right = 37.0
 offset_bottom = 38.0
-theme = ExtResource("1_0i4ni")
+theme = ExtResource("1_ram7y")
 horizontal_alignment = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
