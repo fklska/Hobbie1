@@ -22,4 +22,5 @@ func show_selected_info():
 
 func _on_mouse_entered():
 	if Input.is_action_pressed("LeftMouseButton"):
-		SelectorClass.selected_object = self
+		#SelectorClass.selected_object = self
+		pass

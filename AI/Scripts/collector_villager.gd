@@ -1,4 +1,5 @@
 extends BaseVillager
+class_name CollectorVillager
 
 @export_enum("Wood", "Iron", "Stone", "Gold") var searching_resourse_type: String
 
@@ -61,10 +62,11 @@ func attack():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("RightMouseButton"):
-		if SelectorClass.selected_object == self:
-			start_collect = false
-			nav.target_position = get_global_mouse_position()
-			state = RUN
+		#if SelectorClass.selected_object == self:
+			#start_collect = false
+			#nav.target_position = get_global_mouse_position()
+			#state = RUN
+		pass
 
 func _on_weapon_body_entered(body: ActiveResourses):
 	if body.type == searching_resourse_type:

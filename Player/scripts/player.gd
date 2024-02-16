@@ -95,6 +95,7 @@ func get_item_from_selected_HB_slot():
 	var item = HotBarClass.current_selected_slot.current_item
 	if item == null:
 		print_debug("Nothin in slot")
+		state = RUN
 		return
 	
 	if item is WeaponClass:
@@ -158,11 +159,6 @@ func _on_mouse_entered():
 func _on_mouse_exited():
 	modulate = Color8(255, 255, 255, 255)
 	mouse_enter = false
-
-func _on_input_event(viewport, event: InputEvent, shape_idx):
-	if event.is_action_pressed("LeftMouseButton"):
-		if mouse_enter:
-			SelectorClass.selected_object = self
 
 func _on_weapon_body_entered(body):
 	if body is ActiveResourses:
