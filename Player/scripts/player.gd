@@ -110,6 +110,7 @@ func get_item_from_selected_HB_slot():
 	if item is InventoryItem:
 		selected_HB_item.texture = item.image
 		selected_HB_weapon_shape.shape = null
+		state = RUN
 		return
 
 func hide_item_from_hand():
@@ -128,7 +129,8 @@ func _input(event: InputEvent):
 			state = ITEM_ACTION
 	
 	if event.is_action_released("LeftMouseButton"):
-		await animPlayer.animation_finished
+		if animPlayer.current_animation == "item_action":
+			await animPlayer.animation_finished
 		hide_item_from_hand()
 		state = RUN
 

@@ -595,11 +595,12 @@ offset_right = -1127.0
 offset_bottom = -625.0
 
 [node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_h0fti")]
+visible = false
 anchors_preset = -1
-anchor_left = 0.670139
-anchor_top = 0.399691
-anchor_right = 1.00781
-anchor_bottom = 0.99537
+anchor_left = 0.136285
+anchor_top = 0.469136
+anchor_right = 0.136285
+anchor_bottom = 0.469136
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0

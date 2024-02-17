@@ -8,6 +8,7 @@
 size = Vector2(0, 0)
 
 [node name="Selector" type="Control"]
+z_index = 5
 layout_mode = 3
 anchor_right = 0.166667
 anchor_bottom = 0.327161
@@ -25,15 +26,17 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.40625
 anchor_bottom = 1.27358
+offset_right = -78.0005
+offset_bottom = -77.9994
 texture = ExtResource("1_3pc4i")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Background"]
 layout_mode = 2
-anchor_left = 0.265624
-anchor_top = 0.46875
-anchor_right = 0.734374
-anchor_bottom = 0.765624
+anchor_left = 0.260417
+anchor_top = 0.578125
+anchor_right = 0.729167
+anchor_bottom = 0.874999
 theme_override_colors/font_color = Color(0, 0, 0, 0.960784)
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
@@ -65,11 +68,13 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.276041
 anchor_bottom = 0.103773
-offset_right = 2.0
-offset_bottom = 2.0
+offset_right = -53.0
+offset_bottom = -21.9999
 metadata/_edit_use_anchors_ = true
 
 [node name="Area2D" type="Area2D" parent="Panel"]
+collision_mask = 30
+collision_priority = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Panel/Area2D"]
 position = Vector2(36.25, 17.625)

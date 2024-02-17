@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckaxvp2v3x7bk"]
+
+[ext_resource type="Script" path="res://Selector/rectangle_selector.gd" id="1_s2sxi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_si0tc"]
+
+[node name="Panel" type="Panel"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_s2sxi")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 30
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_si0tc")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
