@@ -111,13 +111,15 @@ func _on_mouse_exited():
 func _on_input_event(viewport, event: InputEvent, shape_idx):
 	if event.is_action_pressed("RightMouseButton"):
 		if mouse_enter:
-			SelectorClass.selected_object = self
+			#SelectorClass.selected_object = self
+			pass
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("LeftMouseButton"):
-		if SelectorClass.selected_object == self:
-			nav.target_position = get_global_mouse_position()
-			state = SET_TARGET
+		#if SelectorClass.selected_object == self:
+		pass
+			#nav.target_position = get_global_mouse_position()
+			#state = SET_TARGET
 
 func show_selected_info():
 	return {

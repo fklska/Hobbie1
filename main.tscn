@@ -77,9 +77,8 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="Navigation" type="Node2D" parent="."]
 
-[node name="CollectorVillager" parent="." node_paths=PackedStringArray("resourse_trigger") instance=ExtResource("7_g83uw")]
+[node name="CollectorVillager" parent="." instance=ExtResource("7_g83uw")]
 position = Vector2(301, 317)
-resourse_trigger = NodePath("")
 
 [node name="TownHall" parent="." groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
 position = Vector2(452, 317.001)

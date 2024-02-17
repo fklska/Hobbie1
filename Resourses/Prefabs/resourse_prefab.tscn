@@ -45,7 +45,7 @@ _data = {
 "get_hit": SubResource("Animation_rpu3h")
 }
 
-[node name="ResoursePrefab" type="StaticBody2D"]
+[node name="ResoursePrefab" type="StaticBody2D" groups=["selectable"]]
 collision_layer = 8
 collision_mask = 15
 input_pickable = true
