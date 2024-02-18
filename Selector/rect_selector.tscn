@@ -3,10 +3,9 @@
 [ext_resource type="Script" path="res://Selector/rectangle_selector.gd" id="1_s2sxi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_si0tc"]
+size = Vector2(0, 0)
 
 [node name="Panel" type="Panel"]
-offset_right = 40.0
-offset_bottom = 40.0
 script = ExtResource("1_s2sxi")
 
 [node name="Area2D" type="Area2D" parent="."]

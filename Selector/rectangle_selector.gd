@@ -1,9 +1,12 @@
 extends Panel
+class_name RectSelectorClass
 
 @onready var panel_rect: Panel = $"."
 @onready var panel_collider: CollisionShape2D = $Area2D/CollisionShape2D
 
 static var selected_object: Array
+
+signal draw_end
 
 var start_pos: Vector2
 var end_pos: Vector2
@@ -29,6 +32,7 @@ func draw_selector_rect():
 		panel_rect.size = Vector2(0, 0)
 		panel_collider.shape.size = Vector2.ZERO
 		panel_collider.global_position = Vector2(0, 0)
+		emit_signal("draw_end")
 	
 	if is_draw:
 		end_pos = get_global_mouse_position()

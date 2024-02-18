@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dbegdph3wxdfv" path="res://UI/UIAssets/Banners/Banner_Connection_Down.png" id="1_3pc4i"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_lbm5b"]
-[ext_resource type="Script" path="res://Selector/selector.gd" id="2_rgdjr"]
+[ext_resource type="Script" path="res://Selector/selector_ui.gd" id="2_rgdjr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w0rf3"]
 size = Vector2(0, 0)

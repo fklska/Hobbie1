@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=11 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://d1utxvblnfv2d" path="res://AI/Prefabs/collector_villager.tscn" id="7_g83uw"]
 [ext_resource type="PackedScene" uid="uid://ckaxvp2v3x7bk" path="res://Selector/rect_selector.tscn" id="8_1wl27"]
+[ext_resource type="PackedScene" uid="uid://og0gspwamlvi" path="res://Selector/selector.tscn" id="8_yypfy"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 frequency = 0.0084
@@ -57,6 +58,12 @@ metadata/_edit_use_anchors_ = true
 wait_time = 2.0
 autostart = true
 
+[node name="Selector" parent="CanvasLayer" instance=ExtResource("8_yypfy")]
+offset_left = 264.0
+offset_top = -25.0
+offset_right = 264.0
+offset_bottom = -25.0
+
 [node name="Tilemap" type="TileMap" parent="." groups=["navigation_polygon_source_geometry_group"]]
 z_index = -1
 texture_filter = 1
@@ -78,3 +85,4 @@ position = Vector2(452, 317.001)
 [node name="Panel" parent="." instance=ExtResource("8_1wl27")]
 
 [connection signal="timeout" from="CanvasLayer/Stats/Timer" to="CanvasLayer/Stats" method="_on_timer_timeout"]
+[connection signal="draw_end" from="Panel" to="CanvasLayer/Selector" method="_on_panel_draw_end"]
