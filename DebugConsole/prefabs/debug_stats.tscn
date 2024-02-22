@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2wv8totvopdf"]
+
+[ext_resource type="Script" path="res://DebugConsole/Scripts/debugger_stats.gd" id="1_b4dal"]
+
+[node name="Stats" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.0347222
+anchor_bottom = 0.0617284
+offset_right = -8.0
+offset_bottom = -8.0
+script = ExtResource("1_b4dal")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 16
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_vertical = 8
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

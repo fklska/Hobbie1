@@ -49,12 +49,15 @@ var res_height_val =[]
 var gap = 64
 
 func _ready():
-	noise.seed = randi()
-	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
 	generate()
 	custom_server()
 
 func generate():
+	clear()
+	
+	noise.seed = randi()
+	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
+
 	for x in range(-SIZE.x / 2, SIZE.x / 2):
 		for y in range(-SIZE.y / 2, SIZE.y / 2):
 			
@@ -90,6 +93,17 @@ func generate():
 	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
 	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)
+
+func clear():
+	var objs: Array = root_node.get_children()
+	
+	for obj in objs:
+		obj.queue_free()
+		
+	tilemap.clear()
+	water_tiles.clear()
+	sand_tiles.clear()
+	grass_tiles.clear()
 
 func setup_polygon(current_position: Vector2):
 	#nav_mesh.navigation_polygon.clear_polygons()

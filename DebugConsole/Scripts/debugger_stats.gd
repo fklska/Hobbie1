@@ -3,9 +3,6 @@ extends PanelContainer
 
 @onready var label: Label = $Label
 
-
-
-
 func _on_timer_timeout():
 	var fps = Performance.get_monitor(Performance.TIME_FPS)
 	var memory = Performance.get_monitor(Performance.MEMORY_STATIC)

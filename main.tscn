@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
+[ext_resource type="PackedScene" uid="uid://e3tw5rrxm6bf" path="res://DebugConsole/custom_debbuger.tscn" id="4_8csdw"]
 [ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
-[ext_resource type="Script" path="res://custom_debbuger.gd" id="5_4my3v"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://d1utxvblnfv2d" path="res://AI/Prefabs/collector_villager.tscn" id="7_g83uw"]
 [ext_resource type="PackedScene" uid="uid://ckaxvp2v3x7bk" path="res://Selector/rect_selector.tscn" id="8_1wl27"]
@@ -37,32 +37,17 @@ position = Vector2(580, 326)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Stats" type="PanelContainer" parent="CanvasLayer"]
-custom_minimum_size = Vector2(32, 32)
-anchors_preset = -1
-anchor_left = 0.486111
-anchor_right = 0.513889
-anchor_bottom = 0.0493827
-grow_horizontal = 2
-script = ExtResource("5_4my3v")
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CanvasLayer/Stats"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 16
-metadata/_edit_use_anchors_ = true
-
-[node name="Timer" type="Timer" parent="CanvasLayer/Stats"]
-wait_time = 2.0
-autostart = true
-
 [node name="Selector" parent="CanvasLayer" instance=ExtResource("8_yypfy")]
 offset_left = 264.0
 offset_top = -25.0
 offset_right = 264.0
 offset_bottom = -25.0
+
+[node name="custom_debbuger" parent="CanvasLayer" instance=ExtResource("4_8csdw")]
+offset_left = 796.0
+offset_top = 2.0
+offset_right = 952.0
+offset_bottom = 70.0
 
 [node name="Tilemap" type="TileMap" parent="." groups=["navigation_polygon_source_geometry_group"]]
 z_index = -1
@@ -84,5 +69,4 @@ position = Vector2(452, 317.001)
 
 [node name="Panel" parent="." instance=ExtResource("8_1wl27")]
 
-[connection signal="timeout" from="CanvasLayer/Stats/Timer" to="CanvasLayer/Stats" method="_on_timer_timeout"]
 [connection signal="draw_end" from="Panel" to="CanvasLayer/Selector" method="_on_panel_draw_end"]
