@@ -417,7 +417,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0416667, 0.0833333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667, 0.833333, 0.875, 0.916667, 0.958333),
@@ -588,30 +588,28 @@ offset_bottom = 100.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_h0fti")]
+visible = false
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 157.0
+offset_top = 297.0
+offset_right = 157.0
+offset_bottom = 297.0
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="PlayerHealthBar" parent="CanvasLayer" instance=ExtResource("5_gfsoj")]
 offset_left = 25.0
 offset_top = 23.0
 offset_right = -1127.0
 offset_bottom = -625.0
 
-[node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_h0fti")]
-visible = false
-anchors_preset = -1
-anchor_left = 0.136285
-anchor_top = 0.469136
-anchor_right = 0.136285
-anchor_bottom = 0.469136
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
-size_flags_horizontal = 0
-metadata/_edit_use_anchors_ = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
-root_node = NodePath("../InventoryUI")
+root_node = NodePath("")
 libraries = {
 "": SubResource("AnimationLibrary_32phd")
 }

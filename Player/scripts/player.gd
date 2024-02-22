@@ -93,6 +93,7 @@ func add_item(_texture: Texture2D, _name: String, _amount: int, _type: String):
 
 func get_item_from_selected_HB_slot():
 	var item = HotBarClass.current_selected_slot.current_item
+	velocity = Vector2i.ZERO
 	if item == null:
 		print_debug("Nothin in slot")
 		state = RUN

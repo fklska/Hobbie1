@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
 [ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
-[ext_resource type="Script" path="res://ComputerStats.gd" id="5_4my3v"]
+[ext_resource type="Script" path="res://custom_debbuger.gd" id="5_4my3v"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://d1utxvblnfv2d" path="res://AI/Prefabs/collector_villager.tscn" id="7_g83uw"]
 [ext_resource type="PackedScene" uid="uid://ckaxvp2v3x7bk" path="res://Selector/rect_selector.tscn" id="8_1wl27"]
