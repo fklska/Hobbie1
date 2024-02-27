@@ -61,12 +61,13 @@ func attack():
 	anim.play("attack")
 
 func _input(event: InputEvent):
-	if event.is_action_pressed("RightMouseButton"):
-		#if SelectorClass.selected_object == self:
-			#start_collect = false
-			#nav.target_position = get_global_mouse_position()
-			#state = RUN
-		pass
+	if event.is_action_pressed("LeftMouseButton"):
+		if RectSelectorClass.selected_object.has(self):
+			print_debug("Click")
+			start_collect = false
+			nav.target_position = get_global_mouse_position()
+			state = RUN
+		
 
 func _on_weapon_body_entered(body: ActiveResourses):
 	if body.type == searching_resourse_type:

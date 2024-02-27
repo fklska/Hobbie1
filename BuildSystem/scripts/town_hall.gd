@@ -4,6 +4,9 @@ class_name Building
 @export var data: StorageDataClass
 @onready var storage_ui: StorageUI = $CanvasLayer2/storage_ui
 
+func _ready():
+	var butt: Button = Button.new()
+
 func action(inventory: Dictionary):
 	for slot: Slot in inventory:
 		if inventory[slot] != null:
@@ -14,13 +17,13 @@ func action(inventory: Dictionary):
 			
 	storage_ui.update_ui(data.data_items)
 
+func create_human():
+	print_debug("Villager Created!")
+
 func show_selected_info():
 	return {
 		"texture": get_node("Sprite2D").texture,
-		"text": "Building"
+		"text": "Building",
+		"action": [create_human]
 		}
 
-func _on_mouse_entered():
-	if Input.is_action_pressed("LeftMouseButton"):
-		#SelectorClass.selected_object = self
-		pass

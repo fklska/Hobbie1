@@ -32,6 +32,7 @@ func draw_selector_rect():
 		panel_rect.size = Vector2(0, 0)
 		panel_collider.shape.size = Vector2.ZERO
 		panel_collider.global_position = Vector2(0, 0)
+		print_debug(selected_object)
 		emit_signal("draw_end")
 	
 	if is_draw:
