@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends StaticBodySelectedObject
 class_name ActiveResourses
 
 @export var HEALTH = 100

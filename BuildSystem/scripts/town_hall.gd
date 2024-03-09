@@ -1,4 +1,4 @@
-extends ActiveClass
+extends StaticBodySelectedObject
 class_name Building
 
 @export var data: StorageDataClass

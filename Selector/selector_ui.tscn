@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://og0gspwamlvi"]
+[gd_scene load_steps=4 format=3 uid="uid://og0gspwamlvi"]
 
 [ext_resource type="Texture2D" uid="uid://dbegdph3wxdfv" path="res://UI/UIAssets/Banners/Banner_Connection_Down.png" id="1_3pc4i"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_lbm5b"]
 [ext_resource type="Script" path="res://Selector/selector_ui.gd" id="2_rgdjr"]
-[ext_resource type="PackedScene" uid="uid://8iw307ek5r1h" path="res://Selector/action_button_in_selector.tscn" id="4_m60nm"]
 
 [node name="Selector" type="Control"]
 z_index = 5
@@ -60,31 +59,3 @@ size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Background"]
-custom_minimum_size = Vector2(8, 8)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.21875
-anchor_top = 0.838542
-anchor_right = 0.786458
-anchor_bottom = 0.984375
-theme_override_constants/separation = 12
-metadata/_edit_use_anchors_ = true
-
-[node name="Action" parent="Background/HBoxContainer" instance=ExtResource("4_m60nm")]
-layout_mode = 2
-text = "1"
-
-[node name="Action2" parent="Background/HBoxContainer" instance=ExtResource("4_m60nm")]
-layout_mode = 2
-text = "2"
-
-[node name="Action3" parent="Background/HBoxContainer" instance=ExtResource("4_m60nm")]
-layout_mode = 2
-text = "3"
-
-[node name="Action4" parent="Background/HBoxContainer" instance=ExtResource("4_m60nm")]
-layout_mode = 2
-text = "4
-"

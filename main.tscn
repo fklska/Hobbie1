@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
 [ext_resource type="PackedScene" uid="uid://e3tw5rrxm6bf" path="res://DebugConsole/custom_debbuger.tscn" id="4_8csdw"]
-[ext_resource type="PackedScene" uid="uid://cq63ulxk8g6gt" path="res://BuildSystem/buildings/town_hall.tscn" id="4_fc61l"]
 [ext_resource type="PackedScene" uid="uid://cnpdc5pf0vuaj" path="res://Player/player.tscn" id="5_b88ed"]
 [ext_resource type="PackedScene" uid="uid://d1utxvblnfv2d" path="res://AI/Prefabs/collector_villager.tscn" id="7_g83uw"]
 [ext_resource type="PackedScene" uid="uid://ckaxvp2v3x7bk" path="res://Selector/rect_selector.tscn" id="8_1wl27"]
+[ext_resource type="PackedScene" uid="uid://h3wbd84xih6v" path="res://BuildSystem/buildings/building_selected_obj.tscn" id="8_erq2y"]
 [ext_resource type="PackedScene" uid="uid://og0gspwamlvi" path="res://Selector/selector_ui.tscn" id="8_yypfy"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
@@ -69,9 +69,9 @@ layer_1/tile_data = PackedInt32Array()
 [node name="CollectorVillager" parent="." instance=ExtResource("7_g83uw")]
 position = Vector2(301, 317)
 
-[node name="TownHall" parent="." groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("4_fc61l")]
-position = Vector2(452, 317.001)
-
 [node name="RectSeelctor" parent="." instance=ExtResource("8_1wl27")]
+
+[node name="Building_selected_obj" parent="." instance=ExtResource("8_erq2y")]
+position = Vector2(493, 332)
 
 [connection signal="draw_end" from="RectSeelctor" to="CanvasLayer/Selector" method="_on_rect_seelctor_draw_end"]

@@ -103,8 +103,8 @@ func _to_string():
 
 func _on_input_event(viewport, event: InputEvent, shape_idx):
 	if event.is_action_pressed("RightMouseButton"):
-		#SelectorClass.selected_object = self
-		pass
+		RectSelectorClass.selected_object.append(self)
+		print_debug(RectSelectorClass.selected_object)
 
 func _on_enemy_trigger_body_entered(body):
 	enemy_target = body

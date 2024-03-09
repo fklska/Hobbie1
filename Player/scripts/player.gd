@@ -95,7 +95,6 @@ func get_item_from_selected_HB_slot():
 	var item = HotBarClass.current_selected_slot.current_item
 	velocity = Vector2i.ZERO
 	if item == null:
-		print_debug("Nothin in slot")
 		state = RUN
 		return
 	
@@ -119,12 +118,6 @@ func hide_item_from_hand():
 	selected_HB_weapon_shape.shape = null
 
 func _input(event: InputEvent):
-	if event.is_action_pressed("action"):
-		#print_debug(InventoryData.inventory)
-		if selected != null:
-			selected.action(InventoryData.inventory)
-			inv_ui.update_slots()
-	
 	if inv_ui.visible == false:
 		if event.is_action_pressed("LeftMouseButton"):
 			state = ITEM_ACTION
@@ -134,17 +127,6 @@ func _input(event: InputEvent):
 			await animPlayer.animation_finished
 		hide_item_from_hand()
 		state = RUN
-
-var selected: ActiveClass
-func _on_trigger_body_entered(body):
-	if body is Building:
-		body.set_selected()
-		selected = body
-
-func _on_trigger_body_exited(body):
-	if body is Building:
-		body.hide_selected()
-		selected = null
 
 func show_selected_info():
 	return {
