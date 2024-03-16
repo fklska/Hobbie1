@@ -62,9 +62,7 @@ func attack():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("LeftMouseButton"):
-		print_debug(RectSelectorClass.selected_object)
 		if RectSelectorClass.selected_object.has(self):
-			print_debug("Click")
 			start_collect = false
 			nav.target_position = get_global_mouse_position()
 			state = RUN

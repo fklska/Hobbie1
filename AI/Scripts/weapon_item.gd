@@ -15,5 +15,6 @@ func _init(_texture: Texture2D, _name: String, _amount: int, _type: String, _dam
 	
 
 func set_collider_shape():
-	shape.height = 40.0
-	shape.radius = 3.0
+	shape.height = 35
+	shape.radius = 5
+	

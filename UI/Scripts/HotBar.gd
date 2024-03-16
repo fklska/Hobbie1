@@ -22,7 +22,7 @@ func _input(event: InputEvent):
 		set_slot_selector(slot)
 	
 	if event.is_action_pressed("test"):
-		var texture = load("res://AI/sword 1.png")
+		var texture = load("res://AI/#1---Transparent-Icons_54.png")
 		var test_weapon = WeaponClass.new(
 			texture,
 			"test_name",

@@ -25,7 +25,8 @@ text = "Очистить"
 [node name="HSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
 min_value = 1.0
-max_value = 64.0
+max_value = 256.0
+step = 8.0
 value = 1.0
 scrollable = false
 

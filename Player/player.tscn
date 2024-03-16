@@ -272,7 +272,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"attack"]
+"values": [&"idle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -289,26 +289,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/Area2D/CollisionPolygon2D:disabled")
+tracks/2/path = NodePath("AnimatedSprite2D/Weapon:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Weapon:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-3.14159]
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_0twvm"]
@@ -350,18 +338,6 @@ tracks/2/keys = {
 "args": [],
 "method": &"clearing"
 }]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D/Area2D/CollisionPolygon2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_5m2fn"]
@@ -406,7 +382,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.45),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, -3.14159]
+"values": [0.436332, -2.0944]
 }
 
 [sub_resource type="Animation" id="Animation_8iueh"]
@@ -505,7 +481,6 @@ collision_layer = 2
 collision_mask = 31
 input_pickable = true
 script = ExtResource("1_q72hs")
-STRENCH = 50
 selected_HB_item = NodePath("AnimatedSprite2D/Weapon/WeaponSprite")
 selected_HB_weapon_shape = NodePath("AnimatedSprite2D/Weapon/CollisionShape2D")
 
@@ -516,44 +491,25 @@ shape = SubResource("CapsuleShape2D_7qahw")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -14)
 sprite_frames = SubResource("SpriteFrames_2vylw")
-animation = &"attack"
+animation = &"idle"
 autoplay = "idle"
-
-[node name="Area2D" type="Area2D" parent="AnimatedSprite2D"]
-position = Vector2(1, 14)
-collision_layer = 2
-collision_mask = 13
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite2D/Area2D"]
-position = Vector2(-12, -3)
-polygon = PackedVector2Array(4, -46, -29, 3, 4, 51)
 
 [node name="Weapon" type="Area2D" parent="AnimatedSprite2D"]
 position = Vector2(-7, 11)
-rotation = -3.14159
 collision_layer = 2
 collision_mask = 12
 
 [node name="WeaponSprite" type="TextureRect" parent="AnimatedSprite2D/Weapon"]
-custom_minimum_size = Vector2(64, 64)
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -7.0
-offset_top = -53.0
-offset_right = 57.0
-offset_bottom = 11.0
-grow_horizontal = 0
-grow_vertical = 2
+offset_left = -5.00007
+offset_top = -28.0
+offset_right = 26.9999
+offset_bottom = 4.00001
 scale = Vector2(-1, 1)
-pivot_offset = Vector2(7.52908, 34.9504)
-expand_mode = 4
-stretch_mode = 4
+pivot_offset = Vector2(5.06034, 26.8758)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Weapon"]
-position = Vector2(4.76837e-07, -19)
+position = Vector2(-12, -13)
+rotation = -0.785398
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -605,6 +561,4 @@ libraries = {
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="body_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="body_entered" from="AnimatedSprite2D/Weapon" to="." method="_on_weapon_body_entered"]

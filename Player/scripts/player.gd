@@ -9,7 +9,7 @@ class_name Player
 @export var selected_HB_item: TextureRect
 @export var selected_HB_weapon_shape: CollisionShape2D
 
-const SPEED = 50.0
+const SPEED = 20.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
 @onready var inv_ui: InventoryUI = $CanvasLayer/InventoryUI
@@ -30,8 +30,6 @@ func _physics_process(delta):
 	match state:
 		RUN:
 			run()
-		ATTACK:
-			attack()
 		ITEM_ACTION:
 			get_item_from_selected_HB_slot()
 	
@@ -52,28 +50,6 @@ func run():
 	else:
 		velocity = Vector2(0, 0)
 		animPlayer.play("idle")
-		
-	if Input.is_action_just_pressed("attack"):
-		velocity = Vector2(0, 0)
-		state = ATTACK
-		
-func attack():
-	animPlayer.play("attack")
-	await animPlayer.animation_finished
-	state = RUN
-
-func clearing():
-	for obj: ActiveResourses in targets:
-		var damage = STRENCH / 2
-		add_item(obj.get_texture(), obj.name, damage, obj.type)
-		obj.get_damage(damage)
-
-var targets = []
-func _on_area_2d_body_entered(body: StaticBody2D):
-	targets.push_back(body)
-
-func _on_area_2d_body_exited(body):
-	targets.pop_back()
 
 func add_item(_texture: Texture2D, _name: String, _amount: int, _type: String):
 	#print_debug(InventoryData.inventory)
