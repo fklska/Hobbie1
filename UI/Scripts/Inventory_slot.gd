@@ -15,7 +15,6 @@ func _init():
 func _ready():
 	slot_number_label = get_node("Label")
 	slot_number_label.text = str(current_slot_number)
-	InventoryData.initialize()
 
 func _to_string():
 	return ("InventorySlot #" + str(current_slot_number))

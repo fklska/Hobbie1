@@ -1,17 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccppdgqk5yuir"]
+[gd_scene load_steps=5 format=3 uid="uid://ccppdgqk5yuir"]
 
-[ext_resource type="PackedScene" uid="uid://divdmmdc1574d" path="res://Resourses/Prefabs/resourse_prefab.tscn" id="1_5yqjd"]
+[ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_lf805"]
 [ext_resource type="Script" path="res://Resourses/Scripts/rock.gd" id="2_0j7ew"]
 [ext_resource type="Texture2D" uid="uid://b06ojyuwegde" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_10.png" id="2_3y0j2"]
 
-[node name="Stone" instance=ExtResource("1_5yqjd")]
-collision_mask = 7
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_txk66"]
+radius = 17.0
+height = 34.0
+
+[node name="BasicResourse" instance=ExtResource("1_lf805")]
 script = ExtResource("2_0j7ew")
 type = "Stone"
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+[node name="Texture" parent="." index="0"]
 texture = ExtResource("2_3y0j2")
 
-[node name="collider" type="CollisionPolygon2D" parent="." index="1"]
-position = Vector2(1.75, 2)
-polygon = PackedVector2Array(-16.75, 12, -1.75, -14, 12.25, 5)
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CapsuleShape2D_txk66")

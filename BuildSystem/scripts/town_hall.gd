@@ -12,7 +12,6 @@ func action(inventory: Dictionary):
 		if inventory[slot] != null:
 			if inventory[slot] is InventoryItem:
 				data.put_in_storage(inventory[slot])
-				InventoryData.remove_item_from_slot(slot)
 				slot.clear_slot()
 			
 	storage_ui.update_ui(data.data_items)

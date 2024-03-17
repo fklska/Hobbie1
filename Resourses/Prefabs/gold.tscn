@@ -1,18 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://ddox3crpcxdgn"]
 
-[ext_resource type="PackedScene" uid="uid://divdmmdc1574d" path="res://Resourses/Prefabs/resourse_prefab.tscn" id="1_008bd"]
+[ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_eqmbd"]
 [ext_resource type="Texture2D" uid="uid://k8v3t7pxhf4u" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_12.png" id="1_patfn"]
 [ext_resource type="Script" path="res://Resourses/Scripts/gold.gd" id="2_wk81d"]
 
-[node name="Gold" instance=ExtResource("1_008bd")]
-collision_mask = 7
+[node name="BasicResourse" instance=ExtResource("1_eqmbd")]
 script = ExtResource("2_wk81d")
 type = "Gold"
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
-position = Vector2(0, 1)
+[node name="Texture" parent="." index="0"]
 texture = ExtResource("1_patfn")
-
-[node name="collider" type="CollisionPolygon2D" parent="." index="1"]
-position = Vector2(1.75, 2)
-polygon = PackedVector2Array(-16.75, 12, -1.75, -14, 12.25, 5)

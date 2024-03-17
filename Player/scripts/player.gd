@@ -9,12 +9,13 @@ class_name Player
 @export var selected_HB_item: TextureRect
 @export var selected_HB_weapon_shape: CollisionShape2D
 
+@export var INVENTORY: InventoryUI
+
+
 const SPEED = 20.0
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
-@onready var inv_ui: InventoryUI = $CanvasLayer/InventoryUI
 
-#static var inventory: InvenoryData
 
 enum {
 	RUN,
@@ -52,19 +53,17 @@ func run():
 		animPlayer.play("idle")
 
 func add_item(_texture: Texture2D, _name: String, _amount: int, _type: String):
-	#print_debug(InventoryData.inventory)
-	for slot: Slot in InventoryData.inventory:
-		var item: InventoryItem = InventoryData.inventory[slot]
+	for slot: Slot in INVENTORY.slots:
 		if not slot.is_empty():
-			if item.image == _texture:
-				item.amount += _amount
-				inv_ui.update_slots()
+			var item: InventoryItem = slot.current_item
+			if item._compare(_type):
+				item.increase_amount(_amount)
+				slot.update(item)
 				return "Updated!"
 
-	for slot: Slot in InventoryData.inventory:
+	for slot: Slot in INVENTORY.slots:
 		if slot.is_empty():
-			InventoryData.add_item(slot, InventoryItem.new(_texture, _name, _amount, _type))
-			inv_ui.update_slots()
+			slot.update(InventoryItem.new(_texture, _name, _amount, _type))
 			return "Added"
 
 func get_item_from_selected_HB_slot():
@@ -94,7 +93,7 @@ func hide_item_from_hand():
 	selected_HB_weapon_shape.shape = null
 
 func _input(event: InputEvent):
-	if inv_ui.visible == false:
+	if INVENTORY.visible == false:
 		if event.is_action_pressed("LeftMouseButton"):
 			state = ITEM_ACTION
 	

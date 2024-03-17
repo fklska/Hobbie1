@@ -1,10 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://divdmmdc1574d"]
+[gd_scene load_steps=10 format=3 uid="uid://cpmuho6osgn33"]
 
-[ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="1_outc6"]
-[ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="2_1n43t"]
-[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="3_k8bi8"]
+[ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_kpm82"]
+[ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="2_mwnmf"]
+[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="2_teda1"]
+[ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="3_fmnx2"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmwpk"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kgta8"]
+radius = 17.0
+height = 34.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tc87y"]
 bg_color = Color(0.854902, 0.560784, 0.0784314, 1)
 
 [sub_resource type="Animation" id="Animation_d3bnw"]
@@ -45,15 +50,28 @@ _data = {
 "get_hit": SubResource("Animation_rpu3h")
 }
 
-[node name="ResoursePrefab" type="StaticBody2D" groups=["selectable"]]
-z_index = 1
-collision_layer = 8
-collision_mask = 15
+[node name="BasicResourse" instance=ExtResource("1_kpm82")]
 input_pickable = true
-script = ExtResource("1_outc6")
-damage_node = ExtResource("2_1n43t")
+script = ExtResource("2_mwnmf")
+HEALTH = 100
+STORAGE = 100
+type = ""
+current_color = Color(1, 1, 1, 1)
+damage_node = ExtResource("3_fmnx2")
 
-[node name="healthbar" type="ProgressBar" parent="."]
+[node name="Texture" parent="." index="0"]
+material = null
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CapsuleShape2D_kgta8")
+
+[node name="Selector" parent="." index="2"]
+visible = false
+
+[node name="Ebutton" parent="." index="3"]
+visible = false
+
+[node name="healthbar" type="ProgressBar" parent="." index="4"]
 visible = false
 z_index = 1
 offset_left = -16.0
@@ -61,36 +79,35 @@ offset_top = -25.0
 offset_right = 314.0
 offset_bottom = 5.0
 scale = Vector2(0.1, 0.1)
-theme = ExtResource("3_k8bi8")
+theme = ExtResource("2_teda1")
 value = 100.0
 show_percentage = false
 
-[node name="damage_bar" type="ProgressBar" parent="."]
+[node name="damage_bar" type="ProgressBar" parent="." index="5"]
 visible = false
 offset_left = -16.0
 offset_top = -25.0
 offset_right = 314.0
 offset_bottom = 5.0
 scale = Vector2(0.1, 0.1)
-theme = ExtResource("3_k8bi8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_tmwpk")
+theme = ExtResource("2_teda1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tc87y")
 value = 100.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="damage_bar"]
+[node name="Timer" type="Timer" parent="damage_bar" index="0"]
 wait_time = 0.3
 one_shot = true
 
-[node name="PopUpLocation" type="Marker2D" parent="."]
+[node name="PopUpLocation" type="Marker2D" parent="." index="6"]
 z_index = 1
 position = Vector2(0, -32)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
 libraries = {
 "": SubResource("AnimationLibrary_eq8xt")
 }
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="timeout" from="damage_bar/Timer" to="." method="_on_timer_timeout"]

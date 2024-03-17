@@ -3,7 +3,7 @@ class_name ActiveResourses
 
 @export var HEALTH = 100
 @export var STORAGE = 100
-@export var type: String = "Resourse"
+@export_enum("Stone", "Gold", "Wood", "Iron") var type: String
 
 @export var current_color = Color8(255, 255, 255, 255)
 
@@ -14,15 +14,12 @@ class_name ActiveResourses
 @onready var timer: Timer = $damage_bar/Timer
 @onready var anim = $AnimationPlayer
 
-var mouse_enter: bool = false
 
 func _on_mouse_entered():
 	modulate = Color8(155, 155, 155, 255)
-	mouse_enter = true
 
 func _on_mouse_exited():
 	modulate = current_color
-	mouse_enter = false
 
 func get_damage(damage: int):
 	HEALTH -= damage

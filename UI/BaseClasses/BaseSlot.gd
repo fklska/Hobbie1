@@ -28,7 +28,6 @@ func _process(delta):
 
 func _ready():
 	slot_number_label = get_node("Label")
-	InventoryData.initialize()
 	
 func update(item: InventoryItem):
 	current_item = item
@@ -91,16 +90,15 @@ func _on_gui_input(event: InputEvent):
 	if event.is_action_released("LeftMouseButton"):
 		if flying_obj == null:  # Take Item
 			flying_obj = current_item
-			InventoryData.remove_item_from_slot(self)
 			clear_slot()
 		else:  # Put Item
 			if is_empty():
-				InventoryData.add_item(self, flying_obj)
+				current_item = flying_obj
 				update(flying_obj)
 				flying_obj = null
 				InventoryUI.disable_display = true
 			else:
-				if current_item.image == flying_obj.image:
+				if current_item._compare(flying_obj.type):
 					print_debug("Stack")
 				else:
 					print_debug("Slot zanyat!")

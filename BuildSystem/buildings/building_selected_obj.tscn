@@ -1,11 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://h3wbd84xih6v"]
+[gd_scene load_steps=11 format=3 uid="uid://h3wbd84xih6v"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_rj47l"]
 [ext_resource type="Script" path="res://BuildSystem/scripts/town_hall.gd" id="2_fopta"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="3_35esh"]
 [ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="3_vnq44"]
-[ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="4_wiftr"]
-[ext_resource type="Texture2D" uid="uid://imkgdt01hauu" path="res://UI/UIAssets/E-Key.png" id="5_omx7a"]
 [ext_resource type="PackedScene" uid="uid://bq2jvgxrp2es6" path="res://BuildSystem/UI/storage_ui.tscn" id="6_2o8ry"]
 
 [sub_resource type="Animation" id="Animation_au1dd"]
@@ -67,28 +65,11 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osisj"]
 size = Vector2(52, 24)
 
-[node name="Building_selected_obj" instance=ExtResource("1_rj47l")]
+[node name="TownHall" instance=ExtResource("1_rj47l")]
 script = ExtResource("2_fopta")
 data = ExtResource("3_35esh")
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
-texture = ExtResource("3_vnq44")
-
-[node name="Selector" type="Sprite2D" parent="." index="1"]
-visible = false
-z_index = -1
-position = Vector2(0, 11)
-scale = Vector2(1.3125, 1.3125)
-texture = ExtResource("4_wiftr")
-
-[node name="Ebutton" type="Sprite2D" parent="." index="2"]
-visible = false
-z_index = 2
-position = Vector2(0, -50)
-texture = ExtResource("5_omx7a")
-hframes = 2
-
-[node name="CanvasLayer2" type="CanvasLayer" parent="." index="3"]
+[node name="CanvasLayer2" type="CanvasLayer" parent="." index="0"]
 offset = Vector2(250, 0)
 transform = Transform2D(1, 0, 0, 1, 250, 0)
 
@@ -110,6 +91,9 @@ libraries = {
 "": SubResource("AnimationLibrary_7l2pq")
 }
 
-[node name="CollisionShape2D" parent="." index="4"]
+[node name="Texture" parent="." index="1"]
+texture = ExtResource("3_vnq44")
+
+[node name="CollisionShape2D" parent="." index="2"]
 position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_osisj")

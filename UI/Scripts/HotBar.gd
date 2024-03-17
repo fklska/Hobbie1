@@ -31,9 +31,7 @@ func _input(event: InputEvent):
 			5,
 			1
 		)
-		InventoryData.add_item(current_selected_slot, test_weapon)
 		current_selected_slot.update(test_weapon)
-		print_debug(InventoryData.inventory)
 
 func set_slot_selector(slot: Slot):
 	slot_selector.reparent(slot)

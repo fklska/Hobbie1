@@ -476,13 +476,14 @@ _data = {
 "disapear": SubResource("Animation_422wi")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("selected_HB_item", "selected_HB_weapon_shape")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("selected_HB_item", "selected_HB_weapon_shape", "INVENTORY")]
 collision_layer = 2
 collision_mask = 31
 input_pickable = true
 script = ExtResource("1_q72hs")
 selected_HB_item = NodePath("AnimatedSprite2D/Weapon/WeaponSprite")
 selected_HB_weapon_shape = NodePath("AnimatedSprite2D/Weapon/CollisionShape2D")
+INVENTORY = NodePath("CanvasLayer/InventoryUI")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 2)
@@ -520,7 +521,7 @@ libraries = {
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HotBar" parent="CanvasLayer" instance=ExtResource("4_ubnck")]
+[node name="HotBar" parent="CanvasLayer" node_paths=PackedStringArray("slot_selector") instance=ExtResource("4_ubnck")]
 z_index = 2
 anchors_preset = 0
 anchor_right = 0.0
@@ -531,6 +532,7 @@ offset_right = 25.0
 offset_bottom = 100.0
 grow_horizontal = 1
 grow_vertical = 1
+slot_selector = NodePath("")
 
 [node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_h0fti")]
 visible = false

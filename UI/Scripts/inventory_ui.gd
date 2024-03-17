@@ -1,12 +1,14 @@
 extends Control
 class_name InventoryUI
 
+var slots: Array
+
 var display_flying_obj: Sprite2D
-#var anim: AnimationPlayer
 
 func _ready():
 	display_flying_obj = get_node("FlyingObj")
-	#anim = $"../AnimationPlayer"
+	slots = $GridContainer.get_children()
+	$".".connect("update_ui", update_slots)
 
 
 func _process(delta):
@@ -18,12 +20,9 @@ func _process(delta):
 	if disable_display:
 		disable_display_fly_obj()
 
-
 func update_slots():
-	for i: Slot in InventoryData.inventory:
-		if InventoryData.inventory[i] != null:
-			i.update(InventoryData.inventory[i])
-	#print_debug(InventoryData.inventory)
+	for i: Slot in slots:
+		i.update(i.current_item)
 
 static var disable_display: bool = false
 func disable_display_fly_obj():
@@ -37,8 +36,5 @@ func _input(event: InputEvent):
 	if event.is_action_pressed("inventory"):
 		if !visible:
 			visible = true
-			#anim.play("appear")
 		else:
-			#anim.play("disapear")
-			#await anim.animation_finished
 			visible = false

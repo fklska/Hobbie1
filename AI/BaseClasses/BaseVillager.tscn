@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://AI/BaseClasses/villager.gd" id="1_2k0kf"]
 [ext_resource type="Texture2D" uid="uid://t1qt3bqwc0yw" path="res://AI/BaseClasses/Male4.png" id="1_3vbqf"]
-[ext_resource type="Script" path="res://AI/Scripts/weapon_item.gd" id="2_1cqu1"]
+[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="2_1cqu1"]
 [ext_resource type="Texture2D" uid="uid://cq76esqb51ykk" path="res://AI/sword 1.png" id="2_ju872"]
 [ext_resource type="Script" path="res://AI/Scripts/ai_data.gd" id="3_xycgl"]
 
