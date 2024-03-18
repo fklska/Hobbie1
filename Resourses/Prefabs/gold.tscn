@@ -1,12 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddox3crpcxdgn"]
+[gd_scene load_steps=6 format=3 uid="uid://ddox3crpcxdgn"]
 
 [ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_eqmbd"]
 [ext_resource type="Texture2D" uid="uid://k8v3t7pxhf4u" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_12.png" id="1_patfn"]
 [ext_resource type="Script" path="res://Resourses/Scripts/gold.gd" id="2_wk81d"]
+[ext_resource type="Shader" path="res://outline.gdshader" id="3_vfsp8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2yer"]
+shader = ExtResource("3_vfsp8")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = false
 
 [node name="BasicResourse" instance=ExtResource("1_eqmbd")]
 script = ExtResource("2_wk81d")
 type = "Gold"
 
 [node name="Texture" parent="." index="0"]
+material = SubResource("ShaderMaterial_c2yer")
 texture = ExtResource("1_patfn")

@@ -1,13 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpmuho6osgn33"]
+[gd_scene load_steps=9 format=3 uid="uid://cpmuho6osgn33"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_kpm82"]
 [ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="2_mwnmf"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="2_teda1"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="3_fmnx2"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kgta8"]
-radius = 17.0
-height = 34.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tc87y"]
 bg_color = Color(0.854902, 0.560784, 0.0784314, 1)
@@ -59,11 +55,8 @@ type = ""
 current_color = Color(1, 1, 1, 1)
 damage_node = ExtResource("3_fmnx2")
 
-[node name="Texture" parent="." index="0"]
-material = null
-
 [node name="CollisionShape2D" parent="." index="1"]
-shape = SubResource("CapsuleShape2D_kgta8")
+polygon = PackedVector2Array(-16, 10, -2, -12, 8, -12, 14, 10)
 
 [node name="Selector" parent="." index="2"]
 visible = false
@@ -108,6 +101,4 @@ libraries = {
 "": SubResource("AnimationLibrary_eq8xt")
 }
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="timeout" from="damage_bar/Timer" to="." method="_on_timer_timeout"]

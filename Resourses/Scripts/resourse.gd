@@ -15,12 +15,6 @@ class_name ActiveResourses
 @onready var anim = $AnimationPlayer
 
 
-func _on_mouse_entered():
-	modulate = Color8(155, 155, 155, 255)
-
-func _on_mouse_exited():
-	modulate = current_color
-
 func get_damage(damage: int):
 	HEALTH -= damage
 	current_color.a8 -= 5

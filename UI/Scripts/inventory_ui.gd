@@ -8,8 +8,6 @@ var display_flying_obj: Sprite2D
 func _ready():
 	display_flying_obj = get_node("FlyingObj")
 	slots = $GridContainer.get_children()
-	$".".connect("update_ui", update_slots)
-
 
 func _process(delta):
 	if Slot.flying_obj != null:

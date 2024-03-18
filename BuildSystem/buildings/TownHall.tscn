@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://h3wbd84xih6v"]
+[gd_scene load_steps=12 format=3 uid="uid://h3wbd84xih6v"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_rj47l"]
 [ext_resource type="Script" path="res://BuildSystem/scripts/town_hall.gd" id="2_fopta"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="3_35esh"]
 [ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="3_vnq44"]
+[ext_resource type="Shader" path="res://outline.gdshader" id="5_2qy2q"]
 [ext_resource type="PackedScene" uid="uid://bq2jvgxrp2es6" path="res://BuildSystem/UI/storage_ui.tscn" id="6_2o8ry"]
 
 [sub_resource type="Animation" id="Animation_au1dd"]
@@ -62,10 +63,17 @@ _data = {
 "show": SubResource("Animation_ps8li")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_osisj"]
-size = Vector2(52, 24)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4xrvj"]
+shader = ExtResource("5_2qy2q")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = false
 
 [node name="TownHall" instance=ExtResource("1_rj47l")]
+input_pickable = true
 script = ExtResource("2_fopta")
 data = ExtResource("3_35esh")
 
@@ -92,8 +100,12 @@ libraries = {
 }
 
 [node name="Texture" parent="." index="1"]
+material = SubResource("ShaderMaterial_4xrvj")
 texture = ExtResource("3_vnq44")
 
 [node name="CollisionShape2D" parent="." index="2"]
 position = Vector2(0, 18)
-shape = SubResource("RectangleShape2D_osisj")
+polygon = PackedVector2Array(-26, 11, -26, -12, 26, -12, 26, 11)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
