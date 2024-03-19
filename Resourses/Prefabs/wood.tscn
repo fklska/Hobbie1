@@ -5,7 +5,8 @@
 [ext_resource type="Script" path="res://Resourses/Scripts/wood.gd" id="2_njwln"]
 [ext_resource type="Shader" path="res://outline.gdshader" id="3_7o1wn"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1x8q"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_too2p"]
+resource_local_to_scene = true
 shader = ExtResource("3_7o1wn")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
@@ -19,9 +20,9 @@ script = ExtResource("2_njwln")
 type = "Wood"
 
 [node name="Texture" parent="." index="0"]
-material = SubResource("ShaderMaterial_y1x8q")
+material = SubResource("ShaderMaterial_too2p")
 texture = ExtResource("1_tvyi4")
 
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, 9)
-polygon = PackedVector2Array(-11, -4, 10, -4, 0, 12)
+polygon = PackedVector2Array(-10, -9, 10, -9, 7, 12, -6, 12)

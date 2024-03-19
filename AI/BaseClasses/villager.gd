@@ -35,7 +35,7 @@ func _ready():
 	#setup_polygon()
 	firs_pos = global_position
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	match state:
 		RUN:
 			run()
@@ -75,7 +75,7 @@ func attack():
 var index: int = 0
 func setup_polygon():
 	var coor = global_position
-	var bounding_outline = PackedVector2Array([Vector2(coor.x - 256, coor.y - 256), Vector2(coor.x + 256, coor.y - 256), Vector2(coor.x + 256, coor.y + 256), Vector2(coor.x - 256, coor.y + 256)])
+	var _bounding_outline = PackedVector2Array([Vector2(coor.x - 256, coor.y - 256), Vector2(coor.x + 256, coor.y - 256), Vector2(coor.x + 256, coor.y + 256), Vector2(coor.x - 256, coor.y + 256)])
 	#nav_mesh.navigation_polygon.add_outline_at_index(bounding_outline, index)
 	print_debug("Start Baking")
 	#nav_mesh.bake_navigation_polygon(true)
@@ -101,7 +101,7 @@ func show_selected_info():
 func _to_string():
 	return "Base Villager"
 
-func _on_input_event(viewport, event: InputEvent, shape_idx):
+func _on_input_event(_viewport, event: InputEvent, _shape_idx):
 	if event.is_action_pressed("RightMouseButton"):
 		RectSelectorClass.selected_object.append(self)
 		print_debug(RectSelectorClass.selected_object)
@@ -110,10 +110,10 @@ func _on_enemy_trigger_body_entered(body):
 	enemy_target = body
 	state = RUN
 
-func _on_enemy_trigger_body_exited(body):
+func _on_enemy_trigger_body_exited(_body):
 	enemy_target = null
 	await anim.animation_finished
 	state = RUN
 
-func _on_weapon_body_entered(body):
+func _on_weapon_body_entered(_body):
 	print_debug("Get Hit")

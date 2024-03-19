@@ -5,7 +5,8 @@
 [ext_resource type="Script" path="res://Resourses/Scripts/gold.gd" id="2_wk81d"]
 [ext_resource type="Shader" path="res://outline.gdshader" id="3_vfsp8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2yer"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cyheb"]
+resource_local_to_scene = true
 shader = ExtResource("3_vfsp8")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
@@ -19,5 +20,5 @@ script = ExtResource("2_wk81d")
 type = "Gold"
 
 [node name="Texture" parent="." index="0"]
-material = SubResource("ShaderMaterial_c2yer")
+material = SubResource("ShaderMaterial_cyheb")
 texture = ExtResource("1_patfn")

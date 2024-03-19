@@ -5,7 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dkd27jxqd6ork" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_11.png" id="2_uwnvi"]
 [ext_resource type="Shader" path="res://outline.gdshader" id="3_8j5s8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_blbaq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h2b0j"]
+resource_local_to_scene = true
 shader = ExtResource("3_8j5s8")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
@@ -19,5 +20,5 @@ script = ExtResource("2_5pxcs")
 type = "Iron"
 
 [node name="Texture" parent="." index="0"]
-material = SubResource("ShaderMaterial_blbaq")
+material = SubResource("ShaderMaterial_h2b0j")
 texture = ExtResource("2_uwnvi")

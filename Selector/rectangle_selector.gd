@@ -13,7 +13,7 @@ var end_pos: Vector2
 
 var is_draw: bool = false
 
-func _process(delta):
+func _process(_delta):
 	draw_selector_rect()
 
 func clear():
@@ -48,9 +48,8 @@ func draw_selector_rect():
 		else:
 			panel_rect.scale.y = 1
 
-		var size = Vector2(abs(start_pos.x - end_pos.x), abs(start_pos.y - end_pos.y))
-		panel_rect.size = size
-
+		size = Vector2(abs(start_pos.x - end_pos.x), abs(start_pos.y - end_pos.y))
+		
 		panel_collider.shape.size = size
 		panel_collider.position = Vector2(size.x / 2, size.y / 2)
 

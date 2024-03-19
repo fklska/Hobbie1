@@ -110,7 +110,7 @@ func setup_polygon(current_position: Vector2):
 	#nav_mesh.navigation_polygon.clear_outlines()
 	var coor = current_position
 	#var bounding_outline = PackedVector2Array([Vector2(-SIZE.x * 32, -SIZE.y * 32), Vector2(SIZE.x * 32 / 8, -SIZE.y * 32), Vector2(SIZE.x * 32 / 8, SIZE.y * 32 / 8), Vector2(-SIZE.x * 32, SIZE.y * 32 / 8)])
-	var bounding_outline = PackedVector2Array([Vector2(coor.x - 256, coor.y - 256), Vector2(coor.x + 256, coor.y - 256), Vector2(coor.x + 256, coor.y + 256), Vector2(coor.x - 256, coor.y + 256)])
+	var _bounding_outline = PackedVector2Array([Vector2(coor.x - 256, coor.y - 256), Vector2(coor.x + 256, coor.y - 256), Vector2(coor.x + 256, coor.y + 256), Vector2(coor.x - 256, coor.y + 256)])
 	#nav_mesh.navigation_polygon.add_outline(bounding_outline)
 	print_debug("Start Baking")
 	#nav_mesh.bake_navigation_polygon(true)

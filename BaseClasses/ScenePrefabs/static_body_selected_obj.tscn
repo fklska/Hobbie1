@@ -1,13 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1uwin6oqyhns"]
+[gd_scene load_steps=6 format=3 uid="uid://b1uwin6oqyhns"]
 
 [ext_resource type="Script" path="res://BaseClasses/ScriptClasses/static_body_selected_object.gd" id="1_p3m3c"]
+[ext_resource type="Shader" path="res://outline.gdshader" id="2_sjcks"]
 [ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="3_ug3o3"]
 [ext_resource type="Texture2D" uid="uid://imkgdt01hauu" path="res://UI/UIAssets/E-Key.png" id="4_4gufj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_75s72"]
+resource_local_to_scene = true
+shader = ExtResource("2_sjcks")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = false
 
 [node name="StaticBodySelectedObj" type="StaticBody2D"]
 script = ExtResource("1_p3m3c")
 
 [node name="Texture" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_75s72")
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
 
@@ -21,3 +33,7 @@ z_index = 2
 position = Vector2(0, -50)
 texture = ExtResource("4_4gufj")
 hframes = 2
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

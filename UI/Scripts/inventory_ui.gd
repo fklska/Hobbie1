@@ -9,7 +9,7 @@ func _ready():
 	display_flying_obj = get_node("FlyingObj")
 	slots = $GridContainer.get_children()
 
-func _process(delta):
+func _process(_delta):
 	if Slot.flying_obj != null:
 		display_flying_obj.texture = Slot.flying_obj.image
 		display_flying_obj.get_child(0).text = str(Slot.flying_obj.amount)

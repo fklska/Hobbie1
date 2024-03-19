@@ -12,7 +12,7 @@ var start_collect: bool:
 		start_collect = value
 		$CheckButton.button_pressed = start_collect
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	match state:
 		RUN:
 			run()

@@ -22,7 +22,7 @@ var state = EMPTY
 var slot_number_label: Label
 
 
-func _process(delta):
+func _process(_delta):
 	state_machine()
 	
 

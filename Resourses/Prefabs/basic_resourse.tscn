@@ -1,9 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpmuho6osgn33"]
+[gd_scene load_steps=11 format=3 uid="uid://cpmuho6osgn33"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_kpm82"]
 [ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="2_mwnmf"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="2_teda1"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="3_fmnx2"]
+[ext_resource type="Shader" path="res://outline.gdshader" id="4_mu4ns"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_867q3"]
+resource_local_to_scene = true
+shader = ExtResource("4_mu4ns")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tc87y"]
 bg_color = Color(0.854902, 0.560784, 0.0784314, 1)
@@ -55,8 +66,11 @@ type = ""
 current_color = Color(1, 1, 1, 1)
 damage_node = ExtResource("3_fmnx2")
 
+[node name="Texture" parent="." index="0"]
+material = SubResource("ShaderMaterial_867q3")
+
 [node name="CollisionShape2D" parent="." index="1"]
-polygon = PackedVector2Array(-16, 10, -2, -12, 8, -12, 14, 10)
+polygon = PackedVector2Array(-20, 12, -6, -12, 15, -12, 15, 12)
 
 [node name="Selector" parent="." index="2"]
 visible = false

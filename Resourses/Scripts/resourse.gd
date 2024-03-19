@@ -48,12 +48,6 @@ func get_texture():
 func show_healthbar():
 	hb.visible = true
 
-func _on_input_event(viewport, event: InputEvent, shape_idx):
-	if event.is_action_pressed("LeftMouseButton"):
-		#if mouse_enter:
-			#SelectorClass.selected_object = self
-		pass
-
 func _on_timer_timeout():
 	damage_bar.value = HEALTH
 

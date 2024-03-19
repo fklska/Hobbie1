@@ -1,23 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccppdgqk5yuir"]
+[gd_scene load_steps=4 format=3 uid="uid://ccppdgqk5yuir"]
 
 [ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_lf805"]
 [ext_resource type="Script" path="res://Resourses/Scripts/rock.gd" id="2_0j7ew"]
 [ext_resource type="Texture2D" uid="uid://b06ojyuwegde" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_10.png" id="2_3y0j2"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="3_ca5r7"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w8mbj"]
-shader = ExtResource("3_ca5r7")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 2
-shader_parameter/inside = false
-shader_parameter/add_margins = false
-shader_parameter/enable = false
 
 [node name="BasicResourse" instance=ExtResource("1_lf805")]
 script = ExtResource("2_0j7ew")
 type = "Stone"
 
 [node name="Texture" parent="." index="0"]
-material = SubResource("ShaderMaterial_w8mbj")
 texture = ExtResource("2_3y0j2")
