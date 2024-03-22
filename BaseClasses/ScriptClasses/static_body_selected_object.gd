@@ -21,6 +21,11 @@ func _on_mouse_entered():
 func _on_mouse_exited():
 	hide_outline()
 
+func send_obj_data() -> Dictionary:
+	return {
+		"Basic": "Basic staticBody2dObject",
+		"2nd": "Second label"
+	}
 
 func _on_input_event(viewport, event: InputEvent, shape_idx):
 	if event.is_action_pressed("LeftMouseButton"):

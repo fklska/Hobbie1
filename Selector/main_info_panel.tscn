@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxbl7bjq8hf5x"]
+
+[ext_resource type="Script" path="res://Selector/selector_data.gd" id="1_1k4g0"]
+[ext_resource type="Texture2D" uid="uid://cjx4bvmefedck" path="res://UI/UIAssets/Banners/banner.png" id="1_2fte3"]
+[ext_resource type="Texture2D" uid="uid://b0o2l83ka66rk" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_02.png" id="2_p1i7a"]
+[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="4_yw2la"]
+
+[node name="MainInfoPanel" type="MarginContainer" node_paths=PackedStringArray("texture", "VContainter")]
+anchors_preset = -1
+anchor_left = 0.381944
+anchor_top = 0.808642
+anchor_right = 0.618056
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_1k4g0")
+texture = NodePath("Background/Portret")
+VContainter = NodePath("Background/VBoxContainer")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_2fte3")
+
+[node name="Portret" type="TextureRect" parent="Background"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+anchor_left = 0.113971
+anchor_top = 0.169355
+anchor_right = 0.349265
+anchor_bottom = 0.685484
+texture = ExtResource("2_p1i7a")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.349266
+anchor_top = 0.0322581
+anchor_right = 0.812502
+anchor_bottom = 0.983871
+offset_right = -30.0
+offset_bottom = -104.0
+theme = ExtResource("4_yw2la")
+metadata/_edit_use_anchors_ = true

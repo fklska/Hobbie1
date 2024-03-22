@@ -43,7 +43,7 @@ func poup(amount: String):
 	get_tree().current_scene.add_child(damage)
 
 func get_texture():
-	return get_node("Sprite2D").texture
+	return get_node("Texture").texture
 
 func show_healthbar():
 	hb.visible = true
@@ -53,7 +53,7 @@ func _on_timer_timeout():
 
 func show_selected_info():
 	return {
-		"texture": get_node("Sprite2D").texture,
+		"texture": get_node("Texture").texture,
 		"text": ("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
 	}
 

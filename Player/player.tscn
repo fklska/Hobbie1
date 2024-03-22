@@ -1,11 +1,8 @@
-[gd_scene load_steps=52 format=3 uid="uid://cnpdc5pf0vuaj"]
+[gd_scene load_steps=49 format=3 uid="uid://cnpdc5pf0vuaj"]
 
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="1_q72hs"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="1_soyia"]
 [ext_resource type="PackedScene" uid="uid://cuu8agnq5ro00" path="res://Camera/main_cam.tscn" id="3_7v0dy"]
-[ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/prefabs/inventory_ui.tscn" id="4_h0fti"]
-[ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://UI/prefabs/hot_bar.tscn" id="4_ubnck"]
-[ext_resource type="PackedScene" uid="uid://beia5xtps3hg8" path="res://Player/UI/player_health_bar.tscn" id="5_gfsoj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7qahw"]
 radius = 6.0
@@ -476,14 +473,13 @@ _data = {
 "disapear": SubResource("Animation_422wi")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("selected_HB_item", "selected_HB_weapon_shape", "INVENTORY")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("selected_HB_item", "selected_HB_weapon_shape")]
 collision_layer = 2
 collision_mask = 31
 input_pickable = true
 script = ExtResource("1_q72hs")
 selected_HB_item = NodePath("AnimatedSprite2D/Weapon/WeaponSprite")
 selected_HB_weapon_shape = NodePath("AnimatedSprite2D/Weapon/CollisionShape2D")
-INVENTORY = NodePath("CanvasLayer/InventoryUI")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 2)
@@ -520,39 +516,6 @@ libraries = {
 [node name="Camera2D" parent="." instance=ExtResource("3_7v0dy")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="HotBar" parent="CanvasLayer" node_paths=PackedStringArray("slot_selector") instance=ExtResource("4_ubnck")]
-z_index = 2
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 25.0
-offset_top = 100.0
-offset_right = 25.0
-offset_bottom = 100.0
-grow_horizontal = 1
-grow_vertical = 1
-slot_selector = NodePath("")
-
-[node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("4_h0fti")]
-visible = false
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 157.0
-offset_top = 297.0
-offset_right = 157.0
-offset_bottom = 297.0
-grow_horizontal = 1
-grow_vertical = 1
-
-[node name="PlayerHealthBar" parent="CanvasLayer" instance=ExtResource("5_gfsoj")]
-offset_left = 25.0
-offset_top = 23.0
-offset_right = -1127.0
-offset_bottom = -625.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
 root_node = NodePath("")

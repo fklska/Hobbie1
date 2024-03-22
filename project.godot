@@ -15,10 +15,6 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
 config/icon="res://icon.svg"
 
-[autoload]
-
-SelectorData="*res://Selector/selector_data.gd"
-
 [dotnet]
 
 project/assembly_name="Godot1"

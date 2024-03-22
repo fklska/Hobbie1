@@ -13,12 +13,10 @@ func action(inventory: Dictionary):
 			
 	storage_ui.update_ui(data.data_items)
 
+func send_obj_data() -> Dictionary:
+	return {
+		"Description": "Базовое строение в деревне"
+	}
+
 func create_human():
 	print_debug("Villager Created!")
-
-func show_selected_info():
-	return {
-		"texture": get_node("Sprite2D").texture,
-		"text": "Building",
-		"action": [create_human]
-		}
