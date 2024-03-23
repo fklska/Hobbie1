@@ -51,54 +51,6 @@ script = ExtResource("3_vnp28")
 layout_mode = 2
 script = ExtResource("3_vnp28")
 
-[node name="Slot5" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot6" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot7" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot8" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot9" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot10" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot11" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot12" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot13" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot14" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot15" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
-[node name="Slot16" parent="GridContainer" instance=ExtResource("1_0agyi")]
-layout_mode = 2
-script = ExtResource("3_vnp28")
-
 [node name="FlyingObj" type="Sprite2D" parent="."]
 z_index = 3
 

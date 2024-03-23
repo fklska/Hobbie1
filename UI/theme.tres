@@ -55,13 +55,13 @@ corner_detail = 5
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o461a"]
 texture = ExtResource("1_2ap5q")
-expand_margin_left = 23.0
-expand_margin_top = 23.0
-expand_margin_right = 23.0
-expand_margin_bottom = 27.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ido5"]
-bg_color = Color(0.705882, 0, 0.180392, 1)
+bg_color = Color(0, 0.611765, 0.266667, 1)
 corner_detail = 6
 
 [resource]
@@ -88,5 +88,6 @@ Button/styles/focus = SubResource("StyleBoxEmpty_bojb6")
 Button/styles/hover = SubResource("StyleBoxFlat_h4gdo")
 Button/styles/normal = SubResource("StyleBoxFlat_22k27")
 Button/styles/pressed = SubResource("StyleBoxFlat_0kisw")
+Label/colors/font_color = Color(0, 0, 0, 1)
 ProgressBar/styles/background = SubResource("StyleBoxTexture_o461a")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_1ido5")

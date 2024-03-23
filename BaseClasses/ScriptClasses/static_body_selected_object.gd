@@ -19,7 +19,8 @@ func _on_mouse_entered():
 
 
 func _on_mouse_exited():
-	hide_outline()
+	if SelectorDataClass.selected_obj != self:
+		hide_outline()
 
 func send_obj_data() -> Dictionary:
 	return {

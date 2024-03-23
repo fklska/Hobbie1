@@ -1,13 +1,16 @@
 extends Node
 class_name SelectorDataClass
 
-@export var texture: TextureRect
+@export var obj_texture: TextureRect
 @export var VContainter: VBoxContainer
 
 static var selected_obj: PhysicsBody2D
 static var need_to_update: bool = false
 
+static var prev_selected_obj: PhysicsBody2D
+
 static func set_selected_obj(obj: PhysicsBody2D):
+	prev_selected_obj = selected_obj
 	selected_obj = obj
 	need_to_update = true
 	print_debug("Setted: ", selected_obj)
@@ -20,7 +23,7 @@ func _process(_delta):
 func update_panel():
 	clear()
 
-	texture.texture = selected_obj.texture.texture
+	obj_texture.texture = selected_obj.texture.texture
 	var data: Dictionary = selected_obj.send_obj_data()
 	
 	for property in data:
@@ -31,6 +34,8 @@ func update_panel():
 
 
 func clear():
-	texture.texture = null
+	if prev_selected_obj != null:
+		prev_selected_obj.hide_outline()
+	obj_texture.texture = null
 	for label in VContainter.get_children():
 		label.queue_free()

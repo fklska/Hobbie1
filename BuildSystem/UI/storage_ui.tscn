@@ -2,98 +2,110 @@
 
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_pfvo4"]
 [ext_resource type="Script" path="res://BuildSystem/scripts/storage_ui.gd" id="2_cwcl5"]
-[ext_resource type="Texture2D" uid="uid://cjx4bvmefedck" path="res://UI/UIAssets/Banners/banner.png" id="2_uy4gs"]
+[ext_resource type="Texture2D" uid="uid://cg8ljg60on6ua" path="res://UI/UIAssets/Buttons/Button_Hover_3Slides.png" id="3_bby3r"]
 [ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="4_ntgfg"]
 [ext_resource type="Texture2D" uid="uid://b06ojyuwegde" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_10.png" id="5_p4ra7"]
 [ext_resource type="Texture2D" uid="uid://dkd27jxqd6ork" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_11.png" id="6_wwf5m"]
 [ext_resource type="Texture2D" uid="uid://k8v3t7pxhf4u" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_12.png" id="7_84k50"]
 
-[node name="storage_ui" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="storage_ui" type="TextureRect"]
+custom_minimum_size = Vector2(192, 64)
+anchors_preset = -1
+anchor_left = 0.416667
+anchor_right = 0.583333
+anchor_bottom = 0.0987654
+grow_horizontal = 2
+theme = ExtResource("1_pfvo4")
+texture = ExtResource("3_bby3r")
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("2_cwcl5")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.135417
+anchor_top = 0.125
+anchor_right = 0.864583
+anchor_bottom = 0.625
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_pfvo4")
-script = ExtResource("2_cwcl5")
+metadata/_edit_use_anchors_ = true
 
-[node name="TextureButton" type="Button" parent="."]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-icon = ExtResource("2_uy4gs")
-flat = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TextureButton"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 66.0
-offset_right = 88.0
-offset_bottom = 114.0
-
-[node name="TextureRect" type="TextureRect" parent="TextureButton/HBoxContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+size_flags_horizontal = 0
 texture = ExtResource("4_ntgfg")
-expand_mode = 1
+expand_mode = 2
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="TextureButton/HBoxContainer/TextureRect"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 26.0
-offset_right = 47.0
-offset_bottom = 49.0
+[node name="Label" type="Label" parent="HBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8125
+anchor_top = 0.5625
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "0"
 horizontal_alignment = 2
 
-[node name="TextureRect2" type="TextureRect" parent="TextureButton/HBoxContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("5_p4ra7")
-expand_mode = 1
+expand_mode = 2
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="TextureButton/HBoxContainer/TextureRect2"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 26.0
-offset_right = 47.0
-offset_bottom = 49.0
+[node name="Label" type="Label" parent="HBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8125
+anchor_top = 0.5625
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "0"
 horizontal_alignment = 2
 
-[node name="TextureRect3" type="TextureRect" parent="TextureButton/HBoxContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("6_wwf5m")
-expand_mode = 1
+expand_mode = 2
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="TextureButton/HBoxContainer/TextureRect3"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 26.0
-offset_right = 47.0
-offset_bottom = 49.0
+[node name="Label" type="Label" parent="HBoxContainer/TextureRect3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8125
+anchor_top = 0.5625
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "0"
 horizontal_alignment = 2
 
-[node name="TextureRect4" type="TextureRect" parent="TextureButton/HBoxContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="TextureRect4" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("7_84k50")
-expand_mode = 1
+expand_mode = 2
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="TextureButton/HBoxContainer/TextureRect4"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 26.0
-offset_right = 47.0
-offset_bottom = 49.0
+[node name="Label" type="Label" parent="HBoxContainer/TextureRect4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8125
+anchor_top = 0.5625
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "0"
 horizontal_alignment = 2
-
-[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

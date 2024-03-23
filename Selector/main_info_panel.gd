@@ -14,7 +14,6 @@ func update_panel():
 	for property in data:
 		var label = Label.new()
 		label.text = property + ": " + data[property]
-		label.size = Vector2(96, 32)
 		VContainter.add_child(label)
 
 

@@ -83,10 +83,10 @@ visible = false
 [node name="healthbar" type="ProgressBar" parent="." index="4"]
 visible = false
 z_index = 1
-offset_left = -16.0
-offset_top = -25.0
-offset_right = 314.0
-offset_bottom = 5.0
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 152.0
+offset_bottom = -4.0
 scale = Vector2(0.1, 0.1)
 theme = ExtResource("2_teda1")
 value = 100.0
@@ -94,10 +94,10 @@ show_percentage = false
 
 [node name="damage_bar" type="ProgressBar" parent="." index="5"]
 visible = false
-offset_left = -16.0
-offset_top = -25.0
-offset_right = 314.0
-offset_bottom = 5.0
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 152.0
+offset_bottom = -4.0
 scale = Vector2(0.1, 0.1)
 theme = ExtResource("2_teda1")
 theme_override_styles/fill = SubResource("StyleBoxFlat_tc87y")

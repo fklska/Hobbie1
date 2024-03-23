@@ -2,7 +2,7 @@ extends StaticBodySelectedObject
 class_name Building
 
 @export var data: StorageDataClass
-@onready var storage_ui: StorageUI = $CanvasLayer2/storage_ui
+@export var storage_ui: StorageUI
 
 func action(inventory: Dictionary):
 	for slot: Slot in inventory:
