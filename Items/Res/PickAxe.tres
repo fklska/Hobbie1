@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponClass" load_steps=4 format=3 uid="uid://cpk8nt4u6rwe"]
+
+[ext_resource type="Texture2D" uid="uid://3vot3uac6qpk" path="res://AI/#1---Transparent-Icons_127.png" id="1_fgysg"]
+[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="2_67oji"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1y8iy"]
+
+[resource]
+script = ExtResource("2_67oji")
+damage = 5
+required_strench = 10
+shape = SubResource("CapsuleShape2D_1y8iy")
+image = ExtResource("1_fgysg")
+name = "PickAxe"
+amount = 1
+type = 5

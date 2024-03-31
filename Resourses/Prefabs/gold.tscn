@@ -17,7 +17,7 @@ shader_parameter/enable = false
 
 [node name="BasicResourse" instance=ExtResource("1_eqmbd")]
 script = ExtResource("2_wk81d")
-type = "Gold"
+type = 3
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_cyheb")

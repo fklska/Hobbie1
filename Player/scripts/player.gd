@@ -52,7 +52,7 @@ func run():
 		velocity = Vector2(0, 0)
 		animPlayer.play("idle")
 
-func add_item(_texture: Texture2D, _name: String, _amount: int, _type: String):
+func add_item(_texture: Texture2D, _name: String, _amount: int, _type: int):
 	for slot: Slot in INVENTORY.slots:
 		if not slot.is_empty():
 			var item: InventoryItem = slot.current_item

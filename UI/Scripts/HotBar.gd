@@ -27,7 +27,7 @@ func _input(event: InputEvent):
 			texture,
 			"test_name",
 			1,
-			"Weapon",
+			Types.InventoryItemTypes.WEAPON,
 			5,
 			1
 		)

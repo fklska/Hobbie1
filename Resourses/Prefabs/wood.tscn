@@ -17,7 +17,7 @@ shader_parameter/enable = false
 
 [node name="BasicResourse" instance=ExtResource("1_d46uf")]
 script = ExtResource("2_njwln")
-type = "Wood"
+type = 2
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_too2p")

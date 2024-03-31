@@ -64,7 +64,7 @@ input_pickable = true
 script = ExtResource("2_mwnmf")
 HEALTH = 100
 STORAGE = 100
-type = ""
+type = 0
 current_color = Color(1, 1, 1, 1)
 damage_node = ExtResource("3_fmnx2")
 

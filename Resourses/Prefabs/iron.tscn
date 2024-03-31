@@ -17,7 +17,7 @@ shader_parameter/enable = false
 
 [node name="BasicResourse" instance=ExtResource("1_cr5xk")]
 script = ExtResource("2_5pxcs")
-type = "Iron"
+type = 4
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_h2b0j")

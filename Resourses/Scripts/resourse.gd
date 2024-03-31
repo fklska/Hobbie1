@@ -3,7 +3,7 @@ class_name ActiveResourses
 
 @export var HEALTH = 100
 @export var STORAGE = 100
-@export_enum("Stone", "Gold", "Wood", "Iron") var type: String
+@export var type = Types.ActiveResoursesTypes.EMPTY
 
 @export var current_color = Color8(255, 255, 255, 255)
 
@@ -14,6 +14,12 @@ class_name ActiveResourses
 @onready var timer: Timer = $damage_bar/Timer
 @onready var anim = $AnimationPlayer
 
+var type_name: Dictionary = {
+	1: "Stone",
+	2: "Wood",
+	3: "Gold",
+	4: "Iron"
+}
 
 func get_damage(damage: int):
 	HEALTH -= damage
@@ -54,8 +60,8 @@ func _on_timer_timeout():
 func show_selected_info():
 	return {
 		"texture": get_node("Texture").texture,
-		"text": ("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
+		"text": ("Resourse " + type_name.get(type) + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
 	}
 
 func _to_string():
-	return ("Resourse " + type + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
+	return ("Resourse " + type_name.get(type) + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
