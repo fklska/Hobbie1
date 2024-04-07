@@ -1,6 +1,5 @@
 extends Resource
-class_name Types
-
+class_name Globals
 
 enum InventoryItemTypes {
 	EMPTY,

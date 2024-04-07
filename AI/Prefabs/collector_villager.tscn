@@ -94,7 +94,7 @@ radius = 39.5601
 [node name="CollectorVillager" node_paths=PackedStringArray("resourse_trigger") instance=ExtResource("1_djkry")]
 position = Vector2(262, 141)
 script = ExtResource("2_vcd7y")
-searching_resourse_type = "Wood"
+searching_resourse_type = 2
 resourse_trigger = NodePath("ResourseTrigger/CollisionShape2D")
 data = SubResource("Resource_e8euf")
 

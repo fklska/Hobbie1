@@ -1,7 +1,7 @@
 extends BaseVillager
 class_name CollectorVillager
 
-@export_enum("Wood", "Iron", "Stone", "Gold") var searching_resourse_type: String
+@export var searching_resourse_type = Globals.ActiveResoursesTypes.WOOD
 
 @export var resourse_trigger: CollisionShape2D
 

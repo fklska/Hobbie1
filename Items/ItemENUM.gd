@@ -1,7 +1,4 @@
 extends Resource
+class_name AllInventoryObjects
 
-# ItemName
-static var ITEMS = {
-	"IronSword": "res://Items/Res/IronSword.tres",
-	"IronPickAxe": "res://Items/Res/PickAxe.tres"
-}
+@export var Items: Array[InventoryItem]

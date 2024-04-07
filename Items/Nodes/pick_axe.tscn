@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://dq1lc6pj7l2nm"]
+
+[ext_resource type="PackedScene" uid="uid://gk7ibufqhhoq" path="res://Items/Nodes/BasicItem_Node.tscn" id="1_r01f4"]
+[ext_resource type="Texture2D" uid="uid://3vot3uac6qpk" path="res://Items/Assets/#1---Transparent-Icons_127.png" id="2_jitb4"]
+[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="3_jcjtr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fi54e"]
+
+[sub_resource type="Resource" id="Resource_lgn76"]
+resource_local_to_scene = true
+script = ExtResource("3_jcjtr")
+damage = 5
+required_strench = 10
+shape = SubResource("CapsuleShape2D_fi54e")
+image = ExtResource("2_jitb4")
+name = "PickAxe"
+amount = 1
+type = 0
+description = "Not So shunny"
+
+[node name="PickAxe" instance=ExtResource("1_r01f4")]
+z_index = 4
+ITEM = SubResource("Resource_lgn76")

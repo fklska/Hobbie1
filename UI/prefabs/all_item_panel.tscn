@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://doe0felce6861"]
+
+[ext_resource type="Script" path="res://UI/Scripts/AllItemsPanel.gd" id="1_agl8k"]
+[ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/prefabs/slot.tscn" id="2_k2vro"]
+
+[node name="AllItemPanel" type="PanelContainer" node_paths=PackedStringArray("root_container")]
+offset_right = 68.0
+offset_bottom = 68.0
+script = ExtResource("1_agl8k")
+root_container = NodePath("GridContainer")
+slot_node = ExtResource("2_k2vro")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+columns = 4

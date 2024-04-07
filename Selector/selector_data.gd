@@ -23,7 +23,7 @@ func _process(_delta):
 func update_panel():
 	clear()
 
-	obj_texture.texture = selected_obj.texture.texture
+	obj_texture.texture = selected_obj.get_texture()
 	var data: Dictionary = selected_obj.send_obj_data()
 	
 	for property in data:

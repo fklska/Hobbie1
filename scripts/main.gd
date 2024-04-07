@@ -17,7 +17,7 @@ static var SIZE = Vector2i(32, 32)
 @export_range(0, 0.3) var iron_height: float
 
 @onready var tilemap: TileMap = $Tilemap
-@onready var player = $Player
+@onready var player = $Player_MainCharacter
 @onready var RES_TYPES = {
 		gold_height: {
 			"prefab": preload("res://Resourses/Prefabs/gold.tscn"),

@@ -1,10 +1,9 @@
-extends CharacterBody2D
+extends KinematicBodySelectedObejct
 class_name Player
 
 @export_range(10, 100) var AGILITY = 10
 @export_range(10, 100) var STRENCH = 10
 @export_range(10, 100) var INTELECT = 10
-
 
 @export var selected_HB_item: TextureRect
 @export var selected_HB_weapon_shape: CollisionShape2D
@@ -13,7 +12,6 @@ class_name Player
 
 
 const SPEED = 20.0
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animPlayer = $AnimationPlayer
 
 
@@ -23,9 +21,6 @@ enum {
 	ITEM_ACTION,
 }
 var state = RUN
-
-func _ready():
-	pass
 
 func _physics_process(_delta):
 	match state:
@@ -111,14 +106,8 @@ func show_selected_info():
 		"\n Intelect: " + str(INTELECT) + "\n")
 	}
 
-var mouse_enter: bool = false
-func _on_mouse_entered():
-	modulate = Color8(155, 155, 155, 255)
-	mouse_enter = true
-
-func _on_mouse_exited():
-	modulate = Color8(255, 255, 255, 255)
-	mouse_enter = false
+func get_texture():
+	return anim.sprite_frames.get_frame_texture("idle", 0)
 
 func _on_weapon_body_entered(body):
 	if body is ActiveResourses:

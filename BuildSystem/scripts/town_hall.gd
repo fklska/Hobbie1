@@ -18,5 +18,8 @@ func send_obj_data() -> Dictionary:
 		"Description": "Базовое строение в деревне"
 	}
 
+func get_texture():
+	return get_node("Texture").texture
+
 func create_human():
 	print_debug("Villager Created!")

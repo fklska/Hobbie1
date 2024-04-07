@@ -3,7 +3,7 @@ class_name HotBarClass
 
 @export var slot_selector: TextureRect
 
-#@export var test_weapon: InventoryItem
+@export var test_weapon: PackedScene
 
 static var current_selected_slot: Slot 
 
@@ -22,16 +22,21 @@ func _input(event: InputEvent):
 		set_slot_selector(slot)
 	
 	if event.is_action_pressed("test"):
-		var texture = load("res://AI/#1---Transparent-Icons_54.png")
+		var texture = load("res://Items/Assets/#1---Transparent-Icons_54.png")
 		var test_weapon = WeaponClass.new(
 			texture,
 			"test_name",
 			1,
-			Types.InventoryItemTypes.WEAPON,
+			Globals.InventoryItemTypes.WEAPON,
+			"des",
 			5,
 			1
 		)
+		#var item = load("res://Items/Nodes/pick_axe.tscn").instantiate()
+		#var item = test_weapon.instantiate(PackedScene.GEN_EDIT_STATE_MAIN_INHERITED)
+		#print_debug(item.ITEM)
 		current_selected_slot.update(test_weapon)
+		print_debug(current_selected_slot)
 
 func set_slot_selector(slot: Slot):
 	slot_selector.reparent(slot)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bx4ha6i7br5tk"]
+[gd_scene load_steps=6 format=3 uid="uid://bx4ha6i7br5tk"]
 
 [ext_resource type="Script" path="res://UI/Scripts/HotBar.gd" id="1_8ct3h"]
+[ext_resource type="PackedScene" uid="uid://dq1lc6pj7l2nm" path="res://Items/Nodes/pick_axe.tscn" id="2_fn38j"]
 [ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/prefabs/slot.tscn" id="2_o4s85"]
 [ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="3_ii1k0"]
 [ext_resource type="Script" path="res://UI/Scripts/hb_slots.gd" id="3_pe505"]
@@ -14,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8ct3h")
 slot_selector = NodePath("HBoxContainer/Slot/TextureRect")
+test_weapon = ExtResource("2_fn38j")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0

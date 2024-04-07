@@ -15,4 +15,4 @@ shape = SubResource("CapsuleShape2D_40i5w")
 image = ExtResource("1_d4xl6")
 name = "test"
 amount = 1
-type = "Weapon"
+type = 0
