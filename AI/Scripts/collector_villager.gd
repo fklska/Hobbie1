@@ -25,19 +25,19 @@ func run():
 	var dir = to_local(nav.get_next_path_position()).normalized()
 	if dir:
 		velocity = dir * SPEED * data.AGILITY
-		anim.play("walk")
+		anim_player.play("walk")
 		if dir > Vector2(0, 0):
-			anim_sprite.scale.x = -1
+			anim.scale.x = -1
 		
 		if dir < Vector2(0, 0):
-			anim_sprite.scale.x = 1
+			anim.scale.x = 1
 
 	if nav.is_navigation_finished():
 		velocity = Vector2(0, 0)
 		if start_collect:
 			if nearest_resourse != null:
 				state = ATTACK
-		anim.play("idle")
+		anim_player.play("idle")
 	
 	if enemy_target:
 		nav.target_position = enemy_target.global_position
@@ -52,13 +52,13 @@ func run():
 
 func search():
 	if nearest_resourse == null:
-		anim.play("search")
+		anim_player.play("search")
 
 func attack():
 	if nearest_resourse == null:
-		await anim.animation_finished
+		await anim_player.animation_finished
 		state = SEARCH
-	anim.play("attack")
+	anim_player.play("attack")
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("LeftMouseButton"):
@@ -73,7 +73,15 @@ func _on_weapon_body_entered(body: ActiveResourses):
 		var damage: int = 10 + data.STRENCH
 		body.get_damage(damage)
 		data.add_item(InventoryItem.new(body.get_texture(), body.name, damage, body.type))
-	
+
+func get_texture():
+	return anim.sprite_frames.get_frame_texture("idle", 0)
+
+func send_obj_data() -> Dictionary:
+	return {
+		"Basic": "Basic KinematicBody2dObject",
+		"2nd": "Second label"
+	}
 
 func _on_resourse_trigger_body_entered(body: ActiveResourses):
 	if body.type == searching_resourse_type:

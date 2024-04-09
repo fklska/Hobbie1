@@ -1,14 +1,11 @@
-extends CharacterBody2D
+extends KinematicBodySelectedObejct
 class_name BaseVillager
 
 @export var data: AIBackData
 
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 #@onready var main: MapGenerator = $".."
-
-
-@onready var anim: AnimationPlayer = $AnimationPlayer
-@onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 const SPEED = 50
 
@@ -26,15 +23,6 @@ var firs_pos: Vector2
 
 #@onready var nav_mesh: NavigationRegion2D
 
-func _ready():
-	#nav_mesh = $"../NavigationRegion2D"
-	#var new_polygon: NavigationPolygon = NavigationPolygon.new()
-	#new_polygon.source_geometry_mode = NavigationPolygon.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN
-	#new_polygon.agent_radius = 10
-	#nav_mesh.navigation_polygon = new_polygon
-	#setup_polygon()
-	firs_pos = global_position
-
 func _physics_process(_delta):
 	match state:
 		RUN:
@@ -46,12 +34,12 @@ func run():
 	var dir = to_local(nav.get_next_path_position()).normalized()
 	if dir:
 		velocity = dir * SPEED * data.AGILITY
-		anim.play("walk")
+		anim_player.play("walk")
 		if dir > Vector2(0, 0):
-			anim_sprite.scale.x = -1
+			anim.scale.x = -1
 		
 		if dir < Vector2(0, 0):
-			anim_sprite.scale.x = 1
+			anim.scale.x = 1
 	
 	if enemy_target:
 		nav.target_position = enemy_target.global_position
@@ -61,7 +49,7 @@ func run():
 	else:
 		if nav.is_navigation_finished():
 			velocity = Vector2(0, 0)
-			anim.play("idle")
+			anim_player.play("idle")
 			
 	#if abs(global_position.x - firs_pos.x) + abs(global_position.y - firs_pos.y) >= 170:
 	#	setup_polygon()
@@ -70,7 +58,7 @@ func run():
 	move_and_slide()
 
 func attack():
-	anim.play("attack")
+	anim_player.play("attack")
 
 var index: int = 0
 func setup_polygon():
@@ -94,17 +82,12 @@ func _input(event: InputEvent):
 
 func show_selected_info():
 	return {
-		"texture": anim_sprite.sprite_frames.get_frame_texture("idle", 0),
+		"texture": anim.sprite_frames.get_frame_texture("idle", 0),
 		"text": ("")
 	}
 
 func _to_string():
 	return "Base Villager"
-
-func _on_input_event(_viewport, event: InputEvent, _shape_idx):
-	if event.is_action_pressed("RightMouseButton"):
-		RectSelectorClass.selected_object.append(self)
-		print_debug(RectSelectorClass.selected_object)
 
 func _on_enemy_trigger_body_entered(body):
 	enemy_target = body
@@ -112,8 +95,17 @@ func _on_enemy_trigger_body_entered(body):
 
 func _on_enemy_trigger_body_exited(_body):
 	enemy_target = null
-	await anim.animation_finished
+	await anim_player.animation_finished
 	state = RUN
 
 func _on_weapon_body_entered(_body):
 	print_debug("Get Hit")
+
+func get_texture():
+	pass
+
+func send_obj_data() -> Dictionary:
+	return {
+		"Basic": "Basic KinematicBody2dObject",
+		"2nd": "Second label"
+	}
