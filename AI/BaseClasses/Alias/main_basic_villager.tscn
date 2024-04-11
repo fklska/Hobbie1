@@ -1,66 +1,67 @@
-[gd_scene load_steps=26 format=3 uid="uid://b71gt3p1pd1yt"]
+[gd_scene load_steps=26 format=3 uid="uid://8xkcngptvwcq"]
 
-[ext_resource type="Script" path="res://AI/BaseClasses/villager.gd" id="1_2k0kf"]
-[ext_resource type="Texture2D" uid="uid://t1qt3bqwc0yw" path="res://AI/BaseClasses/Male4.png" id="1_3vbqf"]
-[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="2_1cqu1"]
-[ext_resource type="Texture2D" uid="uid://cq76esqb51ykk" path="res://AI/sword 1.png" id="2_ju872"]
-[ext_resource type="Script" path="res://AI/Scripts/ai_data.gd" id="3_xycgl"]
+[ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_p8ta3"]
+[ext_resource type="Script" path="res://AI/BaseClasses/Alias/villager.gd" id="2_3amib"]
+[ext_resource type="Texture2D" uid="uid://cq76esqb51ykk" path="res://Items/Assets/sword 1.png" id="3_1u8jh"]
+[ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="5_wauok"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="6_nkhur"]
+[ext_resource type="Texture2D" uid="uid://t1qt3bqwc0yw" path="res://AI/BaseClasses/Alias/Male4.png" id="7_wwfmw"]
 
-[sub_resource type="Resource" id="Resource_lj36q"]
-script = ExtResource("2_1cqu1")
-damage = 5
-required_strench = 2
-image = ExtResource("2_ju872")
-name = "test"
-amount = 1
-type = 0
-description = ""
-
-[sub_resource type="Resource" id="Resource_8321e"]
-script = ExtResource("3_xycgl")
+[sub_resource type="Resource" id="Resource_thuxa"]
+resource_local_to_scene = true
+script = ExtResource("5_wauok")
 HEALTH = 0
-STRENCH = 10
-AGILITY = 1
+STRENCH = 0
+AGILITY = 0
 INTELECT = 0
 name = ""
 type = "Villager"
-WEAPON = SubResource("Resource_lj36q")
 Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])
 max_carry_weight = 10
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x43jr"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qwr4s"]
 radius = 87.0057
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u6mcb"]
+resource_local_to_scene = true
+shader = ExtResource("6_nkhur")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = false
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_v2qru"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b0vot"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(32, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ltc4w"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(64, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_46fg8"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(96, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8jffa"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(128, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwvxp"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(160, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6owu7"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(192, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1barj"]
-atlas = ExtResource("1_3vbqf")
+atlas = ExtResource("7_wwfmw")
 region = Rect2(224, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tfco3"]
@@ -100,13 +101,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n2aqe"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k4jiw"]
 radius = 3.0
 height = 40.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3gm4s"]
-radius = 6.0
-height = 18.0
 
 [sub_resource type="Animation" id="Animation_o8kxf"]
 length = 0.001
@@ -303,58 +300,46 @@ _data = {
 "walk": SubResource("Animation_ngkh0")
 }
 
-[node name="BaseVillager" type="CharacterBody2D"]
-z_index = -1
-collision_layer = 2
-collision_mask = 31
-input_pickable = true
-script = ExtResource("1_2k0kf")
-data = SubResource("Resource_8321e")
+[node name="MainBasicVillager" instance=ExtResource("1_p8ta3")]
+script = ExtResource("2_3amib")
+data = SubResource("Resource_thuxa")
 
-[node name="EnemyTrigger" type="Area2D" parent="."]
+[node name="EnemyTrigger" type="Area2D" parent="." index="1"]
 collision_layer = 2
 collision_mask = 4
 input_pickable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTrigger"]
-shape = SubResource("CircleShape2D_x43jr")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTrigger" index="0"]
+shape = SubResource("CircleShape2D_qwr4s")
 debug_color = Color(0.933333, 0.0745098, 0.615686, 0.419608)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" parent="." index="2"]
+material = SubResource("ShaderMaterial_u6mcb")
 sprite_frames = SubResource("SpriteFrames_tfco3")
 animation = &"idle"
 
-[node name="Weapon" type="Area2D" parent="AnimatedSprite2D"]
+[node name="Weapon" type="Area2D" parent="AnimatedSprite2D" index="0"]
 visible = false
 position = Vector2(-7, 1.90735e-06)
 
-[node name="WeaponSprite" type="Sprite2D" parent="AnimatedSprite2D/Weapon"]
+[node name="WeaponSprite" type="Sprite2D" parent="AnimatedSprite2D/Weapon" index="0"]
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_ju872")
+texture = ExtResource("3_1u8jh")
 offset = Vector2(0, -170)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Weapon"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Weapon" index="1"]
 position = Vector2(4.76837e-07, -19)
-shape = SubResource("CapsuleShape2D_n2aqe")
+shape = SubResource("CapsuleShape2D_k4jiw")
 disabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("CapsuleShape2D_3gm4s")
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.376471, 0.164706, 0.933333, 1)
 debug_path_custom_point_size = 10.0
 debug_path_custom_line_width = 5.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_dlad1")
 }
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="body_entered" from="EnemyTrigger" to="." method="_on_enemy_trigger_body_entered"]
-[connection signal="body_exited" from="EnemyTrigger" to="." method="_on_enemy_trigger_body_exited"]
-[connection signal="body_entered" from="AnimatedSprite2D/Weapon" to="." method="_on_weapon_body_entered"]

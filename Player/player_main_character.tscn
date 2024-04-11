@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_5t8oh"]
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="2_tll70"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="3_slw5e"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_slw5e"]
 [ext_resource type="Texture2D" uid="uid://3hvb500lwbpx" path="res://Player/red hood itch free Copy-Sheet.png" id="3_y456y"]
 [ext_resource type="PackedScene" uid="uid://cuu8agnq5ro00" path="res://Camera/main_cam.tscn" id="4_d1huh"]
 

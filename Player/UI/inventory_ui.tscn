@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bduu47fsemt20"]
 
 [ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/prefabs/slot.tscn" id="1_0agyi"]
-[ext_resource type="Script" path="res://UI/Scripts/inventory_ui.gd" id="1_w3xik"]
-[ext_resource type="Script" path="res://UI/Scripts/Inventory_slot.gd" id="3_vnp28"]
+[ext_resource type="Script" path="res://Player/UI/scripts/inventory_ui.gd" id="1_w3xik"]
+[ext_resource type="Script" path="res://Player/UI/scripts/Inventory_slot.gd" id="3_vnp28"]
 
 [node name="InventoryUI" type="Control"]
 z_index = 2

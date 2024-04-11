@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq76esqb51ykk"
-path="res://.godot/imported/sword 1.png-5650be5d20363f48b3526e367e120443.ctex"
+uid="uid://c5ec8hivh74gx"
+path="res://.godot/imported/MiniLumberjack.png-bdb286ba81f38fec42426febaed5c228.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AI/sword 1.png"
-dest_files=["res://.godot/imported/sword 1.png-5650be5d20363f48b3526e367e120443.ctex"]
+source_file="res://AI/Prefabs/Alias/assets/MiniLumberjack.png"
+dest_files=["res://.godot/imported/MiniLumberjack.png-bdb286ba81f38fec42426febaed5c228.ctex"]
 
 [params]
 

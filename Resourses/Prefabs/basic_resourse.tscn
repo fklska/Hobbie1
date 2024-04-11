@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="2_mwnmf"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="2_teda1"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="3_fmnx2"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="4_mu4ns"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_mu4ns"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_867q3"]
 resource_local_to_scene = true

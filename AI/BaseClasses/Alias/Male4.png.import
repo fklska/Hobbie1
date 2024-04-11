@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c75ewspb38miu"
-path="res://.godot/imported/axe 1.png-bcaf2b4bd970189907c40f2a5831a6cb.ctex"
+uid="uid://t1qt3bqwc0yw"
+path="res://.godot/imported/Male4.png-3c1e9749fcba040cae7e4f68900113e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AI/axe 1.png"
-dest_files=["res://.godot/imported/axe 1.png-bcaf2b4bd970189907c40f2a5831a6cb.ctex"]
+source_file="res://AI/BaseClasses/Alias/Male4.png"
+dest_files=["res://.godot/imported/Male4.png-3c1e9749fcba040cae7e4f68900113e8.ctex"]
 
 [params]
 

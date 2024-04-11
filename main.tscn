@@ -1,16 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=15 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
 [ext_resource type="PackedScene" uid="uid://e3tw5rrxm6bf" path="res://DebugConsole/custom_debbuger.tscn" id="4_8csdw"]
-[ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://UI/prefabs/hot_bar.tscn" id="5_drtwv"]
-[ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/prefabs/inventory_ui.tscn" id="7_16lju"]
+[ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://Player/UI/hot_bar.tscn" id="5_drtwv"]
+[ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://Player/UI/inventory_ui.tscn" id="7_16lju"]
 [ext_resource type="PackedScene" uid="uid://beia5xtps3hg8" path="res://Player/UI/player_health_bar.tscn" id="7_u3odg"]
 [ext_resource type="PackedScene" uid="uid://h3wbd84xih6v" path="res://BuildSystem/buildings/TownHall.tscn" id="8_erq2y"]
 [ext_resource type="PackedScene" uid="uid://doe0felce6861" path="res://UI/prefabs/all_item_panel.tscn" id="8_rf2id"]
 [ext_resource type="PackedScene" uid="uid://cxbl7bjq8hf5x" path="res://Selector/main_info_panel.tscn" id="8_ui1hx"]
-[ext_resource type="PackedScene" uid="uid://b3lrti1cgcygf" path="res://AI/Prefabs/main_collector_villager.tscn" id="11_f77r4"]
+[ext_resource type="PackedScene" uid="uid://b3lrti1cgcygf" path="res://AI/Prefabs/Alias/main_collector_villager.tscn" id="11_f77r4"]
 [ext_resource type="PackedScene" uid="uid://b0dwhont1cotx" path="res://Player/player_main_character.tscn" id="11_ljrm2"]
+[ext_resource type="PackedScene" uid="uid://dwnwnd8parvu1" path="res://AI/BaseClasses/Enemy/stone_giant.tscn" id="12_03y0n"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 seed = -1743871685
@@ -127,3 +128,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MainCollectorVillager" parent="." instance=ExtResource("11_f77r4")]
 position = Vector2(322, 327)
+
+[node name="StoneGiant" parent="." instance=ExtResource("12_03y0n")]
+position = Vector2(539, 222)

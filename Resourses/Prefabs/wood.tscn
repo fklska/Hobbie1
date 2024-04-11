@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_d46uf"]
 [ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="1_tvyi4"]
 [ext_resource type="Script" path="res://Resourses/Scripts/wood.gd" id="2_njwln"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="3_7o1wn"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_7o1wn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_too2p"]
 resource_local_to_scene = true

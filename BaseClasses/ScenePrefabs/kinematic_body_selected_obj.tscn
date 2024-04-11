@@ -1,9 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ddl18dld7vkor"]
 
 [ext_resource type="Script" path="res://BaseClasses/ScriptClasses/InteractiveObjects/kinematic_body_selected.gd" id="1_xlrum"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="2_0iutk"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2cxme"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_0iutk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6cluj"]
 resource_local_to_scene = true
@@ -17,16 +15,20 @@ shader_parameter/enable = false
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_y0esw"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2cxme"]
+radius = 12.0
+height = 40.0
+
 [node name="KinematicBodySelectedObj" type="CharacterBody2D"]
 input_pickable = true
 script = ExtResource("1_xlrum")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_2cxme")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_6cluj")
 sprite_frames = SubResource("SpriteFrames_y0esw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_2cxme")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

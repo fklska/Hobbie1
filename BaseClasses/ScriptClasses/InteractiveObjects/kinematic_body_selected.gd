@@ -7,7 +7,8 @@ var shader: ShaderMaterial
 
 func _ready():
 	shader = anim.material
-	print_debug(shader)
+	if shader == null:
+		print_debug("SHADER INSTALL")
 
 func set_outline():
 	shader.set_shader_parameter("enable", true)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b1uwin6oqyhns"]
 
 [ext_resource type="Script" path="res://BaseClasses/ScriptClasses/InteractiveObjects/static_body_selected_object.gd" id="1_b10i0"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="2_sjcks"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_sjcks"]
 [ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="3_ug3o3"]
 [ext_resource type="Texture2D" uid="uid://imkgdt01hauu" path="res://UI/UIAssets/E-Key.png" id="4_4gufj"]
 

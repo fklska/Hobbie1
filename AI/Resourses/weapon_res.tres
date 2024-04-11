@@ -11,4 +11,5 @@ required_strench = 1
 image = SubResource("ImageTexture_2pdfk")
 name = "Noname"
 amount = 1
-type = "Weapon"
+type = 0
+description = ""

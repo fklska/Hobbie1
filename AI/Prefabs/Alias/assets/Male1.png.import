@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5ec8hivh74gx"
-path="res://.godot/imported/MiniLumberjack.png-b53d088e36fc606f8fdb54c13b9d70ff.ctex"
+uid="uid://kpdlk2pter1g"
+path="res://.godot/imported/Male1.png-93c69501a6b40d391d3f5fdff994260a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AI/MiniLumberjack.png"
-dest_files=["res://.godot/imported/MiniLumberjack.png-b53d088e36fc606f8fdb54c13b9d70ff.ctex"]
+source_file="res://AI/Prefabs/Alias/assets/Male1.png"
+dest_files=["res://.godot/imported/Male1.png-93c69501a6b40d391d3f5fdff994260a.ctex"]
 
 [params]
 

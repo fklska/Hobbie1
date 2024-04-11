@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_cr5xk"]
 [ext_resource type="Script" path="res://Resourses/Scripts/iron.gd" id="2_5pxcs"]
 [ext_resource type="Texture2D" uid="uid://dkd27jxqd6ork" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_11.png" id="2_uwnvi"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="3_8j5s8"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_8j5s8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2b0j"]
 resource_local_to_scene = true

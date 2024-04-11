@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://BuildSystem/scripts/town_hall.gd" id="2_fopta"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="3_35esh"]
 [ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="3_vnq44"]
-[ext_resource type="Shader" path="res://outline.gdshader" id="5_2qy2q"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="5_2qy2q"]
 [ext_resource type="PackedScene" uid="uid://bq2jvgxrp2es6" path="res://BuildSystem/UI/storage_ui.tscn" id="6_2o8ry"]
 
 [sub_resource type="Animation" id="Animation_au1dd"]

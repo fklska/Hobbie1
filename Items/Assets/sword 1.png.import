@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kpdlk2pter1g"
-path="res://.godot/imported/Male1.png-9624bf86c24e29bfa2b28a01f31e5f5f.ctex"
+uid="uid://cq76esqb51ykk"
+path="res://.godot/imported/sword 1.png-63c02bab22497dbbc68df6f24f1c399a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AI/Prefabs/Male1.png"
-dest_files=["res://.godot/imported/Male1.png-9624bf86c24e29bfa2b28a01f31e5f5f.ctex"]
+source_file="res://Items/Assets/sword 1.png"
+dest_files=["res://.godot/imported/sword 1.png-63c02bab22497dbbc68df6f24f1c399a.ctex"]
 
 [params]
 

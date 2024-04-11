@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckql0tq1xmuyo"
-path="res://.godot/imported/Armi no border.png-0fd6bd7e8caf024fe17e64fcdb8f852d.ctex"
+uid="uid://717lxhmpp7ey"
+path="res://.godot/imported/Character_sheet.png-ee50aefab65afce4d811012b8c4c8816.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AI/Armi no border.png"
-dest_files=["res://.godot/imported/Armi no border.png-0fd6bd7e8caf024fe17e64fcdb8f852d.ctex"]
+source_file="res://AI/BaseClasses/Enemy/Character_sheet.png"
+dest_files=["res://.godot/imported/Character_sheet.png-ee50aefab65afce4d811012b8c4c8816.ctex"]
 
 [params]
 
