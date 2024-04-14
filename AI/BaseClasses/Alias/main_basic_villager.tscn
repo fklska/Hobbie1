@@ -19,9 +19,6 @@ type = "Villager"
 Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])
 max_carry_weight = 10
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qwr4s"]
-radius = 87.0057
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u6mcb"]
 resource_local_to_scene = true
 shader = ExtResource("6_nkhur")
@@ -104,6 +101,9 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k4jiw"]
 radius = 3.0
 height = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qwr4s"]
+radius = 87.0057
 
 [sub_resource type="Animation" id="Animation_o8kxf"]
 length = 0.001
@@ -304,16 +304,7 @@ _data = {
 script = ExtResource("2_3amib")
 data = SubResource("Resource_thuxa")
 
-[node name="EnemyTrigger" type="Area2D" parent="." index="1"]
-collision_layer = 2
-collision_mask = 4
-input_pickable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTrigger" index="0"]
-shape = SubResource("CircleShape2D_qwr4s")
-debug_color = Color(0.933333, 0.0745098, 0.615686, 0.419608)
-
-[node name="AnimatedSprite2D" parent="." index="2"]
+[node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_u6mcb")
 sprite_frames = SubResource("SpriteFrames_tfco3")
 animation = &"idle"
@@ -331,6 +322,15 @@ offset = Vector2(0, -170)
 position = Vector2(4.76837e-07, -19)
 shape = SubResource("CapsuleShape2D_k4jiw")
 disabled = true
+
+[node name="EnemyTrigger" type="Area2D" parent="." index="1"]
+collision_layer = 2
+collision_mask = 4
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTrigger" index="0"]
+shape = SubResource("CircleShape2D_qwr4s")
+debug_color = Color(0.933333, 0.0745098, 0.615686, 0.419608)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
 debug_enabled = true

@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dwnwnd8parvu1"]
+[gd_scene load_steps=38 format=3 uid="uid://dwnwnd8parvu1"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_yun30"]
 [ext_resource type="Script" path="res://AI/BaseClasses/Enemy/stone_giant.gd" id="2_ho4l5"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_13vkk"]
 [ext_resource type="Script" path="res://AI/BaseClasses/Enemy/stone_giant_data.gd" id="3_b1a20"]
 [ext_resource type="Texture2D" uid="uid://717lxhmpp7ey" path="res://AI/BaseClasses/Enemy/Character_sheet.png" id="4_i5j23"]
+[ext_resource type="Texture2D" uid="uid://clprqdasu1kj8" path="res://AI/BaseClasses/Enemy/Laser_sheet.png" id="6_7r6ge"]
 
 [sub_resource type="Resource" id="Resource_liplv"]
 script = ExtResource("3_b1a20")
@@ -61,6 +62,306 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdkuf"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 900, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j53m2"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 1000, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl2m3"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 1100, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulsh0"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 1200, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j21n1"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 1300, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7u0il"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 1400, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wiwwm"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 0, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cv5p8"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 100, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pse80"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 200, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4s116"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 300, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6tl7"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 400, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3305f"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 500, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ppdc"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 600, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvilx"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 700, 300, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bktkc"]
+atlas = ExtResource("6_7r6ge")
+region = Rect2(0, 800, 300, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ec68b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdkuf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j53m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pl2m3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulsh0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j21n1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7u0il")
+}],
+"loop": true,
+"name": &"laser",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wiwwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cv5p8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pse80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4s116")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6tl7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3305f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ppdc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvilx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bktkc")
+}],
+"loop": true,
+"name": &"pre_laser",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_be6eq"]
+size = Vector2(254, 12.5)
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_uibja"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7lpue"]
+particle_flag_disable_z = true
+directional_velocity_min = 0.0
+directional_velocity_max = 0.0
+directional_velocity_curve = SubResource("CurveXYZTexture_uibja")
+radial_velocity_min = 61.23
+radial_velocity_max = 221.47
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="Animation" id="Animation_0804l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Laser:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"pre_laser"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Laser:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Laser:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ya1g2"]
+length = 0.8
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Laser:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Laser:animation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"pre_laser"]
+}
+
+[sub_resource type="Animation" id="Animation_qaf4p"]
+length = 0.65
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Laser:frame")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Laser:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["laser"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Laser:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.65),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 2.82743]
+}
+
+[sub_resource type="Animation" id="Animation_xkhig"]
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Laser:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Laser:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["pre_laser"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pf12g"]
+_data = {
+"RESET": SubResource("Animation_0804l"),
+"idle": SubResource("Animation_ya1g2"),
+"laser": SubResource("Animation_qaf4p"),
+"pre_laser": SubResource("Animation_xkhig")
+}
+
 [node name="StoneGiant" instance=ExtResource("1_yun30")]
 scale = Vector2(2, 2)
 script = ExtResource("2_ho4l5")
@@ -70,4 +371,26 @@ data = SubResource("Resource_liplv")
 material = SubResource("ShaderMaterial_mhyc1")
 sprite_frames = SubResource("SpriteFrames_hcngq")
 animation = &"idle"
-frame_progress = 0.46869
+frame = 1
+
+[node name="Laser" type="AnimatedSprite2D" parent="." index="2"]
+position = Vector2(3, -18.5)
+sprite_frames = SubResource("SpriteFrames_ec68b")
+animation = &"pre_laser"
+offset = Vector2(97, 17)
+
+[node name="Area2D" type="Area2D" parent="Laser" index="0"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Laser/Area2D" index="0"]
+position = Vector2(118.5, 0.75)
+shape = SubResource("RectangleShape2D_be6eq")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Laser" index="1"]
+emitting = false
+amount = 7
+process_material = SubResource("ParticleProcessMaterial_7lpue")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_pf12g")
+}

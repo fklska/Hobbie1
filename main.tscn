@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c34jocapwhqh8"]
+[gd_scene load_steps=16 format=3 uid="uid://c34jocapwhqh8"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_x33w5"]
 [ext_resource type="TileSet" uid="uid://ghcdpblo5xrf" path="res://main.tres" id="2_77wjo"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b3lrti1cgcygf" path="res://AI/Prefabs/Alias/main_collector_villager.tscn" id="11_f77r4"]
 [ext_resource type="PackedScene" uid="uid://b0dwhont1cotx" path="res://Player/player_main_character.tscn" id="11_ljrm2"]
 [ext_resource type="PackedScene" uid="uid://dwnwnd8parvu1" path="res://AI/BaseClasses/Enemy/stone_giant.tscn" id="12_03y0n"]
+[ext_resource type="PackedScene" uid="uid://bml80fbyn2s8k" path="res://BuildSystem/buildings/black_smith.tscn" id="13_bo2bq"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_o5d00"]
 seed = -1743871685
@@ -39,6 +40,7 @@ gold_height = 0.022
 iron_height = 0.036
 
 [node name="Player_MainCharacter" parent="." node_paths=PackedStringArray("INVENTORY") instance=ExtResource("11_ljrm2")]
+z_index = 1
 position = Vector2(428, 284)
 INVENTORY = NodePath("../CanvasLayer/InventoryUI")
 
@@ -131,3 +133,6 @@ position = Vector2(322, 327)
 
 [node name="StoneGiant" parent="." instance=ExtResource("12_03y0n")]
 position = Vector2(539, 222)
+
+[node name="BlackSmith" parent="." instance=ExtResource("13_bo2bq")]
+position = Vector2(219, 539)

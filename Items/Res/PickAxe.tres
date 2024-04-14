@@ -14,4 +14,4 @@ image = ExtResource("1_fgysg")
 name = "PickAxe"
 amount = 1
 type = 5
-description = ""
+description = "test"
