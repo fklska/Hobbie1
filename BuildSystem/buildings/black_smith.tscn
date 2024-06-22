@@ -2,8 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_blr83"]
 [ext_resource type="Script" path="res://BuildSystem/scripts/black_smith.gd" id="2_7a3fy"]
-[ext_resource type="Texture2D" uid="uid://llp3pkwsuc15" path="res://BuildSystem/assets/370PEG.png" id="2_vs7r0"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_3hssb"]
+[ext_resource type="Texture2D" uid="uid://b6rd6ckeubmor" path="res://BuildSystem/assets/370PEG2-0.png" id="4_qio1e"]
+[ext_resource type="Texture2D" uid="uid://bv88axqotujox" path="res://BuildSystem/assets/370PEG2-1.png" id="5_acy30"]
+[ext_resource type="Texture2D" uid="uid://c7b27ryw78d4o" path="res://BuildSystem/assets/370PEG2-2.png" id="6_cc7py"]
+[ext_resource type="Texture2D" uid="uid://c7ongmupys70o" path="res://BuildSystem/assets/370PEG2-3.png" id="7_knk0c"]
+[ext_resource type="Texture2D" uid="uid://cnixa2dd5nhvv" path="res://BuildSystem/assets/370PEG2-4.png" id="8_6wqod"]
+[ext_resource type="Texture2D" uid="uid://cdjgpvn35if0d" path="res://BuildSystem/assets/370PEG2-5.png" id="9_f4p2h"]
+[ext_resource type="Texture2D" uid="uid://yfasm1uwcvlt" path="res://BuildSystem/assets/370PEG2-6.png" id="10_akycc"]
+[ext_resource type="Texture2D" uid="uid://c3qmrhnba51os" path="res://BuildSystem/assets/370PEG2-7.png" id="11_kfy01"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3v8t5"]
 shader = ExtResource("3_3hssb")
@@ -14,69 +21,47 @@ shader_parameter/inside = false
 shader_parameter/add_margins = false
 shader_parameter/enable = false
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j5dow"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 2086, 392, 298)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n2iwr"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 1788, 392, 298)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eu45x"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 1490, 392, 298)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mbruc"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 1192, 392, 298)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gcepo"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 894, 392, 298)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dscnv"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 596, 392, 298)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2cqb4"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 298, 392, 298)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rurfi"]
-atlas = ExtResource("2_vs7r0")
-region = Rect2(0, 0, 392, 298)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_tyxco"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j5dow")
+"texture": ExtResource("4_qio1e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n2iwr")
+"texture": ExtResource("5_acy30")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eu45x")
+"texture": ExtResource("6_cc7py")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mbruc")
+"texture": ExtResource("7_knk0c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gcepo")
+"texture": ExtResource("8_6wqod")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dscnv")
+"texture": ExtResource("9_f4p2h")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2cqb4")
+"texture": ExtResource("10_akycc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rurfi")
+"texture": ExtResource("11_kfy01")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 9.0
 }]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n8byl"]
+resource_local_to_scene = true
+shader = ExtResource("3_3hssb")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = false
 
 [sub_resource type="Animation" id="Animation_ty6v6"]
 resource_name = "idle"
@@ -119,9 +104,12 @@ script = ExtResource("2_7a3fy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_3v8t5")
-scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_tyxco")
 animation = &"idle"
+frame_progress = 0.59542
+
+[node name="Texture" parent="." index="1"]
+material = SubResource("ShaderMaterial_n8byl")
 
 [node name="CollisionShape2D" parent="." index="2"]
 polygon = PackedVector2Array(-188, 70, -25, 70, 68, 69, 194, 50, 196, -104, -187, -103)

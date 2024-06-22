@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://vumq2e0d4xkh"]
+
+[ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="1_owwux"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2hbv"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.682353, 0.588235, 0.239216, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.121569, 0.141176, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_detail = 2
+anti_aliasing = false
+anti_aliasing_size = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82pde"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.14902, 0.290196, 0.223529, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.121569, 0.141176, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_detail = 2
+anti_aliasing = false
+anti_aliasing_size = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufdyt"]
+bg_color = Color(0.666667, 0.690196, 0.705882, 0.588235)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+anti_aliasing_size = 0.56
+
+[node name="Menu" type="TabContainer"]
+offset_right = 718.0
+offset_bottom = 384.0
+theme_override_colors/font_selected_color = Color(0.192157, 0.25098, 0.764706, 1)
+theme_override_colors/font_hovered_color = Color(0.917647, 0.113725, 0.227451, 1)
+theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_owwux")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_r2hbv")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_82pde")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ufdyt")
+tab_alignment = 1
+
+[node name="Buildings" type="TabBar" parent="."]
+layout_mode = 2
+
+[node name="TabBar2" type="TabBar" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="TabBar3" type="TabBar" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="TabBar4" type="TabBar" parent="."]
+visible = false
+layout_mode = 2
