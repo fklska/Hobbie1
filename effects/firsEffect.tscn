@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://df07gr28egplj"]
+
+[ext_resource type="Shader" path="res://Resourses/Prefabs/testShader.gdshader" id="1_p18l8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bcpbl"]
+shader = ExtResource("1_p18l8")
+shader_parameter/scroll = Vector2(0.1, 0.1)
+shader_parameter/goScroll = false
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pn40v"]
+noise_type = 5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nmckm"]
+noise = SubResource("FastNoiseLite_pn40v")
+
+[node name="Sprite2D" type="Sprite2D"]
+material = SubResource("ShaderMaterial_bcpbl")
+texture = SubResource("NoiseTexture2D_nmckm")

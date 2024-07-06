@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhmrbylseit5m"]
+
+[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_ep2lt"]
+[ext_resource type="Script" path="res://UI/prefabs/mouseInfoPanel.gd" id="2_pmsim"]
+
+[node name="InfoPanel" type="PanelContainer"]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_ep2lt")
+script = ExtResource("2_pmsim")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ItemName" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Item Name"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = -2
+
+[node name="ItemType" type="Label" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_ep2lt")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "ItemType"
+uppercase = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="Decription" type="RichTextLabel" parent="VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+text = "Item Description"
+fit_content = true

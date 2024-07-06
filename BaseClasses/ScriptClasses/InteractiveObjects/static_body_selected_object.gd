@@ -18,6 +18,7 @@ func hide_outline():
 	shader.set_shader_parameter("enable", false)
 
 func _on_mouse_entered():
+	MouseInfoPanel.setPosSignal()
 	set_outline()
 
 func _on_mouse_exited():
