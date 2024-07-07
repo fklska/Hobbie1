@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://vumq2e0d4xkh"]
+[gd_scene load_steps=8 format=3 uid="uid://vumq2e0d4xkh"]
 
 [ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="1_owwux"]
 [ext_resource type="Script" path="res://UI/Scripts/Menu.gd" id="2_1xlac"]
+[ext_resource type="Script" path="res://BuildSystem/BuildManager.gd" id="3_1w5oy"]
 [ext_resource type="Texture2D" uid="uid://b6rd6ckeubmor" path="res://BuildSystem/assets/370PEG2-0.png" id="3_s41en"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2hbv"]
@@ -57,6 +58,7 @@ script = ExtResource("2_1xlac")
 
 [node name="Buildings" type="TabBar" parent="."]
 layout_mode = 2
+script = ExtResource("3_1w5oy")
 
 [node name="GridContainer" type="GridContainer" parent="Buildings"]
 layout_mode = 1
@@ -75,7 +77,7 @@ theme_override_constants/h_separation = 64
 theme_override_constants/v_separation = 32
 columns = 4
 
-[node name="Button" type="Button" parent="Buildings/GridContainer"]
+[node name="BlacksmithButt" type="Button" parent="Buildings/GridContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 text = "Кузница"
@@ -84,7 +86,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="Button2" type="Button" parent="Buildings/GridContainer"]
+[node name="TownHallButt" type="Button" parent="Buildings/GridContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 text = "fgfg"
@@ -93,7 +95,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="Button3" type="Button" parent="Buildings/GridContainer"]
+[node name="FireButt" type="Button" parent="Buildings/GridContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 text = "fgfgf"
@@ -113,3 +115,7 @@ layout_mode = 2
 [node name="TabBar4" type="TabBar" parent="."]
 visible = false
 layout_mode = 2
+
+[connection signal="button_down" from="Buildings/GridContainer/BlacksmithButt" to="Buildings" method="_on_blacksmith_butt_button_down"]
+[connection signal="button_down" from="Buildings/GridContainer/TownHallButt" to="Buildings" method="_on_town_hall_butt_button_down"]
+[connection signal="button_down" from="Buildings/GridContainer/FireButt" to="Buildings" method="_on_fire_butt_button_down"]

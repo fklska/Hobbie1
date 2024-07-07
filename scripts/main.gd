@@ -84,8 +84,8 @@ func generate():
 						break
 					
 				grass_tiles.append(Vector2i(x, y))
-
-
+	
+	# tets
 	#print_debug("max: ", height_val.max())
 	#print_debug("min: ", height_val.min())
 	#print_debug("Resmax: ", res_height_val.max())

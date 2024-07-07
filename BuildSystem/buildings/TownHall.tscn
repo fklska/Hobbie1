@@ -74,10 +74,13 @@ shader_parameter/add_margins = false
 shader_parameter/enable = false
 
 [node name="TownHall" node_paths=PackedStringArray("storage_ui") instance=ExtResource("1_rj47l")]
+z_index = 2
 input_pickable = true
 script = ExtResource("2_fopta")
 data = ExtResource("3_35esh")
 storage_ui = NodePath("CanvasLayer2/storage_ui")
+Rectangle = Rect2(-32, -32, 64, 64)
+RectColor = Color(0.27451, 0.47451, 0.345098, 0.431373)
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." index="0"]
 
