@@ -8,10 +8,13 @@ func _on_blacksmith_butt_button_down():
 
 
 func _on_town_hall_butt_button_down():
-	#buildMenu.close()
+	buildMenu.close()
+	var bmode = get_node("/root/BuildMode") as BuildModeManager
+	bmode.build_mode = true
+	print_debug(bmode.position)
+	print_debug(bmode.global_position)
 	var TownHall = TownHallPrefab.instantiate()
 	get_tree().root.add_child(TownHall)
-	print_debug(TownHall.position)
 	TownHall.global_position = get_global_mouse_position()
 	TownHall.start_build()
 

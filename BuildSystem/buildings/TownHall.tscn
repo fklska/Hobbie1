@@ -79,8 +79,9 @@ input_pickable = true
 script = ExtResource("2_fopta")
 data = ExtResource("3_35esh")
 storage_ui = NodePath("CanvasLayer2/storage_ui")
-Rectangle = Rect2(-32, -32, 64, 64)
+Rectangle = Rect2(-64, -64, 128, 128)
 RectColor = Color(0.27451, 0.47451, 0.345098, 0.431373)
+SelectRectColor = Color(0.680279, 0.594012, 0.059898, 1)
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." index="0"]
 

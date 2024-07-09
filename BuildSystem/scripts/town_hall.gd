@@ -7,6 +7,7 @@ class_name Building
 @export_category("BuildManager")
 @export var Rectangle: Rect2
 @export var RectColor: Color
+@export var SelectRectColor: Color
 
 var flying_obj: bool = false
 
@@ -15,8 +16,6 @@ func _process(delta):
 
 func start_build():
 	flying_obj = true
-	print_debug("Start build")
-	print_debug(flying_obj)
 
 func build():
 	if (flying_obj):
@@ -52,3 +51,4 @@ func create_human():
 func _draw():
 	if (flying_obj):
 		draw_rect(Rectangle, RectColor, true)
+	
