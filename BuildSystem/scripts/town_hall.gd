@@ -9,10 +9,15 @@ class_name Building
 @export var RectColor: Color
 @export var SelectRectColor: Color
 
+var buildMode: BuildModeManager
 var flying_obj: bool = false
 
 func _process(delta):
 	build()
+
+func _ready():
+	shader = texture.material
+	buildMode = get_node("/root/BuildMode")
 
 func start_build():
 	flying_obj = true
@@ -20,9 +25,8 @@ func start_build():
 func build():
 	if (flying_obj):
 		var world_pos: Vector2 = get_global_mouse_position()
-		var x: int = floori(world_pos.x)
-		var y: int = floori(world_pos.y)
-		global_position = Vector2i(x, y)
+		var coor = buildMode.cell2pixel((buildMode.pixel2cell(world_pos)))
+		global_position = coor + Vector2i(32, 32)
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("LeftMouseButton"):

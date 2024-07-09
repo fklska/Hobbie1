@@ -16,13 +16,13 @@ var build_mode: bool = false:
 @export var cell_size: Vector2i
 @export var map_size: Vector2i
 
-var last_selected_cell = Vector2i(0, 0)
+var last_selected_cell = null
 
 func _process(delta):
 	need_to_redraw_selected_cell()
 	
 func need_to_redraw_selected_cell():
-	if pixel2cell(get_global_mouse_position()) != last_selected_cell:
+	if pixel2cell(get_global_mouse_position()) != last_selected_cell and last_selected_cell != null:
 		queue_redraw()
 
 func draw_grid():
@@ -32,12 +32,16 @@ func draw_grid():
 
 func draw_selected_cell():
 	var coor: Vector2i = pixel2cell(get_global_mouse_position())
-	draw_rect(Rect2i(coor.x*basis_vec_hor + coor.y*basis_vec_ver,cell_size), SelectRectColor, false)
+	draw_rect(Rect2i(coor.x*basis_vec_hor + coor.y*basis_vec_ver, cell_size), SelectRectColor, false)
+	last_selected_cell = coor
 
 func pixel2cell(pixel:Vector2) -> Vector2i:
 	var x = int(pixel.x/cell_size.x)
 	var y = int(pixel.y/cell_size.y)
 	return Vector2i(x, y)
+	
+func cell2pixel(cell: Vector2) -> Vector2i:
+	return Vector2i(cell.x * cell_size.x, cell.y*cell_size.y)
 
 func _draw():
 	if build_mode:
