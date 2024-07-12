@@ -79,9 +79,10 @@ input_pickable = true
 script = ExtResource("2_fopta")
 data = ExtResource("3_35esh")
 storage_ui = NodePath("CanvasLayer2/storage_ui")
-Rectangle = Rect2(-64, -64, 128, 128)
+Rectangle = Rect2(0, 0, 64, 64)
 RectColor = Color(0.27451, 0.47451, 0.345098, 0.431373)
 SelectRectColor = Color(0.680279, 0.594012, 0.059898, 1)
+size_on_map = 1
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." index="0"]
 
@@ -102,7 +103,8 @@ libraries = {
 [node name="Texture" parent="." index="1"]
 material = SubResource("ShaderMaterial_aml6d")
 texture = ExtResource("3_vnq44")
+offset = Vector2(32, 32)
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2(0, 18)
+position = Vector2(33, 49)
 polygon = PackedVector2Array(-26, 11, -26, -18, 26, -18, 26, 11)

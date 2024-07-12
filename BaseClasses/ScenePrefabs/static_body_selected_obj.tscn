@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1uwin6oqyhns"]
+[gd_scene load_steps=4 format=3 uid="uid://b1uwin6oqyhns"]
 
 [ext_resource type="Script" path="res://BaseClasses/ScriptClasses/InteractiveObjects/static_body_selected_object.gd" id="1_b10i0"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_sjcks"]
-[ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="3_ug3o3"]
-[ext_resource type="Texture2D" uid="uid://imkgdt01hauu" path="res://UI/UIAssets/E-Key.png" id="4_4gufj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_75s72"]
 resource_local_to_scene = true
@@ -22,17 +20,6 @@ script = ExtResource("1_b10i0")
 material = SubResource("ShaderMaterial_75s72")
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-
-[node name="Selector" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(0, 11)
-texture = ExtResource("3_ug3o3")
-
-[node name="Ebutton" type="Sprite2D" parent="."]
-z_index = 2
-position = Vector2(0, -50)
-texture = ExtResource("4_4gufj")
-hframes = 2
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
