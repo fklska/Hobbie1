@@ -2,7 +2,7 @@ extends StaticBodySelectedObject
 class_name Building
 
 @export var data: StorageDataClass
-@export var storage_ui: StorageUI
+#@export var storage_ui: StorageUI
 
 @export_category("BuildManager")
 @export var Rectangle: Rect2
@@ -46,7 +46,7 @@ func action(inventory: Dictionary):
 				data.put_in_storage(inventory[slot])
 				slot.clear_slot()
 			
-	storage_ui.update_ui(data.data_items)
+#	storage_ui.update_ui(data.data_items)
 
 func send_obj_data() -> Dictionary:
 	return {
