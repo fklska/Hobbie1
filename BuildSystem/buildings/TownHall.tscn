@@ -1,28 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://h3wbd84xih6v"]
+[gd_scene load_steps=7 format=3 uid="uid://h3wbd84xih6v"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_rj47l"]
 [ext_resource type="Script" path="res://BuildSystem/scripts/town_hall.gd" id="2_fopta"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="3_35esh"]
 [ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="3_vnq44"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="5_2qy2q"]
-[ext_resource type="Shader" path="res://shaders/BuildingsShineShader.gdshader" id="6_kwwhv"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_y53ly"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aml6d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wvymk"]
 resource_local_to_scene = true
-shader = ExtResource("5_2qy2q")
+shader = ExtResource("4_y53ly")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 2
 shader_parameter/inside = false
 shader_parameter/add_margins = false
 shader_parameter/enable = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywaj3"]
-shader = ExtResource("6_kwwhv")
-shader_parameter/shine_color = Vector4(1, 1, 1, 1)
-shader_parameter/shine_progress = 0.25
-shader_parameter/shine_size = 0.1
-shader_parameter/shine_angle = 45.0
 
 [node name="TownHall" instance=ExtResource("1_rj47l")]
 z_index = 2
@@ -35,13 +27,9 @@ SelectRectColor = Color(0.680279, 0.594012, 0.059898, 1)
 size_on_map = 1
 
 [node name="Texture" parent="." index="0"]
-material = SubResource("ShaderMaterial_aml6d")
+material = SubResource("ShaderMaterial_wvymk")
 texture = ExtResource("3_vnq44")
 offset = Vector2(32, 32)
-
-[node name="vfx" type="Sprite2D" parent="Texture" index="0"]
-material = SubResource("ShaderMaterial_ywaj3")
-position = Vector2(32, 32)
 
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(33, 49)

@@ -1,19 +1,11 @@
 shader_type canvas_item;
 
-uniform sampler2D noise: repeat_enable;
-uniform vec2 scroll = vec2(0.5, 0.5);
-uniform bool goScroll = false;
-
 void vertex() {
-	// Called for every vertex the material is visible on.
+	 // VERTEX.y += sin(TIME + VERTEX.x) / .5;
 }
 
 void fragment() {
-	if (goScroll)
-	{
-		vec4 noiseColor = texture(noise, UV + scroll * TIME);
-		COLOR = noiseColor;
-	}
+	
 }
 
 //void light() {

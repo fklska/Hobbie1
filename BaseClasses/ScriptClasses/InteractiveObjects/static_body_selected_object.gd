@@ -1,7 +1,13 @@
 extends StaticBody2D
 class_name StaticBodySelectedObject
 
+@export_category("SelectedObject")
+@export var Name: String
+@export var Type: String
+@export var Description: String
+
 @onready var texture: Sprite2D = $Texture
+
 
 var shader: ShaderMaterial
 
@@ -18,10 +24,11 @@ func hide_outline():
 	shader.set_shader_parameter("enable", false)
 
 func _on_mouse_entered():
-	MouseInfoPanel.setPosSignal()
+	MouseInfoPanel.set_show(global_position + Vector2(32, 0))
 	set_outline()
 
 func _on_mouse_exited():
+	MouseInfoPanel.hide()
 	if SelectorDataClass.selected_obj != self:
 		hide_outline()
 

@@ -4,7 +4,8 @@
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_xcm1l"]
 
 [node name="Genarator" type="PanelContainer"]
-custom_minimum_size = Vector2(32, 32)
+offset_right = 107.0
+offset_bottom = 68.0
 size_flags_horizontal = 0
 script = ExtResource("1_vqv86")
 metadata/_edit_use_anchors_ = true

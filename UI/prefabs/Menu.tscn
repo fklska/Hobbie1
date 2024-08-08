@@ -104,15 +104,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="TabBar2" type="TabBar" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="TabBar3" type="TabBar" parent="."]
-visible = false
-layout_mode = 2
-
-[node name="TabBar4" type="TabBar" parent="."]
+[node name="Stats" type="TabBar" parent="."]
 visible = false
 layout_mode = 2
 

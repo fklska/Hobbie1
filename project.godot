@@ -18,6 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 BuildMode="*res://BuildSystem/build_mode.tscn"
+MouseInfoPanel="*res://UI/prefabs/mouseInfoPanel.tscn"
+
+[display]
+
+window/vsync/vsync_mode=0
 
 [dotnet]
 

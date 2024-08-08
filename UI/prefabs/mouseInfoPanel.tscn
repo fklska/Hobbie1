@@ -1,9 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhmrbylseit5m"]
 
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_ep2lt"]
-[ext_resource type="Script" path="res://UI/prefabs/mouseInfoPanel.gd" id="2_pmsim"]
+[ext_resource type="Script" path="res://UI/Scripts/mouseInfoPanel.gd" id="2_pmsim"]
 
 [node name="InfoPanel" type="PanelContainer"]
+z_index = 5
+offset_right = 84.0
+offset_bottom = 51.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_ep2lt")

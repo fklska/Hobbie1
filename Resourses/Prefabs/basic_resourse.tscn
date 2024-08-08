@@ -58,6 +58,7 @@ _data = {
 }
 
 [node name="BasicResourse" instance=ExtResource("1_kpm82")]
+y_sort_enabled = true
 collision_layer = 8
 collision_mask = 2
 input_pickable = true
@@ -74,13 +75,7 @@ material = SubResource("ShaderMaterial_867q3")
 [node name="CollisionShape2D" parent="." index="1"]
 polygon = PackedVector2Array(-20, 12, -6, -12, 15, -12, 15, 12)
 
-[node name="Selector" parent="." index="2"]
-visible = false
-
-[node name="Ebutton" parent="." index="3"]
-visible = false
-
-[node name="healthbar" type="ProgressBar" parent="." index="4"]
+[node name="healthbar" type="ProgressBar" parent="." index="2"]
 visible = false
 z_index = 1
 offset_left = -8.0
@@ -92,7 +87,7 @@ theme = ExtResource("2_teda1")
 value = 100.0
 show_percentage = false
 
-[node name="damage_bar" type="ProgressBar" parent="." index="5"]
+[node name="damage_bar" type="ProgressBar" parent="." index="3"]
 visible = false
 offset_left = -8.0
 offset_top = -24.0
@@ -108,11 +103,11 @@ show_percentage = false
 wait_time = 0.3
 one_shot = true
 
-[node name="PopUpLocation" type="Marker2D" parent="." index="6"]
+[node name="PopUpLocation" type="Marker2D" parent="." index="4"]
 z_index = 1
 position = Vector2(0, -32)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
 libraries = {
 "": SubResource("AnimationLibrary_eq8xt")
 }
