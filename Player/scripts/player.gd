@@ -12,8 +12,8 @@ class_name Player
 
 
 const SPEED = 20.0
-@onready var animPlayer = $AnimationPlayer
-
+@onready var animPlayer: AnimationPlayer = $AnimationPlayer
+@onready var Item: Area2D = $AnimatedSprite2D/Weapon
 
 enum {
 	RUN,
@@ -70,6 +70,8 @@ func get_item_from_selected_HB_slot():
 	
 	if item is WeaponClass:
 		animPlayer.play("item_action")
+		print_debug(global_position.direction_to(get_global_mouse_position()).angle())
+		Item.rotation = global_position.direction_to(get_global_mouse_position()).angle()
 		var shape: CapsuleShape2D = CapsuleShape2D.new()
 		shape.height = 40.0
 		shape.radius = 3.0

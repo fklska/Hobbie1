@@ -1,8 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://gk7ibufqhhoq"]
+[gd_scene load_steps=4 format=3 uid="uid://gk7ibufqhhoq"]
 
-[ext_resource type="Texture2D" uid="uid://dyudrlpha70iv" path="res://Items/Assets/#1---Transparent-Icons_54.png" id="1_snpdt"]
-[ext_resource type="Script" path="res://Items/Basic_Item_Node.gd" id="2_utinm"]
+[ext_resource type="Script" path="res://Items/Basic/Item_Node.gd" id="1_jfjrb"]
+[ext_resource type="Resource" uid="uid://7tse4osg34b3" path="res://Items/Res/IronSword.tres" id="2_n5t7a"]
+[ext_resource type="Texture2D" uid="uid://bnefaa2h2hgcs" path="res://Items/Assets/Sword64x64.png" id="3_6cug6"]
 
-[node name="BasicItemNode" type="Sprite2D"]
-texture = ExtResource("1_snpdt")
-script = ExtResource("2_utinm")
+[node name="Item" type="Area2D" node_paths=PackedStringArray("textureRect")]
+script = ExtResource("1_jfjrb")
+textureRect = NodePath("Texture")
+ITEM = ExtResource("2_n5t7a")
+
+[node name="Texture" type="TextureRect" parent="."]
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("3_6cug6")

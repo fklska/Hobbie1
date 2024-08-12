@@ -54,9 +54,11 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_r2hbv")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_82pde")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ufdyt")
 tab_alignment = 1
+current_tab = 1
 script = ExtResource("2_1xlac")
 
 [node name="Buildings" type="TabBar" parent="."]
+visible = false
 layout_mode = 2
 script = ExtResource("3_1w5oy")
 
@@ -104,8 +106,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="Stats" type="TabBar" parent="."]
-visible = false
+[node name="Village" type="TabBar" parent="."]
 layout_mode = 2
 
 [connection signal="button_down" from="Buildings/GridContainer/BlacksmithButt" to="Buildings" method="_on_blacksmith_butt_button_down"]
