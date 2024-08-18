@@ -9,31 +9,31 @@ class_name AIBackData
 @export var name: String
 @export_enum("Villager", "Collector", "Lumberjack") var type: String = "Villager"
 
-@export_category("Items")
-@export var WEAPON: WeaponClass
-@export var Inventory: Array[InventoryItem]
-
-@export var max_carry_weight: int = 10 :
-	get:
-		return STRENCH * 4 + max_carry_weight
-
-func add_item(item: InventoryItem):
-	var el: InventoryItem = has(item)
-	if el == null:
-		Inventory.append(item)
-		return item
-
-	el.increase_amount(item.amount)
-	return el
-		
-func has(item: InventoryItem):
-	for i: InventoryItem in Inventory:
-		if i._compare(item.type):
-			return i
-	return null
-	
-func total_resourse_amount():
-	var value = 0
-	for i: InventoryItem in Inventory:
-		value += i.amount
-	return value
+#@export_category("Items")
+#@export var WEAPON: WeaponClass
+#@export var Inventory: Array[InventoryItem]
+#
+#@export var max_carry_weight: int = 10 :
+	#get:
+		#return STRENCH * 4 + max_carry_weight
+#
+#func add_item(item: InventoryItem):
+	#var el: InventoryItem = has(item)
+	#if el == null:
+		#Inventory.append(item)
+		#return item
+#
+	#el.increase_amount(item.amount)
+	#return el
+		#
+#func has(item: InventoryItem):
+	#for i: InventoryItem in Inventory:
+		#if i._compare(item.type):
+			#return i
+	#return null
+	#
+#func total_resourse_amount():
+	#var value = 0
+	#for i: InventoryItem in Inventory:
+		#value += i.amount
+	#return value

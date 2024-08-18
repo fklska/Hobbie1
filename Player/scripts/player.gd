@@ -4,16 +4,15 @@ class_name Player
 @export_range(10, 100) var AGILITY = 10
 @export_range(10, 100) var STRENCH = 10
 @export_range(10, 100) var INTELECT = 10
-
-@export var selected_HB_item: TextureRect
-@export var selected_HB_weapon_shape: CollisionShape2D
+@export_range(10, 100) var CONCENTRATION = 10
 
 @export var INVENTORY: InventoryUI
-
+@export var Hotbar: HotBarClass
+@export var enableConcentration: bool
 
 const SPEED = 20.0
 @onready var animPlayer: AnimationPlayer = $AnimationPlayer
-@onready var Item: Area2D = $AnimatedSprite2D/Weapon
+@onready var concentration: ProgressBar = $Concentration
 
 enum {
 	RUN,
@@ -29,7 +28,7 @@ func _physics_process(_delta):
 		ITEM_ACTION:
 			get_item_from_selected_HB_slot()
 	
-	move_and_slide()	
+	move_and_slide()
 
 func run():
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
@@ -47,7 +46,7 @@ func run():
 		velocity = Vector2(0, 0)
 		animPlayer.play("idle")
 
-func add_item(_texture: Texture2D, _name: String, _amount: int, _type: int):
+func add_item(_texture: Texture2D, _amount: int, _type: int):
 	for slot: Slot in INVENTORY.slots:
 		if not slot.is_empty():
 			var item: InventoryItem = slot.current_item
@@ -58,7 +57,9 @@ func add_item(_texture: Texture2D, _name: String, _amount: int, _type: int):
 
 	for slot: Slot in INVENTORY.slots:
 		if slot.is_empty():
-			slot.update(InventoryItem.new(_texture, _name, _amount, _type))
+			var item = InventoryItem.new()
+			item.set_properties(_texture, _amount, _type)
+			slot.update(item)
 			return "Added"
 
 func get_item_from_selected_HB_slot():
@@ -69,25 +70,19 @@ func get_item_from_selected_HB_slot():
 		return
 	
 	if item is WeaponClass:
-		animPlayer.play("item_action")
-		print_debug(global_position.direction_to(get_global_mouse_position()).angle())
-		Item.rotation = global_position.direction_to(get_global_mouse_position()).angle()
-		var shape: CapsuleShape2D = CapsuleShape2D.new()
-		shape.height = 40.0
-		shape.radius = 3.0
-		selected_HB_item.texture = item.image
-		selected_HB_weapon_shape.shape = shape
-		return
+		state = RUN
 	
 	if item is InventoryItem:
-		selected_HB_item.texture = item.image
-		selected_HB_weapon_shape.shape = null
-		state = RUN
-		return
+		pass
 
 func hide_item_from_hand():
-	selected_HB_item.texture = null
-	selected_HB_weapon_shape.shape = null
+	pass
+
+func calculate_damage():
+	if enableConcentration:
+		print_debug(STRENCH * concentration.conc_value / 100)
+		return STRENCH * concentration.conc_value / 100
+	return STRENCH / 100
 
 func _input(event: InputEvent):
 	if INVENTORY.visible == false:
@@ -111,8 +106,12 @@ func show_selected_info():
 func get_texture():
 	return anim.sprite_frames.get_frame_texture("idle", 0)
 
-func _on_weapon_body_entered(body):
-	if body is ActiveResourses:
-		var damage: int = 10 + STRENCH
-		body.get_damage(damage)
-		add_item(body.get_texture(), body.name, damage, body.type)
+#func _on_weapon_body_entered(body):
+	#if body is ActiveResourses:
+		#var damage: int = 10 + STRENCH
+		#body.get_damage(damage)
+		#add_item(body.get_texture(), damage, body.type)
+
+func _on_hot_bar_selected_slot_changed(Item: InventoryItem):
+	if is_instance_valid(Item):
+		Item.set_selected({"Parent": self})

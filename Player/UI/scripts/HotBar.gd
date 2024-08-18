@@ -1,4 +1,4 @@
-extends Control
+extends MarginContainer
 class_name HotBarClass
 
 @export var slot_selector: TextureRect
@@ -6,6 +6,8 @@ class_name HotBarClass
 @export var test_weapon: PackedScene
 
 static var current_selected_slot: Slot 
+
+signal selected_slot_changed(item: InventoryItem)
 
 var hotbar_slots: Array
 var key_slot_map: Dictionary = {}
@@ -22,25 +24,17 @@ func _input(event: InputEvent):
 		set_slot_selector(slot)
 	
 	if event.is_action_pressed("test"):
-		var texture = load("res://Items/Assets/#1---Transparent-Icons_54.png")
-		var test_weapon = WeaponClass.new(
-			texture,
-			"test_name",
-			1,
-			Globals.InventoryItemTypes.WEAPON,
-			"des",
-			5,
-			1
-		)
+		var item = load("res://Items/Nodes/iron_sword.tscn").instantiate()
 		#var item = load("res://Items/Nodes/pick_axe.tscn").instantiate()
 		#var item = test_weapon.instantiate(PackedScene.GEN_EDIT_STATE_MAIN_INHERITED)
 		#print_debug(item.ITEM)
-		current_selected_slot.update(test_weapon)
+		current_selected_slot.update(item)
 		print_debug(current_selected_slot)
 
 func set_slot_selector(slot: Slot):
 	slot_selector.reparent(slot)
 	slot_selector.position = Vector2(0, 0)
+	selected_slot_changed.emit(current_selected_slot.current_item)
 
 func initialize_key_slot_map(slots: Array):
 	var index = 1

@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="AIBackData" load_steps=3 format=3 uid="uid://bc5mk7ly2vnds"]
+[gd_resource type="Resource" script_class="AIBackData" load_steps=2 format=3 uid="uid://bc5mk7ly2vnds"]
 
 [ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="1_kit5j"]
-[ext_resource type="Resource" uid="uid://c3jjtfrko2j5q" path="res://AI/Resourses/weapon_res.tres" id="2_v7p1m"]
 
 [resource]
 script = ExtResource("1_kit5j")
@@ -11,6 +10,3 @@ AGILITY = 1
 INTELECT = 1
 name = ""
 type = "Villager"
-WEAPON = ExtResource("2_v7p1m")
-Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])
-max_carry_weight = 10

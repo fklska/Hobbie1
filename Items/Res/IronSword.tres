@@ -1,18 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponClass" load_steps=4 format=3 uid="uid://7tse4osg34b3"]
-
-[ext_resource type="Texture2D" uid="uid://bnefaa2h2hgcs" path="res://Items/Assets/Sword64x64.png" id="1_cx8f3"]
-[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="2_c1lhy"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_stjuk"]
-radius = 5.0
+[gd_resource type="Resource" format=3 uid="uid://7tse4osg34b3"]
 
 [resource]
-script = ExtResource("2_c1lhy")
-damage = 1
-required_strench = 1
-shape = SubResource("CapsuleShape2D_stjuk")
-image = ExtResource("1_cx8f3")
-name = "Iron Sword"
-amount = 1
-type = 5
-description = ""
+resource_local_to_scene = true

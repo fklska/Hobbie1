@@ -4,35 +4,18 @@
 [ext_resource type="Script" path="res://Player/UI/scripts/inventory_ui.gd" id="1_w3xik"]
 [ext_resource type="Script" path="res://Player/UI/scripts/Inventory_slot.gd" id="3_vnp28"]
 
-[node name="InventoryUI" type="Control"]
+[node name="InventoryUI" type="MarginContainer"]
 z_index = 2
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -276.0
-offset_top = -324.0
-offset_right = 8.00037
-offset_bottom = -48.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = -1
+anchor_right = 0.246528
+anchor_bottom = 0.425926
+offset_right = -16.0004
+offset_bottom = -212.0
 script = ExtResource("1_w3xik")
+metadata/_edit_use_anchors_ = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -134.0
-offset_top = -134.0
-offset_right = 134.0
-offset_bottom = 134.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 columns = 4
 
 [node name="Slot" parent="GridContainer" instance=ExtResource("1_0agyi")]

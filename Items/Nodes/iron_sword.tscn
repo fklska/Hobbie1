@@ -1,14 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjr2e7es1ihe8"]
+[gd_scene load_steps=5 format=3 uid="uid://cjr2e7es1ihe8"]
 
 [ext_resource type="PackedScene" uid="uid://gk7ibufqhhoq" path="res://Items/Nodes/BasicItem_Node.tscn" id="1_ie05i"]
-[ext_resource type="Script" path="res://Items/iron_sword.gd" id="2_wtfm5"]
+[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="2_xjt5w"]
+[ext_resource type="Texture2D" uid="uid://bnefaa2h2hgcs" path="res://Items/Assets/Sword64x64.png" id="3_8clt8"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_stjuk"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h3mx6"]
 radius = 5.0
 
 [node name="IronSword" instance=ExtResource("1_ie05i")]
-position = Vector2(81, 65)
-script = ExtResource("2_wtfm5")
+collision_layer = 2
+collision_mask = 12
+script = ExtResource("2_xjt5w")
+damage = 1
+required_strench = 1
+image = ExtResource("3_8clt8")
+amount = 1
+type = 5
 
 [node name="Texture" parent="." index="0"]
 offset_left = -32.0
@@ -21,4 +28,11 @@ pivot_offset = Vector2(32, 64)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 position = Vector2(45, 1)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_stjuk")
+shape = SubResource("CapsuleShape2D_h3mx6")
+
+[node name="Timer" type="Timer" parent="." index="2"]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

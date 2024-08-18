@@ -1,15 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://udl0gyje82hp"]
+[gd_scene load_steps=2 format=3 uid="uid://udl0gyje82hp"]
 
-[ext_resource type="Texture2D" uid="uid://bnefaa2h2hgcs" path="res://Items/Assets/Sword64x64.png" id="1_6lqrt"]
 [ext_resource type="Script" path="res://test_script.gd" id="1_oxneu"]
 
 [node name="Test_scene" type="Node2D"]
-position = Vector2(239, 170)
-rotation = 0.785398
+position = Vector2(111, 50)
 script = ExtResource("1_oxneu")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-29.8096, 1.93634)
-rotation = 1.5708
-texture = ExtResource("1_6lqrt")
-offset = Vector2(-1.93645, -29.8096)
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_right = 130.0
+offset_bottom = 27.0
+step = 1.0
+value = 53.0
+show_percentage = false

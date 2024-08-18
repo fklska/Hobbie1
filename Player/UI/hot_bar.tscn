@@ -6,8 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://brhw41lth6c5m" path="res://UI/UIAssets/Pointers/02.png" id="3_ii1k0"]
 [ext_resource type="Script" path="res://Player/UI/scripts/hb_slots.gd" id="3_pe505"]
 
-[node name="HotBar" type="Control" node_paths=PackedStringArray("slot_selector")]
-layout_mode = 3
+[node name="HotBar" type="MarginContainer" node_paths=PackedStringArray("slot_selector")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,9 +17,7 @@ slot_selector = NodePath("HBoxContainer/Slot/TextureRect")
 test_weapon = ExtResource("2_fn38j")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 2
 
 [node name="Slot" parent="HBoxContainer" instance=ExtResource("2_o4s85")]
 layout_mode = 2
