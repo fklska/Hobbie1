@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://b0dwhont1cotx"]
+[gd_scene load_steps=51 format=3 uid="uid://b0dwhont1cotx"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_5t8oh"]
 [ext_resource type="Script" path="res://Player/scripts/player.gd" id="2_tll70"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://Player/UI/hot_bar.tscn" id="6_yyv38"]
 [ext_resource type="PackedScene" uid="uid://beia5xtps3hg8" path="res://Player/UI/player_health_bar.tscn" id="7_jbxtf"]
 [ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://Player/UI/inventory_ui.tscn" id="8_b474a"]
-[ext_resource type="PackedScene" uid="uid://dfnx5whpcvaek" path="res://Player/concentration.tscn" id="9_stdt0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7da7d"]
 resource_local_to_scene = true
@@ -419,7 +418,7 @@ INTELECT = 10
 CONCENTRATION = 100
 INVENTORY = NodePath("PlayerUI/InventoryUI")
 Hotbar = NodePath("PlayerUI/HotBar")
-enableConcentration = true
+enableConcentration = false
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_7da7d")
@@ -469,12 +468,5 @@ anchor_top = 0.219136
 anchor_bottom = 0.317901
 offset_right = -0.00012207
 offset_bottom = -1.52588e-05
-
-[node name="Concentration" parent="." index="5" node_paths=PackedStringArray("player") instance=ExtResource("9_stdt0")]
-offset_left = -20.0
-offset_top = -21.0
-offset_right = 20.0
-offset_bottom = -17.0
-player = NodePath("..")
 
 [connection signal="selected_slot_changed" from="PlayerUI/HotBar" to="." method="_on_hot_bar_selected_slot_changed"]

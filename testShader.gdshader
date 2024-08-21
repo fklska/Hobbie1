@@ -1,11 +1,13 @@
 shader_type canvas_item;
 
+uniform vec2 tiling;
+uniform vec2 offset;
 void vertex() {
-	 // VERTEX.y += sin(TIME + VERTEX.x) / .5;
+	UV = UV * tiling * offset;
 }
 
 void fragment() {
-	
+
 }
 
 //void light() {

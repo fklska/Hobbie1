@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://UI/Scripts/mouseInfoPanel.gd" id="2_pmsim"]
 
 [node name="InfoPanel" type="PanelContainer"]
+visible = false
 z_index = 5
 offset_right = 84.0
 offset_bottom = 51.0

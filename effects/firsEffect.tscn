@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://df07gr28egplj"]
 
-[ext_resource type="Shader" path="res://Resourses/Prefabs/testShader.gdshader" id="1_p18l8"]
+[ext_resource type="Shader" path="res://testShader.gdshader" id="1_p18l8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bcpbl"]
 shader = ExtResource("1_p18l8")

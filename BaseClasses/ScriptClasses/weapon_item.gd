@@ -6,11 +6,11 @@ class_name WeaponClass
 @export var required_strench: int
 
 @onready var collisionShape: CollisionShape2D = $CollisionShape2D
-@onready var timer: Timer = $Timer
 
 var new_rotation
 var amplitude_deegre = 45
 var is_ready = true
+var parent: Player = null
 
 func _ready():
 	new_rotation = rotation
@@ -19,7 +19,7 @@ func _physics_process(delta):
 	rotate_sword(delta)
 
 func set_selected(args: Dictionary):
-	var parent = args.get("Parent")
+	parent = args.get("Parent")
 	parent.add_child(self)
 
 func disable():
@@ -30,7 +30,6 @@ func enable():
 	show()
 	collisionShape.disabled = false
 	is_ready = false
-	timer.start()
 
 func rotate_sword(t):
 	if Input.is_action_just_released("LeftMouseButton") and is_ready:
@@ -38,20 +37,16 @@ func rotate_sword(t):
 		new_rotation = global_position.direction_to(get_global_mouse_position()).angle() + deg_to_rad(amplitude_deegre)
 		rotation = new_rotation - deg_to_rad(2*amplitude_deegre)
 
-	rotation = lerp_angle(rotation, new_rotation, t*1)
+	rotation = lerp_angle(rotation, new_rotation, t*parent.AGILITY / 10)
 	
-	if abs(new_rotation - rotation) < 0.5:
+	if abs(new_rotation - rotation) < 0.3:
 		disable()
+		is_ready = true
 
 func calculate_damage():
-	var parent: Player = get_parent()
 	return parent.calculate_damage() + damage
 
 func _on_body_entered(body):
 	if body is ActiveResourses:
-		var parent: Player = get_parent()
 		body.get_damage(calculate_damage())
 		parent.add_item(body.get_texture(), calculate_damage(), body.type)
-
-func _on_timer_timeout():
-	is_ready = true
