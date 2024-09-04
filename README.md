@@ -52,7 +52,8 @@
 Поведение ИИ основано на [NavMesh](https://docs.unity3d.com/Packages/com.unity.ai.navigation@2.0/manual/index.html) в частности на алгоритме [A*](https://ru.wikipedia.org/wiki/A*)
 
 
-https://github.com/user-attachments/assets/622356cb-e9b4-428c-a083-6e4c6bec5d59
+https://github.com/user-attachments/assets/365a39fe-342f-4798-b3c5-21504b11d2b0
+
 
 ---
 
