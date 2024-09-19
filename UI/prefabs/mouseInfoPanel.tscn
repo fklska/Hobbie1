@@ -4,14 +4,15 @@
 [ext_resource type="Script" path="res://UI/Scripts/mouseInfoPanel.gd" id="2_pmsim"]
 
 [node name="InfoPanel" type="PanelContainer"]
-visible = false
 z_index = 5
-offset_right = 84.0
-offset_bottom = 51.0
+anchors_preset = -1
+anchor_right = 0.0729167
+anchor_bottom = 0.0787037
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_ep2lt")
 script = ExtResource("2_pmsim")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

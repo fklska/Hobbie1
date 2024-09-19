@@ -1,4 +1,4 @@
-extends KinematicBodySelectedObejct
+extends KinematicBodyEntity
 class_name StoneGiant
 
 @export var data: BasicEnemyData

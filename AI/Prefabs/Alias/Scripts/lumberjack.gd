@@ -86,7 +86,7 @@ func grind():
 func farm():
 	var damage: int = data.STRENCH
 	var res: ActiveResourses = objects[0]
-	data.add_item(InventoryItem.new(res.get_texture(), res.name, damage, res.type))
+	#data.add_item(InventoryItem.new(res.get_texture(), res.name, damage, res.type))
 	res.get_damage(damage)
 	
 	if data.max_carry_weight <= data.total_resourse_amount():

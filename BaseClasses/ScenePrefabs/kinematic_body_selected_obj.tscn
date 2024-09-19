@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ddl18dld7vkor"]
 
-[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/InteractiveObjects/kinematic_body_selected.gd" id="1_xlrum"]
+[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/InteractiveObjects/KinematicEntity.gd" id="1_g3ya1"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_0iutk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6cluj"]
@@ -21,7 +21,7 @@ height = 40.0
 
 [node name="KinematicBodySelectedObj" type="CharacterBody2D"]
 input_pickable = true
-script = ExtResource("1_xlrum")
+script = ExtResource("1_g3ya1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_6cluj")

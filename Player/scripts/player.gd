@@ -1,4 +1,4 @@
-extends KinematicBodySelectedObejct
+extends KinematicBodyEntity
 class_name Player
 
 @export_range(10, 100) var AGILITY = 10

@@ -1,4 +1,4 @@
-extends KinematicBodySelectedObejct
+extends KinematicBodyEntity
 class_name BaseVillager
 
 @export var data: AIBackData
