@@ -51,6 +51,10 @@
 
 Поведение ИИ основано на [NavMesh](https://docs.unity3d.com/Packages/com.unity.ai.navigation@2.0/manual/index.html) в частности на алгоритме [A*](https://ru.wikipedia.org/wiki/A*)
 
+
+https://github.com/user-attachments/assets/365a39fe-342f-4798-b3c5-21504b11d2b0
+
+
 ---
 
 ## Генерация карты
@@ -78,8 +82,21 @@
 
 UPD: Скорее всего буду отказываться от этого. Основная плашка будет показывать только запасы ресурсов в деревне, а информация по инвентарю и характеристике только про главного персонажа.
 <div id="header" align="center">
-  <img src="https://imgur.com/YKmwCY2.png" width="800"/>
-  <img src="https://imgur.com/Gb56aLT.png" width="300"/>
-  <img src="https://imgur.com/uiZ8HPg.png" width="400"/>
-  <img src="https://imgur.com/qwrvV9B.gif" width="800"/>
+  <img src="https://imgur.com/z4sdeRO.png" width="800"/>
+  <img src="https://imgur.com/CRdyNYs.png" width="300"/>
+  <img src="https://imgur.com/ijGd1yc.png" width="300"/>
+  <img src="https://imgur.com/0mynifS.gif" width="800"/>
 </div>
+
+Неболшое изменение UI в сторону упрощения. Всю информацию по деревне и жителям, а также строительство и ветки развития можно будет посмотреть в одном меню.
+
+https://github.com/user-attachments/assets/6cabadb0-bbd5-403d-8143-88bbe25a1529
+
+
+## Шейдеры и эффекты
+Шейдеры и VFX пока что находятся на стадии изучения. На данный момент реализован outline шейдер, который добавляет внешнее выделение выбранного цвета и ширины, используется при наведении и в селекторе.
+
+Также получилось реализовать что то более менее сностное - эффект сплеша от удара мечом. 
+
+https://github.com/user-attachments/assets/f18a7eae-57c0-4e68-aefc-e7bc1b6d5c1f
+
