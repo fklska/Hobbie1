@@ -39,13 +39,13 @@
 Есть РПГ аспекты: главный персонаж за которого играет игрок или несколько (планируется мультиплеер) прокачивает его, выбирает навыки, пути развития. А также жители (ИИ), который споособствует развитию и защите деревни / города / поселения:
 <div id="header" align="center">
   <a href=https://free-game-assets.itch.io/free-yokai-pixel-sprite-sheets>
-    <img src="https://img.craftpix.net/2023/07/Free-Yokai-Pixel-Art-Character-Sprites.gif" width="400"/>
+	<img src="https://img.craftpix.net/2023/07/Free-Yokai-Pixel-Art-Character-Sprites.gif" width="400"/>
   </a>
   <a href=https://craftpix.net/freebies/free-wizard-sprite-sheets-pixel-art/>
-    <img src="https://img.craftpix.net/2023/01/Free-Wizard-Sprite-Sheets-Pixel-Art.gif" width="400"/>
+	<img src="https://img.craftpix.net/2023/01/Free-Wizard-Sprite-Sheets-Pixel-Art.gif" width="400"/>
   </a>
   <a href=https://free-game-assets.itch.io/free-3-character-sprite-pixel-art> 
-    <img src="https://img.craftpix.net/2020/01/Free-3-Character-Sprite-Sheets-Pixel-Art.gif" width="400"/>
+	<img src="https://img.craftpix.net/2020/01/Free-3-Character-Sprite-Sheets-Pixel-Art.gif" width="400"/>
   </a>
 </div>
 

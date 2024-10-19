@@ -8,6 +8,7 @@
 radius = 5.0
 
 [node name="IronSword" instance=ExtResource("1_ie05i")]
+position = Vector2(122, 120)
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("2_xjt5w")
