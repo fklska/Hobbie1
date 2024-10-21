@@ -12,6 +12,7 @@ var new_rotation
 var amplitude_deegre = 45
 var is_ready = true
 var parent: Player = null
+var elapsed: float = 0.0
 
 func _ready():
 	new_rotation = rotation
@@ -22,6 +23,9 @@ func _physics_process(delta):
 func set_selected(args: Dictionary):
 	parent = args.get("Parent")
 	parent.add_child(self)
+
+func IsRotateComplete():
+	return abs(rotation - new_rotation) < 0.1
 
 func disable():
 	hide()
@@ -34,21 +38,24 @@ func enable():
 
 func rotate_sword(t):
 	if Input.is_action_just_released("LeftMouseButton") and is_ready:
+		elapsed = 0.0
 		enable()
 		var direction = global_position.direction_to(get_global_mouse_position())
 		new_rotation = direction.angle() + deg_to_rad(amplitude_deegre)
 		rotation = new_rotation - deg_to_rad(2*amplitude_deegre)
-		var splash = splash_effect.instantiate()
-		splash.direction = direction
-		splash.global_position = global_position
-		splash.rotation = direction.angle()
-		get_parent().add_child(splash)
+		#var splash = splash_effect.instantiate()
+		#splash.direction = direction
+		#splash.global_position = global_position
+		#splash.rotation = direction.angle()
+		#get_parent().add_child(splash)
 	
-	if abs(new_rotation - rotation) < 0.3:
-		disable()
+	if abs(new_rotation - rotation) < 0.1:
 		is_ready = true
+		disable()
 	else:
-		rotation += t*10 / 10
+		rotation = lerp_angle(rotation, new_rotation, elapsed / 10)
+		elapsed += t
+	
 
 func calculate_damage():
 	return parent.calculate_damage() + damage
