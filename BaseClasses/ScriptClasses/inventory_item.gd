@@ -11,15 +11,28 @@ class_name InventoryItem
 @export var amount: int
 @export var type = Globals.InventoryItemTypes.EMPTY
 @export_multiline var description: String
+var parametrs: Dictionary = {
+	# Player
+	# Player_Agility
+}
 
 @onready var textureRect: TextureRect = $Texture
+
+func setParametr(key, value):
+	parametrs[key] = value
+
+func isConsumable():
+	return true
+
+func DoFunction(delta):
+	pass
 
 func set_selected(args: Dictionary):
 	pass
 
 func increase_amount(value: int):
 	amount += value
-	
+
 func decrease_amount(value: int):
 	amount -= value
 

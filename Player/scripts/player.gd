@@ -114,4 +114,4 @@ func get_texture():
 
 func _on_hot_bar_selected_slot_changed(Item: InventoryItem):
 	if is_instance_valid(Item):
-		Item.set_selected({"Parent": self})
+		Item.setParametr("Player_Agility", AGILITY)

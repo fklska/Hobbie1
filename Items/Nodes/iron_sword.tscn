@@ -8,7 +8,7 @@
 radius = 5.0
 
 [node name="IronSword" instance=ExtResource("1_ie05i")]
-position = Vector2(122, 120)
+position = Vector2(27, 118)
 collision_layer = 2
 collision_mask = 12
 script = ExtResource("2_xjt5w")
@@ -30,5 +30,8 @@ pivot_offset = Vector2(32, 64)
 position = Vector2(45, 1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_h3mx6")
+
+[node name="EffectLocator" type="Marker2D" parent="." index="2"]
+position = Vector2(64, 0)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
