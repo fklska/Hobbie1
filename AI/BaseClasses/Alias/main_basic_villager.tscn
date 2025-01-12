@@ -16,8 +16,6 @@ AGILITY = 0
 INTELECT = 0
 name = ""
 type = "Villager"
-Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])
-max_carry_weight = 10
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u6mcb"]
 resource_local_to_scene = true

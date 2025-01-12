@@ -21,6 +21,8 @@ enum {
 }
 var state = RUN
 
+var current_active_item = null
+
 func _physics_process(_delta):
 	match state:
 		RUN:
@@ -106,12 +108,14 @@ func show_selected_info():
 func get_texture():
 	return anim.sprite_frames.get_frame_texture("idle", 0)
 
-#func _on_weapon_body_entered(body):
-	#if body is ActiveResourses:
-		#var damage: int = 10 + STRENCH
-		#body.get_damage(damage)
-		#add_item(body.get_texture(), damage, body.type)
 
 func _on_hot_bar_selected_slot_changed(Item: InventoryItem):
-	if is_instance_valid(Item):
-		Item.setParametr("Player_Agility", AGILITY)
+	if current_active_item:
+		remove_child(current_active_item)
+		current_active_item = null
+
+	if Item != null:
+		current_active_item = Item
+		Item.parent = self
+		Item.setParametr("Agility", AGILITY)
+		add_child(Item)

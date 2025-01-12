@@ -12,7 +12,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_ep2lt")
 script = ExtResource("2_pmsim")
-metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

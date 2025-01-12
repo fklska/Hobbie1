@@ -24,7 +24,7 @@ func setParametr(key, value):
 func isConsumable():
 	return true
 
-func DoFunction(delta):
+func DoFunction(params={}):
 	pass
 
 func set_selected(args: Dictionary):

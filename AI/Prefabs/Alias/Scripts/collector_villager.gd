@@ -72,7 +72,7 @@ func _on_weapon_body_entered(body: ActiveResourses):
 	if body.type == searching_resourse_type:
 		var damage: int = 10 + data.STRENCH
 		body.get_damage(damage)
-		data.add_item(InventoryItem.new(body.get_texture(), body.name, damage, body.type))
+		#data.add_item(InventoryItem.new(body.get_texture(), body.name, damage, body.type))
 
 func get_texture():
 	return anim.sprite_frames.get_frame_texture("idle", 0)

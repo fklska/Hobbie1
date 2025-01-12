@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bcvwprysb1266"]
+
+[ext_resource type="Script" path="res://test_res.gd" id="1_7l7cu"]
+
+[resource]
+script = ExtResource("1_7l7cu")
+value1 = 6
+value2 = "Hello"

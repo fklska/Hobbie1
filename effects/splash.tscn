@@ -102,23 +102,25 @@ _data = {
 
 [node name="Splash" type="Node2D"]
 modulate = Color(4, 6, 1.30196, 1)
+z_index = 2
 material = SubResource("ShaderMaterial_bbv4c")
 script = ExtResource("3_2hicc")
 
 [node name="MainPart" type="Sprite2D" parent="."]
 modulate = Color(4, 6, 1.30196, 1)
+z_index = 3
 material = SubResource("ShaderMaterial_bbv4c")
 rotation = 1.5708
 texture = ExtResource("2_v5hd7")
 
 [node name="Tail" type="Sprite2D" parent="MainPart"]
-z_index = -1
+z_index = 1
 material = SubResource("ShaderMaterial_ppfoi")
 position = Vector2(0, 17)
 texture = ExtResource("3_ixpx2")
 
 [node name="Shadow" type="Sprite2D" parent="MainPart"]
-z_index = -2
+z_index = 2
 material = SubResource("ShaderMaterial_hjfxp")
 position = Vector2(0, 17)
 texture = ExtResource("3_ixpx2")
