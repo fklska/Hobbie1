@@ -32,7 +32,7 @@ func need_to_redraw_selected_cell():
 func draw_grid():
 	for x in range(-map_size.x, map_size.x):
 		for y in range(-map_size.y, map_size.y):
-			draw_rect(Rect2i(x*basis_vec_hor + y*basis_vec_ver,cell_size), RectColor, false)
+			draw_rect(Rect2i(x*basis_vec_hor + y*basis_vec_ver, cell_size), RectColor, false)
 
 func draw_selected_cell(size_multiplier: int = 1):
 	var coor: Vector2i = pixel2cell(get_global_mouse_position())

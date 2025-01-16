@@ -94,6 +94,7 @@ func generate():
 	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
 	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)
+	#how to rebuild map
 
 func clear():
 	var objs: Array = root_node.get_children()

@@ -73,7 +73,8 @@ damage_node = ExtResource("3_fmnx2")
 material = SubResource("ShaderMaterial_867q3")
 
 [node name="CollisionShape2D" parent="." index="1"]
-polygon = PackedVector2Array(-20, 12, -6, -12, 15, -12, 15, 12)
+position = Vector2(-5, -4)
+polygon = PackedVector2Array(-2, 12, -2, -1, 12, -1, 12, 12)
 
 [node name="healthbar" type="ProgressBar" parent="." index="2"]
 visible = false
@@ -106,6 +107,7 @@ one_shot = true
 [node name="PopUpLocation" type="Marker2D" parent="." index="4"]
 z_index = 1
 position = Vector2(0, -32)
+gizmo_extents = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
 libraries = {

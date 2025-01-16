@@ -12,7 +12,7 @@ class_name Player
 
 const SPEED = 20.0
 @onready var animPlayer: AnimationPlayer = $AnimationPlayer
-@onready var concentration: ProgressBar = $Concentration
+@onready var concentration: ProgressBar = null #$Concentration
 
 enum {
 	RUN,

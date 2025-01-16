@@ -1,11 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://udl0gyje82hp"]
+[gd_scene load_steps=4 format=3 uid="uid://udl0gyje82hp"]
 
 [ext_resource type="Script" path="res://test_script.gd" id="1_oxneu"]
-[ext_resource type="Texture2D" uid="uid://d156r06q044fi" path="res://icon.svg" id="2_xp3o4"]
+[ext_resource type="Script" path="res://Camera/Scripts/main_cam.gd" id="2_k0dhk"]
 
-[node name="Test_scene" type="Node2D"]
-position = Vector2(103, 51)
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_5g8w7"]
+vertices = PackedVector2Array(1014, -10, 10, -10, 10, -1014, 1014, -1014)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 0, -1024, 1024, -1024, 1024, 0)])
+
+[node name="Test_scene" type="NavigationRegion2D"]
+navigation_polygon = SubResource("NavigationPolygon_5g8w7")
 script = ExtResource("1_oxneu")
+chunk_size = 1024
+debug_map_size = Vector2i(32, 32)
+rect_color = Color(1, 1, 1, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_xp3o4")
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_k0dhk")
