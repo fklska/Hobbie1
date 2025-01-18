@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkcwymv7e7axp"]
+
+[ext_resource type="Script" path="res://navigation_agent_2d.gd" id="1_7j52m"]
+[ext_resource type="Script" path="res://Navigation/navigation.gd" id="1_khhfs"]
+[ext_resource type="Script" path="res://Camera/Scripts/main_cam.gd" id="3_cxdtl"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_7j52m")
+
+[node name="NavigationRegion2DLeft" type="Node2D" parent="."]
+script = ExtResource("1_khhfs")
+chunk_size = 1024
+debug_map_size = Vector2i(32, 32)
+rect_color = Color(0.865248, 0.11149, 0.579953, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.09, 0.09)
+script = ExtResource("3_cxdtl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["navigation_polygon_source_geometry_group"]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-6, 0)
+polygon = PackedVector2Array(-21, 147, 695, 147, 908, 536, 1261, 117, 1381, 482, 1192, 812, 773, 815, 539, 497, 479, 761, 401, 584, 168, 731, -48, 482, 344, 306, 96, 264)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-6, 0)
+polygon = PackedVector2Array(-1998, 108, -2252, 540, -1828, 256, -1760, 743, -2222, 904, -1701, 1243, -1559, 1718, -1202, 1698, -1296, 945, -1290, -44, -1760, -495)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-6, 0)
+polygon = PackedVector2Array(-1417, -1592, 1011, -1827, 2343, -1309, 379, -1201, -650, -979, -449, -1410, 655, -1544, -852, -1531)
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Node2D"]
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.852183, 1.92523e-07, 0.427868, 1)
+debug_path_custom_point_size = 10.0
+debug_path_custom_line_width = 4.0

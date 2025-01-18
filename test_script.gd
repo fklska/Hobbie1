@@ -1,5 +1,6 @@
 @tool
 extends NavigationRegion2D
+class_name TestScript
 
 @onready var NavigationRegion: NavigationRegion2D = $"."
 
@@ -11,7 +12,9 @@ extends NavigationRegion2D
 @export var rect_color: Color
 
 func _ready() -> void:
-	pass
+	get_global_mouse_position()
+	#NavigationServer2D.map_set_edge_connection_margin(get_navigation_map(), 100)
+	bake_navigation_on_cell(calculate_polygon_coords(pixel2cell(Vector2i(-1, 1))))
 	
 func debug_draw_grid():
 	for x in range(-debug_map_size.x, debug_map_size.x):
@@ -47,7 +50,7 @@ func pixel2cell(pixel:Vector2) -> Vector2i:
 	return Vector2i(x, y)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("LeftMouseButton"):
+	if event.is_action_pressed("RightMouseButton"):
 		print_debug(pixel2cell(get_global_mouse_position()), get_global_mouse_position())
 		bake_navigation_on_cell(calculate_polygon_coords(pixel2cell(get_global_mouse_position())))
 
