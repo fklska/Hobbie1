@@ -11,20 +11,28 @@ class_name TestScript
 @export var debug_map_size: Vector2i
 @export var rect_color: Color
 
+var current_cell: Vector2i = Vector2i(0, 0)
+
 func _ready() -> void:
-	get_global_mouse_position()
 	#NavigationServer2D.map_set_edge_connection_margin(get_navigation_map(), 100)
 	bake_navigation_on_cell(calculate_polygon_coords(pixel2cell(Vector2i(-1, 1))))
-	
+
+func _process(delta: float) -> void:
+	if current_cell != pixel2cell(get_global_mouse_position()):
+		queue_redraw()
+
 func debug_draw_grid():
-	for x in range(-debug_map_size.x, debug_map_size.x):
-		for y in range(-debug_map_size.y, debug_map_size.y):
+	for x in range(-debug_map_size.x, debug_map_size.x + 1):
+		for y in range(-debug_map_size.y - 1, debug_map_size.y):
+			current_cell = pixel2cell(get_global_mouse_position())
+			var color = rect_color
+			color.a = color.a / (1 + abs(x) + abs(y))
 			draw_rect(
 				Rect2i(
-					Vector2i(x * chunk_size, y*chunk_size),
+					(Vector2i(x, y) + current_cell)*chunk_size,
 					Vector2i(chunk_size, chunk_size)
 				),
-				rect_color, false
+				color, false
 			)
 
 func calculate_polygon_coords(cell: Vector2i) -> PackedVector2Array:

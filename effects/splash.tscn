@@ -107,7 +107,7 @@ material = SubResource("ShaderMaterial_bbv4c")
 script = ExtResource("3_2hicc")
 
 [node name="MainPart" type="Sprite2D" parent="."]
-modulate = Color(4, 6, 1.30196, 1)
+modulate = Color(16.756, 6, 1.302, 1)
 z_index = 3
 material = SubResource("ShaderMaterial_bbv4c")
 rotation = 1.5708

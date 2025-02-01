@@ -6,13 +6,13 @@
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_5g8w7"]
 vertices = PackedVector2Array(-10, 1014, -1014, 1014, -1014, 10, -10, 10, 1014, -10, 10, -10, 10, -1014, 1014, -1014)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 0, -1024, 1024, -1024, 1024, 0), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 0, -1024, 1024, -1024, 1024, 0), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-1024, 1024, -1024, 0, 0, 0, 0, 1024), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256), PackedVector2Array(-256, 256, -256, 0, 0, 0, 0, 256)])
 
 [node name="Test_scene" type="NavigationRegion2D"]
 navigation_polygon = SubResource("NavigationPolygon_5g8w7")
 script = ExtResource("1_oxneu")
-chunk_size = 1024
-debug_map_size = Vector2i(32, 32)
+chunk_size = 256
+debug_map_size = Vector2i(1, 1)
 rect_color = Color(1, 1, 1, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]

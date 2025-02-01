@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+
 public partial class test_script : Node2D
 {
 	public NavigationRegion2D nav_region;

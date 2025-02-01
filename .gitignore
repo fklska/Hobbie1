@@ -24,3 +24,4 @@ mono_crash.*.json
 
 .android/
 .vs/
+.vscode/
