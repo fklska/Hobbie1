@@ -331,6 +331,7 @@ shape = SubResource("CircleShape2D_qwr4s")
 debug_color = Color(0.933333, 0.0745098, 0.615686, 0.419608)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
+path_postprocessing = 1
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.376471, 0.164706, 0.933333, 1)

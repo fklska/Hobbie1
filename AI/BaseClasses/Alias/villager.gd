@@ -76,8 +76,7 @@ func setup_polygon():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("LeftMouseButton"):
-		if RectSelectorClass.selected_object.has(self):
-			nav.target_position = get_global_mouse_position()
+		nav.target_position = get_global_mouse_position()
 		
 
 func show_selected_info():

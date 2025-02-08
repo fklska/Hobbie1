@@ -9,16 +9,25 @@ class_name Navigation
 @export var debug_map_size: Vector2i
 @export var rect_color: Color
 
-var polygon_map: Dictionary = {
+
+static var polygon_map: Dictionary = {
 	#CELL: NAV_REGION
 }
+static var cellSize = 256
+
 
 var source_geometry: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
+
+static func bake_navigation_on_agent(agent):
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			var agent_pos = StaticPixel2cell(agent.global_position)
+			bake_navigation_on_cell(Vector2i(x, y) + agent_pos, cellSize)
 
 func _ready() -> void:
 	queue_redraw()
 	#bake_navigation_on_cell(set_up_navigation_region(self), calculate_polygon_coords(Vector2i(0,-1)))
-	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 100)
+	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 256)
 	
 func debug_draw_grid():
 	for x in range(-debug_map_size.x, debug_map_size.x):
@@ -31,7 +40,8 @@ func debug_draw_grid():
 				rect_color, false
 			)
 
-func set_up_navigation_region(navigation_root_node: Node2D):
+
+static func set_up_navigation_region(navigation_root_node: Node2D):
 	var polygon = NavigationPolygon.new()
 	var region = NavigationRegion2D.new()
 	polygon.source_geometry_mode = NavigationPolygon.SOURCE_GEOMETRY_GROUPS_WITH_CHILDREN
@@ -40,27 +50,36 @@ func set_up_navigation_region(navigation_root_node: Node2D):
 	navigation_root_node.add_child(region)
 	return region
 
-func calculate_polygon_coords(cell: Vector2i) -> PackedVector2Array:
+static func calculate_polygon_coords(cell: Vector2i) -> PackedVector2Array:
 	return PackedVector2Array([
-		Vector2i(cell.x * chunk_size, cell.y * chunk_size), #left bottom
-		Vector2i(cell.x * chunk_size, (cell.y - 1) * chunk_size), # left top
-		Vector2i((cell.x + 1) * chunk_size, (cell.y - 1) * chunk_size), # top right
-		Vector2i((cell.x + 1) * chunk_size, cell.y * chunk_size), # right bottom
+		Vector2i(cell.x * cellSize, cell.y * cellSize), #left bottom
+		Vector2i(cell.x * cellSize, (cell.y - 1) * cellSize), # left top
+		Vector2i((cell.x + 1) * cellSize, (cell.y - 1) * cellSize), # top right
+		Vector2i((cell.x + 1) * cellSize, cell.y * cellSize), # right bottom
 	])
 
-func bake_navigation_on_cell(cell: Vector2i) -> void:
+static func bake_navigation_on_cell(cell: Vector2i, cell_size) -> void:
 	var region = polygon_hash_map_manager(cell)
 	region.navigation_polygon.add_outline(calculate_polygon_coords(cell))
 	region.bake_navigation_polygon()
-	#NavigationServer2D.bake_from_source_geometry_data(navigation_region.navigation_polygon, )
 
-func polygon_hash_map_manager(cell: Vector2i):
+static func polygon_hash_map_manager(cell: Vector2i):
 	if polygon_map.has(cell):
 		return polygon_map[cell]
 	
-	var region = set_up_navigation_region(self)
+	var region = set_up_navigation_region(GlobalNavigation)
 	polygon_map[cell] = region
 	return region
+
+static func StaticPixel2cell(pixel:Vector2) -> Vector2i:
+	var x = int(pixel.x/cellSize)
+	if sign(pixel.x) == -1:
+		x -= 1
+
+	var y = int(pixel.y/cellSize)
+	if sign(pixel.y) == 1:
+		y += 1
+	return Vector2i(x, y)
 
 func pixel2cell(pixel:Vector2) -> Vector2i:
 	var x = int(pixel.x/chunk_size)
@@ -73,9 +92,8 @@ func pixel2cell(pixel:Vector2) -> Vector2i:
 	return Vector2i(x, y)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("LeftMouseButton"):
-		print_debug(pixel2cell(get_global_mouse_position()), get_global_mouse_position())
-		bake_navigation_on_cell(pixel2cell(get_global_mouse_position()))
+	pass
 
 func  _draw() -> void:
-	debug_draw_grid()
+	#debug_draw_grid()
+	pass

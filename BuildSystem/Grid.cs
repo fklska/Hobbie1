@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-[Tool]
+
 public partial class Grid : Node2D
 {
     [Export] Vector2I cellSize;
@@ -13,12 +13,16 @@ public partial class Grid : Node2D
 
     Vector2I currentCell = Vector2I.Zero;
     bool drawOnce = true;
+    bool buildMode = false;
 
     public override void _Process(double delta)
     {
-        if (currentCell != pixelToCell(GetGlobalMousePosition()))
+        if (buildMode)
         {
-             QueueRedraw();
+            if (currentCell != pixelToCell(GetGlobalMousePosition()))
+            {
+                QueueRedraw();
+            }
         }
     }
 

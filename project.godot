@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 BuildMode="*res://BuildSystem/build_mode.tscn"
 MouseInfoPanel="*res://UI/prefabs/mouseInfoPanel.tscn"
+GlobalNavigation="*res://Navigation/navigation.gd"
 
 [display]
 
