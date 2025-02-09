@@ -1,7 +1,6 @@
 using Godot;
 using System;
 
-
 public partial class Grid : Node2D
 {
     [Export] Vector2I cellSize;
@@ -28,9 +27,9 @@ public partial class Grid : Node2D
 
     public override void _Draw()
     {
-        // drawGridNearMouse();
+        drawGridNearMouse();
         //drawStaticGrid();
-        drawLineGridNearMouse();
+        // drawLineGridNearMouse();
     }
 
     public void drawGridNearMouse()

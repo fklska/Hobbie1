@@ -4,7 +4,6 @@ class_name BaseVillager
 @export var data: AIBackData
 
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
-#@onready var main: MapGenerator = $".."
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 const SPEED = 50
@@ -19,7 +18,7 @@ var state = RUN
 
 var enemy_target
 
-var firs_pos: Vector2
+var current_cell: Vector2i = Vector2i(0, 0)
 
 #@onready var nav_mesh: NavigationRegion2D
 
@@ -51,9 +50,8 @@ func run():
 			velocity = Vector2(0, 0)
 			anim_player.play("idle")
 			
-	#if abs(global_position.x - firs_pos.x) + abs(global_position.y - firs_pos.y) >= 170:
-	#	setup_polygon()
-	#	firs_pos = global_position
+	if current_cell != Navigation.StaticPixel2cell(global_position):
+		Navigation.bake_navigation_on_agent(self)
 
 	move_and_slide()
 

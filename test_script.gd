@@ -1,4 +1,3 @@
-@tool
 extends Node2D
 
 @onready var main_basic_villager: BaseVillager = $MainBasicVillager

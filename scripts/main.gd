@@ -38,7 +38,7 @@ static var SIZE = Vector2i(32, 32)
 			},
 	}
 
-@onready var root_node = $Navigation
+@onready var root_node = $Resourses
 
 var sand_tiles = []
 var grass_tiles = []

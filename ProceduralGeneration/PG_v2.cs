@@ -2,7 +2,6 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-[Tool]
 public partial class PG_v2 : Node2D
 {
     [ExportCategory("Regions")]

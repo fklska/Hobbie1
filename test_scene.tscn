@@ -10,7 +10,7 @@ resource_local_to_scene = true
 script = ExtResource("4_trey7")
 HEALTH = 0
 STRENCH = 0
-AGILITY = 0
+AGILITY = 10
 INTELECT = 0
 name = ""
 type = "Villager"
@@ -19,11 +19,11 @@ type = "Villager"
 position = Vector2(3, 6)
 script = ExtResource("1_oxneu")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource("2_k0dhk")
-
 [node name="MainBasicVillager" parent="." instance=ExtResource("3_3be5d")]
 data = SubResource("Resource_jn6my")
+
+[node name="Camera2D" type="Camera2D" parent="MainBasicVillager"]
+script = ExtResource("2_k0dhk")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["navigation_polygon_source_geometry_group"]]
 

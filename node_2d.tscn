@@ -1,23 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkcwymv7e7axp"]
+[gd_scene load_steps=7 format=3 uid="uid://bkcwymv7e7axp"]
 
 [ext_resource type="Script" path="res://navigation_agent_2d.gd" id="1_7j52m"]
-[ext_resource type="Script" path="res://Navigation/navigation.gd" id="1_khhfs"]
 [ext_resource type="Script" path="res://Camera/Scripts/main_cam.gd" id="3_cxdtl"]
+[ext_resource type="PackedScene" uid="uid://8xkcngptvwcq" path="res://AI/BaseClasses/Alias/main_basic_villager.tscn" id="3_ficqk"]
+[ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="4_not0c"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_x2wra"]
-vertices = PackedVector2Array(-3434.92, 189.172, -3688.15, 1351.86, -4716.51, 894.156, -4433.43, -415.297, -4130.76, -515.547, -2747.95, -1071.28, -2858.98, -1447.8, -1601.1, -1260.83, -2156.83, 479.523, -2795.72, 358.758, -858.5, -1358.24, 470.961, -1369.7, -461.719, -1256.5, -755, -461.906, -1181.36, -1393.09, -667.68, -814.852, 1006.41, -1674.42, -1211.87, -1459.71, -1469.3, -2021.92, -721.039, -2125.03, 1757.46, -2229.84, 2348.14, -1152.64, 2845.11, -1291.09, -659.953, -805.156, 1605.39, -784.727, 374.391, -1028.3, 2345.61, -1136.7)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(5, 8, 9), PackedInt32Array(10, 11, 12), PackedInt32Array(13, 14, 10, 15), PackedInt32Array(16, 17, 18, 19, 20), PackedInt32Array(21, 16, 20, 22), PackedInt32Array(10, 12, 15), PackedInt32Array(13, 15, 23), PackedInt32Array(24, 13, 23, 25, 26), PackedInt32Array(22, 24, 26), PackedInt32Array(21, 22, 26)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-2758, -1070, -2806, 367, -2150, 491, -1588, -1269, -2873, -1460), PackedVector2Array(-4442, -423, -4728, 900, -3681, 1366, -3424, 186, -4128, -527), PackedVector2Array(-1484, -2030, -761, -451, 1608, -775, 2864, -1288, 1761, -2240, -722, -2135)])
 source_geometry_mode = 1
+baking_rect = Rect2(-512, -768, 768, 768)
+
+[sub_resource type="Resource" id="Resource_ud4ol"]
+resource_local_to_scene = true
+script = ExtResource("4_not0c")
+HEALTH = 0
+STRENCH = 0
+AGILITY = 10
+INTELECT = 0
+name = ""
+type = "Villager"
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_7j52m")
 
 [node name="NavigationRegion2DLeft" type="Node2D" parent="."]
-script = ExtResource("1_khhfs")
-chunk_size = 1024
-debug_map_size = Vector2i(32, 32)
-rect_color = Color(0.865248, 0.11149, 0.579953, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.09, 0.09)
@@ -37,15 +42,10 @@ polygon = PackedVector2Array(-1998, 108, -2252, 540, -1828, 256, -1760, 743, -22
 position = Vector2(-6, 0)
 polygon = PackedVector2Array(-1417, -1592, 1011, -1827, 2343, -1309, 379, -1201, -650, -979, -449, -1410, 655, -1544, -852, -1531)
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Node2D"]
-debug_enabled = true
-debug_use_custom = true
-debug_path_custom_color = Color(0.852183, 1.92523e-07, 0.427868, 1)
-debug_path_custom_point_size = 10.0
-debug_path_custom_line_width = 4.0
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-position = Vector2(0, -162.755)
 navigation_polygon = SubResource("NavigationPolygon_x2wra")
+use_edge_connections = false
+
+[node name="MainBasicVillager" parent="." instance=ExtResource("3_ficqk")]
+position = Vector2(78, -4)
+data = SubResource("Resource_ud4ol")
