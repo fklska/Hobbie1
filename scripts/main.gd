@@ -51,7 +51,8 @@ var gap = 64
 
 func _ready():
 	generate()
-	custom_server()
+	GlobalNavigation.debug_baking()
+	#custom_server()
 
 func generate():
 	clear()
@@ -79,7 +80,7 @@ func generate():
 					if res_height < res:
 						var prefab: Node2D = RES_TYPES[res].get("prefab").instantiate()
 						prefab.position = Vector2i(x*gap, y*gap)
-						prefab.add_to_group("navigation_polygon_source_group")
+						prefab.add_to_group("navigation_polygon_source_geometry_group")
 						root_node.add_child(prefab)
 						break
 					

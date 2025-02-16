@@ -1,4 +1,3 @@
-@tool
 extends Node2D
 class_name Navigation
 
@@ -13,8 +12,13 @@ static var polygon_map: Dictionary = {
 }
 static var cellSize: Vector2i = Vector2i(256, 256)
 
+static var thread: Thread = Thread.new()
 
 var source_geometry: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
+
+
+func thread_bake(agent):
+	thread.start(bake_navigation_on_agent(agent))
 
 static func bake_navigation_on_agent(agent):
 	for x in range(-1, 2):
@@ -30,8 +34,9 @@ func debug_baking():
 func _ready() -> void:
 	queue_redraw()
 	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 0)
-	NavigationServer2D.set_debug_enabled(false)
-	debug_baking()
+	NavigationServer2D.set_debug_enabled(true
+	)
+	#debug_baking()
 
 func debug_draw_grid():
 	for x in range(-debug_map_size.x, debug_map_size.x):
@@ -73,7 +78,7 @@ static func polygon_hash_map_manager(cell: Vector2i):
 	
 	var region = set_up_navigation_region(GlobalNavigation)
 	region.navigation_polygon.add_outline(calculate_polygon_coords(cell))
-	print_debug(calculate_polygon_coords(cell), Rect2i(Vector2i(cell.x, (cell.y - 1))  * cellSize,cellSize).grow(2))
+	#print_debug(calculate_polygon_coords(cell), Rect2i(Vector2i(cell.x, (cell.y - 1))  * cellSize,cellSize).grow(2))
 	region.navigation_polygon.baking_rect = Rect2i(Vector2i(cell.x, (cell.y - 1))  * cellSize,cellSize).grow(cellSize.x)
 	region.navigation_polygon.border_size = cellSize.x
 	region.bake_navigation_polygon()
@@ -100,8 +105,13 @@ func pixel2cell(pixel:Vector2) -> Vector2i:
 		y += 1
 	return Vector2i(x, y)
 
+static func __rebake_map():
+	for item in polygon_map:
+		polygon_map[item].bake_navigation_polygon()
+
 func _input(event: InputEvent) -> void:
-	pass
+	if event.is_action_pressed("DEBUG"):
+		__rebake_map()
 
 func  _draw() -> void:
 	debug_draw_grid()

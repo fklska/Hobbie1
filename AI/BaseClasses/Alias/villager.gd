@@ -2,9 +2,10 @@ extends KinematicBodyEntity
 class_name BaseVillager
 
 @export var data: AIBackData
-
+@export var tick: float
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var timer: Timer = $Timer
 
 const SPEED = 50
 
@@ -21,6 +22,15 @@ var enemy_target
 var current_cell: Vector2i = Vector2i(0, 0)
 
 #@onready var nav_mesh: NavigationRegion2D
+
+func _ready() -> void:
+	shader = anim.material
+	if shader == null:
+		print_debug("SHADER INSTALL")
+	
+	timer.wait_time = tick
+	
+	await Navigation.bake_navigation_on_agent(self)
 
 func _physics_process(_delta):
 	match state:
@@ -51,7 +61,8 @@ func run():
 			anim_player.play("idle")
 			
 	if current_cell != Navigation.StaticPixel2cell(global_position):
-		Navigation.bake_navigation_on_agent(self)
+		GlobalNavigation.call_deferred("bake_navigation_on_agent", self)
+
 
 	move_and_slide()
 
@@ -73,9 +84,9 @@ func setup_polygon():
 	
 
 func _input(event: InputEvent):
-	if event.is_action_pressed("LeftMouseButton"):
-		nav.target_position = get_global_mouse_position()
-		
+	#if event.is_action_pressed("LeftMouseButton"):
+		#nav.target_position = get_global_mouse_position()
+	pass
 
 func show_selected_info():
 	return {
@@ -106,3 +117,6 @@ func send_obj_data() -> Dictionary:
 		"Basic": "Basic KinematicBody2dObject",
 		"2nd": "Second label"
 	}
+
+func _on_timer_timeout() -> void:
+	nav.target_position = get_global_mouse_position() + Vector2(randi_range(-100, 100), randi_range(-100, 100))

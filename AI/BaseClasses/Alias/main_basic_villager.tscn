@@ -12,7 +12,7 @@ resource_local_to_scene = true
 script = ExtResource("5_wauok")
 HEALTH = 0
 STRENCH = 0
-AGILITY = 0
+AGILITY = 2
 INTELECT = 0
 name = ""
 type = "Villager"
@@ -217,6 +217,7 @@ _data = {
 [node name="MainBasicVillager" instance=ExtResource("1_p8ta3")]
 script = ExtResource("2_3amib")
 data = SubResource("Resource_thuxa")
+tick = 0.0
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_u6mcb")
@@ -246,6 +247,9 @@ input_pickable = false
 shape = SubResource("CircleShape2D_qwr4s")
 debug_color = Color(0.933333, 0.0745098, 0.615686, 0.419608)
 
+[node name="CollisionShape2D" parent="." index="2"]
+disabled = true
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
 simplify_path = true
 simplify_epsilon = 2.476
@@ -259,3 +263,8 @@ debug_path_custom_line_width = 5.0
 libraries = {
 "": SubResource("AnimationLibrary_dlad1")
 }
+
+[node name="Timer" type="Timer" parent="." index="5"]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
