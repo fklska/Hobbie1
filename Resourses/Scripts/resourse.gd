@@ -51,6 +51,9 @@ func poup(amount: String):
 func get_texture():
 	return get_node("Texture").texture
 
+func get_sprite():
+	return get_node("Texture")
+
 func show_healthbar():
 	hb.visible = true
 

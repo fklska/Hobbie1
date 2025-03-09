@@ -6,13 +6,10 @@ offsets = PackedFloat32Array(0, 0.473404, 0.654255)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lbs8o"]
-noise_type = 0
-frequency = 0.0037
-offset = Vector3(-26046.2, 0.18, 0)
-fractal_octaves = 3
-fractal_lacunarity = 2.47
-fractal_gain = 0.465
-fractal_weighted_strength = 0.47
+frequency = 0.0032
+offset = Vector3(-3703.5, 0.18, 0)
+fractal_lacunarity = 3.065
+fractal_gain = 0.385
 
 [resource]
 invert = true

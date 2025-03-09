@@ -3,6 +3,8 @@ shader_type canvas_item;
 uniform float wind_strength : hint_range(0, 1) = 0.1; // Сила ветра
 uniform float wind_speed : hint_range(0, 10) = 1.0;  // Скорость ветра
 uniform vec2 wind_direction = vec2(-1.0, 0.0);       // Направление ветра
+uniform float random_offset : hint_range(0, 10);
+uniform float random_speed : hint_range(0, 10) = 1.0;
 
 uniform vec4 color : source_color = vec4(1.0);
 uniform float width : hint_range(0, 10) = 1.0;
@@ -14,10 +16,10 @@ uniform bool enable = false;
 
 void vertex() {
     // Инвертируем высоту дерева (1 внизу, 0 вверху)
-    float height_factor = 1.0 - UV.y;
+    float height_factor = pow(1.0 - UV.y, 2.0); // Более плавное затухание
 
     // Вычисляем смещение вершины
-    float wave = sin(TIME * wind_speed) * wind_strength * height_factor;
+	float wave = sin(TIME * wind_speed + random_offset) * wind_strength * height_factor;
 
     // Применяем смещение к вершине
     VERTEX.x += wave * wind_direction.x;

@@ -8,9 +8,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wetxv"]
 resource_local_to_scene = true
 shader = ExtResource("2_1gxm3")
-shader_parameter/wind_strength = 0.93
-shader_parameter/wind_speed = 2.509
+shader_parameter/wind_strength = 1.0
+shader_parameter/wind_speed = 2.603
 shader_parameter/wind_direction = Vector2(-1, 0)
+shader_parameter/random_offset = 0.0
+shader_parameter/random_speed = 1.0
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 2
