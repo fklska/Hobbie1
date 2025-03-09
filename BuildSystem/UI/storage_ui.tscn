@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bq2jvgxrp2es6"]
 
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_pfvo4"]
-[ext_resource type="Script" path="res://BuildSystem/scripts/storage_ui.gd" id="2_cwcl5"]
+[ext_resource type="Script" uid="uid://dfvygo2ih38md" path="res://BuildSystem/scripts/storage_ui.gd" id="2_cwcl5"]
 [ext_resource type="Texture2D" uid="uid://cg8ljg60on6ua" path="res://UI/UIAssets/Buttons/Button_Hover_3Slides.png" id="3_bby3r"]
 [ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="4_ntgfg"]
 [ext_resource type="Texture2D" uid="uid://b06ojyuwegde" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_10.png" id="5_p4ra7"]

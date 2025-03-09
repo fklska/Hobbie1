@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponClass" load_steps=3 format=3 uid="uid://c3jjtfrko2j5q"]
 
-[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="1_avnag"]
+[ext_resource type="Script" uid="uid://b8xwsu24mxaxj" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="1_avnag"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_2pdfk"]
 
@@ -8,8 +8,8 @@
 script = ExtResource("1_avnag")
 damage = 5
 required_strench = 1
+attack_speed = 0
 image = SubResource("ImageTexture_2pdfk")
-name = "Noname"
 amount = 1
 type = 0
 description = ""

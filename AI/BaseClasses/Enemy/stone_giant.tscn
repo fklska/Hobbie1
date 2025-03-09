@@ -1,9 +1,9 @@
 [gd_scene load_steps=38 format=3 uid="uid://dwnwnd8parvu1"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_yun30"]
-[ext_resource type="Script" path="res://AI/BaseClasses/Enemy/stone_giant.gd" id="2_ho4l5"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_13vkk"]
-[ext_resource type="Script" path="res://AI/BaseClasses/Enemy/stone_giant_data.gd" id="3_b1a20"]
+[ext_resource type="Script" uid="uid://bpisoucpxnope" path="res://AI/BaseClasses/Enemy/stone_giant.gd" id="2_ho4l5"]
+[ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_13vkk"]
+[ext_resource type="Script" uid="uid://bttcnfbivrtk2" path="res://AI/BaseClasses/Enemy/stone_giant_data.gd" id="3_b1a20"]
 [ext_resource type="Texture2D" uid="uid://717lxhmpp7ey" path="res://AI/BaseClasses/Enemy/Character_sheet.png" id="4_i5j23"]
 [ext_resource type="Texture2D" uid="uid://clprqdasu1kj8" path="res://AI/BaseClasses/Enemy/Laser_sheet.png" id="6_7r6ge"]
 
@@ -356,10 +356,10 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pf12g"]
 _data = {
-"RESET": SubResource("Animation_0804l"),
-"idle": SubResource("Animation_ya1g2"),
-"laser": SubResource("Animation_qaf4p"),
-"pre_laser": SubResource("Animation_xkhig")
+&"RESET": SubResource("Animation_0804l"),
+&"idle": SubResource("Animation_ya1g2"),
+&"laser": SubResource("Animation_qaf4p"),
+&"pre_laser": SubResource("Animation_xkhig")
 }
 
 [node name="StoneGiant" instance=ExtResource("1_yun30")]

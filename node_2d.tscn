@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bkcwymv7e7axp"]
 
-[ext_resource type="Script" path="res://navigation_agent_2d.gd" id="1_7j52m"]
-[ext_resource type="Script" path="res://Camera/Scripts/main_cam.gd" id="3_cxdtl"]
+[ext_resource type="Script" uid="uid://clvjxqin3i0bb" path="res://navigation_agent_2d.gd" id="1_7j52m"]
+[ext_resource type="Script" uid="uid://cofdwy06uot6b" path="res://Camera/Scripts/main_cam.gd" id="3_cxdtl"]
 [ext_resource type="PackedScene" uid="uid://8xkcngptvwcq" path="res://AI/BaseClasses/Alias/main_basic_villager.tscn" id="3_ficqk"]
-[ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="4_not0c"]
+[ext_resource type="Script" uid="uid://bp22ebv84xljv" path="res://AI/Resourses/ai_data.gd" id="4_not0c"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_x2wra"]
 source_geometry_mode = 1

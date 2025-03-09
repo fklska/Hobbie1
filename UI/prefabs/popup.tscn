@@ -73,8 +73,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_posc1"]
 _data = {
-"RESET": SubResource("Animation_1h4jg"),
-"floating_damage": SubResource("Animation_hukv5")
+&"RESET": SubResource("Animation_1h4jg"),
+&"floating_damage": SubResource("Animation_hukv5")
 }
 
 [node name="Popup" type="Marker2D"]

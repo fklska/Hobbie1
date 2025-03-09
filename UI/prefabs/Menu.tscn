@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://vumq2e0d4xkh"]
 
 [ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="1_owwux"]
-[ext_resource type="Script" path="res://UI/Scripts/Menu.gd" id="2_1xlac"]
-[ext_resource type="Script" path="res://BuildSystem/BuildManager.gd" id="3_1w5oy"]
+[ext_resource type="Script" uid="uid://dtrmm8wwd7cop" path="res://UI/Scripts/Menu.gd" id="2_1xlac"]
+[ext_resource type="Script" uid="uid://b5wuccqf64dts" path="res://BuildSystem/BuildManager.gd" id="3_1w5oy"]
 [ext_resource type="Texture2D" uid="uid://b6rd6ckeubmor" path="res://BuildSystem/assets/370PEG2-0.png" id="3_s41en"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2hbv"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://cvc0anycxd5pt"]
 
-[ext_resource type="Script" path="res://AI/Prefabs/Alias/Scripts/lumberjack.gd" id="1_mjo43"]
+[ext_resource type="Script" uid="uid://dpoi8lrgsw0mr" path="res://AI/Prefabs/Alias/Scripts/lumberjack.gd" id="1_mjo43"]
 [ext_resource type="Resource" uid="uid://bc5mk7ly2vnds" path="res://AI/Resourses/ai_data_res.tres" id="2_y1wp5"]
 [ext_resource type="Texture2D" uid="uid://c5ec8hivh74gx" path="res://AI/Prefabs/Alias/assets/MiniLumberjack.png" id="3_1n2to"]
 
@@ -319,11 +319,11 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kgh84"]
 _data = {
-"RESET": SubResource("Animation_r8jug"),
-"attack": SubResource("Animation_qyw7b"),
-"circle_detector": SubResource("Animation_8102p"),
-"idle": SubResource("Animation_fq47i"),
-"walk": SubResource("Animation_sic8e")
+&"RESET": SubResource("Animation_r8jug"),
+&"attack": SubResource("Animation_qyw7b"),
+&"circle_detector": SubResource("Animation_8102p"),
+&"idle": SubResource("Animation_fq47i"),
+&"walk": SubResource("Animation_sic8e")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1nl3b"]

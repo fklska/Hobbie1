@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://puflxaap1ueo"]
+[gd_scene load_steps=4 format=3 uid="uid://puflxaap1ueo"]
 
 [ext_resource type="PackedScene" uid="uid://bl1ykifb23s2m" path="res://BuildSystem/build_mode.tscn" id="1_wnsgo"]
+[ext_resource type="PackedScene" uid="uid://cld5xptrjp0mr" path="res://Light/light.tscn" id="2_wjtrd"]
 
 [sub_resource type="Environment" id="Environment_iheb7"]
 background_mode = 3
@@ -13,3 +14,10 @@ glow_hdr_scale = 0.7
 environment = SubResource("Environment_iheb7")
 
 [node name="BuildMode" parent="." instance=ExtResource("1_wnsgo")]
+
+[node name="Light" parent="." instance=ExtResource("2_wjtrd")]
+position = Vector2(54, 50)
+color = Color(0.688399, 0.368768, 0.488237, 1)
+energy = 3.16
+offset = Vector2(0.98, 0)
+height = 0.22

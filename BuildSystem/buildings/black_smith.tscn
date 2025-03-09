@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://bml80fbyn2s8k"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_blr83"]
-[ext_resource type="Script" path="res://BuildSystem/scripts/black_smith.gd" id="2_7a3fy"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_3hssb"]
+[ext_resource type="Script" uid="uid://dec36puysm3jy" path="res://BuildSystem/scripts/black_smith.gd" id="2_7a3fy"]
+[ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_3hssb"]
 [ext_resource type="Texture2D" uid="uid://b6rd6ckeubmor" path="res://BuildSystem/assets/370PEG2-0.png" id="4_qio1e"]
 [ext_resource type="Texture2D" uid="uid://bv88axqotujox" path="res://BuildSystem/assets/370PEG2-1.png" id="5_acy30"]
 [ext_resource type="Texture2D" uid="uid://c7b27ryw78d4o" path="res://BuildSystem/assets/370PEG2-2.png" id="6_cc7py"]
@@ -95,7 +95,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lyd58"]
 _data = {
-"idle": SubResource("Animation_ty6v6")
+&"idle": SubResource("Animation_ty6v6")
 }
 
 [node name="BlackSmith" instance=ExtResource("1_blr83")]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=19 format=3 uid="uid://b3lrti1cgcygf"]
 
 [ext_resource type="PackedScene" uid="uid://8xkcngptvwcq" path="res://AI/BaseClasses/Alias/main_basic_villager.tscn" id="1_dcriw"]
-[ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="2_ap7ki"]
-[ext_resource type="Script" path="res://AI/Prefabs/Alias/Scripts/collector_villager.gd" id="2_c8q2j"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_yspmx"]
+[ext_resource type="Script" uid="uid://bp22ebv84xljv" path="res://AI/Resourses/ai_data.gd" id="2_ap7ki"]
+[ext_resource type="Script" uid="uid://ynaje5m3jcsw" path="res://AI/Prefabs/Alias/Scripts/collector_villager.gd" id="2_c8q2j"]
+[ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="2_yspmx"]
 [ext_resource type="Texture2D" uid="uid://kpdlk2pter1g" path="res://AI/Prefabs/Alias/assets/Male1.png" id="3_hnkod"]
 
 [sub_resource type="Resource" id="Resource_e8euf"]
@@ -14,8 +14,6 @@ AGILITY = 2
 INTELECT = 0
 name = ""
 type = "Collector"
-Inventory = Array[Resource("res://BaseClasses/ScriptClasses/inventory_item.gd")]([])
-max_carry_weight = 10
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_md5dy"]
 resource_local_to_scene = true

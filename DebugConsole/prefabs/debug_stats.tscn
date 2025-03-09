@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c2wv8totvopdf"]
 
-[ext_resource type="Script" path="res://DebugConsole/Scripts/debugger_stats.gd" id="1_b4dal"]
+[ext_resource type="Script" uid="uid://8c2ntkoelrn1" path="res://DebugConsole/Scripts/debugger_stats.gd" id="1_b4dal"]
 
 [node name="Stats" type="PanelContainer"]
 anchors_preset = -1

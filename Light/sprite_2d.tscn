@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm4a66qi7mp4l"]
+
+[ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_lbs8o"]
+
+[node name="Light" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.366913, 0.371739, 0.276231, 1)
+
+[node name="DirectionalLight2D" type="PointLight2D" parent="."]
+position = Vector2(647, 344)
+scale = Vector2(6.22656, 6.22656)
+texture = ExtResource("2_lbs8o")
+texture_scale = 0.59

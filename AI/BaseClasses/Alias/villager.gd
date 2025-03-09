@@ -21,6 +21,7 @@ var enemy_target
 
 var current_cell: Vector2i = Vector2i(0, 0)
 
+var Path: PackedVector2Array = PackedVector2Array()
 #@onready var nav_mesh: NavigationRegion2D
 
 func _ready() -> void:
@@ -28,9 +29,10 @@ func _ready() -> void:
 	if shader == null:
 		print_debug("SHADER INSTALL")
 	
-	timer.wait_time = tick
+	timer.wait_time = randf_range(5, 15)
+	data.AGILITY = randi_range(2, 5)
 	
-	await Navigation.bake_navigation_on_agent(self)
+	#await Navigation.bake_navigation_on_agent(self)
 
 func _physics_process(_delta):
 	match state:
@@ -60,8 +62,8 @@ func run():
 			velocity = Vector2(0, 0)
 			anim_player.play("idle")
 			
-	if current_cell != Navigation.StaticPixel2cell(global_position):
-		GlobalNavigation.call_deferred("bake_navigation_on_agent", self)
+	#if current_cell != Navigation.StaticPixel2cell(global_position):
+		#GlobalNavigation.call_deferred("thread_bake", self)
 
 
 	move_and_slide()
@@ -84,9 +86,8 @@ func setup_polygon():
 	
 
 func _input(event: InputEvent):
-	#if event.is_action_pressed("LeftMouseButton"):
-		#nav.target_position = get_global_mouse_position()
-	pass
+	if event.is_action_pressed("LeftMouseButton"):
+		nav.target_position = get_global_mouse_position()
 
 func show_selected_info():
 	return {
@@ -118,5 +119,15 @@ func send_obj_data() -> Dictionary:
 		"2nd": "Second label"
 	}
 
+func get_next_path_pos():
+	if Path.is_empty():
+		return global_position
+
+	var value = Path[0]
+	Path.remove_at(0)
+	return value
+
 func _on_timer_timeout() -> void:
-	nav.target_position = get_global_mouse_position() + Vector2(randi_range(-100, 100), randi_range(-100, 100))
+	var dest = get_global_mouse_position() + Vector2(randi_range(-100, 100), randi_range(-100, 100))
+	#Path = NavigationServer2D.map_get_path(get_world_2d().navigation_map, global_position, dest, true)
+	nav.target_position = dest

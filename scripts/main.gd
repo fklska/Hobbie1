@@ -51,8 +51,9 @@ var gap = 64
 
 func _ready():
 	generate()
-	GlobalNavigation.debug_baking()
+	#GlobalNavigation.debug_baking()
 	#custom_server()
+	#GlobalNavigation.call_deferred("thread_map_bake")
 
 func generate():
 	clear()
@@ -96,6 +97,8 @@ func generate():
 	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
 	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)
 	#how to rebuild map
+	
+	GlobalNavigation.call_deferred("bake_all_navigation_map")
 
 func clear():
 	var objs: Array = root_node.get_children()

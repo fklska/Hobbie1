@@ -1,46 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://udl0gyje82hp"]
+[gd_scene load_steps=2 format=3 uid="uid://udl0gyje82hp"]
 
-[ext_resource type="Script" path="res://test_script.gd" id="1_oxneu"]
-[ext_resource type="Script" path="res://Camera/Scripts/main_cam.gd" id="2_k0dhk"]
-[ext_resource type="PackedScene" uid="uid://8xkcngptvwcq" path="res://AI/BaseClasses/Alias/main_basic_villager.tscn" id="3_3be5d"]
-[ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="4_trey7"]
-
-[sub_resource type="Resource" id="Resource_jn6my"]
-resource_local_to_scene = true
-script = ExtResource("4_trey7")
-HEALTH = 0
-STRENCH = 0
-AGILITY = 10
-INTELECT = 0
-name = ""
-type = "Villager"
+[ext_resource type="Script" uid="uid://nvikc7vmcjrl" path="res://test_script.gd" id="1_oxneu"]
 
 [node name="Test_scene" type="Node2D"]
 position = Vector2(3, 6)
 script = ExtResource("1_oxneu")
-
-[node name="MainBasicVillager" parent="." instance=ExtResource("3_3be5d")]
-data = SubResource("Resource_jn6my")
-
-[node name="Camera2D" type="Camera2D" parent="MainBasicVillager"]
-script = ExtResource("2_k0dhk")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["navigation_polygon_source_geometry_group"]]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(181, -215, 161, -99, 350, -48, 433, -157)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-521, -88, -504, 35, -381, 64, -355, -60)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-1450, -96, -1538, 221, -1256, 469, -703, 691, -1075, -163, -1418, -96)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-192, 682, -152, 1100, 634, 1216, 540, 916)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(1998, 1287, 2133, 130, 2705, -630, 3351, 749, 3297, 1630, 2059, 1967, 2025, 1234)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(1021, 949, 773, 327, 1440, 193, 1592, 682, 1586, 1298)

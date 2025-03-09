@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://gk7ibufqhhoq"]
 
-[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/inventory_item.gd" id="1_nxn7h"]
+[ext_resource type="Script" uid="uid://di8jcd0sy2m7" path="res://BaseClasses/ScriptClasses/inventory_item.gd" id="1_nxn7h"]
 [ext_resource type="Texture2D" uid="uid://bnefaa2h2hgcs" path="res://Items/Assets/Sword64x64.png" id="3_6cug6"]
 
 [node name="Item" type="Area2D"]

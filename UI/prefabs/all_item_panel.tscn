@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://doe0felce6861"]
 
-[ext_resource type="Script" path="res://UI/Scripts/AllItemsPanel.gd" id="1_agl8k"]
+[ext_resource type="Script" uid="uid://bxesxmb8j8vtn" path="res://UI/Scripts/AllItemsPanel.gd" id="1_agl8k"]
 [ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/prefabs/slot.tscn" id="2_k2vro"]
 
 [node name="AllItemPanel" type="PanelContainer" node_paths=PackedStringArray("root_container")]

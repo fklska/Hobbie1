@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfnx5whpcvaek"]
 
-[ext_resource type="Script" path="res://Player/concentration.gd" id="1_qmtuj"]
+[ext_resource type="Script" uid="uid://cmifg2fc16mv" path="res://Player/concentration.gd" id="1_qmtuj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cpyvy"]
 bg_color = Color(0.180392, 0.188235, 0.192157, 1)

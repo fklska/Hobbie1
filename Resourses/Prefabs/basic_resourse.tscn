@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://cpmuho6osgn33"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_kpm82"]
-[ext_resource type="Script" path="res://Resourses/Scripts/resourse.gd" id="2_mwnmf"]
+[ext_resource type="Script" uid="uid://bxtnvldvcr8jb" path="res://Resourses/Scripts/resourse.gd" id="2_mwnmf"]
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="2_teda1"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="3_fmnx2"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_mu4ns"]
+[ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="4_mu4ns"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_867q3"]
 resource_local_to_scene = true
@@ -53,8 +53,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eq8xt"]
 _data = {
-"RESET": SubResource("Animation_d3bnw"),
-"get_hit": SubResource("Animation_rpu3h")
+&"RESET": SubResource("Animation_d3bnw"),
+&"get_hit": SubResource("Animation_rpu3h")
 }
 
 [node name="BasicResourse" instance=ExtResource("1_kpm82")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://7q3r4vbmk4ae"]
 
-[ext_resource type="Script" path="res://ProceduralGeneration/PG_v2.cs" id="1_sykl1"]
+[ext_resource type="Script" uid="uid://m6kmnxnw12nw" path="res://ProceduralGeneration/PG_v2.cs" id="1_sykl1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ipxto"]
 noise_type = 0

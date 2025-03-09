@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cld5xptrjp0mr"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mde8y"]
+
+[node name="Light" type="PointLight2D"]
+texture = SubResource("NoiseTexture2D_mde8y")
+texture_scale = 5.95
+height = 185.0

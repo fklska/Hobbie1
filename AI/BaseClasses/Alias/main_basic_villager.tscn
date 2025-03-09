@@ -1,10 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://8xkcngptvwcq"]
+[gd_scene load_steps=25 format=3 uid="uid://8xkcngptvwcq"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_p8ta3"]
-[ext_resource type="Script" path="res://AI/BaseClasses/Alias/villager.gd" id="2_3amib"]
+[ext_resource type="Script" uid="uid://bk5clgfkhurr" path="res://AI/BaseClasses/Alias/villager.gd" id="2_3amib"]
 [ext_resource type="Texture2D" uid="uid://cq76esqb51ykk" path="res://Items/Assets/sword 1.png" id="3_1u8jh"]
-[ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="5_wauok"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="6_nkhur"]
+[ext_resource type="Script" uid="uid://bp22ebv84xljv" path="res://AI/Resourses/ai_data.gd" id="5_wauok"]
+[ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="6_nkhur"]
 [ext_resource type="Texture2D" uid="uid://t1qt3bqwc0yw" path="res://AI/BaseClasses/Alias/Male4.png" id="7_wwfmw"]
 
 [sub_resource type="Resource" id="Resource_thuxa"]
@@ -99,9 +99,6 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k4jiw"]
 radius = 3.0
 height = 40.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_qwr4s"]
-radius = 87.0057
 
 [sub_resource type="Animation" id="Animation_o8kxf"]
 length = 0.001
@@ -207,11 +204,11 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dlad1"]
 _data = {
-"RESET": SubResource("Animation_o8kxf"),
-"attack": SubResource("Animation_bgqpn"),
-"idle": SubResource("Animation_1wi0h"),
-"search": SubResource("Animation_tfabx"),
-"walk": SubResource("Animation_ngkh0")
+&"RESET": SubResource("Animation_o8kxf"),
+&"attack": SubResource("Animation_bgqpn"),
+&"idle": SubResource("Animation_1wi0h"),
+&"search": SubResource("Animation_tfabx"),
+&"walk": SubResource("Animation_ngkh0")
 }
 
 [node name="MainBasicVillager" instance=ExtResource("1_p8ta3")]
@@ -238,33 +235,19 @@ position = Vector2(4.76837e-07, -19)
 shape = SubResource("CapsuleShape2D_k4jiw")
 disabled = true
 
-[node name="EnemyTrigger" type="Area2D" parent="." index="1"]
-collision_layer = 2
-collision_mask = 4
-input_pickable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyTrigger" index="0"]
-shape = SubResource("CircleShape2D_qwr4s")
-debug_color = Color(0.933333, 0.0745098, 0.615686, 0.419608)
-
-[node name="CollisionShape2D" parent="." index="2"]
-disabled = true
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
-simplify_path = true
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="1"]
 simplify_epsilon = 2.476
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.376471, 0.164706, 0.933333, 1)
-debug_path_custom_point_size = 10.0
-debug_path_custom_line_width = 5.0
+debug_path_custom_point_size = 3.0
+debug_path_custom_line_width = 2.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_dlad1")
 }
 
-[node name="Timer" type="Timer" parent="." index="5"]
+[node name="Timer" type="Timer" parent="." index="3"]
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

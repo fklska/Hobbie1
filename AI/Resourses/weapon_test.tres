@@ -1,18 +1,14 @@
-[gd_resource type="Resource" script_class="WeaponClass" load_steps=4 format=3 uid="uid://cgyidmwdj3qk4"]
+[gd_resource type="Resource" script_class="WeaponClass" load_steps=3 format=3 uid="uid://cgyidmwdj3qk4"]
 
 [ext_resource type="Texture2D" uid="uid://cq76esqb51ykk" path="res://Items/Assets/sword 1.png" id="1_d4xl6"]
-[ext_resource type="Script" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="2_smyql"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_40i5w"]
-radius = 3.0
-height = 40.0
+[ext_resource type="Script" uid="uid://b8xwsu24mxaxj" path="res://BaseClasses/ScriptClasses/weapon_item.gd" id="2_smyql"]
 
 [resource]
 script = ExtResource("2_smyql")
 damage = 2
 required_strench = 2
-shape = SubResource("CapsuleShape2D_40i5w")
+attack_speed = 0
 image = ExtResource("1_d4xl6")
-name = "test"
 amount = 1
 type = 0
+description = ""

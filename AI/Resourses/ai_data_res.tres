@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AIBackData" load_steps=2 format=3 uid="uid://bc5mk7ly2vnds"]
 
-[ext_resource type="Script" path="res://AI/Resourses/ai_data.gd" id="1_kit5j"]
+[ext_resource type="Script" uid="uid://bp22ebv84xljv" path="res://AI/Resourses/ai_data.gd" id="1_kit5j"]
 
 [resource]
 script = ExtResource("1_kit5j")

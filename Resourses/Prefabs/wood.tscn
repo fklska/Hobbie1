@@ -2,12 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_d46uf"]
 [ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="1_tvyi4"]
-[ext_resource type="Script" path="res://Resourses/Scripts/wood.gd" id="2_njwln"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_c6d7s"]
+[ext_resource type="Shader" uid="uid://c3o7mr7g415ti" path="res://Resourses/Prefabs/woodWave.gdshader" id="2_1gxm3"]
+[ext_resource type="Script" uid="uid://dbt27wd6j64v7" path="res://Resourses/Scripts/wood.gd" id="2_njwln"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wetxv"]
 resource_local_to_scene = true
-shader = ExtResource("3_c6d7s")
+shader = ExtResource("2_1gxm3")
+shader_parameter/wind_strength = 0.93
+shader_parameter/wind_speed = 2.509
+shader_parameter/wind_direction = Vector2(-1, 0)
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 2
