@@ -4,6 +4,7 @@
 ![Play Store](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
 ![Godot Engine](https://img.shields.io/badge/Godot-478CBF?style=for-the-badge&logo=GodotEngine&logoColor=white)
+
 [YOUTUBE](https://www.youtube.com/shorts/szq9N0DynM0)
 
 ### Внимание, автор не учился на программиста в ВУЗе 
