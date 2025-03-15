@@ -1,0 +1,80 @@
+[gd_resource type="VisualShader" load_steps=9 format=3 uid="uid://cnvjs8soaeoqp"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_851sx"]
+source = 5
+
+[sub_resource type="Gradient" id="Gradient_yeehp"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.549383)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_62rrs"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fgjnf"]
+color_ramp = SubResource("Gradient_yeehp")
+noise = SubResource("FastNoiseLite_62rrs")
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_g3mgv"]
+expanded_output_ports = [0]
+source = 5
+texture = SubResource("NoiseTexture2D_fgjnf")
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_lsph2"]
+parameter_name = "Texture2DParameter"
+texture_filter = 1
+texture_repeat = 1
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_851sx"]
+expanded_output_ports = [0]
+input_name = "texture"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_yeehp"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0)]
+expanded_output_ports = [0]
+op_type = 2
+operator = 2
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform sampler2D Texture2DParameter : filter_nearest, repeat_enable;
+
+
+
+void fragment() {
+	vec4 n_out10p0;
+// Texture2D:10
+	n_out10p0 = texture(TEXTURE, UV);
+
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(Texture2DParameter, UV);
+
+
+// VectorOp:9
+	vec4 n_out9p0 = n_out10p0 * n_out3p0;
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out9p0.xyz);
+
+
+}
+"
+graph_offset = Vector2(-864.333, -92.4709)
+mode = 1
+flags/light_only = false
+preview_params/Texture2DParameter = "Object(CompressedTexture2D,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"load_path\":\"res://.godot/imported/grassTexture.png-0fffd0850a2cb96d29efab000a62f78d.ctex\",\"script\":null)
+"
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_g3mgv")
+nodes/fragment/3/position = Vector2(-540, 400)
+nodes/fragment/6/node = SubResource("VisualShaderNodeTexture2DParameter_lsph2")
+nodes/fragment/6/position = Vector2(-1060, 340)
+nodes/fragment/8/node = SubResource("VisualShaderNodeInput_851sx")
+nodes/fragment/8/position = Vector2(-1140, 40)
+nodes/fragment/9/node = SubResource("VisualShaderNodeVectorOp_yeehp")
+nodes/fragment/9/position = Vector2(-140, 200)
+nodes/fragment/10/node = SubResource("VisualShaderNodeTexture_851sx")
+nodes/fragment/10/position = Vector2(-660, 60)
+nodes/fragment/connections = PackedInt32Array(6, 0, 3, 2, 9, 0, 0, 0, 3, 0, 9, 1, 8, 0, 10, 2, 10, 0, 9, 0)
