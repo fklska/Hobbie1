@@ -5,6 +5,8 @@
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
 ![Godot Engine](https://img.shields.io/badge/Godot-478CBF?style=for-the-badge&logo=GodotEngine&logoColor=white)
 
+[YOUTUBE](https://www.youtube.com/@fklska3995/shorts) канал по игре
+
 ### Внимание, автор не учился на программиста в ВУЗе 
 Напиши [мне](https://t.me/fklska) если хочешь поучаствовать
 
