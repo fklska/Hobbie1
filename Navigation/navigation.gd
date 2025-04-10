@@ -49,7 +49,7 @@ func debug_baking():
 func _ready() -> void:
 	queue_redraw()
 	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 0)
-	NavigationServer2D.set_debug_enabled(false)
+	NavigationServer2D.set_debug_enabled(true)
 	#thread_map_bake()
 
 func debug_draw_grid():

@@ -1,7 +1,6 @@
-[gd_resource type="TileSet" load_steps=18 format=3 uid="uid://ghcdpblo5xrf"]
+[gd_resource type="TileSet" load_steps=17 format=3 uid="uid://ghcdpblo5xrf"]
 
 [ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="1_5i7ek"]
-[ext_resource type="Texture2D" uid="uid://b577xti2q0cc1" path="res://Map/grassTexture.png" id="2_uxqhr"]
 [ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="3_8e873"]
 [ext_resource type="Texture2D" uid="uid://b46faxpgckila" path="res://Map/Tilemap_Flat.png" id="3_svxdp"]
 [ext_resource type="Texture2D" uid="uid://vktf0gduh0lw" path="res://Map/Water.png" id="4_jjbj7"]
@@ -11,7 +10,6 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uxqhr"]
 shader = ExtResource("1_5i7ek")
-shader_parameter/overlay_tex = ExtResource("2_uxqhr")
 shader_parameter/scale = 0.012
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_t3p6e"]

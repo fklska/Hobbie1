@@ -2,14 +2,19 @@
 extends Node2D
 class_name MapGenerator
 
-static var SIZE = Vector2i(32, 32)
+static var SIZE = Vector2i(128, 128)
 
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
 
 @export_category("Biomes Height")
-@export_range(-0.8, 0) var water_height: float
-@export_range(-0.4, 0.8) var sand_height: float
+@export var water_height: float
+@export var dirt_height: float
+@export var grass_height: float
+
+@onready var dirt: TileMapLayer = $Dirt
+@onready var grass: TileMapLayer = $Grass
+@onready var water: TileMapLayer = $Water
 
 @export_category("Resourses Height")
 @export_range(0, 0.3) var wood_height: float
@@ -17,7 +22,6 @@ static var SIZE = Vector2i(32, 32)
 @export_range(0, 0.3) var gold_height: float
 @export_range(0, 0.3) var iron_height: float
 
-@onready var tilemap: TileMap = $Tilemap
 @onready var player = $Player_MainCharacter
 @onready var RES_TYPES = {
 		gold_height: {
@@ -40,14 +44,14 @@ static var SIZE = Vector2i(32, 32)
 
 @onready var root_node = $Resourses
 
-var sand_tiles = []
+var dirt_tiles = []
 var grass_tiles = []
 var water_tiles = []
 
 var height_val =[]
 var res_height_val =[]
 
-var gap = 64
+var gap = 16
 
 func _ready():
 	generate()
@@ -59,7 +63,6 @@ func generate():
 	clear()
 	
 	noise.seed = randi()
-	noise.offset = Vector3(player.global_position.x, player.global_position.y, 0)
 
 	for x in range(-SIZE.x / 2, SIZE.x / 2):
 		for y in range(-SIZE.y / 2, SIZE.y / 2):
@@ -67,13 +70,15 @@ func generate():
 			var height = noise.get_noise_2d(x, y)
 			height_val.append(height)
 			
-			if height < water_height:
+			if height > water_height:
 				water_tiles.append(Vector2i(x, y))
 				
-			elif height < sand_height:
-				sand_tiles.append(Vector2i(x, y))
+			if height > dirt_height:
+				dirt_tiles.append(Vector2i(x, y))
 				
-			else:
+			if height > grass_height:
+				grass_tiles.append(Vector2i(x, y))
+				
 				var res_height = abs(res_noise.get_noise_2d(x, y))
 				res_height_val.append(res_height)
 				
@@ -85,7 +90,6 @@ func generate():
 						root_node.add_child(prefab)
 						break
 					
-				grass_tiles.append(Vector2i(x, y))
 	
 	# tetsaw
 	#print_debug("max: ", height_val.max())
@@ -93,11 +97,10 @@ func generate():
 	#print_debug("Resmax: ", res_height_val.max())
 	#print_debug("Resmin: ", res_height_val.min())
 
-	tilemap.set_cells_terrain_connect(0, water_tiles, 0, 0)
-	tilemap.set_cells_terrain_connect(0, sand_tiles, 0, 1)
-	tilemap.set_cells_terrain_connect(0, grass_tiles, 0, 2)
+	water.set_cells_terrain_connect(water_tiles, 0, 2, false)
+	grass.set_cells_terrain_connect(grass_tiles, 0, 0, false)
+	dirt.set_cells_terrain_connect(dirt_tiles, 0, 3, false)
 	#how to rebuild map
-	
 	GlobalNavigation.call_deferred("bake_all_navigation_map")
 
 func clear():
@@ -106,10 +109,12 @@ func clear():
 	for obj in objs:
 		obj.queue_free()
 		
-	tilemap.clear()
-	water_tiles.clear()
-	sand_tiles.clear()
+	grass.clear()
+	dirt.clear()
+	water.clear()
+	dirt_tiles.clear()
 	grass_tiles.clear()
+	water_tiles.clear()
 
 func setup_polygon(current_position: Vector2):
 	#nav_mesh.navigation_polygon.clear_polygons()
