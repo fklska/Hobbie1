@@ -1,23 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://puflxaap1ueo"]
+[gd_scene load_steps=5 format=3 uid="uid://puflxaap1ueo"]
 
-[ext_resource type="PackedScene" uid="uid://bl1ykifb23s2m" path="res://BuildSystem/build_mode.tscn" id="1_wnsgo"]
-[ext_resource type="PackedScene" uid="uid://cld5xptrjp0mr" path="res://Light/light.tscn" id="2_wjtrd"]
+[ext_resource type="PackedScene" uid="uid://cclqjnvsbtijf" path="res://Map/tilemap/new_tile_map.tscn" id="1_01g3i"]
+[ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_t4ycb"]
+[ext_resource type="Script" uid="uid://dlxknb7a41wrq" path="res://Light/pointLight.gd" id="3_x002e"]
 
 [sub_resource type="Environment" id="Environment_iheb7"]
-background_mode = 3
+ssil_radius = 4.16
+ssil_intensity = 8.24
+sdfgi_bounce_feedback = 0.79
+sdfgi_min_cell_size = 28.99
+sdfgi_cascade0_distance = 1855.36
+sdfgi_max_distance = 29685.8
 glow_enabled = true
-glow_intensity = 2.7
-glow_blend_mode = 1
-glow_hdr_scale = 0.7
+glow_bloom = 0.75
+adjustment_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment"]
 environment = SubResource("Environment_iheb7")
 
-[node name="BuildMode" parent="." instance=ExtResource("1_wnsgo")]
+[node name="newTileMap" parent="." instance=ExtResource("1_01g3i")]
+position = Vector2(101, 252)
 
-[node name="Light" parent="." instance=ExtResource("2_wjtrd")]
-position = Vector2(54, 50)
-color = Color(0.688399, 0.368768, 0.488237, 1)
-energy = 3.16
-offset = Vector2(0.98, 0)
-height = 0.22
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(5, 5)
+energy = 0.7
+texture = ExtResource("2_t4ycb")
+script = ExtResource("3_x002e")
+SPEED = Vector3(-2, 0, 0)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.605274, 0.605274, 0.605274, 1)

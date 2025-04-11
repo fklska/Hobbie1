@@ -2,7 +2,7 @@
 extends Node2D
 class_name MapGenerator
 
-static var SIZE = Vector2i(128, 128)
+static var SIZE = Vector2i(64, 64)
 
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
@@ -101,7 +101,7 @@ func generate():
 	grass.set_cells_terrain_connect(grass_tiles, 0, 0, false)
 	dirt.set_cells_terrain_connect(dirt_tiles, 0, 3, false)
 	#how to rebuild map
-	GlobalNavigation.call_deferred("bake_all_navigation_map")
+	#GlobalNavigation.call_deferred("bake_all_navigation_map")
 
 func clear():
 	var objs: Array = root_node.get_children()
