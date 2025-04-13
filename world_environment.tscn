@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://puflxaap1ueo"]
+[gd_scene load_steps=3 format=3 uid="uid://puflxaap1ueo"]
 
-[ext_resource type="PackedScene" uid="uid://cclqjnvsbtijf" path="res://Map/tilemap/new_tile_map.tscn" id="1_01g3i"]
-[ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_t4ycb"]
-[ext_resource type="Script" uid="uid://dlxknb7a41wrq" path="res://Light/pointLight.gd" id="3_x002e"]
+[ext_resource type="PackedScene" uid="uid://c34jocapwhqh8" path="res://Generator.tscn" id="1_x16oa"]
 
 [sub_resource type="Environment" id="Environment_iheb7"]
 ssil_radius = 4.16
@@ -18,15 +16,5 @@ adjustment_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment"]
 environment = SubResource("Environment_iheb7")
 
-[node name="newTileMap" parent="." instance=ExtResource("1_01g3i")]
-position = Vector2(101, 252)
-
-[node name="PointLight2D" type="PointLight2D" parent="."]
-scale = Vector2(5, 5)
-energy = 0.7
-texture = ExtResource("2_t4ycb")
-script = ExtResource("3_x002e")
-SPEED = Vector3(-2, 0, 0)
-
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.605274, 0.605274, 0.605274, 1)
+[node name="Main" parent="." instance=ExtResource("1_x16oa")]
+position = Vector2(414, 604)

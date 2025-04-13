@@ -1,3 +1,4 @@
+@icon("res://Navigation/navigation.png")
 extends Node2D
 class_name Navigation
 

@@ -1,4 +1,5 @@
 @tool
+@icon("res://world.png")
 extends Node2D
 class_name MapGenerator
 
@@ -22,8 +23,8 @@ static var SIZE = Vector2i(64, 64)
 @export_range(0, 0.3) var gold_height: float
 @export_range(0, 0.3) var iron_height: float
 
-@onready var player = $Player_MainCharacter
-@onready var RES_TYPES = {
+
+var RES_TYPES = {
 		gold_height: {
 			"prefab": preload("res://Resourses/Prefabs/gold.tscn"),
 			"sourse_id": 3
@@ -54,13 +55,14 @@ var res_height_val =[]
 var gap = 16
 
 func _ready():
-	generate()
+	if Engine.is_editor_hint():
+		generate()
 	#GlobalNavigation.debug_baking()
 	#custom_server()
 	#GlobalNavigation.call_deferred("thread_map_bake")
 
 func generate():
-	clear()
+	#clear()
 	
 	noise.seed = randi()
 
@@ -101,7 +103,8 @@ func generate():
 	grass.set_cells_terrain_connect(grass_tiles, 0, 0, false)
 	dirt.set_cells_terrain_connect(dirt_tiles, 0, 3, false)
 	#how to rebuild map
-	#GlobalNavigation.call_deferred("bake_all_navigation_map")
+	if not Engine.is_editor_hint():
+		GlobalNavigation.call_deferred("bake_all_navigation_map")
 
 func clear():
 	var objs: Array = root_node.get_children()

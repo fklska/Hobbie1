@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Godot1"
-run/main_scene="res://main.tscn"
+run/main_scene="res://Generator.tscn"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
 
