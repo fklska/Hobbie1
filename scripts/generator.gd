@@ -24,24 +24,24 @@ static var SIZE = Vector2i(64, 64)
 @export_range(0, 0.3) var iron_height: float
 
 
-var RES_TYPES = {
-		gold_height: {
-			"prefab": preload("res://Resourses/Prefabs/gold.tscn"),
-			"sourse_id": 3
-			},
-		iron_height: {
-			"prefab": preload("res://Resourses/Prefabs/iron.tscn"),
-			"sourse_id": 4
-			},
-		rock_height: {
-			"prefab": preload("res://Resourses/Prefabs/rock.tscn"),
-			"sourse_id": 5
-			},
-		wood_height: {
-			"prefab": preload("res://Resourses/Prefabs/wood.tscn"),
-			"sourse_id": 2
-			},
-	}
+@onready var RES_TYPES = {
+	gold_height: {
+		"prefab": preload("res://Resourses/Prefabs/gold.tscn"),
+		"sourse_id": 3,
+		},
+	iron_height: {
+		"prefab": preload("res://Resourses/Prefabs/iron.tscn"),
+		"sourse_id": 4,
+		},
+	rock_height: {
+		"prefab": preload("res://Resourses/Prefabs/rock.tscn"),
+		"sourse_id": 5,
+		},
+	wood_height: {
+		"prefab": preload("res://Resourses/Prefabs/wood.tscn"),
+		"sourse_id": 2,
+		},
+}
 
 @onready var root_node = $Resourses
 
@@ -55,14 +55,14 @@ var res_height_val =[]
 var gap = 16
 
 func _ready():
-	if Engine.is_editor_hint():
-		generate()
+	#if Engine.is_editor_hint():
+	generate()
 	#GlobalNavigation.debug_baking()
 	#custom_server()
 	#GlobalNavigation.call_deferred("thread_map_bake")
 
 func generate():
-	#clear()
+	clear()
 	
 	noise.seed = randi()
 
