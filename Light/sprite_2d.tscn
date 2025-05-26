@@ -7,8 +7,9 @@
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.366913, 0.371739, 0.276231, 1)
 
-[node name="DirectionalLight2D" type="PointLight2D" parent="."]
+[node name="Light2D" type="PointLight2D" parent="."]
 position = Vector2(647, 344)
 scale = Vector2(6.22656, 6.22656)
+shadow_enabled = true
 texture = ExtResource("2_lbs8o")
 texture_scale = 0.59

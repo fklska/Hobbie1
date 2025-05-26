@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://puflxaap1ueo"]
+[gd_scene load_steps=4 format=3 uid="uid://puflxaap1ueo"]
 
 [ext_resource type="PackedScene" uid="uid://c34jocapwhqh8" path="res://Generator.tscn" id="1_x16oa"]
+[ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_wjtrd"]
 
 [sub_resource type="Environment" id="Environment_iheb7"]
 ssil_radius = 4.16
@@ -10,11 +11,35 @@ sdfgi_min_cell_size = 28.99
 sdfgi_cascade0_distance = 1855.36
 sdfgi_max_distance = 29685.8
 glow_enabled = true
-glow_bloom = 0.75
-adjustment_enabled = true
+glow_strength = 0.3
+glow_bloom = 0.19
+glow_blend_mode = 0
+glow_hdr_threshold = 0.4
 
 [node name="WorldEnvironment" type="WorldEnvironment"]
 environment = SubResource("Environment_iheb7")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
+
 [node name="Main" parent="." instance=ExtResource("1_x16oa")]
 position = Vector2(414, 604)
+
+[node name="Light2D" type="PointLight2D" parent="."]
+position = Vector2(320, 258)
+scale = Vector2(6.22656, 6.22656)
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+texture = ExtResource("2_wjtrd")
+offset = Vector2(27.65, 0)
+texture_scale = 0.59
+height = 1024.0
+
+[node name="DirectionalLight2D2" type="DirectionalLight2D" parent="."]
+visible = false
+position = Vector2(359, 721)
+scale = Vector2(6.22656, 6.22656)
+energy = 1.3
+blend_mode = 2
+shadow_color = Color(0, 0, 0, 1)
+height = 0.53
