@@ -59,7 +59,6 @@ void light() {
 
 }
 "
-graph_offset = Vector2(-393.845, -70.9733)
 mode = 1
 modes/blend = 1
 flags/light_only = false

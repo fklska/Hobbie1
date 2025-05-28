@@ -30,7 +30,3 @@ func _process(delta: float) -> void:
 	else:
 		bloom_light.energy = value * 2
 	light.texture.color_ramp.set_offset(1, max(0.2, min(value, cloud_conts)))
-
-	if time >= 24.0:
-		day_count += 1
-		#time = fmod(time, 24.0)

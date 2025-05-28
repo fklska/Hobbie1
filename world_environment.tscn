@@ -48,7 +48,7 @@ gradient = SubResource("Gradient_t4ycb")
 use_hdr = true
 
 [sub_resource type="Curve" id="Curve_nwcac"]
-_data = [Vector2(0, 0.0516719), 0.0, 0.0, 0, 0, Vector2(0.102564, 0.466565), 0.0, 0.0, 0, 0, Vector2(0.194139, 0.387538), -0.202261, -0.202261, 0, 0, Vector2(0.505494, 0.239362), -0.929934, -0.929934, 0, 0]
+_data = [Vector2(0, 0.0516719), 0.0, 0.0, 0, 0, Vector2(0.201465, 0.515957), 0.0, 0.0, 0, 0, Vector2(0.355311, 0.357903), -1.63443, -1.63443, 0, 0, Vector2(0.505494, 0.239362), -0.929934, -0.929934, 0, 0]
 point_count = 4
 
 [node name="World" type="Node2D"]
@@ -57,7 +57,9 @@ point_count = 4
 environment = SubResource("Environment_wjtrd")
 
 [node name="Light2D" type="PointLight2D" parent="."]
+position = Vector2(461, 345)
 scale = Vector2(6, 6)
+color = Color(0.754404, 0.734966, 0.747245, 1)
 energy = 0.63
 blend_mode = 2
 shadow_enabled = true
@@ -71,8 +73,10 @@ script = ExtResource("4_x002e")
 SPEED = Vector3(-2, 0, 0)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(303, 261)
-energy = 1.82409
+position = Vector2(498.3, 459.3)
+scale = Vector2(1.51072, 1.51857)
+color = Color(0.754404, 0.734966, 0.747245, 1)
+energy = 1.70714
 texture = SubResource("GradientTexture2D_sunvg")
 texture_scale = 11.95
 height = 254.0
@@ -87,11 +91,12 @@ shadow_color = Color(0, 0, 0, 1)
 height = 0.42
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." node_paths=PackedStringArray("light", "bloom_light")]
+color = Color(0.754404, 0.734966, 0.747245, 1)
 script = ExtResource("4_t4ycb")
 colors = SubResource("GradientTexture1D_x002e")
 light = NodePath("../Light2D")
 bloom_light = NodePath("../PointLight2D")
-time = 2.173
+time = 106.312
 curve = SubResource("Curve_nwcac")
 
 [node name="Camera2D" type="Camera2D" parent="."]
