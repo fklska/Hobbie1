@@ -2,16 +2,12 @@
 
 [sub_resource type="Gradient" id="Gradient_msx0d"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.512987, 0.707792)
-colors = PackedColorArray(1, 1, 1, 1, 0.447, 0.447, 0.447, 1, 0.194349, 0.194349, 0.194349, 1)
+offsets = PackedFloat32Array(0, 0.75)
+colors = PackedColorArray(6.077, 6.077, 6.077, 1, 0.0627451, 0.0627451, 0.0627451, 0.976471)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_lbs8o"]
-frequency = 0.0097
-offset = Vector3(-29619.9, 0.18, 0)
-fractal_lacunarity = 3.495
-fractal_gain = 0.355
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kl3b6"]
+offset = Vector3(-3277.63, 0, 0)
 
 [resource]
-generate_mipmaps = false
 color_ramp = SubResource("Gradient_msx0d")
-noise = SubResource("FastNoiseLite_lbs8o")
+noise = SubResource("FastNoiseLite_kl3b6")

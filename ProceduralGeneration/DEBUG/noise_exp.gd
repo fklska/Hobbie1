@@ -1,9 +1,8 @@
 @tool
 @icon("res://world.png")
 extends Node2D
-class_name MapGenerator
 
-static var SIZE = Vector2i(64, 64)
+static var SIZE = Vector2i(32, 32)
 
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
@@ -18,28 +17,33 @@ static var SIZE = Vector2i(64, 64)
 @onready var water: TileMapLayer = $Water
 
 @export_category("Resourses Height")
-@export_range(0, 0.3) var wood_height: float
-@export_range(0, 0.3) var rock_height: float
-@export_range(0, 0.3) var gold_height: float
-@export_range(0, 0.3) var iron_height: float
+@export_range(0, 1) var gold_height: float
+@export_range(0, 1) var iron_height: float
+@export_range(0, 1) var rock_height: float
+@export_range(0, 1) var wood_height: float
 
 
 @onready var RES_TYPES = {
 	gold_height: {
 		"prefab": preload("res://Resourses/Prefabs/gold.tscn"),
 		"sourse_id": 3,
+		"gold_min_h":  gold_height,
+		"max_h": 1.0
 		},
 	iron_height: {
 		"prefab": preload("res://Resourses/Prefabs/iron.tscn"),
 		"sourse_id": 4,
+		"max_h": gold_height
 		},
 	rock_height: {
 		"prefab": preload("res://Resourses/Prefabs/rock.tscn"),
 		"sourse_id": 5,
+		"max_h": iron_height
 		},
 	wood_height: {
 		"prefab": preload("res://Resourses/Prefabs/wood.tscn"),
 		"sourse_id": 2,
+		"max_h": 0.27
 		},
 }
 
@@ -54,23 +58,33 @@ var res_height_val =[]
 
 var gap = 16
 
+@onready var res_texture: TextureRect = $res_texture
+@onready var biom_texture: TextureRect = $biom_texture
+
 
 func _ready():
-	#if Engine.is_editor_hint():
 	generate()
-	#GlobalNavigation.debug_baking()
-	#custom_server()
-	#GlobalNavigation.call_deferred("thread_map_bake")
+	#biom_texture.texture = ImageTexture.create_from_image(image)
+	
+func sig(x : float):
+	return (1) / (1 + exp(-x))
+
+@export var grad: Gradient
+@export var res_grad: Gradient
 
 func generate():
 	clear()
 	
 	noise.seed = randi()
-
-	for x in range(-SIZE.x / 2, SIZE.x / 2):
-		for y in range(-SIZE.y / 2, SIZE.y / 2):
+	res_noise.seed = randi()
+	var image = Image.create_empty(SIZE.x, SIZE.y, false, Image.FORMAT_RGB8)
+	res_texture.texture.noise = res_noise
+	for x in range(SIZE.x):
+		for y in range(SIZE.y):
 			
-			var height = noise.get_noise_2d(x, y)
+			var height = (noise.get_noise_2d(x, y) + 1) / 2.0
+			var color = grad.sample(height)
+			image.set_pixel(x, y, color)
 			height_val.append(height)
 			
 			if height > water_height:
@@ -83,17 +97,20 @@ func generate():
 				grass_tiles.append(Vector2i(x, y))
 				
 				if x % 2 == 0 and y % 2 == 0:
-					var res_height = abs(res_noise.get_noise_2d(x, y))
+					var res_height = (res_noise.get_noise_2d(x, y) + 1) / 2
 					res_height_val.append(res_height)
 					
 					for res in RES_TYPES:
-						if res_height < res:
+						if res < res_height and res_height < RES_TYPES[res].get("max_h"):
 							var prefab: Node2D = RES_TYPES[res].get("prefab").instantiate()
 							prefab.position = Vector2i(x*gap, y*gap)
 							prefab.add_to_group("navigation_polygon_source_geometry_group")
 							root_node.add_child(prefab)
+							image.set_pixel(x, y, res_grad.sample(res_height))
 							break
-					
+	
+	biom_texture.texture = ImageTexture.create_from_image(image)
+	print_debug(res_height_val)
 	# tetsaw
 	#print_debug("max: ", height_val.max())
 	#print_debug("min: ", height_val.min())

@@ -1,0 +1,83 @@
+[gd_resource type="VisualShader" load_steps=9 format=3 uid="uid://dpnv32oyslrwu"]
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_a1mmq"]
+parameter_name = "cloudNoise"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_oestr"]
+expanded_output_ports = [0]
+source = 5
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_hxggf"]
+expanded_output_ports = [0]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_n8hms"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_oestr"]
+parameter_name = "cloudNoise2"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_hxggf"]
+expanded_output_ports = [0]
+source = 5
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_uwvum"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_l7q27"]
+expanded_output_ports = [0]
+input_name = "light_color"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_add;
+
+uniform sampler2D cloudNoise2;
+
+
+
+void light() {
+// Input:5
+	vec4 n_out5p0 = LIGHT_COLOR;
+	float n_out5p4 = n_out5p0.a;
+
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(cloudNoise2, UV);
+	float n_out3p4 = n_out3p0.a;
+
+
+// FloatOp:4
+	float n_out4p0 = n_out5p4 * n_out3p4;
+
+
+// Output:0
+	LIGHT.rgb = vec3(n_out5p0.xyz);
+	LIGHT.a = n_out4p0;
+
+
+}
+"
+graph_offset = Vector2(-393.845, -70.9733)
+mode = 1
+modes/blend = 1
+flags/light_only = false
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_a1mmq")
+nodes/fragment/2/position = Vector2(-860, 460)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_oestr")
+nodes/fragment/3/position = Vector2(-400, 420)
+nodes/fragment/4/node = SubResource("VisualShaderNodeInput_hxggf")
+nodes/fragment/4/position = Vector2(-460, 80)
+nodes/fragment/5/node = SubResource("VisualShaderNodeFloatOp_n8hms")
+nodes/fragment/5/position = Vector2(80, 200)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 3, 4, 5, 1, 4, 0, 5, 0)
+nodes/light/2/node = SubResource("VisualShaderNodeTexture2DParameter_oestr")
+nodes/light/2/position = Vector2(-1100, 420)
+nodes/light/3/node = SubResource("VisualShaderNodeTexture_hxggf")
+nodes/light/3/position = Vector2(-640, 380)
+nodes/light/4/node = SubResource("VisualShaderNodeFloatOp_uwvum")
+nodes/light/4/position = Vector2(20, 320)
+nodes/light/5/node = SubResource("VisualShaderNodeInput_l7q27")
+nodes/light/5/position = Vector2(-540, 40)
+nodes/light/connections = PackedInt32Array(2, 0, 3, 2, 3, 4, 4, 1, 5, 4, 4, 0, 4, 0, 0, 1, 5, 0, 0, 0)

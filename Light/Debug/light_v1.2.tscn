@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://bygdhww83ri6v"]
+
+[ext_resource type="PackedScene" uid="uid://7886xyn06la5" path="res://ProceduralGeneration/V2/generator_v_2.tscn" id="1_et4gd"]
+[ext_resource type="Shader" uid="uid://h6s0qf46ugi4" path="res://Light/Debug/light_v1.2.gdshader" id="1_mlc0q"]
+[ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_mlc0q"]
+
+[sub_resource type="Environment" id="Environment_v2l4m"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.48
+glow_strength = 0.62
+glow_bloom = 0.46
+adjustment_enabled = true
+adjustment_saturation = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvlyp"]
+shader = ExtResource("1_mlc0q")
+shader_parameter/glow_intensity = 2.645
+shader_parameter/glow_threshold = 0.472
+shader_parameter/glow_color = Vector4(1, 0.9, 0.7, 1)
+shader_parameter/noise_texture = ExtResource("2_mlc0q")
+
+[sub_resource type="Gradient" id="Gradient_mlc0q"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.0167364, 0.610879)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.884)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cvlyp"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cqg54"]
+color_ramp = SubResource("Gradient_mlc0q")
+noise = SubResource("FastNoiseLite_cvlyp")
+
+[sub_resource type="Gradient" id="Gradient_cqg54"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v2l4m"]
+gradient = SubResource("Gradient_cqg54")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v2l4m")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+material = SubResource("ShaderMaterial_cvlyp")
+position = Vector2(256, 251)
+energy = 1.22
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+texture = SubResource("NoiseTexture2D_cqg54")
+texture_scale = 1.11
+height = 237.0
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(260, 244)
+energy = 0.41
+texture = SubResource("GradientTexture2D_v2l4m")
+texture_scale = 11.95
+height = 195.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
+
+[node name="Generator v2" parent="." instance=ExtResource("1_et4gd")]
