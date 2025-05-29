@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dnntr11vdyrvt" path="res://Light/daynight.gd" id="4_t4ycb"]
 [ext_resource type="Script" uid="uid://dlxknb7a41wrq" path="res://Light/pointLight.gd" id="4_x002e"]
 [ext_resource type="PackedScene" uid="uid://7886xyn06la5" path="res://ProceduralGeneration/V2/generator_v_2.tscn" id="5_nwcac"]
-[ext_resource type="Script" uid="uid://cofdwy06uot6b" path="res://Camera/Scripts/main_cam.gd" id="5_x002e"]
+[ext_resource type="PackedScene" uid="uid://b0dwhont1cotx" path="res://Player/player_main_character.tscn" id="5_x002e"]
 
 [sub_resource type="Environment" id="Environment_wjtrd"]
 background_mode = 3
@@ -59,7 +59,7 @@ environment = SubResource("Environment_wjtrd")
 [node name="Light2D" type="PointLight2D" parent="."]
 position = Vector2(461, 345)
 scale = Vector2(6, 6)
-color = Color(0.754404, 0.734966, 0.747245, 1)
+color = Color(0.102044, 0.100461, 0.952254, 1)
 energy = 0.63
 blend_mode = 2
 shadow_enabled = true
@@ -75,8 +75,8 @@ SPEED = Vector3(-2, 0, 0)
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(498.3, 459.3)
 scale = Vector2(1.51072, 1.51857)
-color = Color(0.754404, 0.734966, 0.747245, 1)
-energy = 1.70714
+color = Color(0.102044, 0.100461, 0.952254, 1)
+energy = 0.421635
 texture = SubResource("GradientTexture2D_sunvg")
 texture_scale = 11.95
 height = 254.0
@@ -91,15 +91,15 @@ shadow_color = Color(0, 0, 0, 1)
 height = 0.42
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." node_paths=PackedStringArray("light", "bloom_light")]
-color = Color(0.754404, 0.734966, 0.747245, 1)
+color = Color(0.102044, 0.100461, 0.952254, 1)
 script = ExtResource("4_t4ycb")
 colors = SubResource("GradientTexture1D_x002e")
 light = NodePath("../Light2D")
 bloom_light = NodePath("../PointLight2D")
-time = 106.312
+time = 24.0079
 curve = SubResource("Curve_nwcac")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource("5_x002e")
-
 [node name="Generator v2" parent="." instance=ExtResource("5_nwcac")]
+
+[node name="Player_MainCharacter" parent="." instance=ExtResource("5_x002e")]
+position = Vector2(610, 593)

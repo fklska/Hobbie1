@@ -6,6 +6,7 @@
 process_thread_group = 2
 process_thread_group_order = 0
 process_thread_messages = 0
+visible = false
 script = ExtResource("1_b4yxt")
 chunk_size = 256
 debug_map_size = Vector2i(8, 8)

@@ -3,7 +3,7 @@
 extends Node2D
 class_name Noiseler
 
-static var SIZE = Vector2i(64, 64)
+static var SIZE = Vector2i(84, 84)
 
 @export var noise: FastNoiseLite
 @export var res_noise: FastNoiseLite
