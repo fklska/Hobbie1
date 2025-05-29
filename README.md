@@ -7,8 +7,16 @@
 
 [YOUTUBE](https://www.youtube.com/@fklska3995/shorts) канал по игре
 
-- [UPDATES](Updates.md)
-  
+## Updates
+
+### Light update 0.0.3
+Добалены тени и эффект облаков, динамическое освещение
+
+https://github.com/user-attachments/assets/0914b3fc-8088-47cf-a815-b2ee11b8582e
+
+
+
+
 ### Внимание, автор не учился на программиста в ВУЗе 
 Напиши [мне](https://t.me/fklska) если хочешь поучаствовать
 
