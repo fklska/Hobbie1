@@ -7,6 +7,8 @@
 
 [YOUTUBE](https://www.youtube.com/@fklska3995/shorts) канал по игре
 
+- [UPDATES](Updates.md)
+  
 ### Внимание, автор не учился на программиста в ВУЗе 
 Напиши [мне](https://t.me/fklska) если хочешь поучаствовать
 
