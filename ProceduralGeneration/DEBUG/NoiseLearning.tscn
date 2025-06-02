@@ -4,7 +4,7 @@
 [ext_resource type="FastNoiseLite" uid="uid://cwhgcqnvgwrp0" path="res://ProceduralGeneration/V2/biom.tres" id="2_v0jmi"]
 [ext_resource type="FastNoiseLite" uid="uid://cniqxb2m1o5dk" path="res://ProceduralGeneration/V2/res.tres" id="3_a0kef"]
 [ext_resource type="TileSet" uid="uid://bf371l03866ah" path="res://Map/tilemap/16x16_tileset.tres" id="4_fce5c"]
-[ext_resource type="Shader" uid="uid://cm8lmhq1wyu5r" path="res://sand_shader2.gdshader" id="5_ax5fc"]
+[ext_resource type="Shader" uid="uid://cm8lmhq1wyu5r" path="res://Map/Shaders/sand_shader2.gdshader" id="5_ax5fc"]
 [ext_resource type="Texture2D" uid="uid://bs5se311ru1o1" path="res://Map/tilemap/sand1.png" id="6_l3psl"]
 [ext_resource type="Shader" uid="uid://b85105pc6fdu5" path="res://ProceduralGeneration/DEBUG/NoiseLearning.tres" id="7_m3y02"]
 [ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="7_mx3y0"]

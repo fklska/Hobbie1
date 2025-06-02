@@ -30,7 +30,8 @@ adjustment_enabled = true
 adjustment_saturation = 2.0
 
 [sub_resource type="Gradient" id="Gradient_et4gd"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.42)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sunvg"]
 gradient = SubResource("Gradient_et4gd")
@@ -41,7 +42,7 @@ fill_to = Vector2(0.5, 0)
 [sub_resource type="Gradient" id="Gradient_t4ycb"]
 interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.357143, 0.75)
-colors = PackedColorArray(0.0114899, 0.0123659, 0.980469, 1, 0.976563, 0.953287, 0.705719, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0, 0.000120074, 0.132813, 1, 0.976563, 0.953287, 0.705719, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_x002e"]
 gradient = SubResource("Gradient_t4ycb")
@@ -59,7 +60,6 @@ environment = SubResource("Environment_wjtrd")
 [node name="Light2D" type="PointLight2D" parent="."]
 position = Vector2(461, 345)
 scale = Vector2(6, 6)
-color = Color(0.102044, 0.100461, 0.952254, 1)
 energy = 0.63
 blend_mode = 2
 shadow_enabled = true
@@ -73,10 +73,10 @@ script = ExtResource("4_x002e")
 SPEED = Vector3(-2, 0, 0)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(498.3, 459.3)
+position = Vector2(672, 675)
 scale = Vector2(1.51072, 1.51857)
-color = Color(0.102044, 0.100461, 0.952254, 1)
-energy = 0.421635
+energy = 1.90512
+shadow_filter = 1
 texture = SubResource("GradientTexture2D_sunvg")
 texture_scale = 11.95
 height = 254.0
@@ -91,12 +91,11 @@ shadow_color = Color(0, 0, 0, 1)
 height = 0.42
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." node_paths=PackedStringArray("light", "bloom_light")]
-color = Color(0.102044, 0.100461, 0.952254, 1)
 script = ExtResource("4_t4ycb")
 colors = SubResource("GradientTexture1D_x002e")
 light = NodePath("../Light2D")
 bloom_light = NodePath("../PointLight2D")
-time = 24.0079
+time = 89.9745
 curve = SubResource("Curve_nwcac")
 
 [node name="Generator v2" parent="." instance=ExtResource("5_nwcac")]

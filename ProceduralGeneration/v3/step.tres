@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dild0r014mv46"]
+
+[ext_resource type="Script" uid="uid://qg5fek2d62ok" path="res://ProceduralGeneration/v3/GenerationStep.cs" id="1_wto8e"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2o31u"]
+
+[resource]
+script = ExtResource("1_wto8e")
+stepName = ""
+noise = SubResource("FastNoiseLite_2o31u")
