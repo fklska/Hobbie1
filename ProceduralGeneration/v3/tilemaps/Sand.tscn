@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcvg0c1t0okco"]
+
+[ext_resource type="Shader" uid="uid://cm8lmhq1wyu5r" path="res://Map/Shaders/sand_shader2.gdshader" id="1_23mr4"]
+[ext_resource type="Texture2D" uid="uid://bs5se311ru1o1" path="res://Map/tilemap/sand1.png" id="2_67nm3"]
+[ext_resource type="TileSet" uid="uid://bf371l03866ah" path="res://Map/tilemap/16x16_tileset.tres" id="3_6y330"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0bwjn"]
+shader = ExtResource("1_23mr4")
+shader_parameter/overlay_tex = ExtResource("2_67nm3")
+shader_parameter/scale = 0.00694444
+
+[node name="Sand" type="TileMapLayer"]
+material = SubResource("ShaderMaterial_0bwjn")
+tile_set = ExtResource("3_6y330")

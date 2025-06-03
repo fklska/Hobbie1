@@ -3,18 +3,21 @@
 [ext_resource type="Script" uid="uid://bh7e6cgxlcwx" path="res://ProceduralGeneration/v3/steps/BasicLandScapeStep.cs" id="1_uohbi"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cfwm6"]
-noise_type = 3
-seed = -219931211
-frequency = 0.0138
-fractal_octaves = 1
+noise_type = 0
+seed = -1932393959
+frequency = 0.0061
 cellular_distance_function = 2
 cellular_return_type = 0
 domain_warp_enabled = true
 domain_warp_type = 1
+domain_warp_amplitude = 12.57
+domain_warp_fractal_type = 2
+domain_warp_fractal_octaves = 4
 
 [resource]
 script = ExtResource("1_uohbi")
 waterThreshold = 0.5
 landThreshold = 0.0
 noise = SubResource("FastNoiseLite_cfwm6")
+Enabled = true
 metadata/_custom_type_script = "uid://bh7e6cgxlcwx"

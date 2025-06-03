@@ -13,6 +13,9 @@ public partial class GeneratorData : Resource
     public HashSet<Vector2I> LandTilesCoords;
     public HashSet<Vector2I> WaterTilesCoords;
 
+    public HashSet<Vector2I> SandTilesCoords;
+    [Export] public Color sandPreRenderColor;
+
     public TileType[,] ResourseMapTiles;
     public HashSet<Vector2I> ResorseTilesCoords;
 
@@ -27,15 +30,16 @@ public partial class GeneratorData : Resource
         LandTilesCoords = new();
         WaterTilesCoords = new();
         ResorseTilesCoords = new();
+        SandTilesCoords = new();
         LandMapHeights = null;
     }
-    public enum TileType
-    {
-        None,
-        Water,
-        Sand,
-        Grass
-
-    }
     //public GeneratorData() { }
+}
+
+public enum TileType
+{
+    None,
+    Water,
+    Sand,
+    Grass
 }

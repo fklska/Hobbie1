@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://y6tip6gyyyfl"]
+
+[ext_resource type="TileSet" uid="uid://bf371l03866ah" path="res://Map/tilemap/16x16_tileset.tres" id="1_qnekr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ivhsp"]
+
+[node name="Water" type="TileMapLayer"]
+material = SubResource("ShaderMaterial_ivhsp")
+tile_set = ExtResource("1_qnekr")
