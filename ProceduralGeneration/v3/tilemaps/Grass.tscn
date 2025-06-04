@@ -1,4 +1,20 @@
-[gd_scene format=3 uid="uid://c0cdyowpclmv0"]
+[gd_scene load_steps=7 format=3 uid="uid://c0cdyowpclmv0"]
+
+[ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="1_kxlxm"]
+[ext_resource type="TileSet" uid="uid://c48dfgc37h1gu" path="res://ProceduralGeneration/v3/tilemaps/grass.tres" id="2_gitc4"]
+[ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/TileMapDual.gd" id="2_hnu26"]
+[ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="4_ksdu8"]
+[ext_resource type="Texture2D" uid="uid://dslchrgcg8o8f" path="res://Map/tilemap/grass3.png" id="5_ywqm8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flj0q"]
+shader = ExtResource("4_ksdu8")
+shader_parameter/overlay_tex = ExtResource("5_ywqm8")
+shader_parameter/scale = 0.00694444
 
 [node name="Grass" type="TileMapLayer"]
-metadata/_custom_type_script = "uid://bn6xvqn44co45"
+material = ExtResource("1_kxlxm")
+tile_set = ExtResource("2_gitc4")
+script = ExtResource("2_hnu26")
+display_material = SubResource("ShaderMaterial_flj0q")
+godot_4_3_compatibility = false
+metadata/_custom_type_script = "uid://cjk8nronimk5r"

@@ -1,16 +1,18 @@
+@tool
 extends Node2D
 
 
-@onready var wood: TileMapLayer = $WOOD
-@onready var roo_ck: TileMapLayer = $ROOCk
-@export var steps: Array = []
+@onready var land: TileMapDual = $Land
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("LeftMouseButton"):
-		var coords = wood.local_to_map(get_global_mouse_position())
-		var tile_data = wood.get_cell_tile_data(coords)
-		if tile_data:
-			print_debug(tile_data.get_custom_data("HP"))
+func _ready() -> void:
+	land.clear()
 	
-	if event.is_action_pressed("RightMouseButton"):
-		wood.notify_runtime_tile_data_update()
+	var land_coords = []
+	var sand_coords = []
+	for x in range(0, 64):
+		for y in range(0, 64):
+			if x % 2 == 0 and y % 2 == 0:
+				land_coords.append(Vector2i(x, y))
+				#land.set_cell(Vector2i(x, y), 0, Vector2i(2, 1), 0)
+				
+	land.set_cells_terrain_connect(land_coords, 0, 0, false)

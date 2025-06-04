@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcvg0c1t0okco"]
+[gd_scene load_steps=7 format=3 uid="uid://bcvg0c1t0okco"]
 
+[ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="1_6y330"]
 [ext_resource type="Shader" uid="uid://cm8lmhq1wyu5r" path="res://Map/Shaders/sand_shader2.gdshader" id="1_23mr4"]
+[ext_resource type="TileSet" uid="uid://lo4qlsg3o786" path="res://ProceduralGeneration/v3/tilemaps/sand.tres" id="2_6y330"]
 [ext_resource type="Texture2D" uid="uid://bs5se311ru1o1" path="res://Map/tilemap/sand1.png" id="2_67nm3"]
-[ext_resource type="TileSet" uid="uid://bf371l03866ah" path="res://Map/tilemap/16x16_tileset.tres" id="3_6y330"]
+[ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/TileMapDual.gd" id="3_0bwjn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0bwjn"]
 shader = ExtResource("1_23mr4")
@@ -10,5 +12,9 @@ shader_parameter/overlay_tex = ExtResource("2_67nm3")
 shader_parameter/scale = 0.00694444
 
 [node name="Sand" type="TileMapLayer"]
-material = SubResource("ShaderMaterial_0bwjn")
-tile_set = ExtResource("3_6y330")
+material = ExtResource("1_6y330")
+tile_set = ExtResource("2_6y330")
+script = ExtResource("3_0bwjn")
+display_material = SubResource("ShaderMaterial_0bwjn")
+godot_4_3_compatibility = false
+metadata/_custom_type_script = "uid://cjk8nronimk5r"

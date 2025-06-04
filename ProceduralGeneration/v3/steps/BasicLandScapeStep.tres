@@ -4,7 +4,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cfwm6"]
 noise_type = 0
-seed = -1932393959
+seed = -1521302621
 frequency = 0.0061
 cellular_distance_function = 2
 cellular_return_type = 0

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 [Tool]
@@ -30,10 +31,29 @@ public partial class GeneratorV3 : Node2D
         GenerateScene(genData);
     }
 
+    public TileMapLayer GetMapFromTile(TileType tileType)
+    {
+        return tileType switch
+        {
+            TileType.Grass => grassTileMapTemplate,
+            TileType.Water => waterTileMapTemplate,
+            TileType.Sand => sandTileMapTemplate,
+            TileType.None => null,
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    public void ClearTileMapTemlate()
+    {
+        grassTileMapTemplate.Clear();
+        waterTileMapTemplate.Clear();
+        sandTileMapTemplate.Clear();
+    }
+
     public void preRender(GeneratorData genData)
     {
         map_render = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
-        Color color = new Color();
+        Godot.Color color = new Godot.Color();
 
         for (int x = 0; x < genData.mapSize.X; x++)
         {
@@ -55,8 +75,18 @@ public partial class GeneratorV3 : Node2D
     
     public void GenerateScene(GeneratorData genData)
     {
+        ClearTileMapTemlate();
+
         var PackedScene = new PackedScene();
         Node2D rootNode = new Node2D();
+
+        for (int x = 0; x < genData.mapSize.X; x++)
+        {
+            for (int y = 0; y < genData.mapSize.Y; y++)
+            {
+                GetMapFromTile(genData.LandMapTiles[x, y]).SetCell(new Vector2I(x, y), 0, new Vector2I(2, 1), 0);
+            }
+        }
 
         TileMapLayer grassMap = (TileMapLayer)grassTileMapTemplate.Duplicate();
         TileMapLayer sandMap = (TileMapLayer)sandTileMapTemplate.Duplicate();
@@ -70,10 +100,6 @@ public partial class GeneratorV3 : Node2D
 
         rootNode.AddChild(waterMap);
         waterMap.Owner = rootNode;
-
-        grassMap.SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(genData.LandTilesCoords), 0, 0, false);
-        sandMap.SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(genData.SandTilesCoords), 0, 3, false);
-        waterMap.SetCellsTerrainConnect(new Godot.Collections.Array<Vector2I>(genData.WaterTilesCoords), 0, 2, false);
 
         PackedScene.Pack(rootNode);
 
