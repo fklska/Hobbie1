@@ -1,18 +1,22 @@
 @tool
-extends Node2D
+extends TileMapLayer
 
 
-@onready var land: TileMapDual = $Land
+var coordsset = {}
 
-func _ready() -> void:
-	land.clear()
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("LeftMouseButton"):
+		notify_runtime_tile_data_update()
 	
-	var land_coords = []
-	var sand_coords = []
-	for x in range(0, 64):
-		for y in range(0, 64):
-			if x % 2 == 0 and y % 2 == 0:
-				land_coords.append(Vector2i(x, y))
-				#land.set_cell(Vector2i(x, y), 0, Vector2i(2, 1), 0)
-				
-	land.set_cells_terrain_connect(land_coords, 0, 0, false)
+	if event.is_action_pressed("RightMouseButton"):
+		var tile_data = get_cell_tile_data(local_to_map(get_global_mouse_position()))
+		if tile_data:
+			print_debug(tile_data.modulate)
+
+func _use_tile_data_runtime_update(coords: Vector2i) -> bool:
+	#print_debug(coords == local_to_map(get_global_mouse_position()))
+	return coords in coordsset and coords == local_to_map(get_global_mouse_position())
+	
+func _tile_data_runtime_update(coords: Vector2i, tile_data: TileData) -> void:
+	tile_data.modulate.a -= 0.1
+	coordsset[coords] = 1
