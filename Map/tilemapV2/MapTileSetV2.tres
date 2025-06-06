@@ -1,25 +1,26 @@
-[gd_resource type="TileSet" load_steps=20 format=3 uid="uid://btrd3435l6rjm"]
+[gd_resource type="TileSet" load_steps=23 format=3 uid="uid://431dudwp84tr"]
 
-[ext_resource type="Texture2D" uid="uid://dqnv6n4hyict" path="res://Map/tilemap/TilemapDemo — копия.png" id="1_0c2gf"]
-[ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="1_xf7uk"]
-[ext_resource type="Texture2D" uid="uid://b63o84fwvd38q" path="res://Map/tilemapV2/LandWater.png" id="2_3mhn7"]
-[ext_resource type="Texture2D" uid="uid://dslchrgcg8o8f" path="res://Map/tilemap/grass3.png" id="2_oi61n"]
-[ext_resource type="Texture2D" uid="uid://4otvp1idrnb" path="res://Map/tilemap/Tilemap.png" id="3_j6cjd"]
-[ext_resource type="Shader" uid="uid://cm8lmhq1wyu5r" path="res://Map/Shaders/sand_shader2.gdshader" id="4_4qq2m"]
-[ext_resource type="Texture2D" uid="uid://bx0fyx5poamr4" path="res://Map/tilemapV2/Sandv2.png" id="4_8s2jp"]
-[ext_resource type="Texture2D" uid="uid://vjb7rqo3kt8y" path="res://Map/tilemapV2/SandWater.png" id="5_4qq2m"]
-[ext_resource type="Texture2D" uid="uid://bs5se311ru1o1" path="res://Map/tilemap/sand1.png" id="5_rahhy"]
+[ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="1_dld66"]
+[ext_resource type="Texture2D" uid="uid://dslchrgcg8o8f" path="res://Map/tilemap/grass3.png" id="2_mjjfi"]
+[ext_resource type="Texture2D" uid="uid://dqnv6n4hyict" path="res://Map/tilemap/TilemapDemo — копия.png" id="3_lrquu"]
+[ext_resource type="Texture2D" uid="uid://b63o84fwvd38q" path="res://Map/tilemapV2/LandWater.png" id="4_dg3cc"]
+[ext_resource type="Texture2D" uid="uid://4otvp1idrnb" path="res://Map/tilemap/Tilemap.png" id="5_gnne7"]
+[ext_resource type="Shader" uid="uid://cm8lmhq1wyu5r" path="res://Map/Shaders/sand_shader2.gdshader" id="6_5ngpt"]
+[ext_resource type="Texture2D" uid="uid://bs5se311ru1o1" path="res://Map/tilemap/sand1.png" id="7_524xp"]
+[ext_resource type="Texture2D" uid="uid://bx0fyx5poamr4" path="res://Map/tilemapV2/Sandv2.png" id="8_eywbw"]
+[ext_resource type="Texture2D" uid="uid://vjb7rqo3kt8y" path="res://Map/tilemapV2/SandWater.png" id="9_abk8h"]
+[ext_resource type="Texture2D" uid="uid://cg1yg0uwixlml" path="res://Map/tilemapV2/LandSand.png" id="10_mjjfi"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_524mh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ddv5x"]
-shader = ExtResource("1_xf7uk")
-shader_parameter/replacement_tex = ExtResource("2_oi61n")
+shader = ExtResource("1_dld66")
+shader_parameter/replacement_tex = ExtResource("2_mjjfi")
 shader_parameter/texture_scale = 0.00694444
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_40rp1"]
-texture = ExtResource("1_0c2gf")
+texture = ExtResource("3_lrquu")
 0:3/0 = 0
 0:3/0/material = SubResource("ShaderMaterial_ddv5x")
 0:3/0/terrain_set = 0
@@ -136,13 +137,13 @@ texture = ExtResource("1_0c2gf")
 2:1/0/terrains_peering_bit/top_right_corner = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6nacu"]
-shader = ExtResource("1_xf7uk")
-shader_parameter/replacement_tex = ExtResource("2_oi61n")
+shader = ExtResource("1_dld66")
+shader_parameter/replacement_tex = ExtResource("2_mjjfi")
 shader_parameter/texture_scale = 0.00694444
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3mhn7"]
-texture = ExtResource("2_3mhn7")
+texture = ExtResource("4_dg3cc")
 0:3/0 = 0
 0:3/0/material = SubResource("ShaderMaterial_6nacu")
 0:3/0/terrain_set = 0
@@ -249,7 +250,7 @@ texture = ExtResource("2_3mhn7")
 2:1/0/terrain_set = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8s2jp"]
-texture = ExtResource("3_j6cjd")
+texture = ExtResource("5_gnne7")
 0:3/0 = 0
 0:3/0/terrain_set = 0
 0:3/0/terrain = 0
@@ -351,13 +352,13 @@ texture = ExtResource("3_j6cjd")
 2:1/0/custom_data_0 = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qq2m"]
-shader = ExtResource("4_4qq2m")
-shader_parameter/replacement_tex = ExtResource("5_rahhy")
+shader = ExtResource("6_5ngpt")
+shader_parameter/replacement_tex = ExtResource("7_524xp")
 shader_parameter/texture_scale = 0.00694444
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rahhy"]
-texture = ExtResource("4_8s2jp")
+texture = ExtResource("8_eywbw")
 0:3/0 = 0
 0:3/0/material = SubResource("ShaderMaterial_4qq2m")
 0:3/0/terrain_set = 0
@@ -490,13 +491,13 @@ texture = ExtResource("4_8s2jp")
 2:1/0/custom_data_0 = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uipn0"]
-shader = ExtResource("4_4qq2m")
-shader_parameter/replacement_tex = ExtResource("5_rahhy")
+shader = ExtResource("6_5ngpt")
+shader_parameter/replacement_tex = ExtResource("7_524xp")
 shader_parameter/texture_scale = 0.00694444
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xf7uk"]
-texture = ExtResource("5_4qq2m")
+texture = ExtResource("9_abk8h")
 0:3/0 = 0
 0:3/0/material = SubResource("ShaderMaterial_uipn0")
 0:3/0/terrain_set = 0
@@ -604,6 +605,121 @@ texture = ExtResource("5_4qq2m")
 2:1/0/terrain_set = 0
 2:1/0/custom_data_0 = 2.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lrquu"]
+shader = ExtResource("1_dld66")
+shader_parameter/replacement_tex = ExtResource("2_mjjfi")
+shader_parameter/texture_scale = 0.00694444
+shader_parameter/red_threshold = 0.99
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dg3cc"]
+texture = ExtResource("10_mjjfi")
+0:3/0 = 0
+0:3/0/material = SubResource("ShaderMaterial_lrquu")
+0:3/0/terrain_set = 0
+3:3/0 = 0
+3:3/0/material = SubResource("ShaderMaterial_lrquu")
+3:3/0/terrain_set = 0
+3:3/0/terrain = 3
+3:3/0/terrains_peering_bit/bottom_right_corner = 3
+3:3/0/terrains_peering_bit/bottom_left_corner = 3
+3:3/0/terrains_peering_bit/top_left_corner = 1
+3:3/0/terrains_peering_bit/top_right_corner = 3
+0:2/0 = 0
+0:2/0/material = SubResource("ShaderMaterial_lrquu")
+0:2/0/terrain_set = 0
+0:2/0/terrains_peering_bit/bottom_right_corner = 3
+0:2/0/terrains_peering_bit/bottom_left_corner = 3
+0:2/0/terrains_peering_bit/top_left_corner = 3
+0:2/0/terrains_peering_bit/top_right_corner = 1
+1:2/0 = 0
+1:2/0/material = SubResource("ShaderMaterial_lrquu")
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/bottom_right_corner = 3
+1:2/0/terrains_peering_bit/bottom_left_corner = 3
+1:2/0/terrains_peering_bit/top_left_corner = 1
+1:2/0/terrains_peering_bit/top_right_corner = 1
+0:0/0 = 0
+0:0/0/material = SubResource("ShaderMaterial_lrquu")
+0:0/0/terrain_set = 0
+0:0/0/terrain = 3
+0:0/0/terrains_peering_bit/bottom_right_corner = 3
+0:0/0/terrains_peering_bit/bottom_left_corner = 1
+0:0/0/terrains_peering_bit/top_left_corner = 3
+0:0/0/terrains_peering_bit/top_right_corner = 3
+3:2/0 = 0
+3:2/0/material = SubResource("ShaderMaterial_lrquu")
+3:2/0/terrain_set = 0
+3:2/0/terrains_peering_bit/bottom_right_corner = 3
+3:2/0/terrains_peering_bit/bottom_left_corner = 1
+3:2/0/terrains_peering_bit/top_left_corner = 1
+3:2/0/terrains_peering_bit/top_right_corner = 3
+2:3/0 = 0
+2:3/0/material = SubResource("ShaderMaterial_lrquu")
+2:3/0/terrain_set = 0
+2:3/0/terrains_peering_bit/bottom_right_corner = 3
+2:3/0/terrains_peering_bit/bottom_left_corner = 1
+2:3/0/terrains_peering_bit/top_left_corner = 3
+2:3/0/terrains_peering_bit/top_right_corner = 1
+3:1/0 = 0
+3:1/0/material = SubResource("ShaderMaterial_lrquu")
+3:1/0/terrain_set = 0
+3:1/0/terrains_peering_bit/bottom_right_corner = 3
+3:1/0/terrains_peering_bit/bottom_left_corner = 1
+3:1/0/terrains_peering_bit/top_left_corner = 1
+3:1/0/terrains_peering_bit/top_right_corner = 1
+1:3/0 = 0
+1:3/0/material = SubResource("ShaderMaterial_lrquu")
+1:3/0/terrain_set = 0
+1:3/0/terrains_peering_bit/bottom_right_corner = 1
+1:3/0/terrains_peering_bit/bottom_left_corner = 3
+1:3/0/terrains_peering_bit/top_left_corner = 3
+1:3/0/terrains_peering_bit/top_right_corner = 3
+0:1/0 = 0
+0:1/0/material = SubResource("ShaderMaterial_lrquu")
+0:1/0/terrain_set = 0
+0:1/0/terrains_peering_bit/bottom_right_corner = 1
+0:1/0/terrains_peering_bit/bottom_left_corner = 3
+0:1/0/terrains_peering_bit/top_left_corner = 1
+0:1/0/terrains_peering_bit/top_right_corner = 3
+1:0/0 = 0
+1:0/0/material = SubResource("ShaderMaterial_lrquu")
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/bottom_right_corner = 1
+1:0/0/terrains_peering_bit/bottom_left_corner = 3
+1:0/0/terrains_peering_bit/top_left_corner = 3
+1:0/0/terrains_peering_bit/top_right_corner = 1
+2:2/0 = 0
+2:2/0/material = SubResource("ShaderMaterial_lrquu")
+2:2/0/terrain_set = 0
+2:2/0/terrains_peering_bit/bottom_right_corner = 1
+2:2/0/terrains_peering_bit/bottom_left_corner = 3
+2:2/0/terrains_peering_bit/top_left_corner = 1
+2:2/0/terrains_peering_bit/top_right_corner = 1
+3:0/0 = 0
+3:0/0/material = SubResource("ShaderMaterial_lrquu")
+3:0/0/terrain_set = 0
+3:0/0/terrains_peering_bit/bottom_right_corner = 1
+3:0/0/terrains_peering_bit/bottom_left_corner = 1
+3:0/0/terrains_peering_bit/top_left_corner = 3
+3:0/0/terrains_peering_bit/top_right_corner = 3
+2:0/0 = 0
+2:0/0/material = SubResource("ShaderMaterial_lrquu")
+2:0/0/terrain_set = 0
+2:0/0/terrains_peering_bit/bottom_right_corner = 1
+2:0/0/terrains_peering_bit/bottom_left_corner = 1
+2:0/0/terrains_peering_bit/top_left_corner = 1
+2:0/0/terrains_peering_bit/top_right_corner = 3
+1:1/0 = 0
+1:1/0/material = SubResource("ShaderMaterial_lrquu")
+1:1/0/terrain_set = 0
+1:1/0/terrains_peering_bit/bottom_right_corner = 1
+1:1/0/terrains_peering_bit/bottom_left_corner = 1
+1:1/0/terrains_peering_bit/top_left_corner = 3
+1:1/0/terrains_peering_bit/top_right_corner = 1
+2:1/0 = 0
+2:1/0/material = SubResource("ShaderMaterial_lrquu")
+2:1/0/terrain_set = 0
+
 [resource]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 255
@@ -615,7 +731,7 @@ terrain_set_0/terrain_1/name = "FG -TilemapDemo — копия.png"
 terrain_set_0/terrain_1/color = Color(0.078125, 1, 0, 1)
 terrain_set_0/terrain_2/name = "Water"
 terrain_set_0/terrain_2/color = Color(0, 0.179688, 1, 1)
-terrain_set_0/terrain_3/name = "FG -TilemapSand.png"
+terrain_set_0/terrain_3/name = "Sand"
 terrain_set_0/terrain_3/color = Color(0.96875, 1, 0, 1)
 custom_data_layer_0/name = "biome_id"
 custom_data_layer_0/type = 3
@@ -624,3 +740,4 @@ sources/2 = SubResource("TileSetAtlasSource_3mhn7")
 sources/3 = SubResource("TileSetAtlasSource_8s2jp")
 sources/4 = SubResource("TileSetAtlasSource_rahhy")
 sources/5 = SubResource("TileSetAtlasSource_xf7uk")
+sources/6 = SubResource("TileSetAtlasSource_dg3cc")

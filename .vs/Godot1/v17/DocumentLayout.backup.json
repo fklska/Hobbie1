@@ -52,7 +52,7 @@
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GeneratorV3.cs",
               "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GeneratorV3.cs",
               "RelativeToolTip": "ProceduralGeneration\\v3\\GeneratorV3.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAYwB4AAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAFYAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T04:35:54.548Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "ProceduralGeneration\\v3\\GeneratorData.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T06:29:43.35Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-02T06:29:43.35Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "ProceduralGeneration\\v3\\steps\\CoastLineStep.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T02:27:26.024Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-03T02:27:26.024Z"
             },
             {
               "$type": "Document",
@@ -105,8 +103,7 @@
               "RelativeToolTip": "ProceduralGeneration\\v3\\steps\\TextureTilemap.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T10:42:51.453Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-03T10:42:51.453Z"
             },
             {
               "$type": "Document",

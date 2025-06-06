@@ -43,6 +43,18 @@ public partial class GeneratorV3 : Node2D
         };
     }
 
+    public int GetAtlasFromTile(TileType tileType)
+    {
+        return tileType switch
+        {
+            TileType.Grass => 0,
+            TileType.Water => 3,
+            TileType.Sand => 4,
+            TileType.None => 15,
+            _ => throw new NotImplementedException()
+        };
+    }
+
     public void ClearTileMapTemlate()
     {
         grassTileMapTemplate.Clear();
@@ -84,22 +96,23 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                GetMapFromTile(genData.LandMapTiles[x, y]).SetCell(new Vector2I(x, y), 0, new Vector2I(2, 1), 0);
+                grassTileMapTemplate.SetCell(new Vector2I(x, y), GetAtlasFromTile(genData.LandMapTiles[x, y]), new Vector2I(2, 1), 0);
+                //GetMapFromTile(genData.LandMapTiles[x, y]).SetCell(new Vector2I(x, y), 0, new Vector2I(2, 1), 0);
             }
         }
 
         TileMapLayer grassMap = (TileMapLayer)grassTileMapTemplate.Duplicate();
-        TileMapLayer sandMap = (TileMapLayer)sandTileMapTemplate.Duplicate();
-        TileMapLayer waterMap = (TileMapLayer)waterTileMapTemplate.Duplicate();
+        //TileMapLayer sandMap = (TileMapLayer)sandTileMapTemplate.Duplicate();
+        //TileMapLayer waterMap = (TileMapLayer)waterTileMapTemplate.Duplicate();
 
         rootNode.AddChild(grassMap);
         grassMap.Owner = rootNode;
 
-        rootNode.AddChild(sandMap);
-        sandMap.Owner = rootNode;
+        //rootNode.AddChild(sandMap);
+        //sandMap.Owner = rootNode;
 
-        rootNode.AddChild(waterMap);
-        waterMap.Owner = rootNode;
+        //rootNode.AddChild(waterMap);
+        //waterMap.Owner = rootNode;
 
         PackedScene.Pack(rootNode);
 

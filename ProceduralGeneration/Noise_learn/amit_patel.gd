@@ -36,7 +36,7 @@ func defaultRender():
 				color = TempGradRenderWater.sample(temp)
 			#var color = HeightGradRender.sample(height) #* maskImage.get_pixel(x, y)
 			image.set_pixel(x, y, color)
-	
+
 	texture_rect.texture = ImageTexture.create_from_image(image)
 
 func IslandRender():

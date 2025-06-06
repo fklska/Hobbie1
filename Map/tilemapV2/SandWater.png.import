@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://src0522mixws"
-path="res://.godot/imported/WaterSand.png-88f2500827ad712909cf319d8621168d.ctex"
+uid="uid://vjb7rqo3kt8y"
+path="res://.godot/imported/SandWater.png-401a34e60219b40a2e394f2cbf3f8d5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/tilemapV2/WaterSand.png"
-dest_files=["res://.godot/imported/WaterSand.png-88f2500827ad712909cf319d8621168d.ctex"]
+source_file="res://Map/tilemapV2/SandWater.png"
+dest_files=["res://.godot/imported/SandWater.png-401a34e60219b40a2e394f2cbf3f8d5e.ctex"]
 
 [params]
 
