@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://puflxaap1ueo"]
 
 [ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_wjtrd"]
+[ext_resource type="PackedScene" uid="uid://b34e7uwu1jygl" path="res://SavedWorlds/saved_scene.tscn" id="4_nwcac"]
 [ext_resource type="Script" uid="uid://dnntr11vdyrvt" path="res://Light/daynight.gd" id="4_t4ycb"]
 [ext_resource type="Script" uid="uid://dlxknb7a41wrq" path="res://Light/pointLight.gd" id="4_x002e"]
-[ext_resource type="PackedScene" uid="uid://7886xyn06la5" path="res://ProceduralGeneration/V2/generator_v_2.tscn" id="5_nwcac"]
 [ext_resource type="PackedScene" uid="uid://b0dwhont1cotx" path="res://Player/player_main_character.tscn" id="5_x002e"]
 
 [sub_resource type="Environment" id="Environment_wjtrd"]
@@ -60,6 +60,7 @@ environment = SubResource("Environment_wjtrd")
 [node name="Light2D" type="PointLight2D" parent="."]
 position = Vector2(461, 345)
 scale = Vector2(6, 6)
+color = Color(0.951687, 0.928525, 0.685454, 1)
 energy = 0.63
 blend_mode = 2
 shadow_enabled = true
@@ -75,7 +76,8 @@ SPEED = Vector3(-2, 0, 0)
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(672, 675)
 scale = Vector2(1.51072, 1.51857)
-energy = 1.90512
+color = Color(0.951687, 0.928525, 0.685454, 1)
+energy = 1.33162
 shadow_filter = 1
 texture = SubResource("GradientTexture2D_sunvg")
 texture_scale = 11.95
@@ -91,14 +93,15 @@ shadow_color = Color(0, 0, 0, 1)
 height = 0.42
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." node_paths=PackedStringArray("light", "bloom_light")]
+color = Color(0.951687, 0.928525, 0.685454, 1)
 script = ExtResource("4_t4ycb")
 colors = SubResource("GradientTexture1D_x002e")
 light = NodePath("../Light2D")
 bloom_light = NodePath("../PointLight2D")
-time = 89.9745
+time = 12.2435
 curve = SubResource("Curve_nwcac")
 
-[node name="Generator v2" parent="." instance=ExtResource("5_nwcac")]
+[node name="Node2D" parent="." instance=ExtResource("4_nwcac")]
 
 [node name="Player_MainCharacter" parent="." instance=ExtResource("5_x002e")]
 position = Vector2(610, 593)

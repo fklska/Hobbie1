@@ -4,8 +4,8 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cfwm6"]
 noise_type = 0
-seed = -1019280831
-frequency = 0.0061
+seed = -2022947062
+frequency = 0.0711
 cellular_distance_function = 2
 cellular_return_type = 0
 domain_warp_enabled = true
@@ -16,7 +16,7 @@ domain_warp_fractal_octaves = 4
 
 [resource]
 script = ExtResource("1_uohbi")
-waterThreshold = 0.5
+waterThreshold = 0.3
 landThreshold = 0.0
 noise = SubResource("FastNoiseLite_cfwm6")
 Enabled = true

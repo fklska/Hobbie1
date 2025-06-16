@@ -78,7 +78,7 @@ public static partial class GenerationUtils
         {
             for (int j = 0; j < cols; j++)
             {
-                Console.Write(array[i, j]?.ToString().PadLeft(3) + " ");
+                Console.Write(Math.Round(Convert.ToDecimal(array[j, i]), 2).ToString().PadLeft(3) + " ");
             }
             Console.WriteLine();
         }

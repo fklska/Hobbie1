@@ -17,10 +17,10 @@ void vertex() {
 void fragment() {
     // Определяем, насколько пиксель красный (с учетом порога)
     float is_red = step(red_threshold, COLOR.r) * (1.0 - step(0.01, COLOR.g)) * (1.0 - step(0.01, COLOR.b));
-    
+
     // Получаем цвет из заменяющей текстуры
     vec4 replacement = texture(replacement_tex, world_pos * texture_scale);
-    
+
     // Смешиваем цвета
     COLOR = mix(COLOR, replacement, is_red);
 }

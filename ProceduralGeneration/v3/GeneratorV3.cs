@@ -11,24 +11,30 @@ public partial class GeneratorV3 : Node2D
     [Export] public Godot.Collections.Array<GenerationStep> steps;
     [Export] public Gradient grad;
     public Image map_render = new Image();
-    public TextureRect MapTexture;
+    public Image heat_render = new Image();
+    public TextureRect MapTexture, HeatMap;
 
     [Export] public TileMapLayer grassTileMapTemplate;
     [Export] public TileMapLayer waterTileMapTemplate;
     [Export] public TileMapLayer sandTileMapTemplate;
 
+    [Export] public GradientTexture2D heatGrad;
+
     public override void _Ready()
     {
         base._Ready();
-        MapTexture = GetNode<TextureRect>("TextureRect");
+        MapTexture = GetNode<TextureRect>("HeightMap");
+        HeatMap = GetNode<TextureRect>("HeatMap");
         genData.ResetData();
         foreach (var step in steps)
         {
             step.Execute(genData);
+
         }
 
         preRender(genData);
-        GenerateScene(genData);
+        HeatMapRender(genData);
+        // GenerateScene(genData);
     }
 
     public TileMapLayer GetMapFromTile(TileType tileType)
@@ -84,7 +90,26 @@ public partial class GeneratorV3 : Node2D
         MapTexture.Texture = ImageTexture.CreateFromImage(map_render);
     }
 
-    
+    public void HeatMapRender(GeneratorData genData)
+    {
+        heatGrad.Width = genData.mapSize.X;
+        heatGrad.Height = genData.mapSize.Y;
+        Image heatMask = heatGrad.GetImage();
+        heat_render = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
+        for (int x = 0; x < genData.mapSize.X; x++)
+        {
+            for (int y = 0; y < genData.mapSize.Y; y++)
+            {
+                float latitudeMultiplier = heatMask.GetPixel(x, y).R;
+                float heatValue = latitudeMultiplier * (1 - genData.LandMapHeights[x, y] * 0.5f);
+
+                genData.HeatMapValues[x, y] = heatValue;
+                heat_render.SetPixel(x, y, genData.GetHeatColor(heatValue));
+            }
+        }
+        GenerationUtils.Print2DArray(genData.HeatMapValues);
+        HeatMap.Texture = ImageTexture.CreateFromImage(heat_render);
+    }
     public void GenerateScene(GeneratorData genData)
     {
         ClearTileMapTemlate();
