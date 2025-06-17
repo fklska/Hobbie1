@@ -13,6 +13,7 @@ public partial class GeneratorData : Resource
 
     public float[,] HeatMapValues;
     [Export] public Color Coldest;
+    [Export] public Color Cold;
     [Export] public Color Midlle;
     [Export] public Color Warmest;
 
@@ -59,6 +60,10 @@ public partial class GeneratorData : Resource
         if (value <= 0.2f)
         {
             return Coldest;
+        }
+        else if (value <= 0.4f)
+        {
+            return Cold;
         }
         else if (value <= 0.7f)
         {

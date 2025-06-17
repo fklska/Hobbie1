@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CoastLineStep" load_steps=2 format=3 uid="uid://cnsno8aky56qm"]
+
+[ext_resource type="Script" uid="uid://db2oq6rdunhsv" path="res://ProceduralGeneration/v3/steps/CoastLineStep.cs" id="1_3yrp0"]
+
+[resource]
+script = ExtResource("1_3yrp0")
+preRenderColor = Color(1, 0.944, 0.105, 1)
+Enabled = false
+metadata/_custom_type_script = "uid://db2oq6rdunhsv"

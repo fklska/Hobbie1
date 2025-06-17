@@ -11,14 +11,17 @@ public partial class GeneratorV3 : Node2D
     [Export] public Godot.Collections.Array<GenerationStep> steps;
     [Export] public Gradient grad;
     public Image map_render = new Image();
+
     public Image heat_render = new Image();
     public TextureRect MapTexture, HeatMap;
 
     [Export] public TileMapLayer grassTileMapTemplate;
-    [Export] public TileMapLayer waterTileMapTemplate;
-    [Export] public TileMapLayer sandTileMapTemplate;
+
 
     [Export] public GradientTexture2D heatGrad;
+    [Export] public FastNoiseLite fractalHeatNoise;
+    [Export] public Curve ClimateHeightCurve;
+    [Export] public float TemperatureClimate;
 
     public override void _Ready()
     {
@@ -42,8 +45,6 @@ public partial class GeneratorV3 : Node2D
         return tileType switch
         {
             TileType.Grass => grassTileMapTemplate,
-            TileType.Water => waterTileMapTemplate,
-            TileType.Sand => sandTileMapTemplate,
             TileType.None => null,
             _ => throw new NotImplementedException()
         };
@@ -64,8 +65,6 @@ public partial class GeneratorV3 : Node2D
     public void ClearTileMapTemlate()
     {
         grassTileMapTemplate.Clear();
-        waterTileMapTemplate.Clear();
-        sandTileMapTemplate.Clear();
     }
 
     public void preRender(GeneratorData genData)
@@ -92,6 +91,7 @@ public partial class GeneratorV3 : Node2D
 
     public void HeatMapRender(GeneratorData genData)
     {
+        fractalHeatNoise.Seed = genData.seed;
         heatGrad.Width = genData.mapSize.X;
         heatGrad.Height = genData.mapSize.Y;
         Image heatMask = heatGrad.GetImage();
@@ -100,8 +100,8 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                float latitudeMultiplier = heatMask.GetPixel(x, y).R;
-                float heatValue = latitudeMultiplier * (1 - genData.LandMapHeights[x, y] * 0.5f);
+                float latitudeMultiplier = heatMask.GetPixel(x, y).R * Mathf.SmoothStep(0.3f, 0.5f, (fractalHeatNoise.GetNoise2D(x, y) + 1 )/ 2);
+                float heatValue = latitudeMultiplier * (1 - genData.LandMapHeights[x, y] * ClimateHeightCurve.Sample(genData.LandMapHeights[x, y]));
 
                 genData.HeatMapValues[x, y] = heatValue;
                 heat_render.SetPixel(x, y, genData.GetHeatColor(heatValue));
@@ -122,22 +122,13 @@ public partial class GeneratorV3 : Node2D
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
                 grassTileMapTemplate.SetCell(new Vector2I(x, y), GetAtlasFromTile(genData.LandMapTiles[x, y]), new Vector2I(2, 1), 0);
-                //GetMapFromTile(genData.LandMapTiles[x, y]).SetCell(new Vector2I(x, y), 0, new Vector2I(2, 1), 0);
             }
         }
 
         TileMapLayer grassMap = (TileMapLayer)grassTileMapTemplate.Duplicate();
-        //TileMapLayer sandMap = (TileMapLayer)sandTileMapTemplate.Duplicate();
-        //TileMapLayer waterMap = (TileMapLayer)waterTileMapTemplate.Duplicate();
 
         rootNode.AddChild(grassMap);
         grassMap.Owner = rootNode;
-
-        //rootNode.AddChild(sandMap);
-        //sandMap.Owner = rootNode;
-
-        //rootNode.AddChild(waterMap);
-        //waterMap.Owner = rootNode;
 
         PackedScene.Pack(rootNode);
 
