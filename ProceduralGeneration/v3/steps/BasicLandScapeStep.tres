@@ -4,8 +4,8 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cfwm6"]
 noise_type = 0
-seed = -1951340476
-frequency = 0.0711
+seed = -1378838566
+frequency = 0.0209
 cellular_distance_function = 2
 cellular_return_type = 0
 domain_warp_enabled = true

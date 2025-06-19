@@ -19,9 +19,14 @@ public partial class GeneratorV3 : Node2D
 
 
     [Export] public GradientTexture2D heatGrad;
-    [Export] public FastNoiseLite fractalHeatNoise;
-    [Export] public Curve ClimateHeightCurve;
-    [Export] public float TemperatureClimate;
+    [Export] public FastNoiseLite fractalHeatNoise; // Radom to latitudeGrad
+    [Export] public Curve ClimateHeightCurve; // Curve coefs for highter values less temperature
+    
+    [Export] public Gradient debugLatitudeMask;
+    [Export] public TextureRect DebugLatitude;
+    [Export] public TextureRect DebugFractalMultiplier;
+    [Export] public TextureRect DebugLatFractalMask;
+    [Export] public float FractalStrech;
 
     public override void _Ready()
     {
@@ -96,19 +101,33 @@ public partial class GeneratorV3 : Node2D
         heatGrad.Height = genData.mapSize.Y;
         Image heatMask = heatGrad.GetImage();
         heat_render = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
+
+        // DEBUG
+        Image DebugLatMask = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
+        Image DebugFractalReder = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
+        Image DebugLatReder = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
         for (int x = 0; x < genData.mapSize.X; x++)
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                float latitudeMultiplier = heatMask.GetPixel(x, y).R * Mathf.SmoothStep(0.3f, 0.5f, (fractalHeatNoise.GetNoise2D(x, y) + 1 )/ 2);
+                float fractalValue = (fractalHeatNoise.GetNoise2D(x, y) + 1) / 2;
+                float latitudeMultiplier = (heatMask.GetPixel(x, y).R * (fractalValue) + heatMask.GetPixel(x, y).R) * FractalStrech; // 
                 float heatValue = latitudeMultiplier * (1 - genData.LandMapHeights[x, y] * ClimateHeightCurve.Sample(genData.LandMapHeights[x, y]));
 
                 genData.HeatMapValues[x, y] = heatValue;
                 heat_render.SetPixel(x, y, genData.GetHeatColor(heatValue));
+
+                // DEBUG
+                DebugLatMask.SetPixel(x, y, debugLatitudeMask.Sample(heatMask.GetPixel(x, y).R));
+                DebugFractalReder.SetPixel(x, y, debugLatitudeMask.Sample(fractalValue));
+                DebugLatReder.SetPixel(x, y, debugLatitudeMask.Sample(latitudeMultiplier));
             }
         }
-        GenerationUtils.Print2DArray(genData.HeatMapValues);
         HeatMap.Texture = ImageTexture.CreateFromImage(heat_render);
+        // DEBUG
+        DebugLatitude.Texture = ImageTexture.CreateFromImage(DebugLatMask);
+        DebugFractalMultiplier.Texture = ImageTexture.CreateFromImage(DebugFractalReder);
+        DebugLatFractalMask.Texture = ImageTexture.CreateFromImage(DebugLatReder);
     }
     public void GenerateScene(GeneratorData genData)
     {
