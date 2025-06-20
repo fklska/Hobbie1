@@ -13,26 +13,32 @@ public partial class GeneratorV3 : Node2D
     public Image map_render = new Image();
 
     public Image heat_render = new Image();
-    public TextureRect MapTexture, HeatMap;
+    public TextureRect MapTexture, HeatMap, MoistureMap;
 
     [Export] public TileMapLayer grassTileMapTemplate;
 
-
+    [ExportCategory("HeatMap")]
     [Export] public GradientTexture2D heatGrad;
     [Export] public FastNoiseLite fractalHeatNoise; // Radom to latitudeGrad
     [Export] public Curve ClimateHeightCurve; // Curve coefs for highter values less temperature
-    
     [Export] public Gradient debugLatitudeMask;
     [Export] public TextureRect DebugLatitude;
     [Export] public TextureRect DebugFractalMultiplier;
     [Export] public TextureRect DebugLatFractalMask;
     [Export] public float FractalStrech;
 
+    [ExportCategory("MoistureMap")]
+    [Export] public TextureRect DebugMoistureFractal;
+    [Export] public Curve MoistureHeightCurve;
+    [Export] public FastNoiseLite fractalMoistureNoise;
+    [Export] public Gradient MoistureColors;
+
     public override void _Ready()
     {
         base._Ready();
         MapTexture = GetNode<TextureRect>("HeightMap");
         HeatMap = GetNode<TextureRect>("HeatMap");
+        MoistureMap = GetNode<TextureRect>("MoistureMap");
         genData.ResetData();
         foreach (var step in steps)
         {
@@ -43,6 +49,7 @@ public partial class GeneratorV3 : Node2D
         preRender(genData);
         HeatMapRender(genData);
         // GenerateScene(genData);
+        MoistureMapRender(genData);
     }
 
     public TileMapLayer GetMapFromTile(TileType tileType)
@@ -129,6 +136,27 @@ public partial class GeneratorV3 : Node2D
         DebugFractalMultiplier.Texture = ImageTexture.CreateFromImage(DebugFractalReder);
         DebugLatFractalMask.Texture = ImageTexture.CreateFromImage(DebugLatReder);
     }
+
+    public void MoistureMapRender(GeneratorData genData)
+    {
+        fractalMoistureNoise.Seed = genData.seed;
+        Image DebugFractalReder = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
+        Image DebugMoistureReder = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
+        for (int x = 0; x < genData.mapSize.X; x++)
+        {
+            for (int y = 0; y < genData.mapSize.Y; y++)
+            {
+                float fractalValue = (fractalMoistureNoise.GetNoise2D(x, y) + 1) / 2;
+                float MoistureValue = (1 - genData.LandMapHeights[x, y] * MoistureHeightCurve.Sample(genData.LandMapHeights[x, y]) * (1 + fractalValue));
+
+                DebugFractalReder.SetPixel(x, y, MoistureColors.Sample(fractalValue));
+                DebugMoistureReder.SetPixel(x, y, MoistureColors.Sample(MoistureValue));
+            }
+        }
+        MoistureMap.Texture = ImageTexture.CreateFromImage(DebugMoistureReder);
+        DebugMoistureFractal.Texture = ImageTexture.CreateFromImage(DebugFractalReder);
+    }
+
     public void GenerateScene(GeneratorData genData)
     {
         ClearTileMapTemlate();
