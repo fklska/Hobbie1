@@ -12,14 +12,12 @@ public partial class BasicLandScapeStep : GenerationStep
     [Export] public GradientTexture2D LatitudeMask;
     [Export] public FastNoiseLite fractalHeatNoise; // Radom to latitudeGrad
     [Export] public Curve ClimateHeightCurve; // Curve coefs for highter values less temperature
-    [Export] public Gradient HeatMapRenderGradient;
     [Export] public float FractalStrech;
 
 
     [ExportCategory("MoistureMap")]
     [Export] public Curve MoistureHeightCurve;
     [Export] public FastNoiseLite fractalMoistureNoise;
-    [Export] public Gradient MoistureColors;
 
 
 
@@ -43,7 +41,7 @@ public partial class BasicLandScapeStep : GenerationStep
                     float heatValue = latitudeMultiplier * (1 - heightValue * ClimateHeightCurve.Sample(heightValue));
 
                     float fractalMoistureValue = (fractalMoistureNoise.GetNoise2D(x, y) + 1) / 2;
-                    float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue) * (1 + fractalMoistureValue));
+                    float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue) * (1 + fractalMoistureValue)) / FractalStrech;
 
                     // Store Data
                     generationData.HeightMapValues[x, y] = heightValue;

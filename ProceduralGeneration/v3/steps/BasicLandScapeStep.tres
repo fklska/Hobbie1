@@ -1,10 +1,24 @@
-[gd_resource type="Resource" script_class="BasicLandScapeStep" load_steps=2 format=3 uid="uid://dss481vm4ric3"]
+[gd_resource type="Resource" script_class="BasicLandScapeStep" load_steps=8 format=3 uid="uid://dss481vm4ric3"]
 
+[ext_resource type="Curve" uid="uid://bkkqbnl6dlbw6" path="res://ProceduralGeneration/v3/steps/LandscapeParams/HeatCurve.tres" id="1_ibp8x"]
 [ext_resource type="Script" uid="uid://bh7e6cgxlcwx" path="res://ProceduralGeneration/v3/steps/BasicLandScapeStep.cs" id="1_uohbi"]
+[ext_resource type="FastNoiseLite" uid="uid://cmpa0acnfcnai" path="res://ProceduralGeneration/v3/steps/LandscapeParams/HeightNoise.tres" id="1_yg5sr"]
+[ext_resource type="Texture2D" uid="uid://d1o3xq1qe0nnn" path="res://ProceduralGeneration/v3/steps/LandscapeParams/ClimateMask.tres" id="2_hfm7p"]
+[ext_resource type="FastNoiseLite" uid="uid://ct4b3cdxte8k0" path="res://ProceduralGeneration/v3/steps/LandscapeParams/fractalHeatNoise.tres" id="3_ibp8x"]
+[ext_resource type="Curve" uid="uid://dngglx42eqlqe" path="res://ProceduralGeneration/v3/steps/LandscapeParams/MoistureCurve.tres" id="4_4b60i"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2bpgj"]
+seed = -301006714
+frequency = 0.009
 
 [resource]
 script = ExtResource("1_uohbi")
-waterThreshold = 0.3
-landThreshold = 0.0
+HeightNoise = ExtResource("1_yg5sr")
+LatitudeMask = ExtResource("2_hfm7p")
+fractalHeatNoise = ExtResource("3_ibp8x")
+ClimateHeightCurve = ExtResource("1_ibp8x")
+FractalStrech = 0.71
+MoistureHeightCurve = ExtResource("4_4b60i")
+fractalMoistureNoise = SubResource("FastNoiseLite_2bpgj")
 Enabled = true
 metadata/_custom_type_script = "uid://bh7e6cgxlcwx"
