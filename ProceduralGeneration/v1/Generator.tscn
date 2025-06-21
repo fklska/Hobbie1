@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://clal1bwv1xypu" path="res://scripts/generator.gd" id="1_brxuf"]
 [ext_resource type="TileSet" uid="uid://bf371l03866ah" path="res://Map/tilemap/16x16_tileset.tres" id="2_brxuf"]
-[ext_resource type="FastNoiseLite" uid="uid://dnkoe3wi38h16" path="res://ProceduralGeneration/biome_noise.tres" id="2_nlgcw"]
+[ext_resource type="FastNoiseLite" uid="uid://dnkoe3wi38h16" path="res://ProceduralGeneration/v1/biome_noise.tres" id="2_nlgcw"]
 [ext_resource type="Shader" uid="uid://cm8lmhq1wyu5r" path="res://Map/Shaders/sand_shader2.gdshader" id="3_nlgcw"]
 [ext_resource type="FastNoiseLite" path="res://ProceduralGeneration/v3/resourse.tres" id="3_x7r45"]
 [ext_resource type="Texture2D" uid="uid://bs5se311ru1o1" path="res://Map/tilemap/sand1.png" id="4_x7r45"]

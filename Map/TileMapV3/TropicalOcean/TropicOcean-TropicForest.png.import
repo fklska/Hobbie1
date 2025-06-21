@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ix2wqopbddkr"
-path="res://.godot/imported/test1.png-deec7b2c2762cee07ba2054537436279.ctex"
+uid="uid://6g1evktod8a"
+path="res://.godot/imported/TropicOcean-TropicForest.png-1b27d3d23f9e15f4d518845400dbb64c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/TileMapV3/test1.png"
-dest_files=["res://.godot/imported/test1.png-deec7b2c2762cee07ba2054537436279.ctex"]
+source_file="res://Map/TileMapV3/TropicalOcean/TropicOcean-TropicForest.png"
+dest_files=["res://.godot/imported/TropicOcean-TropicForest.png-1b27d3d23f9e15f4d518845400dbb64c.ctex"]
 
 [params]
 

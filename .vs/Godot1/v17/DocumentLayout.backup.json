@@ -13,6 +13,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\generatordata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\generatordata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\genutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\genutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\generationstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\generationstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\steps\\coastlinestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\steps\\coastlinestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +34,54 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CoastLineStep.cs",
+              "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\steps\\CoastLineStep.cs",
+              "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\steps\\CoastLineStep.cs",
+              "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\steps\\CoastLineStep.cs",
+              "RelativeToolTip": "ProceduralGeneration\\v3\\steps\\CoastLineStep.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T11:31:03.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GenerationStep.cs",
+              "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GenerationStep.cs",
+              "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GenerationStep.cs",
+              "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GenerationStep.cs",
+              "RelativeToolTip": "ProceduralGeneration\\v3\\GenerationStep.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T11:09:52.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GenUtils.cs",
+              "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GenUtils.cs",
+              "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GenUtils.cs",
+              "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GenUtils.cs",
+              "RelativeToolTip": "ProceduralGeneration\\v3\\GenUtils.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T10:56:47.919Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Document",
@@ -36,7 +91,7 @@
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GeneratorV3.cs",
               "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GeneratorV3.cs",
               "RelativeToolTip": "ProceduralGeneration\\v3\\GeneratorV3.cs",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAAAJIAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-09T04:09:43.759Z",
               "EditorCaption": ""
@@ -49,9 +104,10 @@
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\steps\\BasicLandScapeStep.cs",
               "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\steps\\BasicLandScapeStep.cs",
               "RelativeToolTip": "ProceduralGeneration\\v3\\steps\\BasicLandScapeStep.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T11:09:55.379Z"
+              "WhenOpened": "2025-06-17T11:09:55.379Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -61,9 +117,10 @@
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GeneratorData.cs",
               "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GeneratorData.cs",
               "RelativeToolTip": "ProceduralGeneration\\v3\\GeneratorData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T09:23:49.022Z"
+              "WhenOpened": "2025-06-17T09:23:49.022Z",
+              "EditorCaption": ""
             }
           ]
         }

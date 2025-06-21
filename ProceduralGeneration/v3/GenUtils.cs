@@ -18,18 +18,6 @@ public static partial class GenerationUtils
 
     };
 
-    public static float[,] GenerateNoiseMap(FastNoiseLite noise, int width, int height)
-    {
-        float[,] noiseMap = new float[width, height];
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                noiseMap[x, y] = (noise.GetNoise2D(x, y) + 1) / 2;
-            }
-        }
-        return noiseMap;
-    }
 
     public static HashSet<Vector2I> GetEdgeTiles(List<TileType> typesToSearchFor, List<TileType> typesAdjestedTo, GeneratorData genData)
     {

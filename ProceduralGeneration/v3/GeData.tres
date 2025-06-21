@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="GeneratorData" load_steps=2 format=3 uid="uid://26665461abm1"]
+[gd_resource type="Resource" script_class="GeneratorData" load_steps=5 format=3 uid="uid://26665461abm1"]
 
+[ext_resource type="Gradient" uid="uid://fpgm56dxps3l" path="res://ProceduralGeneration/v3/RenderResorses/HeatGradient.tres" id="1_cwf47"]
 [ext_resource type="Script" uid="uid://cdfwnicj3fbs8" path="res://ProceduralGeneration/v3/GeneratorData.cs" id="1_g1xaq"]
+[ext_resource type="Gradient" uid="uid://b2ek7yywt4kv7" path="res://ProceduralGeneration/v3/RenderResorses/HeightGradient.tres" id="2_3p4wp"]
+[ext_resource type="Gradient" uid="uid://6fjvibsxyf6o" path="res://ProceduralGeneration/v3/RenderResorses/MoistureGradient.tres" id="3_2halh"]
 
 [resource]
 script = ExtResource("1_g1xaq")
 mapSize = Vector2i(64, 64)
-Coldest = Color(0.387, 0.497, 1, 0.536)
-Cold = Color(0.617, 0.856, 1, 0.597)
-Midlle = Color(0.074, 1, 0.349, 0.553)
-Warmest = Color(1, 0.242, 0.094, 0.696)
-sandPreRenderColor = Color(1, 0.829, 0.16, 1)
+HeightGrad = ExtResource("2_3p4wp")
+HeatMapRenderGradient = ExtResource("1_cwf47")
+MoistureMapRenderColors = ExtResource("3_2halh")
 metadata/_custom_type_script = "uid://cdfwnicj3fbs8"
