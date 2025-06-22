@@ -1,9 +1,8 @@
 [gd_resource type="FastNoiseLite" format=3 uid="uid://cmpa0acnfcnai"]
 
 [resource]
-noise_type = 0
-seed = -1740333044
-frequency = 0.0315
+seed = -1114645765
+frequency = 0.0114
 cellular_distance_function = 2
 cellular_return_type = 0
 domain_warp_enabled = true

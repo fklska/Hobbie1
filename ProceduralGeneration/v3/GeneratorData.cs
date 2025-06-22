@@ -74,6 +74,7 @@ public enum TileType
     TropicWater,
     SnowMountain,
     StoneMountain,
+    Tundra,
     Taiga,
     RegularForest,
     TropicalForest,

@@ -11,6 +11,7 @@ public partial class GeneratorV3 : Node2D
     [Export] public Godot.Collections.Array<GenerationStep> steps;
     [Export] public TileMapLayer grassTileMapTemplate;
 
+    [Export] public TextureRect FinalMap;
     [Export] public TextureRect HeightMap, HeatMap, MoistureMap;
     [Export] public TextureRect DebugLatitudeMask, DebugHeatFractal, DebugLatFractalMask;
     [Export] public TextureRect DebugMoistureFractal;
@@ -52,6 +53,16 @@ public partial class GeneratorV3 : Node2D
         DebugLatFractalMask.Texture = ImageTexture.CreateFromImage(genData.DebugLatFractal);
 
         DebugMoistureFractal.Texture = ImageTexture.CreateFromImage(genData.DebugMoistureFractal);
+
+        Image finalRender = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
+        for (int x = 0; x < genData.mapSize.X; x++)
+        {
+            for (int y = 0; y < genData.mapSize.Y; y++)
+            {
+                finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(genData.LandMapTiles[x, y]));
+            }
+        }
+        FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);
     }
 
     public void GenerateScene(GeneratorData genData)

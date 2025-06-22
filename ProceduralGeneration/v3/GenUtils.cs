@@ -56,6 +56,25 @@ public static partial class GenerationUtils
         return false;
     }
 
+    public static Color getTileTypeColor(TileType tileType)
+    {
+        return tileType switch
+        {
+            TileType.IceWater => new Color("0200ff"),
+            TileType.RegularWater => new Color("234fe6"),
+            TileType.TropicWater => new Color("1eeaff"),
+            TileType.SnowMountain => new Color("d8fbff"),
+            TileType.StoneMountain => new Color("63524d"),
+            TileType.Tundra => new Color("425d90"),
+            TileType.Taiga => new Color("082c0d"),
+            TileType.RegularForest => new Color("49aa56"),
+            TileType.TropicalForest => new Color("59f619"),
+            TileType.Savanna => new Color("a89c5c"),
+            TileType.Desert => new Color("f7e33e"),
+            _ => throw new NotImplementedException()
+        };
+    }
+
     public static void Print2DArray<T>(T[,] array)
     {
         int rows = array.GetLength(0);
