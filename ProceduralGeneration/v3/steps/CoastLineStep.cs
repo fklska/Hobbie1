@@ -13,7 +13,7 @@ public partial class CoastLineStep : GenerationStep
 
     private List<TileType> sand_tilesAdjestedTo = new List<TileType>()
     {
-        TileType.RegularWater,
+        TileType.Swamp,
     };
 
     [Export] public Color preRenderColor;

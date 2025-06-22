@@ -61,7 +61,7 @@ public static partial class GenerationUtils
         return tileType switch
         {
             TileType.IceWater => new Color("0200ff"),
-            TileType.RegularWater => new Color("234fe6"),
+            TileType.Swamp => new Color("244d22"),
             TileType.TropicWater => new Color("1eeaff"),
             TileType.SnowMountain => new Color("d8fbff"),
             TileType.StoneMountain => new Color("63524d"),
@@ -71,6 +71,25 @@ public static partial class GenerationUtils
             TileType.TropicalForest => new Color("59f619"),
             TileType.Savanna => new Color("a89c5c"),
             TileType.Desert => new Color("f7e33e"),
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    public static int getTileTypeAtlas(TileType tileType)
+    {
+        return tileType switch
+        {
+            TileType.IceWater => 1,
+            TileType.Swamp => 6,
+            TileType.TropicWater => 9,
+            TileType.SnowMountain => 4,
+            TileType.StoneMountain => 5,
+            TileType.Tundra => 10,
+            TileType.Taiga => 7,
+            TileType.RegularForest => 2,
+            TileType.TropicalForest => 8,
+            TileType.Savanna => 3,
+            TileType.Desert => 0,
             _ => throw new NotImplementedException()
         };
     }

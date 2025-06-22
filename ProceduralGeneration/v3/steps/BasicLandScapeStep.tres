@@ -8,7 +8,7 @@
 [ext_resource type="Curve" uid="uid://dngglx42eqlqe" path="res://ProceduralGeneration/v3/steps/LandscapeParams/MoistureCurve.tres" id="4_4b60i"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_2bpgj"]
-seed = -872289319
+seed = -751436185
 frequency = 0.009
 
 [resource]
@@ -20,6 +20,6 @@ ClimateHeightCurve = ExtResource("1_ibp8x")
 HeatFractalStrech = 0.84
 MoistureHeightCurve = ExtResource("4_4b60i")
 fractalMoistureNoise = SubResource("FastNoiseLite_2bpgj")
-MoistureFractalStrech = 0.925
+MoistureFractalStrech = 1.23
 Enabled = true
 metadata/_custom_type_script = "uid://bh7e6cgxlcwx"

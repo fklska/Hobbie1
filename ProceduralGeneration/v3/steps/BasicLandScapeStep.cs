@@ -129,7 +129,7 @@ public partial class BasicLandScapeStep : GenerationStep
             }
             else if (heatValue < 0.7f)
             {
-                return TileType.RegularWater;
+                return TileType.Swamp;
             }
             else
             {

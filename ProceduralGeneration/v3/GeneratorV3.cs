@@ -9,7 +9,7 @@ public partial class GeneratorV3 : Node2D
 {
     [Export] public GeneratorData genData;
     [Export] public Godot.Collections.Array<GenerationStep> steps;
-    [Export] public TileMapLayer grassTileMapTemplate;
+    [Export] public TileMapLayer MainTileMap;
 
     [Export] public TextureRect FinalMap;
     [Export] public TextureRect HeightMap, HeatMap, MoistureMap;
@@ -26,6 +26,7 @@ public partial class GeneratorV3 : Node2D
         }
 
         preRender(genData);
+        TileMapRender(genData);
     }
 
     public int GetAtlasFromTile(TileType tileType)
@@ -39,7 +40,7 @@ public partial class GeneratorV3 : Node2D
 
     public void ClearTileMapTemlate()
     {
-        grassTileMapTemplate.Clear();
+        MainTileMap.Clear();
     }
 
     public void preRender(GeneratorData genData)
@@ -65,6 +66,18 @@ public partial class GeneratorV3 : Node2D
         FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);
     }
 
+    public void TileMapRender(GeneratorData genData)
+    {
+        ClearTileMapTemlate();
+        for (int x = 0; x < genData.mapSize.X; x++)
+        {
+            for (int y = 0; y < genData.mapSize.Y; y++)
+            {
+                MainTileMap.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.LandMapTiles[x, y]), new Vector2I(2, 1), 0);
+            }
+        }
+    }
+
     public void GenerateScene(GeneratorData genData)
     {
         ClearTileMapTemlate();
@@ -76,11 +89,11 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                grassTileMapTemplate.SetCell(new Vector2I(x, y), GetAtlasFromTile(genData.LandMapTiles[x, y]), new Vector2I(2, 1), 0);
+                MainTileMap.SetCell(new Vector2I(x, y), GetAtlasFromTile(genData.LandMapTiles[x, y]), new Vector2I(2, 1), 0);
             }
         }
 
-        TileMapLayer grassMap = (TileMapLayer)grassTileMapTemplate.Duplicate();
+        TileMapLayer grassMap = (TileMapLayer)MainTileMap.Duplicate();
 
         rootNode.AddChild(grassMap);
         grassMap.Owner = rootNode;

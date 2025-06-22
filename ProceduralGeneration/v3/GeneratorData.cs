@@ -60,7 +60,7 @@ public partial class GeneratorData : Resource
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                LandMapTiles[x, y] = TileType.RegularWater;
+                LandMapTiles[x, y] = TileType.None;
             }
         }
     }
@@ -70,7 +70,7 @@ public enum TileType
 {
     None,
     IceWater,
-    RegularWater,
+    Swamp,
     TropicWater,
     SnowMountain,
     StoneMountain,

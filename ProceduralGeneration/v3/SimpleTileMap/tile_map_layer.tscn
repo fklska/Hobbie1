@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bav25r377uht0"]
+
+[ext_resource type="TileSet" uid="uid://b6tw8eycsfq1m" path="res://ProceduralGeneration/v3/SimpleTileMap/SimpleBiomeTileSet.tres" id="1_k2ipl"]
+
+[node name="TileMapLayer" type="TileMapLayer"]
+tile_set = ExtResource("1_k2ipl")
