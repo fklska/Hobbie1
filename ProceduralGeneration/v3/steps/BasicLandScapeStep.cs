@@ -45,7 +45,7 @@ public partial class BasicLandScapeStep : GenerationStep
                     float heatValue = latitudeMultiplier * (1 - heightValue * ClimateHeightCurve.Sample(heightValue));
 
                     float fractalMoistureValue = (fractalMoistureNoise.GetNoise2D(x, y) + 1) / 2;
-                    float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue) * (1 + fractalMoistureValue)) / MoistureFractalStrech;
+                    float moistureValue = ((heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue)) * MoistureFractalStrech;
 
                     // Determine TileType (Biome)
                     generationData.LandMapTiles[x, y] = getTileType(heightValue, heatValue, moistureValue);
@@ -73,55 +73,7 @@ public partial class BasicLandScapeStep : GenerationStep
 
     public TileType getTileType(float heightValue, float heatValue, float moistureValue)
     {
-        if (moistureValue < 0.25f) // Dry
-        {
-            if (heatValue < 0.3f)
-            {
-                if (heightValue < 0.65f)
-                {
-                    return TileType.Tundra;
-                }
-                else
-                {
-                    return TileType.StoneMountain;
-                }
-            }
-            else if (heatValue < 0.5f)
-            {
-                return TileType.Savanna;
-            }
-            else
-            {
-                return TileType.Desert;
-            }
-        }
-        else if (moistureValue < 0.7f) // Medium
-        {
-            if (heatValue < 0.3f)
-            {
-                if (heightValue < 0.65f)
-                {
-                    return TileType.Tundra;
-                }
-                else
-                {
-                    return TileType.SnowMountain;
-                }
-            }
-            else if (heatValue < 0.5f)
-            {
-                return TileType.Taiga;
-            }
-            else if (heatValue < 0.7f)
-            {
-                return TileType.RegularForest;
-            }
-            else
-            {
-                return TileType.TropicalForest;
-            }
-        }
-        else // Wet
+        if (moistureValue < 0.4f) // Wet
         {
             if (heatValue < 0.3f)
             {
@@ -134,6 +86,40 @@ public partial class BasicLandScapeStep : GenerationStep
             else
             {
                 return TileType.TropicWater;
+            }
+        }
+        else if (moistureValue < 0.7f) // Medium
+        {
+            if (heatValue < 0.3f)
+            {
+                return TileType.Snow;
+            }
+            else if (heatValue < 0.5f)
+            {
+                return TileType.Taiga;
+            }
+            else
+            {
+                return TileType.TropicalForest;
+            }
+        }
+        else // Dry
+        {
+            if (heatValue < 0.3f)
+            {
+                return TileType.Tundra;
+            }
+            else if (heatValue < 0.5f)
+            {
+                return TileType.RegularForest;
+            }
+            else if (heatValue < 0.7f)
+            {
+                return TileType.Savanna;
+            }
+            else
+            {
+                return TileType.Desert;
             }
         }
     }

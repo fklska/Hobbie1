@@ -72,7 +72,7 @@ public enum TileType
     IceWater,
     Swamp,
     TropicWater,
-    SnowMountain,
+    Snow,
     StoneMountain,
     Tundra,
     Taiga,

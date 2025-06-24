@@ -63,7 +63,7 @@ public static partial class GenerationUtils
             TileType.IceWater => new Color("0200ff"),
             TileType.Swamp => new Color("244d22"),
             TileType.TropicWater => new Color("1eeaff"),
-            TileType.SnowMountain => new Color("d8fbff"),
+            TileType.Snow => new Color("d8fbff"),
             TileType.StoneMountain => new Color("63524d"),
             TileType.Tundra => new Color("425d90"),
             TileType.Taiga => new Color("082c0d"),
@@ -79,16 +79,16 @@ public static partial class GenerationUtils
     {
         return tileType switch
         {
-            TileType.IceWater => 1,
-            TileType.Swamp => 6,
-            TileType.TropicWater => 9,
-            TileType.SnowMountain => 4,
-            TileType.StoneMountain => 5,
-            TileType.Tundra => 10,
-            TileType.Taiga => 7,
-            TileType.RegularForest => 2,
-            TileType.TropicalForest => 8,
-            TileType.Savanna => 3,
+            TileType.IceWater => 10,
+            TileType.Swamp => 9,
+            TileType.TropicWater => 8,
+            TileType.Snow => 7,
+            TileType.StoneMountain => 6,
+            TileType.Tundra => 5,
+            TileType.Taiga => 4,
+            TileType.RegularForest => 3,
+            TileType.TropicalForest => 2,
+            TileType.Savanna => 1,
             TileType.Desert => 0,
             _ => throw new NotImplementedException()
         };

@@ -178,11 +178,11 @@ func read_tile(atlas: TileSetAtlasSource, sid: int, tile: Vector2i) -> void:
 	var data := atlas.get_tile_data(tile, 0)
 	var mapping := {'sid': sid, 'tile': tile}
 	var terrain_set := data.terrain_set
-	if terrain_set != 0:
-		push_warning(
-			"The tile at %s has a terrain set of %d. Only terrain set 0 is supported." % [mapping, terrain_set]
-		)
-		return
+	#if terrain_set != 0:
+	#	push_warning(
+	#		"The tile at %s has a terrain set of %d. Only terrain set 0 is supported." % [mapping, terrain_set]
+	#	)
+		#return
 	var terrain := data.terrain
 	if terrain != -1:
 		if terrain in terrains:

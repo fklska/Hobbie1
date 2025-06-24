@@ -26,7 +26,7 @@ public partial class GeneratorV3 : Node2D
         }
 
         preRender(genData);
-        TileMapRender(genData);
+        //TileMapRender(genData);
     }
 
     public int GetAtlasFromTile(TileType tileType)

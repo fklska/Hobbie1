@@ -1,11 +1,10 @@
 [gd_resource type="FastNoiseLite" format=3 uid="uid://cmpa0acnfcnai"]
 
 [resource]
-seed = -1515442125
-frequency = 0.0233
+seed = -1987817383
+fractal_lacunarity = 0.98
 cellular_distance_function = 2
 cellular_return_type = 0
-domain_warp_enabled = true
 domain_warp_type = 1
 domain_warp_amplitude = 12.57
 domain_warp_fractal_type = 2
