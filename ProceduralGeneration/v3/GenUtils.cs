@@ -56,6 +56,27 @@ public static partial class GenerationUtils
         return false;
     }
 
+    public static NoiseData GetNoiseData(FastNoiseLite noise, Vector2I MapSize)
+    {
+        NoiseData noiseData = new NoiseData();
+        noiseData.noiseValues = new float[MapSize.X, MapSize.Y];
+        noiseData.min = 2;
+        noiseData.max = -1;
+
+        for (int x = 0; x < MapSize.X; x++)
+        {
+            for (int y = 0; y < MapSize.Y; y++)
+            {
+                float value = noise.GetNoise2D(x, y);
+                noiseData.noiseValues[x, y] = value;
+
+                if (value < noiseData.min) noiseData.min = value;
+                if (value > noiseData.max) noiseData.max = value;
+            }
+        }
+        return noiseData;
+    }
+
     public static Color getTileTypeColor(TileType tileType)
     {
         return tileType switch

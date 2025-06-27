@@ -1,10 +1,11 @@
-using Godot;
+﻿using Godot;
 using System;
 
 [Tool]
 [GlobalClass]
 public partial class BasicLandScapeStep : GenerationStep
 {
+
     [ExportCategory("HeightMap")]
     [Export] public FastNoiseLite HeightNoise;
 
@@ -29,6 +30,11 @@ public partial class BasicLandScapeStep : GenerationStep
             HeightNoise.Seed = generationData.seed;
             fractalHeatNoise.Seed = generationData.seed;
             fractalMoistureNoise.Seed = generationData.seed;
+
+            NoiseData heightNoiseData = GenerationUtils.GetNoiseData(HeightNoise, generationData.mapSize);
+            NoiseData heatNoiseData = GenerationUtils.GetNoiseData(fractalHeatNoise, generationData.mapSize);
+            NoiseData moistureNoiseData = GenerationUtils.GetNoiseData(fractalMoistureNoise, generationData.mapSize);
+
             LatitudeMask.Height = generationData.mapSize.Y;
             LatitudeMask.Width = generationData.mapSize.X;
 
@@ -38,14 +44,14 @@ public partial class BasicLandScapeStep : GenerationStep
             {
                 for (int y = 0; y < generationData.mapSize.Y; y++)
                 {
-                    float heightValue = (HeightNoise.GetNoise2D(x, y) + 1) / 2;
+                    float heightValue = (heightNoiseData.noiseValues[x,y] - heightNoiseData.min)/(heightNoiseData.max - heightNoiseData.min);
 
-                    float fractalHeatValue = (fractalHeatNoise.GetNoise2D(x, y) + 1) / 2;
-                    float latitudeMultiplier = LatitudeHeatGradient.GetPixel(x, y).R * (1 + fractalHeatValue) * HeatFractalStrech;
+                    float fractalHeatValue = (heatNoiseData.noiseValues[x, y] - heatNoiseData.min) / (heatNoiseData.max - heatNoiseData.min);
+                    float latitudeMultiplier = LatitudeHeatGradient.GetPixel(x, y).R * (1 + fractalHeatValue);
                     float heatValue = latitudeMultiplier * (1 - heightValue * ClimateHeightCurve.Sample(heightValue));
 
-                    float fractalMoistureValue = (fractalMoistureNoise.GetNoise2D(x, y) + 1) / 2;
-                    float moistureValue = ((heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue)) * MoistureFractalStrech;
+                    float fractalMoistureValue = (moistureNoiseData.noiseValues[x, y] - moistureNoiseData.min) / (moistureNoiseData.max - moistureNoiseData.min);
+                    float moistureValue = heightValue * MoistureHeightCurve.Sample(heightValue) * (1 + fractalMoistureValue);
 
                     // Determine TileType (Biome)
                     generationData.LandMapTiles[x, y] = getTileType(heightValue, heatValue, moistureValue);
@@ -94,7 +100,7 @@ public partial class BasicLandScapeStep : GenerationStep
             {
                 return TileType.Snow;
             }
-            else if (heatValue < 0.5f)
+            else if (heatValue < 0.6f)
             {
                 return TileType.Taiga;
             }

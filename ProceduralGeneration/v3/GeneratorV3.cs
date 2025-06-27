@@ -24,7 +24,6 @@ public partial class GeneratorV3 : Node2D
         {
             step.Execute(genData);
         }
-
         preRender(genData);
         //TileMapRender(genData);
     }
@@ -101,5 +100,28 @@ public partial class GeneratorV3 : Node2D
         PackedScene.Pack(rootNode);
 
         ResourceSaver.Save(PackedScene, "res://SavedWorlds/saved_scene.tscn");
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("LeftMouseButton"))
+        {
+            Vector2I coords = MainTileMap.LocalToMap(GetGlobalMousePosition());
+            float heightValue = genData.HeightMapValues[coords.X, coords.Y];
+            float heatValue = genData.HeatMapValues[coords.X, coords.Y];
+            float moistureValue = genData.MoistureMapValues[coords.X, coords.Y];
+            GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\n", [coords, heightValue, heatValue, moistureValue]));
+        }
+
+        if (@event.IsActionPressed("DEBUG"))
+        {
+            GD.Print("WORK");
+            foreach (var step in steps)
+            {
+                step.Execute(genData);
+            }
+            _Ready();
+        }
+
     }
 }

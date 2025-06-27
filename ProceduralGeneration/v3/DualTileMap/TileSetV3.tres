@@ -27,7 +27,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3onn"]
 shader = ExtResource("1_gjeed")
 shader_parameter/replacement_tex = ExtResource("2_lvcum")
-shader_parameter/texture_scale = 0.012
+shader_parameter/texture_scale = 0.002
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6rdcs"]
@@ -144,7 +144,7 @@ texture = ExtResource("3_uu3fy")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6ouee"]
 shader = ExtResource("1_gjeed")
 shader_parameter/replacement_tex = ExtResource("4_kngl1")
-shader_parameter/texture_scale = 0.00694444
+shader_parameter/texture_scale = 0.005
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2jl1y"]
@@ -495,8 +495,8 @@ texture = ExtResource("9_j61j7")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lpqpb"]
 shader = ExtResource("1_gjeed")
 shader_parameter/replacement_tex = ExtResource("10_e3d62")
-shader_parameter/texture_scale = 0.00694444
-shader_parameter/red_threshold = 0.99
+shader_parameter/texture_scale = 0.002
+shader_parameter/red_threshold = 1.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1t88e"]
 texture = ExtResource("11_elnpt")
@@ -612,7 +612,7 @@ texture = ExtResource("11_elnpt")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_usfav"]
 shader = ExtResource("1_gjeed")
 shader_parameter/replacement_tex = ExtResource("12_1xuhq")
-shader_parameter/texture_scale = 0.00694444
+shader_parameter/texture_scale = 0.009
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0rsva"]
@@ -729,7 +729,7 @@ texture = ExtResource("13_w50wq")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0idf4"]
 shader = ExtResource("1_gjeed")
 shader_parameter/replacement_tex = ExtResource("14_2kg71")
-shader_parameter/texture_scale = 0.00694444
+shader_parameter/texture_scale = 0.005
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_06tl1"]

@@ -14,7 +14,7 @@ public partial class GeneratorData : Resource
     public float[,] HeatMapValues;
     public float[,] MoistureMapValues;
 
-    public int seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
+    [Export] public int seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
 
     public Image HeightMap, HeatMap, MoistureMap;
 
@@ -34,9 +34,12 @@ public partial class GeneratorData : Resource
     //Debug
     public Image DebugMoistureFractal;
 
+    [Export] public bool NewSeed;
+
     public void ResetData()
     {
-        seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
+        if (NewSeed)
+        { seed = GenerationUtils.rnd.RandiRange(0, 1 << 31); }
         LandMapTiles = new TileType[mapSize.X, mapSize.Y];
 
         HeightMapValues = new float[mapSize.X, mapSize.Y];
@@ -80,4 +83,11 @@ public enum TileType
     TropicalForest,
     Savanna,
     Desert
+}
+
+public struct NoiseData
+{
+    public float[,] noiseValues;
+    public float min;
+    public float max;
 }

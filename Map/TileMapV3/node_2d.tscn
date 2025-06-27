@@ -373,3 +373,5 @@ tile_set = SubResource("TileSet_k518b")
 script = ExtResource("4_8abl7")
 godot_4_3_compatibility = false
 metadata/_custom_type_script = "uid://cjk8nronimk5r"
+
+[connection signal="property_list_changed" from="." to="." method="_on_property_list_changed"]
