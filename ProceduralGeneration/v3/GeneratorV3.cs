@@ -25,7 +25,13 @@ public partial class GeneratorV3 : Node2D
             step.Execute(genData);
         }
         preRender(genData);
-        //TileMapRender(genData);
+        TileMapRender(genData);
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        GetCell();
     }
 
     public int GetAtlasFromTile(TileType tileType)
@@ -123,5 +129,22 @@ public partial class GeneratorV3 : Node2D
             _Ready();
         }
 
+    }
+
+    [Export] public bool DebugInfo;
+    public Vector2I lastcell = Vector2I.Zero;
+    public void GetCell()
+    {
+        Vector2 mouseCoor = GetGlobalMousePosition();
+        Vector2I cell = new Vector2I((int)mouseCoor.X, (int)mouseCoor.Y);
+        if (cell < genData.mapSize && DebugInfo && lastcell != cell)
+        {
+            lastcell = cell;
+            float height = genData.HeightMapValues[cell.X, cell.Y];
+            float heat = genData.HeatMapValues[cell.X, cell.Y];
+            float moisture = genData.MoistureMapValues[cell.X, cell.Y];
+            TileType tileType = genData.LandMapTiles[cell.X, cell.Y];
+            GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
+        }
     }
 }

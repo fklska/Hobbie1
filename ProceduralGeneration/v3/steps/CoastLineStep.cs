@@ -8,12 +8,12 @@ public partial class CoastLineStep : GenerationStep
 {
     private List<TileType> sand_tilesToSearchFor = new List<TileType>()
     {
-        TileType.RegularForest,
+        TileType.TropicalForest,
     };
 
     private List<TileType> sand_tilesAdjestedTo = new List<TileType>()
     {
-        TileType.Swamp,
+        TileType.TropicWater,
     };
 
     [Export] public Color preRenderColor;

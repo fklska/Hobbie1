@@ -67,6 +67,7 @@ public static partial class GenerationUtils
         {
             for (int y = 0; y < MapSize.Y; y++)
             {
+
                 float value = noise.GetNoise2D(x, y);
                 noiseData.noiseValues[x, y] = value;
 
@@ -86,7 +87,7 @@ public static partial class GenerationUtils
             TileType.TropicWater => new Color("1eeaff"),
             TileType.Snow => new Color("d8fbff"),
             TileType.StoneMountain => new Color("63524d"),
-            TileType.Tundra => new Color("425d90"),
+            TileType.Tundra => new Color("a7a8a8"),
             TileType.Taiga => new Color("082c0d"),
             TileType.RegularForest => new Color("49aa56"),
             TileType.TropicalForest => new Color("59f619"),

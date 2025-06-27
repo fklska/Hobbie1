@@ -1,9 +1,8 @@
 [gd_resource type="FastNoiseLite" format=3 uid="uid://cmpa0acnfcnai"]
 
 [resource]
-seed = -1992320010
-frequency = 0.0095
-fractal_lacunarity = 0.98
+seed = -548029537
+frequency = 0.0061
 cellular_distance_function = 2
 cellular_return_type = 0
 domain_warp_type = 1

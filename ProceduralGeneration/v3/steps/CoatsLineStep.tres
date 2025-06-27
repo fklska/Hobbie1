@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_3yrp0")
 preRenderColor = Color(1, 0.944, 0.105, 1)
-Enabled = false
+Enabled = true
 metadata/_custom_type_script = "uid://db2oq6rdunhsv"

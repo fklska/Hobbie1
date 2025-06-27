@@ -51,7 +51,7 @@ public partial class BasicLandScapeStep : GenerationStep
                     float heatValue = latitudeMultiplier * (1 - heightValue * ClimateHeightCurve.Sample(heightValue));
 
                     float fractalMoistureValue = (moistureNoiseData.noiseValues[x, y] - moistureNoiseData.min) / (moistureNoiseData.max - moistureNoiseData.min);
-                    float moistureValue = heightValue * MoistureHeightCurve.Sample(heightValue) * (1 + fractalMoistureValue);
+                    float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue);
 
                     // Determine TileType (Biome)
                     generationData.LandMapTiles[x, y] = getTileType(heightValue, heatValue, moistureValue);
@@ -79,19 +79,23 @@ public partial class BasicLandScapeStep : GenerationStep
 
     public TileType getTileType(float heightValue, float heatValue, float moistureValue)
     {
-        if (moistureValue < 0.4f) // Wet
+        if (moistureValue < 0.4f) // Dry
         {
             if (heatValue < 0.3f)
             {
-                return TileType.IceWater;
+                return TileType.Tundra;
+            }
+            else if (heatValue < 0.5f)
+            {
+                return TileType.RegularForest;
             }
             else if (heatValue < 0.7f)
             {
-                return TileType.Swamp;
+                return TileType.Savanna;
             }
             else
             {
-                return TileType.TropicWater;
+                return TileType.Desert;
             }
         }
         else if (moistureValue < 0.7f) // Medium
@@ -109,23 +113,19 @@ public partial class BasicLandScapeStep : GenerationStep
                 return TileType.TropicalForest;
             }
         }
-        else // Dry
+        else // Wet
         {
             if (heatValue < 0.3f)
             {
-                return TileType.Tundra;
-            }
-            else if (heatValue < 0.5f)
-            {
-                return TileType.RegularForest;
+                return TileType.IceWater;
             }
             else if (heatValue < 0.7f)
             {
-                return TileType.Savanna;
+                return TileType.Swamp;
             }
             else
             {
-                return TileType.Desert;
+                return TileType.TropicWater;
             }
         }
     }
