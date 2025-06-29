@@ -37,6 +37,34 @@ public static partial class GenerationUtils
         return borderLine;
     }
 
+    public static HashSet<Vector2I> ExpandEdgeTiles(HashSet<Vector2I> initialLayer, int widht, List<TileType> validTiles, GeneratorData genData)
+    {
+        HashSet<Vector2I> LastExpendedTiles = new HashSet<Vector2I>();
+        HashSet<Vector2I> currentOutTileLine = new HashSet<Vector2I>(initialLayer);
+
+        for (int i = 0; i < widht; i++)
+        {
+            foreach (Vector2I tileCoor in currentOutTileLine)
+            {
+                foreach (Vector2I dir in dirs)
+                {
+                    Vector2I nCoords = tileCoor + dir;
+                    if (nCoords.X >= 0 && nCoords.X < genData.LandMapTiles.GetLength(0) && nCoords.Y >= 0 && nCoords.Y < genData.LandMapTiles.GetLength(1))
+                    {
+                        if (validTiles.Contains(genData.LandMapTiles[nCoords.X, nCoords.Y]))
+                        {
+                            initialLayer.Add(nCoords);
+                            LastExpendedTiles.Add(nCoords);
+                        }
+                    }
+                }
+            }
+            currentOutTileLine = LastExpendedTiles;
+            LastExpendedTiles = new HashSet<Vector2I>();
+        }
+        return initialLayer;
+    }
+
     public static bool IsAdjacentToTiles(int x, int y, List<TileType> tileTypes, TileType[,] LandmapTiles)
     {
         foreach (Vector2I direction in dirs)

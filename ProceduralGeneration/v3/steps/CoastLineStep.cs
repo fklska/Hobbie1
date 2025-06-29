@@ -4,8 +4,11 @@ using System.Collections.Generic;
 
 [GlobalClass]
 [Tool]
+
 public partial class CoastLineStep : GenerationStep
 {
+    [Export] public int CoastLineSize;
+
     private List<TileType> sand_tilesToSearchFor = new List<TileType>()
     {
         TileType.TropicalForest,
@@ -16,6 +19,15 @@ public partial class CoastLineStep : GenerationStep
         TileType.TropicWater,
     };
 
+    private List<TileType> ValidTilesToExpand = new List<TileType>()
+    {
+        TileType.TropicWater,
+        TileType.TropicalForest,
+        TileType.Taiga,
+        TileType.Savanna,
+        TileType.Swamp,
+    };
+
     [Export] public Color preRenderColor;
     public override void Execute(GeneratorData genData)
     {
@@ -23,7 +35,9 @@ public partial class CoastLineStep : GenerationStep
         {
             HashSet<Vector2I> coastLine = GenerationUtils.GetEdgeTiles(sand_tilesToSearchFor, sand_tilesAdjestedTo, genData);
 
-            foreach (Vector2I sand_coord in coastLine)
+            HashSet<Vector2I> sandTiles = GenerationUtils.ExpandEdgeTiles(coastLine, CoastLineSize, ValidTilesToExpand, genData);
+
+            foreach (Vector2I sand_coord in sandTiles)
             {
                 genData.LandMapTiles[sand_coord.X, sand_coord.Y] = TileType.Desert;
             }

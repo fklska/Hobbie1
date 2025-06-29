@@ -79,17 +79,17 @@ public partial class BasicLandScapeStep : GenerationStep
 
     public TileType getTileType(float heightValue, float heatValue, float moistureValue)
     {
-        if (moistureValue < 0.4f) // Dry
+        if (moistureValue < 0.35f) // Dry
         {
             if (heatValue < 0.3f)
             {
                 return TileType.Tundra;
             }
-            else if (heatValue < 0.5f)
+            else if (heatValue < 0.45f)
             {
                 return TileType.RegularForest;
             }
-            else if (heatValue < 0.7f)
+            else if (heatValue < 0.55f)
             {
                 return TileType.Savanna;
             }
