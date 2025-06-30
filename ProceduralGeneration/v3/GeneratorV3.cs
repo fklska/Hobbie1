@@ -11,6 +11,8 @@ public partial class GeneratorV3 : Node2D
     [Export] public Godot.Collections.Array<GenerationStep> steps;
     [Export] public TileMapLayer MainTileMap;
 
+    [Export] public Node2D ResorseNode; 
+
     [Export] public TextureRect FinalMap;
     [Export] public TextureRect HeightMap, HeatMap, MoistureMap;
     [Export] public TextureRect DebugLatitudeMask, DebugHeatFractal, DebugLatFractalMask;
@@ -65,7 +67,7 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(genData.LandMapTiles[x, y]));
+                finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(genData.Map[x, y].Type));
             }
         }
         FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);
@@ -78,7 +80,16 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                MainTileMap.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.LandMapTiles[x, y]), new Vector2I(2, 1), 0);
+                MainTileMap.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x, y].Type), new Vector2I(2, 1), 0);
+
+                ResorseType currType = genData.Map[x, y].Resourse;
+                if (currType != ResorseType.None)
+                {
+                    Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x, y].Resourse).Instantiate();
+                    prefab.Position = new Vector2I(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE);
+                    ResorseNode.AddChild(prefab);
+                    
+                }
             }
         }
     }

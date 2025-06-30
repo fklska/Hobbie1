@@ -39,7 +39,7 @@ public partial class CoastLineStep : GenerationStep
 
             foreach (Vector2I sand_coord in sandTiles)
             {
-                genData.LandMapTiles[sand_coord.X, sand_coord.Y] = TileType.Desert;
+                genData.Map[sand_coord.X, sand_coord.Y].Type = TileType.Desert;
             }
         }
     }

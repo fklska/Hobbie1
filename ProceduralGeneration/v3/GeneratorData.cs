@@ -10,6 +10,7 @@ public partial class GeneratorData : Resource
     [Export] public Vector2I mapSize;
     public TileType[,] LandMapTiles;
 
+    public Tile[,] Map;
     public float[,] HeightMapValues;
     public float[,] HeatMapValues;
     public float[,] MoistureMapValues;
@@ -41,6 +42,7 @@ public partial class GeneratorData : Resource
         if (NewSeed)
         { seed = GenerationUtils.rnd.RandiRange(0, 1 << 31); }
         LandMapTiles = new TileType[mapSize.X, mapSize.Y];
+        Map = new Tile[mapSize.X, mapSize.Y];
 
         HeightMapValues = new float[mapSize.X, mapSize.Y];
         HeatMapValues = new float[mapSize.X, mapSize.Y];
@@ -83,6 +85,12 @@ public enum TileType
     TropicalForest,
     Savanna,
     Desert
+}
+
+public enum ResorseType
+{
+    None,
+    Wood
 }
 
 public struct NoiseData

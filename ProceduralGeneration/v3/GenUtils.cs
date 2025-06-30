@@ -18,6 +18,7 @@ public static partial class GenerationUtils
 
     };
 
+    public const int TILE_SIZE = 16;
 
     public static HashSet<Vector2I> GetEdgeTiles(List<TileType> typesToSearchFor, List<TileType> typesAdjestedTo, GeneratorData genData)
     {
@@ -140,6 +141,15 @@ public static partial class GenerationUtils
             TileType.TropicalForest => 2,
             TileType.Savanna => 1,
             TileType.Desert => 0,
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    public static PackedScene getResorsePrefabByType(ResorseType type)
+    {
+        return type switch
+        {
+            ResorseType.Wood => GD.Load<PackedScene>("res://Resourses/Prefabs/wood.tscn"),
             _ => throw new NotImplementedException()
         };
     }

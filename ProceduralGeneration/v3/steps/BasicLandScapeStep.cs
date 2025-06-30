@@ -55,12 +55,13 @@ public partial class BasicLandScapeStep : GenerationStep
 
                     // Determine TileType (Biome)
                     generationData.LandMapTiles[x, y] = getTileType(heightValue, heatValue, moistureValue);
-
+                  
                     // Store Data
                     generationData.HeightMapValues[x, y] = heightValue;
                     generationData.HeatMapValues[x, y] = heatValue;
                     generationData.MoistureMapValues[x, y] = moistureValue;
 
+                    generationData.Map[x, y] = new Tile(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
                     // Render DELETE AFTER PROMO
                     generationData.HeightMap.SetPixel(x, y, generationData.HeightGrad.Sample(heightValue));
                     generationData.HeatMap.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(heatValue));
