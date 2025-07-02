@@ -147,14 +147,14 @@ public partial class GeneratorV3 : Node2D
     public void GetCell()
     {
         Vector2 mouseCoor = GetGlobalMousePosition();
-        Vector2I cell = new Vector2I((int)mouseCoor.X, (int)mouseCoor.Y);
-        if (cell < genData.mapSize && DebugInfo && lastcell != cell)
+        Vector2I cell = MainTileMap.LocalToMap(mouseCoor);
+        if (cell.X < genData.mapSize.X && cell.Y < genData.mapSize.Y && DebugInfo && cell != lastcell)
         {
             lastcell = cell;
-            float height = genData.HeightMapValues[cell.X, cell.Y];
-            float heat = genData.HeatMapValues[cell.X, cell.Y];
-            float moisture = genData.MoistureMapValues[cell.X, cell.Y];
-            TileType tileType = genData.LandMapTiles[cell.X, cell.Y];
+            float height = genData.Map[cell.X, cell.Y].heightValue;
+            float heat = genData.Map[cell.X, cell.Y].heatValue;
+            float moisture = genData.Map[cell.X, cell.Y].moistureValue;
+            TileType tileType = genData.Map[cell.X, cell.Y].Type;
             GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
         }
     }

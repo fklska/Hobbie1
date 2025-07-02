@@ -8,8 +8,9 @@ using System.Linq;
 public partial class EnviromnetGenerationStep : GenerationStep
 {
     [Export] public FastNoiseLite TreeNoise;
+    [Export] public FastNoiseLite OreNoise;
 
-    public HashSet<TileType> validTileTypes = new HashSet<TileType>()
+    public HashSet<TileType> TreeValidTileTypes = new HashSet<TileType>()
     {
         TileType.TropicalForest,
         TileType.Swamp,
@@ -17,10 +18,21 @@ public partial class EnviromnetGenerationStep : GenerationStep
         TileType.RegularForest,
         TileType.Taiga,
     };
+    public HashSet<TileType> OreValidTileTypes = new HashSet<TileType>()
+    {
+        TileType.Desert,
+        TileType.Savanna,
+        TileType.Tundra,
+        TileType.Snow,
+        TileType.Taiga,
+    };
     public override void Execute(GeneratorData genData)
     {
-        NoiseData TreeNoiseData = GenerationUtils.GetNoiseData(TreeNoise, genData.mapSize);
+        TreeNoise.Seed = genData.seed;
+        OreNoise.Seed = genData.seed;
 
+        NoiseData TreeNoiseData = GenerationUtils.GetNoiseData(TreeNoise, genData.mapSize);
+        NoiseData OreNoiseData = GenerationUtils.GetNoiseData(OreNoise, genData.mapSize);
 
         for (int x = 0; x < genData.mapSize.X; x++)
         {
@@ -28,13 +40,41 @@ public partial class EnviromnetGenerationStep : GenerationStep
             {
                 float treeNoiseValue = (TreeNoiseData.noiseValues[x, y] - TreeNoiseData.min) / (TreeNoiseData.max - TreeNoiseData.min);
 
-                float value = treeNoiseValue;
+                float oreNoiseValue = (OreNoiseData.noiseValues[x, y] - OreNoiseData.min) / (OreNoiseData.max - OreNoiseData.min);
 
-                if (value > 0.95f && validTileTypes.Contains(genData.Map[x, y].Type))
+                if (treeNoiseValue > 0.9f && TreeValidTileTypes.Contains(genData.Map[x, y].Type))
                 {
                     genData.Map[x, y].Resourse = ResorseType.Wood;
                 }
+
+                if(OreValidTileTypes.Contains(genData.Map[x, y].Type))
+                {
+                    if(genData.Map[x, y].Resourse == ResorseType.None)
+                    {
+                        genData.Map[x, y].Resourse = GetOreResType(oreNoiseValue);
+                    }
+                }
             }
         }
+    }
+
+
+    public ResorseType GetOreResType(float value)
+    {
+        if (value < 0.1f)
+        {
+            return ResorseType.Gold;
+        }
+
+        if (value > 0.2f && value < 0.25f)
+        {
+            return ResorseType.Iron;
+        }
+
+        if (value > 0.63f && value < 0.7f)
+        {
+            return ResorseType.Stone;
+        }
+        return ResorseType.None;
     }
 }

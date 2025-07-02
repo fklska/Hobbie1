@@ -150,6 +150,9 @@ public static partial class GenerationUtils
         return type switch
         {
             ResorseType.Wood => GD.Load<PackedScene>("res://Resourses/Prefabs/wood.tscn"),
+            ResorseType.Gold => GD.Load<PackedScene>("res://Resourses/Prefabs/gold.tscn"),
+            ResorseType.Iron => GD.Load<PackedScene>("res://Resourses/Prefabs/iron.tscn"),
+            ResorseType.Stone => GD.Load<PackedScene>("res://Resourses/Prefabs/rock.tscn"),
             _ => throw new NotImplementedException()
         };
     }

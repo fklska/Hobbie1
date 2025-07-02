@@ -6,8 +6,8 @@ colors = PackedColorArray(0, 0, 1, 1, 0.25098, 0, 1, 1, 0.501961, 0.8, 0.290196,
 
 [resource]
 gradient = SubResource("Gradient_w4fk7")
-width = 32
-height = 32
+width = 128
+height = 128
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 metadata/_snap_enabled = true

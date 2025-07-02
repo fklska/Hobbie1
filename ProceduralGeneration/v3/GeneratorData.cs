@@ -90,7 +90,10 @@ public enum TileType
 public enum ResorseType
 {
     None,
-    Wood
+    Wood,
+    Stone,
+    Iron,
+    Gold
 }
 
 public struct NoiseData
