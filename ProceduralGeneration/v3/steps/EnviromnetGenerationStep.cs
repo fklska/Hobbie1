@@ -28,30 +28,33 @@ public partial class EnviromnetGenerationStep : GenerationStep
     };
     public override void Execute(GeneratorData genData)
     {
-        TreeNoise.Seed = genData.seed;
-        OreNoise.Seed = genData.seed;
-
-        NoiseData TreeNoiseData = GenerationUtils.GetNoiseData(TreeNoise, genData.mapSize);
-        NoiseData OreNoiseData = GenerationUtils.GetNoiseData(OreNoise, genData.mapSize);
-
-        for (int x = 0; x < genData.mapSize.X; x++)
+        if (Enabled)
         {
-            for (int y = 0; y < genData.mapSize.Y; y++)
+            TreeNoise.Seed = genData.seed;
+            OreNoise.Seed = genData.seed;
+
+            NoiseData TreeNoiseData = GenerationUtils.GetNoiseData(TreeNoise, genData.mapSize);
+            NoiseData OreNoiseData = GenerationUtils.GetNoiseData(OreNoise, genData.mapSize);
+
+            for (int x = 0; x < genData.mapSize.X; x++)
             {
-                float treeNoiseValue = (TreeNoiseData.noiseValues[x, y] - TreeNoiseData.min) / (TreeNoiseData.max - TreeNoiseData.min);
-
-                float oreNoiseValue = (OreNoiseData.noiseValues[x, y] - OreNoiseData.min) / (OreNoiseData.max - OreNoiseData.min);
-
-                if (treeNoiseValue > 0.9f && TreeValidTileTypes.Contains(genData.Map[x, y].Type))
+                for (int y = 0; y < genData.mapSize.Y; y++)
                 {
-                    genData.Map[x, y].Resourse = ResorseType.Wood;
-                }
+                    float treeNoiseValue = (TreeNoiseData.noiseValues[x, y] - TreeNoiseData.min) / (TreeNoiseData.max - TreeNoiseData.min);
 
-                if(OreValidTileTypes.Contains(genData.Map[x, y].Type))
-                {
-                    if(genData.Map[x, y].Resourse == ResorseType.None)
+                    float oreNoiseValue = (OreNoiseData.noiseValues[x, y] - OreNoiseData.min) / (OreNoiseData.max - OreNoiseData.min);
+
+                    if (treeNoiseValue > 0.9f && TreeValidTileTypes.Contains(genData.Map[x, y].Type))
                     {
-                        genData.Map[x, y].Resourse = GetOreResType(oreNoiseValue);
+                        genData.Map[x, y].Resourse = ResorseType.Wood;
+                    }
+
+                    if (OreValidTileTypes.Contains(genData.Map[x, y].Type))
+                    {
+                        if (genData.Map[x, y].Resourse == ResorseType.None)
+                        {
+                            genData.Map[x, y].Resourse = GetOreResType(oreNoiseValue);
+                        }
                     }
                 }
             }

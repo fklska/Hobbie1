@@ -8,7 +8,7 @@
 [ext_resource type="Curve" uid="uid://dngglx42eqlqe" path="res://ProceduralGeneration/v3/steps/LandscapeParams/MoistureCurve.tres" id="4_4b60i"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_2bpgj"]
-seed = -1299679416
+seed = -15876779
 frequency = 0.009
 
 [resource]

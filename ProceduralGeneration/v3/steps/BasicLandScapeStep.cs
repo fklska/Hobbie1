@@ -52,16 +52,10 @@ public partial class BasicLandScapeStep : GenerationStep
 
                     float fractalMoistureValue = (moistureNoiseData.noiseValues[x, y] - moistureNoiseData.min) / (moistureNoiseData.max - moistureNoiseData.min);
                     float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue);
-
-                    // Determine TileType (Biome)
-                    generationData.LandMapTiles[x, y] = getTileType(heightValue, heatValue, moistureValue);
                   
                     // Store Data
-                    generationData.HeightMapValues[x, y] = heightValue;
-                    generationData.HeatMapValues[x, y] = heatValue;
-                    generationData.MoistureMapValues[x, y] = moistureValue;
-
                     generationData.Map[x, y] = new Tile(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
+
                     // Render DELETE AFTER PROMO
                     generationData.HeightMap.SetPixel(x, y, generationData.HeightGrad.Sample(heightValue));
                     generationData.HeatMap.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(heatValue));

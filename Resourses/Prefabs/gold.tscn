@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddox3crpcxdgn"]
+[gd_scene load_steps=7 format=3 uid="uid://ddox3crpcxdgn"]
 
 [ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_eqmbd"]
-[ext_resource type="Texture2D" uid="uid://k8v3t7pxhf4u" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_12.png" id="1_patfn"]
 [ext_resource type="Script" uid="uid://bew6xth3viobv" path="res://Resourses/Scripts/gold.gd" id="2_wk81d"]
+[ext_resource type="Texture2D" uid="uid://ck06hs5hgdnc5" path="res://Resourses/AssetsV1/16_Ресурс 2.png" id="3_h4j3w"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_vfsp8"]
+[ext_resource type="Texture2D" uid="uid://dyhaei55r6f4o" path="res://Resourses/AssetsV1/Gold.png" id="4_pr2w7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cyheb"]
 resource_local_to_scene = true
@@ -19,6 +20,14 @@ shader_parameter/enable = false
 script = ExtResource("2_wk81d")
 type = 3
 
-[node name="Texture" parent="." index="0"]
+[node name="TextureRect" type="TextureRect" parent="." index="0"]
+offset_left = -8.0
+offset_top = -7.0
+offset_right = 8.0
+offset_bottom = 9.0
+texture = ExtResource("3_h4j3w")
+
+[node name="Texture" parent="." index="1"]
+visible = false
 material = SubResource("ShaderMaterial_cyheb")
-texture = ExtResource("1_patfn")
+texture = ExtResource("4_pr2w7")

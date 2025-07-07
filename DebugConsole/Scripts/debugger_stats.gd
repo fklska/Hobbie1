@@ -8,7 +8,7 @@ func _ready():
 
 func _on_timer_timeout():
 	var fps = Performance.get_monitor(Performance.TIME_FPS)
-	var memory = Performance.get_monitor(Performance.MEMORY_STATIC)
+	var memory = Performance.get_monitor(Performance.MEMORY_STATIC / (1024))
 	var nav = Performance.get_monitor(Performance.TIME_NAVIGATION_PROCESS)
 	var ping = Performance.get_monitor(Performance.TIME_PROCESS)
 	

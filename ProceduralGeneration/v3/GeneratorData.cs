@@ -8,12 +8,8 @@ using System.Collections.Generic;
 public partial class GeneratorData : Resource
 {
     [Export] public Vector2I mapSize;
-    public TileType[,] LandMapTiles;
 
     public Tile[,] Map;
-    public float[,] HeightMapValues;
-    public float[,] HeatMapValues;
-    public float[,] MoistureMapValues;
 
     [Export] public int seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
 
@@ -41,12 +37,8 @@ public partial class GeneratorData : Resource
     {
         if (NewSeed)
         { seed = GenerationUtils.rnd.RandiRange(0, 1 << 31); }
-        LandMapTiles = new TileType[mapSize.X, mapSize.Y];
-        Map = new Tile[mapSize.X, mapSize.Y];
 
-        HeightMapValues = new float[mapSize.X, mapSize.Y];
-        HeatMapValues = new float[mapSize.X, mapSize.Y];
-        MoistureMapValues = new float[mapSize.X, mapSize.Y];
+        Map = new Tile[mapSize.X, mapSize.Y];
 
         HeightMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
         HeatMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
@@ -65,7 +57,7 @@ public partial class GeneratorData : Resource
         {
             for (int y = 0; y < mapSize.Y; y++)
             {
-                LandMapTiles[x, y] = TileType.None;
+                
             }
         }
     }

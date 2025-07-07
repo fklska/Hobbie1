@@ -1,15 +1,17 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
 [Tool]
+[GlobalClass]
 public partial class GeneratorV3 : Node2D
 {
     [Export] public GeneratorData genData;
     [Export] public Godot.Collections.Array<GenerationStep> steps;
-    [Export] public TileMapLayer MainTileMap;
+    [Export] public TileMapLayer MainTileMapPrefab;
 
     [Export] public Node2D ResorseNode; 
 
@@ -20,34 +22,40 @@ public partial class GeneratorV3 : Node2D
 
     public override void _Ready()
     {
-        base._Ready();
-        genData.ResetData();
-        foreach (var step in steps)
-        {
-            step.Execute(genData);
-        }
-        preRender(genData);
-        TileMapRender(genData);
+        //ClearTileMapTemlate();
     }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
-        GetCell();
+        //GetCell();
     }
 
-    public int GetAtlasFromTile(TileType tileType)
+    public void Generate()
     {
-        return tileType switch
+        Stopwatch generation = Stopwatch.StartNew();
+        Stopwatch resetData = Stopwatch.StartNew();
+        Stopwatch ExecuteStep = Stopwatch.StartNew();
+
+        genData.ResetData();
+        resetData.Stop();
+        GD.Print($"GEN data Reseted in {resetData}");
+
+        foreach (var step in steps)
         {
-            TileType.None => 15,
-            _ => throw new NotImplementedException()
-        };
+            step.Execute(genData);
+        }
+        ExecuteStep.Stop();
+        GD.Print($"Every Step Executed in {ExecuteStep}");
+
+        GenerateScene(genData);
+        generation.Stop();
+        GD.Print($"Generated in {generation}");
     }
 
-    public void ClearTileMapTemlate()
+    public void ClearTileMapTemlate(TileMapLayer map)
     {
-        MainTileMap.Clear();
+        map.Clear();
     }
 
     public void preRender(GeneratorData genData)
@@ -73,22 +81,23 @@ public partial class GeneratorV3 : Node2D
         FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);
     }
 
-    public void TileMapRender(GeneratorData genData)
+    public void MapRender(GeneratorData genData, TileMapLayer map, Node2D ResourseRootNode, Node2D owner)
     {
-        ClearTileMapTemlate();
+        ClearTileMapTemlate(map);
+
         for (int x = 0; x < genData.mapSize.X; x++)
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                MainTileMap.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x, y].Type), new Vector2I(2, 1), 0);
+                map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x, y].Type), new Vector2I(2, 1), 0);
 
                 ResorseType currType = genData.Map[x, y].Resourse;
                 if (currType != ResorseType.None)
                 {
                     Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x, y].Resourse).Instantiate();
                     prefab.Position = new Vector2I(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE);
-                    ResorseNode.AddChild(prefab);
-                    
+                    ResourseRootNode.AddChild(prefab);
+                    prefab.Owner = owner;
                 }
             }
         }
@@ -96,37 +105,27 @@ public partial class GeneratorV3 : Node2D
 
     public void GenerateScene(GeneratorData genData)
     {
-        ClearTileMapTemlate();
-
         var PackedScene = new PackedScene();
-        Node2D rootNode = new Node2D();
+        Node2D Map = GenerationUtils.SetNode2d("Map");
+        Node2D Enviroment = GenerationUtils.SetNode2d("Enviroment", Map);
+        TileMapLayer MainMap = (TileMapLayer)GenerationUtils.SetNode2d("DualMap", MainTileMapPrefab, Map);
 
-        for (int x = 0; x < genData.mapSize.X; x++)
-        {
-            for (int y = 0; y < genData.mapSize.Y; y++)
-            {
-                MainTileMap.SetCell(new Vector2I(x, y), GetAtlasFromTile(genData.LandMapTiles[x, y]), new Vector2I(2, 1), 0);
-            }
-        }
+        MapRender(genData, MainMap, Enviroment, Map);
 
-        TileMapLayer grassMap = (TileMapLayer)MainTileMap.Duplicate();
-
-        rootNode.AddChild(grassMap);
-        grassMap.Owner = rootNode;
-
-        PackedScene.Pack(rootNode);
+        PackedScene.Pack(Map);
 
         ResourceSaver.Save(PackedScene, "res://SavedWorlds/saved_scene.tscn");
     }
 
     public override void _Input(InputEvent @event)
     {
+        /*
         if (@event.IsActionPressed("LeftMouseButton"))
         {
-            Vector2I coords = MainTileMap.LocalToMap(GetGlobalMousePosition());
-            float heightValue = genData.HeightMapValues[coords.X, coords.Y];
-            float heatValue = genData.HeatMapValues[coords.X, coords.Y];
-            float moistureValue = genData.MoistureMapValues[coords.X, coords.Y];
+            Vector2I coords = MainTileMapPrefab.LocalToMap(GetGlobalMousePosition());
+            float heightValue = genData.Map[coords.X, coords.Y].heightValue;
+            float heatValue = genData.Map[coords.X, coords.Y].heatValue;
+            float moistureValue = genData.Map[coords.X, coords.Y].moistureValue;
             GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\n", [coords, heightValue, heatValue, moistureValue]));
         }
 
@@ -139,6 +138,7 @@ public partial class GeneratorV3 : Node2D
             }
             _Ready();
         }
+        */
 
     }
 
@@ -147,7 +147,7 @@ public partial class GeneratorV3 : Node2D
     public void GetCell()
     {
         Vector2 mouseCoor = GetGlobalMousePosition();
-        Vector2I cell = MainTileMap.LocalToMap(mouseCoor);
+        Vector2I cell = MainTileMapPrefab.LocalToMap(mouseCoor);
         if (cell.X < genData.mapSize.X && cell.Y < genData.mapSize.Y && DebugInfo && cell != lastcell)
         {
             lastcell = cell;

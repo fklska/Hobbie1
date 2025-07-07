@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static partial class GenerationUtils
 {
@@ -28,7 +29,7 @@ public static partial class GenerationUtils
         {
             for (int y = 0;y < genData.mapSize.Y; y++)
             {
-                if (typesToSearchFor.Contains(genData.LandMapTiles[x, y]) && IsAdjacentToTiles(x, y, typesAdjestedTo, genData.LandMapTiles))
+                if (typesToSearchFor.Contains(genData.Map[x, y].Type) && IsAdjacentToTiles(x, y, typesAdjestedTo, genData.Map))
                 {
                     borderLine.Add(new Vector2I(x, y));
                 }
@@ -50,9 +51,9 @@ public static partial class GenerationUtils
                 foreach (Vector2I dir in dirs)
                 {
                     Vector2I nCoords = tileCoor + dir;
-                    if (nCoords.X >= 0 && nCoords.X < genData.LandMapTiles.GetLength(0) && nCoords.Y >= 0 && nCoords.Y < genData.LandMapTiles.GetLength(1))
+                    if (nCoords.X >= 0 && nCoords.X < genData.mapSize.X && nCoords.Y >= 0 && nCoords.Y < genData.mapSize.Y)
                     {
-                        if (validTiles.Contains(genData.LandMapTiles[nCoords.X, nCoords.Y]))
+                        if (validTiles.Contains(genData.Map[nCoords.X, nCoords.Y].Type))
                         {
                             initialLayer.Add(nCoords);
                             LastExpendedTiles.Add(nCoords);
@@ -66,16 +67,16 @@ public static partial class GenerationUtils
         return initialLayer;
     }
 
-    public static bool IsAdjacentToTiles(int x, int y, List<TileType> tileTypes, TileType[,] LandmapTiles)
+    public static bool IsAdjacentToTiles(int x, int y, List<TileType> tileTypes, Tile[,] Map)
     {
         foreach (Vector2I direction in dirs)
         {
             int nx = x + direction.X;
             int ny = y + direction.Y;
 
-            if (nx >= 0 && nx < LandmapTiles.GetLength(0) && ny >= 0 && ny < LandmapTiles.GetLength(1))
+            if (nx >= 0 && nx < Map.GetLength(0) && ny >= 0 && ny < Map.GetLength(1))
             {
-                if (tileTypes.Contains(LandmapTiles[nx, ny]))
+                if (tileTypes.Contains(Map[nx, ny].Type))
                 {
                     return true;
                 }
@@ -156,6 +157,34 @@ public static partial class GenerationUtils
             _ => throw new NotImplementedException()
         };
     }
+
+    public static Node2D SetNode2d(string Title)
+    {
+        Node2D node = new Node2D();
+        node.Name = Title;
+        return node;
+    }
+
+    public static Node2D SetNode2d(string Title, Node2D owner)
+    {
+        Node2D node = new Node2D();
+        node.Name = Title;
+        owner.AddChild(node);
+        node.Owner = owner;
+
+        return node;
+    }
+
+    public static Node2D SetNode2d(string Title, Node2D duplicate, Node2D owner)
+    {
+        Node2D node = (Node2D)duplicate.Duplicate();
+        node.Name = Title;
+        owner.AddChild(node);
+        node.Owner = owner;
+
+        return node;
+    }
+
 
     public static void Print2DArray<T>(T[,] array)
     {

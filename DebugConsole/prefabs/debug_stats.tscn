@@ -4,10 +4,9 @@
 
 [node name="Stats" type="PanelContainer"]
 anchors_preset = -1
-anchor_right = 0.0347222
-anchor_bottom = 0.0617284
-offset_right = -8.0
-offset_bottom = -8.0
+anchor_right = 0.0277778
+anchor_bottom = 0.0493827
+offset_right = -2.28882e-05
 script = ExtResource("1_b4dal")
 metadata/_edit_use_anchors_ = true
 

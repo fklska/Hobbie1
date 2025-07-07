@@ -2,11 +2,11 @@
 
 [sub_resource type="Gradient" id="Gradient_msx0d"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.372137)
+offsets = PackedFloat32Array(0, 0.75)
 colors = PackedColorArray(6.077, 6.077, 6.077, 1, 0.0627451, 0.0627451, 0.0627451, 0.976471)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kl3b6"]
-offset = Vector3(-6858.47, 0, 0)
+offset = Vector3(-6946.79, 0, 0)
 
 [resource]
 color_ramp = SubResource("Gradient_msx0d")

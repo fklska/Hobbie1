@@ -1,11 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c1ydwhq2c74sr"]
+[gd_scene load_steps=7 format=3 uid="uid://c1ydwhq2c74sr"]
 
 [ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_d46uf"]
-[ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="1_tvyi4"]
 [ext_resource type="Shader" uid="uid://c3o7mr7g415ti" path="res://Resourses/Prefabs/woodWave.gdshader" id="2_1gxm3"]
 [ext_resource type="Script" uid="uid://dbt27wd6j64v7" path="res://Resourses/Scripts/wood.gd" id="2_njwln"]
-[ext_resource type="Texture2D" uid="uid://csg1kil6b23fl" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04_n.png" id="5_1gxm3"]
-[ext_resource type="Texture2D" uid="uid://78jvtpydktvq" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04_s.png" id="6_pmpga"]
+[ext_resource type="Texture2D" uid="uid://bae4ea1lulb2h" path="res://Resourses/AssetsV1/Wood_01.png" id="4_jsjd5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wetxv"]
 resource_local_to_scene = true
@@ -22,12 +20,6 @@ shader_parameter/inside = false
 shader_parameter/add_margins = false
 shader_parameter/enable = false
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_pmpga"]
-diffuse_texture = ExtResource("1_tvyi4")
-normal_texture = ExtResource("5_1gxm3")
-specular_texture = ExtResource("6_pmpga")
-texture_filter = 1
-
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1gxm3"]
 polygon = PackedVector2Array(-1.2, -28.5, -5, -27.1, -5, -24.6, -17, 7.5, -17, 15.2, -6.3, 27, 6.5, 27, 14.5, 16, 17.7, 16, 12, -12, 12, -14.2)
 
@@ -37,7 +29,7 @@ type = 2
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_wetxv")
-texture = SubResource("CanvasTexture_pmpga")
+texture = ExtResource("4_jsjd5")
 
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, 9)

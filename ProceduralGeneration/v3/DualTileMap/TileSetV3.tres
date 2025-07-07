@@ -27,7 +27,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3onn"]
 shader = ExtResource("1_gjeed")
 shader_parameter/replacement_tex = ExtResource("2_lvcum")
-shader_parameter/texture_scale = 0.002
+shader_parameter/texture_scale = 0.007
 shader_parameter/red_threshold = 0.99
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6rdcs"]
