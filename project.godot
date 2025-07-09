@@ -21,6 +21,7 @@ BuildMode="*res://BuildSystem/build_mode.tscn"
 MouseInfoPanel="*res://UI/prefabs/mouseInfoPanel.tscn"
 GlobalNavigation="*res://Navigation/navigation.tscn"
 GENERATOR="*res://ProceduralGeneration/v3/generator_v_3.tscn"
+Settings="*res://Globals/GlobalSettings.cs"
 
 [display]
 

@@ -13,7 +13,7 @@ public partial class GeneratorData : Resource
 
     [Export] public int seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
 
-    public Image HeightMap, HeatMap, MoistureMap;
+    public Image HeightMap, HeatMap, MoistureMap, BiomeMap;
 
     [ExportCategory("HeightMap")]
     [Export] public Gradient HeightGrad;
@@ -33,13 +33,15 @@ public partial class GeneratorData : Resource
 
     [Export] public bool NewSeed;
 
+
+
     public void ResetData()
     {
-        if (NewSeed)
-        { seed = GenerationUtils.rnd.RandiRange(0, 1 << 31); }
+        GenerateNewSeed();
 
         Map = new Tile[mapSize.X, mapSize.Y];
 
+        BiomeMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
         HeightMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
         HeatMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
         MoistureMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
@@ -49,6 +51,14 @@ public partial class GeneratorData : Resource
         DebugLatFractal = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
 
         DebugMoistureFractal = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
+    }
+
+    public void GenerateNewSeed()
+    {
+        if (NewSeed)
+        {
+            seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
+        }
     }
 
     public void DefaultFill()

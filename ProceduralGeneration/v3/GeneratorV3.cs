@@ -20,9 +20,12 @@ public partial class GeneratorV3 : Node2D
     [Export] public TextureRect DebugLatitudeMask, DebugHeatFractal, DebugLatFractalMask;
     [Export] public TextureRect DebugMoistureFractal;
 
+    private GlobalSettings settings;
+
     public override void _Ready()
     {
         //ClearTileMapTemlate();
+        settings = (GlobalSettings)GetTree().Root.GetNode("Settings");
     }
 
     public override void _Process(double delta)
@@ -31,24 +34,31 @@ public partial class GeneratorV3 : Node2D
         //GetCell();
     }
 
-    public void Generate()
+    public void Generate(ProgressBar progress)
     {
         Stopwatch generation = Stopwatch.StartNew();
         Stopwatch resetData = Stopwatch.StartNew();
         Stopwatch ExecuteStep = Stopwatch.StartNew();
 
+        progress.MaxValue = 2 + steps.Count;
+
         genData.ResetData();
+        progress.Value++;
         resetData.Stop();
         GD.Print($"GEN data Reseted in {resetData}");
 
         foreach (var step in steps)
         {
             step.Execute(genData);
+            progress.Value++;
         }
+        progress.QueueRedraw();
+
         ExecuteStep.Stop();
         GD.Print($"Every Step Executed in {ExecuteStep}");
 
         GenerateScene(genData);
+        progress.Value++;
         generation.Stop();
         GD.Print($"Generated in {generation}");
     }
@@ -157,5 +167,20 @@ public partial class GeneratorV3 : Node2D
             TileType tileType = genData.Map[cell.X, cell.Y].Type;
             GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
         }
+    }
+
+    public void UpdateSeedRule()
+    {
+        genData.NewSeed = settings.NewSeed;
+    }
+
+    public void UpdateMapSize()
+    {
+        genData.mapSize = settings.MapSize;
+    }
+
+    public void UpdateSeedLabel(Label label)
+    {
+        label.Text = Convert.ToString(genData.seed);
     }
 }

@@ -60,6 +60,7 @@ public partial class BasicLandScapeStep : GenerationStep
                     generationData.HeightMap.SetPixel(x, y, generationData.HeightGrad.Sample(heightValue));
                     generationData.HeatMap.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(heatValue));
                     generationData.MoistureMap.SetPixel(x, y, generationData.MoistureMapRenderColors.Sample(moistureValue));
+                    generationData.BiomeMap.SetPixel(x, y, GenerationUtils.getTileTypeColor(generationData.Map[x, y].Type));
 
                     generationData.DebugLatitudeMask.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(LatitudeHeatGradient.GetPixel(x, y).R));
                     generationData.DebugHeatFractal.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(fractalHeatValue));

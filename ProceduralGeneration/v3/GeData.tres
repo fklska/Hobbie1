@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_g1xaq")
-mapSize = Vector2i(512, 512)
+mapSize = Vector2i(64, 64)
 seed = -171488491
 HeightGrad = ExtResource("2_3p4wp")
 HeatMapRenderGradient = ExtResource("1_cwf47")
