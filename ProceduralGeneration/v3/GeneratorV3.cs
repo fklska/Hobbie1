@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 
 [Tool]
 [GlobalClass]
@@ -20,12 +21,10 @@ public partial class GeneratorV3 : Node2D
     [Export] public TextureRect DebugLatitudeMask, DebugHeatFractal, DebugLatFractalMask;
     [Export] public TextureRect DebugMoistureFractal;
 
-    private GlobalSettings settings;
 
     public override void _Ready()
     {
         //ClearTileMapTemlate();
-        settings = (GlobalSettings)GetTree().Root.GetNode("Settings");
     }
 
     public override void _Process(double delta)
@@ -34,16 +33,16 @@ public partial class GeneratorV3 : Node2D
         //GetCell();
     }
 
-    public void Generate(ProgressBar progress)
+    public async Task Generate(ProgressBar progress)
     {
         Stopwatch generation = Stopwatch.StartNew();
         Stopwatch resetData = Stopwatch.StartNew();
         Stopwatch ExecuteStep = Stopwatch.StartNew();
 
         progress.MaxValue = 2 + steps.Count;
-
         genData.ResetData();
         progress.Value++;
+        await ToSignal(GetTree(), "process_frame");
         resetData.Stop();
         GD.Print($"GEN data Reseted in {resetData}");
 
@@ -51,8 +50,8 @@ public partial class GeneratorV3 : Node2D
         {
             step.Execute(genData);
             progress.Value++;
+            await ToSignal(GetTree(), "process_frame");
         }
-        progress.QueueRedraw();
 
         ExecuteStep.Stop();
         GD.Print($"Every Step Executed in {ExecuteStep}");
@@ -117,8 +116,8 @@ public partial class GeneratorV3 : Node2D
     {
         var PackedScene = new PackedScene();
         Node2D Map = GenerationUtils.SetNode2d("Map");
-        Node2D Enviroment = GenerationUtils.SetNode2d("Enviroment", Map);
         TileMapLayer MainMap = (TileMapLayer)GenerationUtils.SetNode2d("DualMap", MainTileMapPrefab, Map);
+        Node2D Enviroment = GenerationUtils.SetNode2d("Enviroment", Map);
 
         MapRender(genData, MainMap, Enviroment, Map);
 
@@ -167,20 +166,5 @@ public partial class GeneratorV3 : Node2D
             TileType tileType = genData.Map[cell.X, cell.Y].Type;
             GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
         }
-    }
-
-    public void UpdateSeedRule()
-    {
-        genData.NewSeed = settings.NewSeed;
-    }
-
-    public void UpdateMapSize()
-    {
-        genData.mapSize = settings.MapSize;
-    }
-
-    public void UpdateSeedLabel(Label label)
-    {
-        label.Text = Convert.ToString(genData.seed);
     }
 }

@@ -7,11 +7,11 @@ using System.Collections.Generic;
 [GlobalClass]
 public partial class GeneratorData : Resource
 {
-    [Export] public Vector2I mapSize;
+    [Export] public Vector2I mapSize = GenerationSettings.MapSize;
 
     public Tile[,] Map;
 
-    [Export] public int seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
+    [Export] public int seed;
 
     public Image HeightMap, HeatMap, MoistureMap, BiomeMap;
 
@@ -31,12 +31,12 @@ public partial class GeneratorData : Resource
     //Debug
     public Image DebugMoistureFractal;
 
-    [Export] public bool NewSeed;
-
 
 
     public void ResetData()
     {
+        mapSize = GenerationSettings.MapSize;
+
         GenerateNewSeed();
 
         Map = new Tile[mapSize.X, mapSize.Y];
@@ -55,10 +55,7 @@ public partial class GeneratorData : Resource
 
     public void GenerateNewSeed()
     {
-        if (NewSeed)
-        {
-            seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
-        }
+        seed = GenerationUtils.rnd.RandiRange(0, 1 << 31);
     }
 
     public void DefaultFill()

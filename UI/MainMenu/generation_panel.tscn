@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://pd4inyp1lk58"]
 
-[ext_resource type="Script" uid="uid://durls8r5v0gpn" path="res://UI/MainMenu/GenerationPanel.gd" id="1_qstll"]
+[ext_resource type="Script" uid="uid://ci7ea2ggpub0n" path="res://UI/MainMenu/GenerationPanel.cs" id="1_qstll"]
 
-[node name="GenerationPanel" type="Control"]
+[node name="GenerationPanel" type="Control" node_paths=PackedStringArray("heightMap", "heatMap", "moistureMap", "biomeMap", "seedLabel", "progressBar", "statusLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,67 +10,84 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qstll")
+heightMap = NodePath("VBoxContainer/HBoxContainer2/HeightMap")
+heatMap = NodePath("VBoxContainer/HBoxContainer2/HeatMap")
+moistureMap = NodePath("VBoxContainer/HBoxContainer2/MoistureMap")
+biomeMap = NodePath("VBoxContainer/HBoxContainer2/BiomeMap")
+seedLabel = NodePath("VBoxContainer/HBoxContainer/SeedLabel")
+progressBar = NodePath("VBoxContainer/ProgressBar")
+statusLabel = NodePath("VBoxContainer/StatusLabel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(512, 0)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.482639
-anchor_top = 0.469136
-anchor_right = 0.517361
-anchor_bottom = 0.530864
+anchor_left = 0.277778
+anchor_top = 0.449074
+anchor_right = 0.722222
+anchor_bottom = 0.550926
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 1
 max_value = 5.0
+show_percentage = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="SeedLabel" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+step = 1000.0
+value = 2.31412e+15
+allow_greater = true
+allow_lesser = true
+alignment = 1
+prefix = "Seed"
 
-[node name="NewSeedCheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="NewSeed" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-button_pressed = true
-text = "New Seed
-"
+text = "Новый Seed"
 
-[node name="Seed" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="HSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+value = 1.0
 
-[node name="MapSize" type="SpinBox" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Generate" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-min_value = 64.0
-max_value = 512.0
-step = 100.0
-value = 64.0
-rounded = true
-prefix = "Size"
+size_flags_vertical = 4
+text = "Generate"
 
-[node name="Generate" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="StatusLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Сгенерировать
-"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
 [node name="HeightMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+stretch_mode = 3
 
 [node name="HeatMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+stretch_mode = 3
 
 [node name="MoistureMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+stretch_mode = 3
 
 [node name="BiomeMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+stretch_mode = 3
 
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/VBoxContainer/NewSeedCheckBox" to="." method="_on_new_seed_check_box_toggled"]
-[connection signal="value_changed" from="VBoxContainer/HBoxContainer/VBoxContainer/MapSize" to="." method="_on_map_size_value_changed"]
-[connection signal="button_down" from="VBoxContainer/HBoxContainer/Generate" to="." method="_on_generate_button_down"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/NewSeed" to="." method="_on_new_seed_button_down"]
+[connection signal="value_changed" from="VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="button_down" from="VBoxContainer/Generate" to="." method="_on_generate_button_down"]
