@@ -65,7 +65,7 @@ void fragment() {
 graph_offset = Vector2(-864.333, -92.4709)
 mode = 1
 flags/light_only = false
-preview_params/Texture2DParameter = "Object(CompressedTexture2D,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"load_path\":\"res://.godot/imported/grassTexture.png-0fffd0850a2cb96d29efab000a62f78d.ctex\",\"script\":null)
+preview_params/Texture2DParameter = "Object(CompressedTexture2D,\"resource_local_to_scene\":false,\"resource_name\":\"\",\"load_path\":\"\",\"script\":null)
 "
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_g3mgv")
 nodes/fragment/3/position = Vector2(-540, 400)

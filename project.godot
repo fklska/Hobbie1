@@ -13,7 +13,6 @@ config_version=5
 config/name="Godot1"
 run/main_scene="res://ProceduralGeneration/v1/Generator.tscn"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
-boot_splash/image="uid://cebk7666pfcnp"
 config/icon="res://icon.svg"
 boot_splash/minimum_display_time=100
 
@@ -22,7 +21,7 @@ boot_splash/minimum_display_time=100
 BuildMode="*res://BuildSystem/build_mode.tscn"
 MouseInfoPanel="*res://UI/prefabs/mouseInfoPanel.tscn"
 GlobalNavigation="*res://Navigation/navigation.tscn"
-GENERATOR="*res://ProceduralGeneration/v3/generator_v_3.tscn"
+GENERATOR="*res://ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn"
 
 [display]
 

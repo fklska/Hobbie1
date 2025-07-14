@@ -34,19 +34,30 @@ func _physics_process(_delta):
 
 func run():
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
-	
 	if direction:
 		velocity = direction * SPEED * AGILITY 
-		animPlayer.play("run")
-		
-		if direction > Vector2(0, 0):
-			anim.scale.x = -1
-		
-		if direction < Vector2(0, 0):
-			anim.scale.x = 1
+		animPlayer.play(getAnimByDirection(direction))
 	else:
 		velocity = Vector2(0, 0)
-		animPlayer.play("idle")
+		animPlayer.play("idleStatic")
+
+func getAnimByDirection(direction: Vector2):
+	if direction == Vector2.DOWN:
+		return "runDown"
+	match direction:
+		Vector2.DOWN:
+			return "runDown"
+		Vector2.UP:
+			return "runUp"
+		Vector2.LEFT:
+			return "runLeft"
+		Vector2.RIGHT:
+			return "runRight"
+		_:
+			printerr("Непредвиденное направление")
+			return "runLeft"
+	
+
 
 func add_item(_texture: Texture2D, _amount: int, _type: int):
 	for slot: Slot in INVENTORY.slots:
@@ -106,7 +117,7 @@ func show_selected_info():
 	}
 
 func get_texture():
-	return anim.sprite_frames.get_frame_texture("idle", 0)
+	return anim.sprite_frames.get_frame_texture("idleStatic", 0)
 
 
 func _on_hot_bar_selected_slot_changed(Item: InventoryItem):

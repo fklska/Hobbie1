@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://di4q8o0j4mgss"]
+
+[ext_resource type="Script" uid="uid://b6t26feo1nc3c" path="res://UI/prefabs/world_list_item.gd" id="1_cvhgd"]
+[ext_resource type="Texture2D" uid="uid://d156r06q044fi" path="res://icon.svg" id="1_qnc6s"]
+
+[node name="MarginContainer" type="MarginContainer" node_paths=PackedStringArray("WorldPreview", "WorldName", "WorldSeed")]
+anchors_preset = -1
+anchor_right = 0.305556
+anchor_bottom = 0.114198
+script = ExtResource("1_cvhgd")
+WorldPreview = NodePath("WorldItem/TextureRect")
+WorldName = NodePath("WorldItem/VBoxContainer/WorldName")
+WorldSeed = NodePath("WorldItem/VBoxContainer/Seed")
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Button" parent="."]
+layout_mode = 2
+
+[node name="WorldItem" type="HBoxContainer" parent="."]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="WorldItem"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("1_qnc6s")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WorldItem"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="WorldName" type="Label" parent="WorldItem/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 28
+text = "Мрачный островок"
+
+[node name="Seed" type="SpinBox" parent="WorldItem/VBoxContainer"]
+layout_mode = 2
+editable = false
+prefix = "Seed"

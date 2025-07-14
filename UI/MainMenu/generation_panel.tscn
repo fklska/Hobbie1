@@ -17,25 +17,27 @@ biomeMap = NodePath("VBoxContainer/HBoxContainer2/BiomeMap")
 seedLabel = NodePath("VBoxContainer/HBoxContainer/SeedLabel")
 progressBar = NodePath("VBoxContainer/ProgressBar")
 statusLabel = NodePath("VBoxContainer/StatusLabel")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(512, 0)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.277778
-anchor_top = 0.449074
-anchor_right = 0.722222
-anchor_bottom = 0.550926
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -158.0
+offset_right = 256.0
+offset_bottom = 158.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-size_flags_vertical = 1
 max_value = 5.0
-show_percentage = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -45,7 +47,7 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 step = 1000.0
-value = 2.31412e+15
+value = -1.71488e+08
 allow_greater = true
 allow_lesser = true
 alignment = 1
@@ -70,24 +72,36 @@ text = "Generate"
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
+alignment = 1
 
 [node name="HeightMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-stretch_mode = 3
+expand_mode = 3
+stretch_mode = 4
 
 [node name="HeatMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-stretch_mode = 3
+expand_mode = 3
+stretch_mode = 4
 
 [node name="MoistureMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-stretch_mode = 3
+expand_mode = 3
+stretch_mode = 4
 
 [node name="BiomeMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-stretch_mode = 3
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Назад"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/NewSeed" to="." method="_on_new_seed_button_down"]
 [connection signal="value_changed" from="VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="button_down" from="VBoxContainer/Generate" to="." method="_on_generate_button_down"]
+[connection signal="button_down" from="VBoxContainer/Button" to="." method="_on_button_button_down"]

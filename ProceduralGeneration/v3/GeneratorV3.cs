@@ -115,7 +115,7 @@ public partial class GeneratorV3 : Node2D
     public void GenerateScene(GeneratorData genData)
     {
         var PackedScene = new PackedScene();
-        Node2D Map = GenerationUtils.SetNode2d("Map");
+        WorldScene Map = (WorldScene)GenerationUtils.SetUpWorldNode("Map", genData);
         TileMapLayer MainMap = (TileMapLayer)GenerationUtils.SetNode2d("DualMap", MainTileMapPrefab, Map);
         Node2D Enviroment = GenerationUtils.SetNode2d("Enviroment", Map);
 

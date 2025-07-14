@@ -19,7 +19,7 @@ public static partial class GenerationUtils
 
     };
 
-    public const int TILE_SIZE = 16;
+    public const int TILE_SIZE = 64;
 
     public static HashSet<Vector2I> GetEdgeTiles(List<TileType> typesToSearchFor, List<TileType> typesAdjestedTo, GeneratorData genData)
     {
@@ -158,12 +158,24 @@ public static partial class GenerationUtils
         };
     }
 
+    public static Node2D SetUpWorldNode(string Title, GeneratorData genData)
+    {
+        WorldScene node = new WorldScene();
+        node.Name = Title;
+        node.WorldPreview = ImageTexture.CreateFromImage(genData.BiomeMap);
+        node.WorldName = "RandomGenWorldNameSoon";
+        node.WorldSeed = genData.seed;
+        node.GeneratorData = genData;
+        return node;
+    }
+
     public static Node2D SetNode2d(string Title)
     {
         Node2D node = new Node2D();
         node.Name = Title;
         return node;
     }
+
 
     public static Node2D SetNode2d(string Title, Node2D owner)
     {

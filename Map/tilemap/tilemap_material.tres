@@ -1,9 +1,10 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dsnueub8kpfjf"]
 
 [ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="1_6x1rl"]
-[ext_resource type="Texture2D" uid="uid://dslchrgcg8o8f" path="res://Map/tilemap/grass3.png" id="2_6xc8m"]
+[ext_resource type="Texture2D" uid="uid://b2j0s02dtpf1x" path="res://ProceduralGeneration/v3/SimpleTileMap/snowMountain.png" id="2_6x1rl"]
 
 [resource]
 shader = ExtResource("1_6x1rl")
-shader_parameter/overlay_tex = ExtResource("2_6xc8m")
-shader_parameter/scale = 0.017
+shader_parameter/replacement_tex = ExtResource("2_6x1rl")
+shader_parameter/texture_scale = 0.00694444
+shader_parameter/red_threshold = 0.99

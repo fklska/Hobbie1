@@ -1,5 +1,6 @@
 // ï»¿
 using Godot;
+using GodotPlugins.Game;
 using System;
 
 [Tool]
@@ -43,6 +44,13 @@ public partial class GenerationPanel : Control
         seedLabel.Value = generator.genData.seed;
     }
 
+    public void _on_button_button_down()
+    {
+        Control parent = GetParent<Control>();
+        if (parent is not null) parent.Visible = true;
+        Visible = false;
+    }
+
     public void PreRender()
     {
         heightMap.Texture = ImageTexture.CreateFromImage(generator.genData.HeightMap);
@@ -53,6 +61,7 @@ public partial class GenerationPanel : Control
 
     public void ClearPreRender()
     {
+        progressBar.Value = 0;
         heightMap.Texture = null;
         heatMap.Texture = null;
         moistureMap.Texture = null;
