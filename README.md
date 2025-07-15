@@ -8,7 +8,18 @@
 [YOUTUBE](https://www.youtube.com/@fklska3995/shorts) канал по игре
 
 ## Updates
+### Update 0.0.4 New Procedural Generation and UI
+Полностью переписана процедурная генерация, теперь мир генерируется на основе нескольких шумовых карт - высотной, тепловой и карты влажности. Также изменена нормализация шума вместо `(value + 1) / 2` на `min-max normalization`. Добавлены новые, биомы изменены настройки тайловой карты - теперь маштаб мира больше. В дальнейшем генерация будет "тонко настраивать". Добавлено UI меню генерации и загрузки миров.
+<div>
+	<img width="200" height="200" alt="heightMap" src="https://github.com/user-attachments/assets/35a3a551-73c5-42bc-8d58-8302d6ab4388" />
+	<img width="200" height="200" alt="heatMap" src="https://github.com/user-attachments/assets/641ceeee-2f58-4d7c-adea-3fdec2ee0988" />
+	<img width="200" height="200" alt="moistureMap" src="https://github.com/user-attachments/assets/db31e0ce-f6fb-44f6-9870-7a327eafb495" />
+	<img width="200" height="200" alt="biomeMap" src="https://github.com/user-attachments/assets/fc37a14e-778e-491c-b51b-99ee9416bdf2" />
+</div>
 
+
+
+  
 ### Light update 0.0.3
 Добалены тени и эффект облаков, динамическое освещение. Освещение и тени реализованы через гдрадиентную карту и шумы, освещение меняется в зависимости от "времени". "Время" считается через нормализованную функцию синуса `(sin(delta) + 1) / 2`, где 1 - это ясный полдень, а 0 темнаяа ночь
 
