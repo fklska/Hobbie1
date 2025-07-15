@@ -1,21 +1,20 @@
 using Godot;
 using System;
 
-public class Tile
+[GlobalClass]
+public partial class Tile: Resource
 {
-    public float heightValue;
-    public float heatValue;
-    public float moistureValue;
-    public TileType Type;
-    public ResorseType Resourse = ResorseType.None;
+    [Export] public float heightValue;
+    [Export] public float heatValue;
+    [Export] public float moistureValue;
+    [Export] public TileType Type = TileType.None;
+    [Export] public ResorseType Resourse = ResorseType.None;
 
-    public Tile(float heightValue, float heatValue, float moistureValue, TileType type)
+    public void MyConstructor(float heightValue, float heatValue, float moistureValue, TileType Type)
     {
         this.heightValue = heightValue;
         this.heatValue = heatValue;
         this.moistureValue = moistureValue;
-        Type = type;
-
+        this.Type = Type;
     }
-
 }

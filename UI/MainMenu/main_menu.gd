@@ -3,35 +3,44 @@ extends Control
 class_name MainMenu
 
 @export_dir var saveFolderPath: String = "res://SavedWorlds/"
+var reloadWorlds: bool = false
+var loadedWorlds = Set.new()
+
+func _ready() -> void:
+	load_world()
 
 func _on_new_world_pressed() -> void:
 	OpenGenMenu()
 
 func OpenGenMenu():
-	$VBoxContainer.visible = false
+	$MainButtons.visible = false
 	$GenerationPanel.visible = true
 
 func _on_load_world_pressed() -> void:
-	load_world()
+	$WorldListPanel.visible = true
+	$MainButtons.visible = false
+	
+	if (reloadWorlds):
+		load_world()
+		reloadWorlds = false
 
 func load_world():
 	var directory = DirAccess.open(saveFolderPath)
-	var worldList: Array[WorldScene] = []
+	var worldList: Array[GeneratorData] = []
 
 	if directory:
 		directory.list_dir_begin()
 		var file_name = directory.get_next()
 		while file_name != "":
 			if not directory.current_is_dir():
-				if file_name.ends_with(".tscn"):
+				if file_name.ends_with(".tres"):
 					var file_path = saveFolderPath + file_name
-					print("Found file: ", file_path)
-					var node: PackedScene = load(file_path)
-					worldList.append(node.instantiate())
+					var node: GeneratorData = load(file_path)
+					if (not loadedWorlds.has(node)):
+						worldList.append(node)
+						loadedWorlds.insert(node)
 			file_name = directory.get_next()
 	else:
 		print("An error occurred when trying to access the path.")
 
-	print_debug(worldList)
 	$WorldListPanel.RenderWorldList(worldList)
-	$WorldListPanel.visible = true

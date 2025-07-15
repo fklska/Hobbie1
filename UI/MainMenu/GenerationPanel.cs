@@ -36,6 +36,7 @@ public partial class GenerationPanel : Control
         await generator.Generate(progressBar);
         statusLabel.Text = "Мир сгенерирован успешно!";
         PreRender();
+        GetParent<Control>().Set("reloadWorlds", true);
     }
 
     public void _on_new_seed_button_down()
@@ -44,10 +45,13 @@ public partial class GenerationPanel : Control
         seedLabel.Value = generator.genData.seed;
     }
 
-    public void _on_button_button_down()
+    public void _on_back_to_menu_button_down()
     {
         Control parent = GetParent<Control>();
-        if (parent is not null) parent.Visible = true;
+        if (IsInstanceValid(parent))
+        {
+            parent.GetNode<Control>("MainButtons").Visible = true;
+        }
         Visible = false;
     }
 

@@ -24,3 +24,9 @@ offset_right = 176.0
 offset_bottom = 308.0
 grow_horizontal = 2
 alignment = 1
+
+[node name="BackToMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Назад"
+
+[connection signal="button_down" from="VBoxContainer/BackToMenu" to="." method="_on_back_to_menu_button_down"]

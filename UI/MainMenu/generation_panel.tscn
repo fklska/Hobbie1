@@ -96,7 +96,7 @@ layout_mode = 2
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="BackToMenu" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Назад"
 metadata/_edit_use_anchors_ = true
@@ -104,4 +104,4 @@ metadata/_edit_use_anchors_ = true
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/NewSeed" to="." method="_on_new_seed_button_down"]
 [connection signal="value_changed" from="VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="button_down" from="VBoxContainer/Generate" to="." method="_on_generate_button_down"]
-[connection signal="button_down" from="VBoxContainer/Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="VBoxContainer/BackToMenu" to="." method="_on_back_to_menu_button_down"]

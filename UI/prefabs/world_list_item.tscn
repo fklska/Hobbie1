@@ -41,5 +41,6 @@ text = "Мрачный островок"
 
 [node name="Seed" type="SpinBox" parent="WorldItem/VBoxContainer"]
 layout_mode = 2
-editable = false
+allow_greater = true
+allow_lesser = true
 prefix = "Seed"

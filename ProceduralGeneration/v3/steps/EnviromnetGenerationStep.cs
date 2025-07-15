@@ -44,16 +44,16 @@ public partial class EnviromnetGenerationStep : GenerationStep
 
                     float oreNoiseValue = (OreNoiseData.noiseValues[x, y] - OreNoiseData.min) / (OreNoiseData.max - OreNoiseData.min);
 
-                    if (treeNoiseValue > 0.9f && TreeValidTileTypes.Contains(genData.Map[x, y].Type))
+                    if (treeNoiseValue > 0.9f && TreeValidTileTypes.Contains(genData.Map[x][y].Type))
                     {
-                        genData.Map[x, y].Resourse = ResorseType.Wood;
+                        genData.Map[x][y].Resourse = ResorseType.Wood;
                     }
 
-                    if (OreValidTileTypes.Contains(genData.Map[x, y].Type))
+                    if (OreValidTileTypes.Contains(genData.Map[x][y].Type))
                     {
-                        if (genData.Map[x, y].Resourse == ResorseType.None)
+                        if (genData.Map[x][y].Resourse == ResorseType.None)
                         {
-                            genData.Map[x, y].Resourse = GetOreResType(oreNoiseValue);
+                            genData.Map[x][y].Resourse = GetOreResType(oreNoiseValue);
                         }
                     }
                 }

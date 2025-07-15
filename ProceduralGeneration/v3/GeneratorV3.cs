@@ -56,7 +56,11 @@ public partial class GeneratorV3 : Node2D
         ExecuteStep.Stop();
         GD.Print($"Every Step Executed in {ExecuteStep}");
 
-        GenerateScene(genData);
+        ResourceSaver.Save(genData, String.Format("res://SavedWorlds/{0}.tres", genData.WorldName));
+        var newRes = ResourceLoader.Load<GeneratorData>(String.Format("res://SavedWorlds/{0}.tres", genData.WorldName));
+
+        GenerateScene(newRes);
+
         progress.Value++;
         generation.Stop();
         GD.Print($"Generated in {generation}");
@@ -84,7 +88,7 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(genData.Map[x, y].Type));
+                finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(genData.Map[x][y].Type));
             }
         }
         FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);
@@ -98,12 +102,12 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x, y].Type), new Vector2I(2, 1), 0);
+                map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x][y].Type), new Vector2I(2, 1), 0);
 
-                ResorseType currType = genData.Map[x, y].Resourse;
+                ResorseType currType = genData.Map[x][y].Resourse;
                 if (currType != ResorseType.None)
                 {
-                    Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x, y].Resourse).Instantiate();
+                    Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x][y].Resourse).Instantiate();
                     prefab.Position = new Vector2I(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE);
                     ResourseRootNode.AddChild(prefab);
                     prefab.Owner = owner;
@@ -123,7 +127,7 @@ public partial class GeneratorV3 : Node2D
 
         PackedScene.Pack(Map);
 
-        ResourceSaver.Save(PackedScene, "res://SavedWorlds/saved_scene.tscn");
+        ResourceSaver.Save(PackedScene, $"res://SavedWorlds/{Map.WorldName}.tscn");
     }
 
     public override void _Input(InputEvent @event)
@@ -160,10 +164,10 @@ public partial class GeneratorV3 : Node2D
         if (cell.X < genData.mapSize.X && cell.Y < genData.mapSize.Y && DebugInfo && cell != lastcell)
         {
             lastcell = cell;
-            float height = genData.Map[cell.X, cell.Y].heightValue;
-            float heat = genData.Map[cell.X, cell.Y].heatValue;
-            float moisture = genData.Map[cell.X, cell.Y].moistureValue;
-            TileType tileType = genData.Map[cell.X, cell.Y].Type;
+            float height = genData.Map[cell.X][cell.Y].heightValue;
+            float heat = genData.Map[cell.X][cell.Y].heatValue;
+            float moisture = genData.Map[cell.X][cell.Y].moistureValue;
+            TileType tileType = genData.Map[cell.X][cell.Y].Type;
             GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
         }
     }

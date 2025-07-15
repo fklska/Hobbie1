@@ -8,12 +8,12 @@ using System.Collections.Generic;
 public partial class GeneratorData : Resource
 {
     [Export] public Vector2I mapSize = GenerationSettings.MapSize;
-
-    public Tile[,] Map;
+    [Export] public String WorldName = GenerationUtils.GenerateNameWorld();
+    [Export] public Godot.Collections.Array<Godot.Collections.Array<Tile>> Map;
 
     [Export] public int seed;
 
-    public Image HeightMap, HeatMap, MoistureMap, BiomeMap;
+    [Export] public Image HeightMap, HeatMap, MoistureMap, BiomeMap;
 
     [ExportCategory("HeightMap")]
     [Export] public Gradient HeightGrad;
@@ -36,10 +36,10 @@ public partial class GeneratorData : Resource
     public void ResetData()
     {
         mapSize = GenerationSettings.MapSize;
+        WorldName = GenerationUtils.GenerateNameWorld();
+        //GenerateNewSeed();
 
-        GenerateNewSeed();
-
-        Map = new Tile[mapSize.X, mapSize.Y];
+        Map = InitializeArray();
 
         BiomeMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
         HeightMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
@@ -51,6 +51,18 @@ public partial class GeneratorData : Resource
         DebugLatFractal = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
 
         DebugMoistureFractal = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);
+    }
+
+    public Godot.Collections.Array<Godot.Collections.Array<Tile>> InitializeArray()
+    {
+        Godot.Collections.Array<Godot.Collections.Array<Tile>> Map = new Godot.Collections.Array<Godot.Collections.Array<Tile>>();
+        Map.Resize(mapSize.X);
+        for (int x = 0; x < mapSize.X; x++)
+        {
+            Map[x] = new Godot.Collections.Array<Tile>();
+            Map[x].Resize(mapSize.Y); 
+        }
+        return Map;
     }
 
     public void GenerateNewSeed()

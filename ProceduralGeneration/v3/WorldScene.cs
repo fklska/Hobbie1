@@ -5,8 +5,8 @@ using System;
 [GlobalClass]
 public partial class WorldScene : Node2D
 {
-    public GeneratorData GeneratorData { get; set; }
-    public string WorldName;
-    public int WorldSeed;
-    public Texture2D WorldPreview;
+    [Export] public GeneratorData GeneratorData { get; set; }
+    [Export] public string WorldName;
+    [Export] public int WorldSeed;
+    [Export] public Texture2D WorldPreview;
 }

@@ -18,6 +18,9 @@ public static partial class GenerationUtils
         new Vector2I(-1, -1), // left top
 
     };
+    private static string[] Adjectives = { "Dark", "Mysterious", "Ancient", "Frozen", "Lost", "Forgotten", "Eternal" };
+    private static string[] Nouns = { "Realm", "Empire", "Kingdom", "Land", "Dominion", "World", "Dimension" };
+    private static string[] Suffixes = { "of Legends", "of Shadows", "of Doom", "of Eternity", "of the Ancients" };
 
     public const int TILE_SIZE = 64;
 
@@ -29,7 +32,7 @@ public static partial class GenerationUtils
         {
             for (int y = 0;y < genData.mapSize.Y; y++)
             {
-                if (typesToSearchFor.Contains(genData.Map[x, y].Type) && IsAdjacentToTiles(x, y, typesAdjestedTo, genData.Map))
+                if (typesToSearchFor.Contains(genData.Map[x][y].Type) && IsAdjacentToTiles(x, y, typesAdjestedTo, genData))
                 {
                     borderLine.Add(new Vector2I(x, y));
                 }
@@ -53,7 +56,7 @@ public static partial class GenerationUtils
                     Vector2I nCoords = tileCoor + dir;
                     if (nCoords.X >= 0 && nCoords.X < genData.mapSize.X && nCoords.Y >= 0 && nCoords.Y < genData.mapSize.Y)
                     {
-                        if (validTiles.Contains(genData.Map[nCoords.X, nCoords.Y].Type))
+                        if (validTiles.Contains(genData.Map[nCoords.X][nCoords.Y].Type))
                         {
                             initialLayer.Add(nCoords);
                             LastExpendedTiles.Add(nCoords);
@@ -67,16 +70,16 @@ public static partial class GenerationUtils
         return initialLayer;
     }
 
-    public static bool IsAdjacentToTiles(int x, int y, List<TileType> tileTypes, Tile[,] Map)
+    public static bool IsAdjacentToTiles(int x, int y, List<TileType> tileTypes, GeneratorData genData)
     {
         foreach (Vector2I direction in dirs)
         {
             int nx = x + direction.X;
             int ny = y + direction.Y;
 
-            if (nx >= 0 && nx < Map.GetLength(0) && ny >= 0 && ny < Map.GetLength(1))
+            if (nx >= 0 && nx < genData.mapSize.X && ny >= 0 && ny < genData.mapSize.Y)
             {
-                if (tileTypes.Contains(Map[nx, ny].Type))
+                if (tileTypes.Contains(genData.Map[nx][ny].Type))
                 {
                     return true;
                 }
@@ -163,7 +166,7 @@ public static partial class GenerationUtils
         WorldScene node = new WorldScene();
         node.Name = Title;
         node.WorldPreview = ImageTexture.CreateFromImage(genData.BiomeMap);
-        node.WorldName = "RandomGenWorldNameSoon";
+        node.WorldName = genData.WorldName;
         node.WorldSeed = genData.seed;
         node.GeneratorData = genData;
         return node;
@@ -197,8 +200,20 @@ public static partial class GenerationUtils
         return node;
     }
 
+    private static Random _random = new Random();
+    public static string GenerateNameWorld()
+    {
+        // Выбираем случайные части
+        string adjective = Adjectives[_random.Next(Adjectives.Length)];
+        string noun = Nouns[_random.Next(Nouns.Length)];
+        string suffix = Suffixes[_random.Next(Suffixes.Length)];
 
-    public static void Print2DArray<T>(T[,] array)
+        // Собираем имя (например: "Dark Realm of Shadows")
+        return $"{adjective} {noun} {suffix}";
+    }
+
+
+public static void Print2DArray<T>(T[,] array)
     {
         int rows = array.GetLength(0);
         int cols = array.GetLength(1);
