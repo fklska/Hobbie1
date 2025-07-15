@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="GeneratorData" load_steps=4106 format=4]
+[gd_resource type="Resource" script_class="GeneratorData" load_steps=4106 format=4 uid="uid://bxsrxvwsc8ogh"]
 
-[ext_resource type="Gradient" path="res://ProceduralGeneration/v3/RenderResorses/HeatGradient.tres" id="1_m4xl7"]
-[ext_resource type="Gradient" path="res://ProceduralGeneration/v3/RenderResorses/HeightGradient.tres" id="2_1qax7"]
-[ext_resource type="Script" path="res://ProceduralGeneration/v3/Tile.cs" id="3_dsty3"]
-[ext_resource type="Gradient" path="res://ProceduralGeneration/v3/RenderResorses/MoistureGradient.tres" id="4_mtfia"]
-[ext_resource type="Script" path="res://ProceduralGeneration/v3/GeneratorData.cs" id="5_hqcls"]
+[ext_resource type="Gradient" uid="uid://fpgm56dxps3l" path="res://ProceduralGeneration/v3/RenderResorses/HeatGradient.tres" id="1_m4xl7"]
+[ext_resource type="Gradient" uid="uid://b2ek7yywt4kv7" path="res://ProceduralGeneration/v3/RenderResorses/HeightGradient.tres" id="2_1qax7"]
+[ext_resource type="Script" uid="uid://c4ysgb7hrbnl5" path="res://ProceduralGeneration/v3/Tile.cs" id="3_dsty3"]
+[ext_resource type="Gradient" uid="uid://6fjvibsxyf6o" path="res://ProceduralGeneration/v3/RenderResorses/MoistureGradient.tres" id="4_mtfia"]
+[ext_resource type="Script" uid="uid://cdfwnicj3fbs8" path="res://ProceduralGeneration/v3/GeneratorData.cs" id="5_hqcls"]
 
 [sub_resource type="Image" id="Image_l1vfo"]
 data = {

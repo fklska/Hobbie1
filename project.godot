@@ -14,7 +14,6 @@ config/name="Godot1"
 run/main_scene="res://ProceduralGeneration/v1/Generator.tscn"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
-boot_splash/minimum_display_time=100
 
 [autoload]
 

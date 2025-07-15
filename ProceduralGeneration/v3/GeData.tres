@@ -8,6 +8,7 @@
 [resource]
 script = ExtResource("1_g1xaq")
 mapSize = Vector2i(64, 64)
+WorldName = "Ancient Realm of Doom"
 Map = []
 seed = -171488491
 HeightGrad = ExtResource("2_3p4wp")

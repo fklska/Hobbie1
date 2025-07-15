@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "E:\\Godot\\Learning\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\steps\\basiclandscapestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\steps\\basiclandscapestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\generatorv3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\generatorv3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\genutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\genutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\steps\\basiclandscapestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\steps\\basiclandscapestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\generatordata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\generatordata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\genutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\genutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\ui\\mainmenu\\generationpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:ui\\mainmenu\\generationpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\globals\\generationsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:globals\\generationsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\tile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\steps\\coastlinestep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,16 +39,8 @@
       "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\steps\\enviromnetgenerationstep.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\ui\\mainmenu\\generationpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:ui\\mainmenu\\generationpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\proceduralgeneration\\v3\\worldscene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:proceduralgeneration\\v3\\worldscene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|e:\\godot\\learning\\globals\\generationsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24F34DF6-1CE1-44B0-B6DA-CD141C51F3AF}|Godot1.csproj|solutionrelative:globals\\generationsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,7 +62,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "CoastLineStep.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\steps\\CoastLineStep.cs",
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\steps\\CoastLineStep.cs",
@@ -75,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "Tile.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\Tile.cs",
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\Tile.cs",
@@ -88,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "WorldScene.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\WorldScene.cs",
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\WorldScene.cs",
@@ -101,20 +101,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "GenUtils.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GenUtils.cs",
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GenUtils.cs",
               "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GenUtils.cs",
               "RelativeToolTip": "ProceduralGeneration\\v3\\GenUtils.cs",
-              "ViewState": "AgIAAJkAAAAAAAAAAAAAAKUAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAMwKsAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-12T06:56:43.67Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 5,
               "Title": "GenerationSettings.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\Globals\\GenerationSettings.cs",
               "RelativeDocumentMoniker": "Globals\\GenerationSettings.cs",
@@ -122,37 +122,38 @@
               "RelativeToolTip": "Globals\\GenerationSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-12T06:18:07.876Z"
+              "WhenOpened": "2025-07-12T06:18:07.876Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "GenerationPanel.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\UI\\MainMenu\\GenerationPanel.cs",
               "RelativeDocumentMoniker": "UI\\MainMenu\\GenerationPanel.cs",
               "ToolTip": "E:\\Godot\\Learning\\UI\\MainMenu\\GenerationPanel.cs",
               "RelativeToolTip": "UI\\MainMenu\\GenerationPanel.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAACQAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-10T03:54:27.04Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "GeneratorV3.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GeneratorV3.cs",
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GeneratorV3.cs",
               "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GeneratorV3.cs",
               "RelativeToolTip": "ProceduralGeneration\\v3\\GeneratorV3.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAAH8AAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-10T04:19:02.327Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "BasicLandScapeStep.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\steps\\BasicLandScapeStep.cs",
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\steps\\BasicLandScapeStep.cs",
@@ -171,14 +172,14 @@
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\GeneratorData.cs",
               "ToolTip": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\GeneratorData.cs",
               "RelativeToolTip": "ProceduralGeneration\\v3\\GeneratorData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-17T09:23:49.022Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "EnviromnetGenerationStep.cs",
               "DocumentMoniker": "E:\\Godot\\Learning\\ProceduralGeneration\\v3\\steps\\EnviromnetGenerationStep.cs",
               "RelativeDocumentMoniker": "ProceduralGeneration\\v3\\steps\\EnviromnetGenerationStep.cs",

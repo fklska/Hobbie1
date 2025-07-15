@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://rieu0npw0fl4"]
+
+[ext_resource type="Script" uid="uid://cui52o7tqu3ae" path="res://Utils/save_images.gd" id="1_dae3j"]
+
+[node name="SaveImages" type="Node2D"]
+script = ExtResource("1_dae3j")
