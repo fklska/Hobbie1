@@ -13,9 +13,6 @@ WorldName = NodePath("WorldItem/VBoxContainer/WorldName")
 WorldSeed = NodePath("WorldItem/VBoxContainer/Seed")
 metadata/_edit_use_anchors_ = true
 
-[node name="Control" type="Button" parent="."]
-layout_mode = 2
-
 [node name="WorldItem" type="HBoxContainer" parent="."]
 layout_mode = 2
 metadata/_edit_use_anchors_ = true
@@ -43,4 +40,13 @@ text = "Мрачный островок"
 layout_mode = 2
 allow_greater = true
 allow_lesser = true
+editable = false
 prefix = "Seed"
+
+[node name="LoadWorld" type="Button" parent="."]
+layout_mode = 2
+text = "
+"
+flat = true
+
+[connection signal="button_down" from="LoadWorld" to="." method="_on_load_world_button_down"]
