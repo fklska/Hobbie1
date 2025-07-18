@@ -68,3 +68,12 @@ func show_selected_info():
 
 func _to_string():
 	return ("Resourse " + type_name.get(type) + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	visible = true
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	process_mode = Node.PROCESS_MODE_INHERIT
+	visible = false

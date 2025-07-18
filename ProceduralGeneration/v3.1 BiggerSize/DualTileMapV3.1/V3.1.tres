@@ -35,6 +35,7 @@ texture = ExtResource("2_io45v")
 texture_region_size = Vector2i(64, 64)
 0:3/0 = 0
 0:3/0/material = SubResource("ShaderMaterial_t875f")
+0:3/0/terrain_set = 0
 3:3/0 = 0
 3:3/0/material = SubResource("ShaderMaterial_t875f")
 3:3/0/terrain_set = 0

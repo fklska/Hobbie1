@@ -122,6 +122,7 @@ DebugMoistureFractal = NodePath("GridContainer/HBoxContainer4/VBoxContainer2/Moi
 [node name="Map" parent="." instance=ExtResource("6_u1bf0")]
 tile_map_data = PackedByteArray()
 tile_set = ExtResource("7_wj6v8")
+rendering_quadrant_size = 8
 
 [node name="Enviroment" type="Node2D" parent="Map"]
 z_index = 1

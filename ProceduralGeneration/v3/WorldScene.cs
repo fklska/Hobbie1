@@ -36,11 +36,17 @@ public partial class WorldScene : Node2D
         {
             lastcell = cell;
             GD.Print(GeneratorData.Map[cell.X][cell.Y].Type);
-            //float height = GeneratorData.Map[cell.X][cell.Y].heightValue;
-            //float heat = GeneratorData.Map[cell.X][cell.Y].heatValue;
-            //float moisture = GeneratorData.Map[cell.X][cell.Y].moistureValue;
-           // TileType tileType = GeneratorData.Map[cell.X][cell.Y].Type;
+            float height = GeneratorData.Map[cell.X][cell.Y].heightValue;
+            float heat = GeneratorData.Map[cell.X][cell.Y].heatValue;
+            float moisture = GeneratorData.Map[cell.X][cell.Y].moistureValue;
+            float treeValue = GeneratorData.Map[cell.X][cell.Y].treeResValue;
+            float oreValue = GeneratorData.Map[cell.X][cell.Y].oreResValue;
+            TileType tileType = GeneratorData.Map[cell.X][cell.Y].Type;
+            ResorseType resType = GeneratorData.Map[cell.X][cell.Y].Resourse;
             //GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
+            GD.Print($"Coord: {cell}, Biome: {tileType}, Resourse: {resType}");
+            GD.Print($"Height: {height}, Heat: {heat}, Moist: {moisture}");
+            GD.Print($"TreeValue: {treeValue}, oreValue: {oreValue} \n");
         }
     }
 }

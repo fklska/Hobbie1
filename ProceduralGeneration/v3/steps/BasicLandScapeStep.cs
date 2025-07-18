@@ -85,7 +85,7 @@ public partial class BasicLandScapeStep : GenerationStep
             {
                 return TileType.RegularForest;
             }
-            else if (heatValue < 0.55f)
+            else if (heatValue < 0.50f)
             {
                 return TileType.Savanna;
             }
@@ -94,13 +94,29 @@ public partial class BasicLandScapeStep : GenerationStep
                 return TileType.Desert;
             }
         }
+        else if (moistureValue < 0.4f) // Medium
+        {
+            if (heatValue < 0.3f)
+            {
+                return TileType.Snow;
+            }
+            else if (heatValue < 0.45f)
+            {
+                return TileType.RegularForest;
+            }
+            else
+            {
+                return TileType.Savanna;
+            }
+
+        }
         else if (moistureValue < 0.7f) // Medium
         {
             if (heatValue < 0.3f)
             {
                 return TileType.Snow;
             }
-            else if (heatValue < 0.6f)
+            else if (heatValue < 0.55f)
             {
                 return TileType.RegularForest;
             }
@@ -111,7 +127,7 @@ public partial class BasicLandScapeStep : GenerationStep
         }
         else // Wet
         {
-            if (moistureValue < 0.85f)
+            if (moistureValue < 0.8f)
             { return TileType.TropicWater;}
 
             return TileType.DeepWater;

@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class TetsSave : Resource
 {
-    public int[,] map = new int[64, 64];
+    public HashSet<int> data = new HashSet<int>();
 }

@@ -22,9 +22,6 @@ public partial class CoastLineStep : GenerationStep
     private List<TileType> ValidTilesToExpand = new List<TileType>()
     {
         TileType.TropicWater,
-        TileType.TropicalForest,
-        TileType.Taiga,
-        TileType.Savanna,
         TileType.DeepWater,
     };
 
