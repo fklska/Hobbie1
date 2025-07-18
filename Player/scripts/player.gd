@@ -55,7 +55,7 @@ func getAnimByDirection(direction: Vector2):
 			return "runRight"
 		_:
 			printerr("Непредвиденное направление")
-			return "runLeft"
+			return "idleStatic"
 	
 
 

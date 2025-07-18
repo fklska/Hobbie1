@@ -3,8 +3,15 @@ class_name WorldListItem
 
 @export var WorldPreview: TextureRect
 @export var WorldName: Label
+@export var WorldData: GeneratorData
 @export var WorldSeed: SpinBox
 @export var WorldDataPath: String
 
+@onready var player = load("res://Player/player_main_character.tscn").instantiate()
+
 func _on_load_world_button_down() -> void:
-	print_debug(WorldDataPath.get_basename())
+	var world = load(WorldDataPath.get_basename() + ".tscn").instantiate()
+	get_tree().root.add_child(world)
+	player.position = WorldData.SpawnPoint
+	get_tree().root.add_child(player)
+	get_tree().root.get_node("Menu").visible = false

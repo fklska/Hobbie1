@@ -25,7 +25,7 @@ public partial class CoastLineStep : GenerationStep
         TileType.TropicalForest,
         TileType.Taiga,
         TileType.Savanna,
-        TileType.Swamp,
+        TileType.DeepWater,
     };
 
     [Export] public Color preRenderColor;

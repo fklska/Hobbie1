@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://rfw4prml2o5s"]
+
+[ext_resource type="PackedScene" uid="uid://cpmuho6osgn33" path="res://Resourses/Prefabs/basic_resourse.tscn" id="1_npxcj"]
+[ext_resource type="Script" uid="uid://dbt27wd6j64v7" path="res://Resourses/Scripts/wood.gd" id="2_r1p8r"]
+[ext_resource type="Shader" uid="uid://c3o7mr7g415ti" path="res://Resourses/Prefabs/woodWave.gdshader" id="3_i2p2e"]
+[ext_resource type="Texture2D" uid="uid://bbaxjrh1uolv8" path="res://Resourses/AssetsV1/Wood_Snow_01.png" id="4_npxcj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wetxv"]
+resource_local_to_scene = true
+shader = ExtResource("3_i2p2e")
+shader_parameter/wind_strength = 1.0
+shader_parameter/wind_speed = 2.603
+shader_parameter/wind_direction = Vector2(-1, 0)
+shader_parameter/random_offset = 0.0
+shader_parameter/random_speed = 1.0
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = false
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1gxm3"]
+polygon = PackedVector2Array(-1.2, -28.5, -5, -27.1, -5, -24.6, -17, 7.5, -17, 15.2, -6.3, 27, 6.5, 27, 14.5, 16, 17.7, 16, 12, -12, 12, -14.2)
+
+[node name="BasicResourse" instance=ExtResource("1_npxcj")]
+z_as_relative = false
+script = ExtResource("2_r1p8r")
+type = 2
+
+[node name="Texture" parent="." index="0"]
+material = SubResource("ShaderMaterial_wetxv")
+texture = ExtResource("4_npxcj")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 9)
+polygon = PackedVector2Array(-6, -4, 6, -4, 6, 5, -6, 5)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." index="6"]
+visible = false
+z_index = -1
+occluder = SubResource("OccluderPolygon2D_1gxm3")

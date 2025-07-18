@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public partial class GeneratorData : Resource
 {
     [Export] public Vector2I mapSize = GenerationSettings.MapSize;
+    [Export] public Vector2I SpawnPoint;
     [Export] public String WorldName = GenerationUtils.GenerateNameWorld();
     [Export] public Godot.Collections.Array<Godot.Collections.Array<Tile>> Map;
 
@@ -31,11 +32,10 @@ public partial class GeneratorData : Resource
     //Debug
     public Image DebugMoistureFractal;
 
-
-
     public void ResetData()
     {
         mapSize = GenerationSettings.MapSize;
+        SpawnPoint = new Vector2I(mapSize.X * GenerationUtils.TILE_SIZE / 2, mapSize.Y * GenerationUtils.TILE_SIZE / 2);
         WorldName = GenerationUtils.GenerateNameWorld();
         //GenerateNewSeed();
 
@@ -60,7 +60,12 @@ public partial class GeneratorData : Resource
         for (int x = 0; x < mapSize.X; x++)
         {
             Map[x] = new Godot.Collections.Array<Tile>();
-            Map[x].Resize(mapSize.Y); 
+            Map[x].Resize(mapSize.Y);
+
+            for (int y = 0; y < mapSize.Y; y++)
+            {
+                Map[x][y] = new Tile();
+            }
         }
         return Map;
     }
@@ -85,11 +90,9 @@ public partial class GeneratorData : Resource
 public enum TileType
 {
     None,
-    IceWater,
-    Swamp,
+    DeepWater,
     TropicWater,
     Snow,
-    StoneMountain,
     Tundra,
     Taiga,
     RegularForest,
@@ -101,7 +104,13 @@ public enum TileType
 public enum ResorseType
 {
     None,
-    Wood,
+    SmallWood,
+    MediumWood,
+    GiantWood,
+    SmallSnowWood,
+    MediumSnowWood,
+    GiantSnowWood,
+    PalmWood,
     Stone,
     Iron,
     Gold

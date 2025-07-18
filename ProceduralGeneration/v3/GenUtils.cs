@@ -89,6 +89,25 @@ public static partial class GenerationUtils
         return false;
     }
 
+    public static bool IsEdgeTile(int x, int y, TileType tileType, GeneratorData genData)
+    {
+        foreach (Vector2I direction in dirs)
+        {
+            int nx = x + direction.X;
+            int ny = y + direction.Y;
+
+            if (nx >= 0 && nx < genData.mapSize.X && ny >= 0 && ny < genData.mapSize.Y)
+            {
+                if (genData.Map[nx][ny].Type != tileType)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static NoiseData GetNoiseData(FastNoiseLite noise, Vector2I MapSize)
     {
         NoiseData noiseData = new NoiseData();
@@ -115,15 +134,13 @@ public static partial class GenerationUtils
     {
         return tileType switch
         {
-            TileType.IceWater => new Color("0200ff"),
-            TileType.Swamp => new Color("244d22"),
-            TileType.TropicWater => new Color("1eeaff"),
+            TileType.DeepWater => new Color("000057"),
+            TileType.TropicWater => new Color("a3f5fd"),
             TileType.Snow => new Color("d8fbff"),
-            TileType.StoneMountain => new Color("63524d"),
             TileType.Tundra => new Color("a7a8a8"),
-            TileType.Taiga => new Color("082c0d"),
-            TileType.RegularForest => new Color("49aa56"),
-            TileType.TropicalForest => new Color("59f619"),
+            TileType.Taiga => new Color("153d13"),
+            TileType.RegularForest => new Color("8eba43"),
+            TileType.TropicalForest => new Color("4b8a00"),
             TileType.Savanna => new Color("a89c5c"),
             TileType.Desert => new Color("f7e33e"),
             _ => throw new NotImplementedException()
@@ -134,11 +151,11 @@ public static partial class GenerationUtils
     {
         return tileType switch
         {
-            TileType.IceWater => 10,
-            TileType.Swamp => 9,
+            TileType.DeepWater => 10,
+            //TileType.Swamp => 9,
             TileType.TropicWater => 8,
             TileType.Snow => 7,
-            TileType.StoneMountain => 6,
+            //TileType.StoneMountain => 6,
             TileType.Tundra => 5,
             TileType.Taiga => 4,
             TileType.RegularForest => 3,
@@ -153,11 +170,16 @@ public static partial class GenerationUtils
     {
         return type switch
         {
-            ResorseType.Wood => GD.Load<PackedScene>("res://Resourses/Prefabs/wood.tscn"),
+            ResorseType.GiantWood => GD.Load<PackedScene>("res://Resourses/Prefabs/GiantWood.tscn"),
+            ResorseType.GiantSnowWood => GD.Load<PackedScene>("res://Resourses/Prefabs/GiantSnowWood.tscn"),
+            ResorseType.MediumWood => GD.Load<PackedScene>("res://Resourses/Prefabs/MediumWood.tscn"),
+            ResorseType.MediumSnowWood => GD.Load<PackedScene>("res://Resourses/Prefabs/MediumSnowWood.tscn"),
+            ResorseType.SmallWood => GD.Load<PackedScene>("res://Resourses/Prefabs/SmallWood.tscn"),
+            ResorseType.SmallSnowWood => GD.Load<PackedScene>("res://Resourses/Prefabs/SmallSnowWood.tscn"),
             ResorseType.Gold => GD.Load<PackedScene>("res://Resourses/Prefabs/gold.tscn"),
             ResorseType.Iron => GD.Load<PackedScene>("res://Resourses/Prefabs/iron.tscn"),
             ResorseType.Stone => GD.Load<PackedScene>("res://Resourses/Prefabs/rock.tscn"),
-            _ => throw new NotImplementedException()
+            _ => GD.Load<PackedScene>("res://Resourses/Prefabs/Dummy.tscn")
         };
     }
 
@@ -168,7 +190,7 @@ public static partial class GenerationUtils
         node.WorldPreview = ImageTexture.CreateFromImage(genData.BiomeMap);
         node.WorldName = genData.WorldName;
         node.WorldSeed = genData.seed;
-        node.GeneratorData = genData;
+        node.GenDataPath = genData.ResourcePath;
         return node;
     }
 

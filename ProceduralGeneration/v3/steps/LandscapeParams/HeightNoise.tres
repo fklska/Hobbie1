@@ -2,7 +2,7 @@
 
 [resource]
 seed = -15876779
-frequency = 0.0006
+frequency = 0.0001
 cellular_distance_function = 2
 cellular_return_type = 0
 domain_warp_type = 1

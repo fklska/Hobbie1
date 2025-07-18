@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbsqqx703mvqv"]
+
+[ext_resource type="Script" uid="uid://d00k1mo8bu7vm" path="res://Debugging/TestSaveRes.cs" id="1_1b5kv"]
+[ext_resource type="Resource" uid="uid://pkveavqw2mo0" path="res://Debugging/TestSave.tres" id="2_wa4vg"]
+
+[node name="TestSaveRes" type="Node2D"]
+script = ExtResource("1_1b5kv")
+tetsSave = ExtResource("2_wa4vg")

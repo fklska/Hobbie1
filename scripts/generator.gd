@@ -38,7 +38,7 @@ static var SIZE = Vector2i(64, 64)
 		"sourse_id": 5,
 		},
 	wood_height: {
-		"prefab": preload("res://Resourses/Prefabs/wood.tscn"),
+		"prefab": preload("res://Resourses/Prefabs/GiantWood.tscn"),
 		"sourse_id": 2,
 		},
 }

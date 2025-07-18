@@ -52,7 +52,6 @@ public partial class GeneratorV3 : Node2D
             progress.Value++;
             await ToSignal(GetTree(), "process_frame");
         }
-
         ExecuteStep.Stop();
         GD.Print($"Every Step Executed in {ExecuteStep}");
 
@@ -108,7 +107,8 @@ public partial class GeneratorV3 : Node2D
                 if (currType != ResorseType.None)
                 {
                     Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x][y].Resourse).Instantiate();
-                    prefab.Position = new Vector2I(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE);
+                    Vector2 offset = new Vector2I(GD.RandRange(-50, 50), GD.RandRange(-50, 50));
+                    prefab.Position = new Vector2(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE); //+ offset;
                     ResourseRootNode.AddChild(prefab);
                     prefab.Owner = owner;
                 }

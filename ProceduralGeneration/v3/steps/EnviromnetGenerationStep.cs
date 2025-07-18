@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 [Tool]
@@ -12,8 +13,6 @@ public partial class EnviromnetGenerationStep : GenerationStep
 
     public HashSet<TileType> TreeValidTileTypes = new HashSet<TileType>()
     {
-        TileType.TropicalForest,
-        TileType.Swamp,
         TileType.Snow,
         TileType.RegularForest,
         TileType.Taiga,
@@ -44,23 +43,56 @@ public partial class EnviromnetGenerationStep : GenerationStep
 
                     float oreNoiseValue = (OreNoiseData.noiseValues[x, y] - OreNoiseData.min) / (OreNoiseData.max - OreNoiseData.min);
 
-                    if (treeNoiseValue > 0.9f && TreeValidTileTypes.Contains(genData.Map[x][y].Type))
+                    if (TreeValidTileTypes.Contains(genData.Map[x][y].Type))
                     {
-                        genData.Map[x][y].Resourse = ResorseType.Wood;
+                        if(!GenerationUtils.IsEdgeTile(x, y, genData.Map[x][y].Type, genData))
+                        { genData.Map[x][y].Resourse = GetWoodType(treeNoiseValue, genData.Map[x][y].Type); }
                     }
 
-                    if (OreValidTileTypes.Contains(genData.Map[x][y].Type))
+                    /*if (OreValidTileTypes.Contains(genData.Map[x][y].Type))
                     {
                         if (genData.Map[x][y].Resourse == ResorseType.None)
                         {
                             genData.Map[x][y].Resourse = GetOreResType(oreNoiseValue);
                         }
-                    }
+                    }*/
                 }
             }
         }
     }
 
+    public ResorseType GetWoodType(float value, TileType biome)
+    {
+        if (value < 0.1f) // SmallWood
+        {
+            if (biome != TileType.Desert)
+            {
+                if(biome == TileType.Snow) return ResorseType.SmallSnowWood;
+            }
+            return ResorseType.SmallWood;
+        }
+
+        if (value > 0.5f && value < 0.65f) // MediumWood
+        {
+            if (biome == TileType.Snow)
+            {
+                return ResorseType.MediumSnowWood;
+            }
+            return ResorseType.MediumWood;
+
+        }
+
+        if (value > 0.95f) // GiantWood
+        {
+            if (biome == TileType.Snow) return ResorseType.GiantSnowWood;
+
+            if (biome == TileType.Desert) return ResorseType.PalmWood;
+            
+            return ResorseType.GiantWood;
+        }
+
+        return ResorseType.None;
+    }
 
     public ResorseType GetOreResType(float value)
     {

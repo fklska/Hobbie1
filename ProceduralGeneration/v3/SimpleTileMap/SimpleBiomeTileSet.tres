@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=23 format=3 uid="uid://b6tw8eycsfq1m"]
 
 [ext_resource type="Texture2D" uid="uid://cdi4gv1x1itp0" path="res://ProceduralGeneration/v3/SimpleTileMap/desert.png" id="1_qwdiq"]
-[ext_resource type="Texture2D" uid="uid://crs2v45xrx5gq" path="res://ProceduralGeneration/v3/SimpleTileMap/iceWater.png" id="2_3psfy"]
+[ext_resource type="Texture2D" uid="uid://crs2v45xrx5gq" path="res://ProceduralGeneration/v3/SimpleTileMap/deepWater.png" id="2_3psfy"]
 [ext_resource type="Texture2D" uid="uid://c76rg777rtk8t" path="res://ProceduralGeneration/v3/SimpleTileMap/tundra.png" id="3_y0hs3"]
 [ext_resource type="Texture2D" uid="uid://d36ppvclbig1a" path="res://ProceduralGeneration/v3/SimpleTileMap/regularForest.png" id="4_hp77p"]
 [ext_resource type="Texture2D" uid="uid://cyfvlvkmxeoi8" path="res://ProceduralGeneration/v3/SimpleTileMap/savanna.png" id="5_dqng2"]

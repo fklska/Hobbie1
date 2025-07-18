@@ -54,8 +54,7 @@ public partial class BasicLandScapeStep : GenerationStep
                     float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue);
 
                     // Store Data
-                    generationData.Map[x][y] = new Tile();
-                    generationData.Map[x][y].MyConstructor(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
+                    generationData.Map[x][y].UpdateInfo(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
 
                     // Render DELETE AFTER PROMO
                     generationData.HeightMap.SetPixel(x, y, generationData.HeightGrad.Sample(heightValue));
@@ -103,7 +102,7 @@ public partial class BasicLandScapeStep : GenerationStep
             }
             else if (heatValue < 0.6f)
             {
-                return TileType.Taiga;
+                return TileType.RegularForest;
             }
             else
             {
@@ -112,18 +111,10 @@ public partial class BasicLandScapeStep : GenerationStep
         }
         else // Wet
         {
-            if (heatValue < 0.3f)
-            {
-                return TileType.IceWater;
-            }
-            else if (heatValue < 0.7f)
-            {
-                return TileType.Swamp;
-            }
-            else
-            {
-                return TileType.TropicWater;
-            }
+            if (moistureValue < 0.85f)
+            { return TileType.TropicWater;}
+
+            return TileType.DeepWater;
         }
     }
 }

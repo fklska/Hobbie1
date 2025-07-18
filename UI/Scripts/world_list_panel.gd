@@ -8,6 +8,7 @@ func RenderWorldList(worldsList: Array[GeneratorData]):
 
 func SetWorldAtList(world: GeneratorData):
 	var new_item: WorldListItem = world_item.duplicate()
+	new_item.WorldData = world
 	new_item.WorldDataPath = world.resource_path
 	new_item.WorldPreview.texture = ImageTexture.create_from_image(world.BiomeMap)
 	new_item.WorldSeed.value = world.seed

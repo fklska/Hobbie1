@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://codch4ey6oaho" path="res://ProceduralGeneration/v3/DualTileMap/_0000_Desert.png" id="3_uu3fy"]
 [ext_resource type="Texture2D" uid="uid://cyfvlvkmxeoi8" path="res://ProceduralGeneration/v3/SimpleTileMap/savanna.png" id="4_kngl1"]
 [ext_resource type="Texture2D" uid="uid://dt0el7rcyqag1" path="res://ProceduralGeneration/v3/DualTileMap/_0001_Savanna.png" id="5_cixj6"]
-[ext_resource type="Texture2D" uid="uid://crs2v45xrx5gq" path="res://ProceduralGeneration/v3/SimpleTileMap/iceWater.png" id="6_2m5kc"]
+[ext_resource type="Texture2D" uid="uid://crs2v45xrx5gq" path="res://ProceduralGeneration/v3/SimpleTileMap/deepWater.png" id="6_2m5kc"]
 [ext_resource type="Texture2D" uid="uid://dylfj0r7f5hu4" path="res://ProceduralGeneration/v3/DualTileMap/_0010_IceWater.png" id="7_ah28y"]
 [ext_resource type="Texture2D" uid="uid://4llr0qvh0pa4" path="res://ProceduralGeneration/v3/SimpleTileMap/tropicalForest.png" id="8_stgkn"]
 [ext_resource type="Texture2D" uid="uid://dosfy6cmpkkl" path="res://ProceduralGeneration/v3/DualTileMap/_0002_TropicalForest.png" id="9_j61j7"]
