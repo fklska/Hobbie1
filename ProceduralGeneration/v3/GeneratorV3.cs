@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 [Tool]
@@ -55,10 +56,13 @@ public partial class GeneratorV3 : Node2D
         ExecuteStep.Stop();
         GD.Print($"Every Step Executed in {ExecuteStep}");
 
-        ResourceSaver.Save(genData, String.Format("res://SavedWorlds/{0}.tres", genData.WorldName));
-        var newRes = ResourceLoader.Load<GeneratorData>(String.Format("res://SavedWorlds/{0}.tres", genData.WorldName));
 
-        GenerateScene(newRes);
+        ResourceSaver.Save(genData, $"res://SavedWorlds/{genData.WorldName}.tres");
+        GeneratorData dupl = ResourceLoader.Load<GeneratorData>($"res://SavedWorlds/{genData.WorldName}.tres");
+
+        GenerateScene(dupl);
+
+        ResourceSaver.Save(dupl.ToSimpleData(), String.Format("res://SavedWorlds/__SIMPLE{0}.tres", dupl.WorldName));
 
         progress.Value++;
         generation.Stop();

@@ -3,7 +3,7 @@ class_name WorldListItem
 
 @export var WorldPreview: TextureRect
 @export var WorldName: Label
-@export var WorldData: GeneratorData
+@export var WorldData: SimpleGeneratorData
 @export var WorldSeed: SpinBox
 @export var WorldDataPath: String
 
@@ -15,3 +15,4 @@ func _on_load_world_button_down() -> void:
 	player.position = WorldData.SpawnPoint
 	get_tree().root.add_child(player)
 	get_tree().root.get_node("Menu").visible = false
+	Navigation.bake_all_navigation_map()

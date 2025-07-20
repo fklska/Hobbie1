@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cpmuho6osgn33"]
+[gd_scene load_steps=6 format=3 uid="uid://cpmuho6osgn33"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_kpm82"]
 [ext_resource type="Script" uid="uid://bxtnvldvcr8jb" path="res://Resourses/Scripts/resourse.gd" id="2_mwnmf"]
-[ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="2_teda1"]
 [ext_resource type="PackedScene" uid="uid://cvvuu0b3t6m5w" path="res://UI/prefabs/popup.tscn" id="3_fmnx2"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="4_mu4ns"]
 
@@ -16,48 +15,8 @@ shader_parameter/inside = false
 shader_parameter/add_margins = false
 shader_parameter/enable = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tc87y"]
-bg_color = Color(0.854902, 0.560784, 0.0784314, 1)
-
-[sub_resource type="Animation" id="Animation_d3bnw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_rpu3h"]
-resource_name = "get_hit"
-length = 0.3
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.4, 1.4), Vector2(1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_eq8xt"]
-_data = {
-&"RESET": SubResource("Animation_d3bnw"),
-&"get_hit": SubResource("Animation_rpu3h")
-}
-
-[node name="BasicResourse" instance=ExtResource("1_kpm82")]
+[node name="BasicResourse" groups=["navigation_polygon_source_geometry_group"] instance=ExtResource("1_kpm82")]
+process_mode = 4
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 2
@@ -76,46 +35,12 @@ material = SubResource("ShaderMaterial_867q3")
 position = Vector2(-5, -4)
 polygon = PackedVector2Array(-2, 12, -2, -1, 12, -1, 12, 12)
 
-[node name="healthbar" type="ProgressBar" parent="." index="2"]
-visible = false
-z_index = 1
-offset_left = -8.0
-offset_top = -24.0
-offset_right = 152.0
-offset_bottom = -4.0
-scale = Vector2(0.1, 0.1)
-theme = ExtResource("2_teda1")
-value = 100.0
-show_percentage = false
-
-[node name="damage_bar" type="ProgressBar" parent="." index="3"]
-visible = false
-offset_left = -8.0
-offset_top = -24.0
-offset_right = 152.0
-offset_bottom = -4.0
-scale = Vector2(0.1, 0.1)
-theme = ExtResource("2_teda1")
-theme_override_styles/fill = SubResource("StyleBoxFlat_tc87y")
-value = 100.0
-show_percentage = false
-
-[node name="Timer" type="Timer" parent="damage_bar" index="0"]
-wait_time = 0.3
-one_shot = true
-
-[node name="PopUpLocation" type="Marker2D" parent="." index="4"]
+[node name="PopUpLocation" type="Marker2D" parent="." index="2"]
 z_index = 1
 position = Vector2(0, -32)
 gizmo_extents = 0.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
-libraries = {
-&"": SubResource("AnimationLibrary_eq8xt")
-}
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="3"]
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="6"]
-
-[connection signal="timeout" from="damage_bar/Timer" to="." method="_on_timer_timeout"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

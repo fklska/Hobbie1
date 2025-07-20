@@ -85,6 +85,18 @@ public partial class GeneratorData : Resource
             }
         }
     }
+
+    public SimpleGeneratorData ToSimpleData()
+    {
+        SimpleGeneratorData data = new SimpleGeneratorData();
+        data.seed = seed;
+        data.BiomeMap = BiomeMap;
+        data.WorldName = WorldName;
+        data.mapSize = mapSize;
+        data.SpawnPoint = SpawnPoint;
+        data.fullDataPath = ResourcePath;
+        return data;
+    }
 }
 
 public enum TileType

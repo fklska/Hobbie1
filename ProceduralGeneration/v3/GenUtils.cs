@@ -187,6 +187,7 @@ public static partial class GenerationUtils
     {
         WorldScene node = new WorldScene();
         node.Name = Title;
+        node.GeneratorData = genData;
         node.WorldPreview = ImageTexture.CreateFromImage(genData.BiomeMap);
         node.WorldName = genData.WorldName;
         node.WorldSeed = genData.seed;

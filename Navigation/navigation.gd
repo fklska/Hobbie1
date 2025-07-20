@@ -11,30 +11,21 @@ class_name Navigation
 static var polygon_map: Dictionary = {
 	#CELL: NAV_REGION
 }
-static var cellSize: Vector2i = Vector2i(256, 256)
-
-static var thread: Thread = Thread.new()
+static var cellSize: Vector2i = Vector2i(1024, 1024)
 
 var source_geometry: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
 
-
-func thread_bake(agent):
-	thread.start(non_static_bake_on_agent.bind(agent))
-
-func thread_map_bake():
-	thread.start(bake_all_navigation_map)
-
+func _ready() -> void:
+	queue_redraw()
+	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 0)
+	NavigationServer2D.set_debug_enabled(false)
+	#bake_all_navigation_map()
+	
 static func bake_all_navigation_map():
-	var map_size = MapGenerator.SIZE
-	for x in range(-map_size.x / 8, map_size.x / 8):
-		for y in range(-map_size.y / 8, (map_size.y / 8) + 1):
+	var map_size = GENERATOR.genData.mapSize  / 16
+	for x in range(map_size.x):
+		for y in range(map_size.y + 1):
 			bake_navigation_on_cell(Vector2i(x, y))
-
-func non_static_bake_on_agent(agent):
-	for x in range(-1, 2):
-		for y in range(-1, 2):
-			var agent_pos = thread.start(pixel2cell.bind(agent.global_position))
-			thread.start(non_static_bake_navigation_on_cell.bind(Vector2i(x, y) + agent_pos))
 
 static func bake_navigation_on_agent(agent):
 	for x in range(-1, 2):
@@ -47,12 +38,6 @@ func debug_baking():
 		for y in range(-1, 2):
 			bake_navigation_on_cell(Vector2i(x, y))
 
-func _ready() -> void:
-	queue_redraw()
-	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 0)
-	NavigationServer2D.set_debug_enabled(false)
-	#thread_map_bake()
-
 func debug_draw_grid():
 	for x in range(-debug_map_size.x, debug_map_size.x):
 		for y in range(-debug_map_size.y, debug_map_size.y):
@@ -63,7 +48,6 @@ func debug_draw_grid():
 				),
 				rect_color, false
 			)
-
 
 static func set_up_navigation_region(navigation_root_node: Node2D):
 	var polygon = NavigationPolygon.new()
@@ -85,23 +69,7 @@ static func calculate_polygon_coords(cell: Vector2i) -> PackedVector2Array:
 
 static func bake_navigation_on_cell(cell: Vector2i) -> void:
 	var region = polygon_hash_map_manager(cell)
-	## region.bake_navigation_polygon()
-
-func non_static_bake_navigation_on_cell(cell: Vector2i) -> void:
-	var region = thread.start(non_static_polygon_hash_map_manager.bind(cell))
-
-func non_static_polygon_hash_map_manager(cell: Vector2i):
-	if polygon_map.has(cell):
-		return polygon_map[cell]
-	
-	var region = set_up_navigation_region(GlobalNavigation)
-	region.navigation_polygon.add_outline(calculate_polygon_coords(cell))
-	#print_debug(calculate_polygon_coords(cell), Rect2i(Vector2i(cell.x, (cell.y - 1))  * cellSize,cellSize).grow(2))
-	region.navigation_polygon.baking_rect = Rect2i(Vector2i(cell.x, (cell.y - 1))  * cellSize,cellSize).grow(cellSize.x)
-	region.navigation_polygon.border_size = cellSize.x
-	thread.start(region.bake_navigation_polygon)
-	polygon_map[cell] = region
-	return region 
+	region.bake_navigation_polygon()
 
 static func polygon_hash_map_manager(cell: Vector2i):
 	if polygon_map.has(cell):

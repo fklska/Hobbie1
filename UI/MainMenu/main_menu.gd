@@ -26,16 +26,16 @@ func _on_load_world_pressed() -> void:
 
 func load_world():
 	var directory = DirAccess.open(saveFolderPath)
-	var worldList: Array[GeneratorData] = []
+	var worldList: Array[SimpleGeneratorData] = []
 
 	if directory:
 		directory.list_dir_begin()
 		var file_name = directory.get_next()
 		while file_name != "":
 			if not directory.current_is_dir():
-				if file_name.ends_with(".tres"):
+				if file_name.ends_with(".tres") and file_name.begins_with("__SIMPLE"):
 					var file_path = saveFolderPath + file_name
-					var node: GeneratorData = load(file_path)
+					var node: SimpleGeneratorData = load(file_path)
 					if (not loadedWorlds.has(node)):
 						worldList.append(node)
 						loadedWorlds.insert(node)

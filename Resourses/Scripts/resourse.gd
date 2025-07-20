@@ -9,10 +9,6 @@ class_name ActiveResourses
 
 @export var damage_node: PackedScene
 
-@onready var hb = $healthbar
-@onready var damage_bar = $damage_bar
-@onready var timer: Timer = $damage_bar/Timer
-@onready var anim = $AnimationPlayer
 
 var type_name: Dictionary = {
 	1: "Stone",
@@ -24,23 +20,11 @@ var type_name: Dictionary = {
 func get_damage(damage: int):
 	HEALTH -= damage
 	current_color.a8 -= 5
-	anim.play("get_hit")
 	poup(str(damage))
-	update_healthbar()
 
 	if HEALTH <= 0:
 		#nav_mesh.remove_child(self)
 		queue_free()
-
-func update_healthbar():
-	hb.value = HEALTH
-	timer.start()
-	if hb.value == 100:
-		hb.visible = false
-		damage_bar.visible = false
-	else:
-		hb.visible = true
-		damage_bar.visible = true
 
 func poup(amount: String):
 	var damage = damage_node.instantiate()
@@ -54,26 +38,18 @@ func get_texture():
 func get_sprite():
 	return get_node("Texture")
 
-func show_healthbar():
-	hb.visible = true
-
-func _on_timer_timeout():
-	damage_bar.value = HEALTH
-
 func show_selected_info():
 	return {
 		"texture": get_node("Texture").texture,
 		"text": ("Resourse " + type_name.get(type) + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
 	}
-
+	
 func _to_string():
 	return ("Resourse " + type_name.get(type) + "\n Health: " + str(HEALTH) + "\n Storage: " + str(STORAGE))
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
-	visible = true
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
-	visible = false
