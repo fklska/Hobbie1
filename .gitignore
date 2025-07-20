@@ -26,4 +26,4 @@ mono_crash.*.json
 .vs/
 .vscode/
 
-.SavedWorlds/
+SavedWorlds/
