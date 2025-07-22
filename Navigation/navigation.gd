@@ -18,11 +18,11 @@ var source_geometry: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGe
 func _ready() -> void:
 	queue_redraw()
 	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 0)
-	NavigationServer2D.set_debug_enabled(false)
+	NavigationServer2D.set_debug_enabled(true)
 	#bake_all_navigation_map()
 	
-static func bake_all_navigation_map():
-	var map_size = GENERATOR.genData.mapSize  / 16
+static func bake_all_navigation_map(mapSize: Vector2i):
+	var map_size = mapSize / 16
 	for x in range(map_size.x):
 		for y in range(map_size.y + 1):
 			bake_navigation_on_cell(Vector2i(x, y))
@@ -56,7 +56,7 @@ static func set_up_navigation_region(navigation_root_node: Node2D):
 	polygon.source_geometry_group_name = "navigation_polygon_source_geometry_group"
 	polygon.agent_radius = 10
 	region.navigation_polygon = polygon
-	navigation_root_node.call_deferred("add_child", region)
+	await navigation_root_node.call_deferred("add_child", region)
 	return region
 
 static func calculate_polygon_coords(cell: Vector2i) -> PackedVector2Array:
@@ -68,14 +68,14 @@ static func calculate_polygon_coords(cell: Vector2i) -> PackedVector2Array:
 	])
 
 static func bake_navigation_on_cell(cell: Vector2i) -> void:
-	var region = polygon_hash_map_manager(cell)
+	var region = await polygon_hash_map_manager(cell)
 	region.bake_navigation_polygon()
 
 static func polygon_hash_map_manager(cell: Vector2i):
 	if polygon_map.has(cell):
 		return polygon_map[cell]
 	
-	var region = set_up_navigation_region(GlobalNavigation)
+	var region = await set_up_navigation_region(GlobalNavigation)
 	region.navigation_polygon.add_outline(calculate_polygon_coords(cell))
 	#print_debug(calculate_polygon_coords(cell), Rect2i(Vector2i(cell.x, (cell.y - 1))  * cellSize,cellSize).grow(2))
 	region.navigation_polygon.baking_rect = Rect2i(Vector2i(cell.x, (cell.y - 1))  * cellSize,cellSize).grow(cellSize.x)

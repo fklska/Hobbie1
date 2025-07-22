@@ -11,7 +11,7 @@ public partial class GeneratorData : Resource
     [Export] public Vector2I SpawnPoint;
     [Export] public String WorldName = GenerationUtils.GenerateNameWorld();
     [Export] public Godot.Collections.Array<Godot.Collections.Array<Tile>> Map;
-
+    [Export] public Godot.Collections.Array<Vector2I> TreeCoords;
     [Export] public int seed;
 
     [Export] public Image HeightMap, HeatMap, MoistureMap, BiomeMap;
@@ -38,7 +38,7 @@ public partial class GeneratorData : Resource
         SpawnPoint = new Vector2I(mapSize.X * GenerationUtils.TILE_SIZE / 2, mapSize.Y * GenerationUtils.TILE_SIZE / 2);
         WorldName = GenerationUtils.GenerateNameWorld();
         //GenerateNewSeed();
-
+        TreeCoords = new Godot.Collections.Array <Vector2I>();
         Map = InitializeArray();
 
         BiomeMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);

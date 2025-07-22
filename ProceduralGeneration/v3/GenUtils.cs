@@ -209,6 +209,7 @@ public static partial class GenerationUtils
         node.Name = Title;
         owner.AddChild(node);
         node.Owner = owner;
+        node.YSortEnabled = true;
 
         return node;
     }

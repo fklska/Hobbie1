@@ -46,7 +46,10 @@ public partial class EnviromnetGenerationStep : GenerationStep
                     if (TreeValidTileTypes.Contains(genData.Map[x][y].Type))
                     {
                         if(!GenerationUtils.IsEdgeTile(x, y, genData.Map[x][y].Type, genData))
-                        { genData.Map[x][y].SetResorsesValues(treeNoiseValue, oreNoiseValue, GetWoodType(treeNoiseValue, genData.Map[x][y].Type)); }
+                        { 
+                            genData.Map[x][y].SetResorsesValues(treeNoiseValue, oreNoiseValue, GetWoodType(treeNoiseValue, genData.Map[x][y].Type));
+                            if(genData.Map[x][y].Resourse != ResorseType.None) genData.TreeCoords.Add(new Vector2I(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE));
+                        }
                     }
 
                     /*if (OreValidTileTypes.Contains(genData.Map[x][y].Type))

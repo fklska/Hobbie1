@@ -126,8 +126,3 @@ func get_next_path_pos():
 	var value = Path[0]
 	Path.remove_at(0)
 	return value
-
-func _on_timer_timeout() -> void:
-	var dest = get_global_mouse_position() + Vector2(randi_range(-100, 100), randi_range(-100, 100))
-	#Path = NavigationServer2D.map_get_path(get_world_2d().navigation_map, global_position, dest, true)
-	nav.target_position = dest

@@ -36,7 +36,7 @@ texture = ExtResource("4_npxcj")
 position = Vector2(0, 9)
 polygon = PackedVector2Array(-6, -4, 6, -4, 6, 5, -6, 5)
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="." index="6"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." index="4"]
 visible = false
 z_index = -1
 occluder = SubResource("OccluderPolygon2D_1gxm3")

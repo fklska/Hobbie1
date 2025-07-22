@@ -20,7 +20,6 @@ var type_name: Dictionary = {
 func get_damage(damage: int):
 	HEALTH -= damage
 	current_color.a8 -= 5
-	poup(str(damage))
 
 	if HEALTH <= 0:
 		#nav_mesh.remove_child(self)

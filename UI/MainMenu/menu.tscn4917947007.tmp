@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsxe317kkbedc"]
+
+[ext_resource type="Script" uid="uid://oolx3r0pang7" path="res://UI/MainMenu/main_menu.gd" id="1_k7f4m"]
+[ext_resource type="PackedScene" uid="uid://pd4inyp1lk58" path="res://UI/MainMenu/generation_panel.tscn" id="2_vxkf2"]
+[ext_resource type="PackedScene" uid="uid://dm2omuqu5juo0" path="res://UI/prefabs/world_list_panel.tscn" id="3_62lfh"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k7f4m")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.507813, 0.464854, 0.382843, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="MainButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -20.0
+offset_right = 32.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="NewWorld" type="Button" parent="MainButtons"]
+custom_minimum_size = Vector2(256, 32)
+layout_mode = 2
+text = "New World"
+
+[node name="LoadWorld" type="Button" parent="MainButtons"]
+custom_minimum_size = Vector2(256, 32)
+layout_mode = 2
+text = "Load World
+"
+
+[node name="GenerationPanel" parent="." instance=ExtResource("2_vxkf2")]
+visible = false
+layout_mode = 1
+
+[node name="WorldListPanel" parent="." instance=ExtResource("3_62lfh")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="MainButtons/NewWorld" to="." method="_on_new_world_pressed"]
+[connection signal="pressed" from="MainButtons/LoadWorld" to="." method="_on_load_world_pressed"]

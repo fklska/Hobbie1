@@ -244,10 +244,8 @@ debug_path_custom_line_width = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_dlad1")
+&"": SubResource("AnimationLibrary_dlad1")
 }
 
 [node name="Timer" type="Timer" parent="." index="3"]
 autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

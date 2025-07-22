@@ -29,3 +29,10 @@ mono_crash.*.json
 SavedWorlds/
 
 SavedWorlds
+
+.venv
+venv
+.venv/
+venv/
+.env/
+env

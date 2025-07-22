@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://du28a5ah6utll"]
+
+[ext_resource type="PackedScene" uid="uid://b3lrti1cgcygf" path="res://AI/Prefabs/main_collector_villager.tscn" id="2_vbodk"]
+[ext_resource type="Script" uid="uid://6smlg5lphbwc" path="res://addons/godot_rl_agents/sync.gd" id="3_tu0au"]
+
+[node name="Training" type="Node"]
+
+[node name="MainCollectorVillager" parent="." instance=ExtResource("2_vbodk")]
+position = Vector2(2571, 1550)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("3_tu0au")
+metadata/_custom_type_script = "uid://6smlg5lphbwc"
