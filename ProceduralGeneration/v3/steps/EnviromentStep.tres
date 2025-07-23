@@ -24,4 +24,4 @@ domain_warp_enabled = true
 script = ExtResource("1_1knl1")
 TreeNoise = SubResource("FastNoiseLite_1knl1")
 OreNoise = SubResource("FastNoiseLite_gcloi")
-Enabled = true
+Enabled = false

@@ -38,36 +38,52 @@ public partial class BasicLandScapeStep : GenerationStep
             LatitudeMask.Height = generationData.mapSize.Y;
             LatitudeMask.Width = generationData.mapSize.X;
 
-
             Image LatitudeHeatGradient = LatitudeMask.GetImage();
-            for (int x = 0; x < generationData.mapSize.X; x++)
+            for (int chunk_x = 0; chunk_x < generationData.x_chunk_count; chunk_x++)
             {
-                for (int y = 0; y < generationData.mapSize.Y; y++)
+                for (int chunk_y = 0; chunk_y < generationData.y_chunk_count; chunk_y++)
                 {
-                    float heightValue = (heightNoiseData.noiseValues[x,y] - heightNoiseData.min)/(heightNoiseData.max - heightNoiseData.min);
+                    ChunkData chunk = generationData.ChunkMap[chunk_x][chunk_y];
+                    int local_x = 0;
 
-                    float fractalHeatValue = (heatNoiseData.noiseValues[x, y] - heatNoiseData.min) / (heatNoiseData.max - heatNoiseData.min);
-                    float latitudeMultiplier = LatitudeHeatGradient.GetPixel(x, y).R * (1 + fractalHeatValue);
-                    float heatValue = latitudeMultiplier * (1 - heightValue * ClimateHeightCurve.Sample(heightValue));
+                    for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
+                    {
+                        int local_y = 0;
+                        for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
+                        {
+                            //GD.Print($"Coords: {x} {y}");
 
-                    float fractalMoistureValue = (moistureNoiseData.noiseValues[x, y] - moistureNoiseData.min) / (moistureNoiseData.max - moistureNoiseData.min);
-                    float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue);
+                            float heightValue = (heightNoiseData.noiseValues[x, y] - heightNoiseData.min) / (heightNoiseData.max - heightNoiseData.min);
 
-                    // Store Data
-                    generationData.Map[x][y].UpdateInfo(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
+                            float fractalHeatValue = (heatNoiseData.noiseValues[x, y] - heatNoiseData.min) / (heatNoiseData.max - heatNoiseData.min);
+                            float latitudeMultiplier = LatitudeHeatGradient.GetPixel(x, y).R * (1 + fractalHeatValue);
+                            float heatValue = latitudeMultiplier * (1 - heightValue * ClimateHeightCurve.Sample(heightValue));
 
-                    // Render DELETE AFTER PROMO
-                    generationData.HeightMap.SetPixel(x, y, generationData.HeightGrad.Sample(heightValue));
-                    generationData.HeatMap.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(heatValue));
-                    generationData.MoistureMap.SetPixel(x, y, generationData.MoistureMapRenderColors.Sample(moistureValue));
-                    generationData.BiomeMap.SetPixel(x, y, GenerationUtils.getTileTypeColor(generationData.Map[x][y].Type));
+                            float fractalMoistureValue = (moistureNoiseData.noiseValues[x, y] - moistureNoiseData.min) / (moistureNoiseData.max - moistureNoiseData.min);
+                            float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue);
 
-                    generationData.DebugLatitudeMask.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(LatitudeHeatGradient.GetPixel(x, y).R));
-                    generationData.DebugHeatFractal.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(fractalHeatValue));
-                    generationData.DebugLatFractal.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(latitudeMultiplier));
+                            // Store Data
+                            generationData.Map[x][y].UpdateInfo(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
+                            
+                            chunk.Map[local_x][local_y].UpdateInfo(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
+
+                            // Render DELETE AFTER PROMO
+                            generationData.HeightMap.SetPixel(x, y, generationData.HeightGrad.Sample(heightValue));
+                            generationData.HeatMap.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(heatValue));
+                            generationData.MoistureMap.SetPixel(x, y, generationData.MoistureMapRenderColors.Sample(moistureValue));
+                            generationData.BiomeMap.SetPixel(x, y, GenerationUtils.getTileTypeColor(generationData.Map[x][y].Type));
+
+                            generationData.DebugLatitudeMask.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(LatitudeHeatGradient.GetPixel(x, y).R));
+                            generationData.DebugHeatFractal.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(fractalHeatValue));
+                            generationData.DebugLatFractal.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(latitudeMultiplier));
 
 
-                    generationData.DebugMoistureFractal.SetPixel(x, y, generationData.MoistureMapRenderColors.Sample(fractalMoistureValue));
+                            generationData.DebugMoistureFractal.SetPixel(x, y, generationData.MoistureMapRenderColors.Sample(fractalMoistureValue));
+                           
+                            local_y++;
+                        }
+                        local_x++;
+                    }
                 }
             }
         }

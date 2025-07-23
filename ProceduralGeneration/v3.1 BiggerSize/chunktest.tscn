@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=4 uid="uid://bkvskl1iffhpb"]
+
+[ext_resource type="PackedScene" uid="uid://bvjyvmqa0cr3j" path="res://ProceduralGeneration/v3/DualTileMap/map.tscn" id="1_pcqkq"]
+[ext_resource type="TileSet" uid="uid://g648pwt45v8r" path="res://ProceduralGeneration/v3.1 BiggerSize/DualTileMapV3.1/V3.1.tres" id="2_sc43s"]
+
+[node name="Chunktest" type="Node2D"]
+
+[node name="Map" parent="." instance=ExtResource("1_pcqkq")]
+tile_map_data = PackedByteArray("AAABAAEAAAACAAEAAAABAAIAAAACAAEAAAACAAIAAAACAAEAAAADAAEAAAACAAEAAAADAAIAAAACAAEAAAAEAAIAAAACAAEAAAADAAMAAAACAAEAAAACAAEAAAACAAEAAAABAAMAAAACAAEAAAABAAQAAAACAAEAAAACAAQAAAACAAEAAAADAAQAAAACAAEAAAAEAAQAAAACAAEAAAAEAAMAAAACAAEAAAAEAAEAAAACAAEAAAACAAMAAAACAAEAAAA=")
+tile_set = ExtResource("2_sc43s")
+rendering_quadrant_size = 8

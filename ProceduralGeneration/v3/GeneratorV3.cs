@@ -26,6 +26,15 @@ public partial class GeneratorV3 : Node2D
     public override void _Ready()
     {
         //ClearTileMapTemlate();
+        genData.ResetData();
+        Stopwatch ExecuteStep = Stopwatch.StartNew();
+        foreach (var step in steps)
+        {
+            step.Execute(genData);
+        }
+        ExecuteStep.Stop();
+        GD.Print($"Every Step Executed in {ExecuteStep}");
+        preRender(genData);
     }
 
     public override void _Process(double delta)
@@ -87,11 +96,24 @@ public partial class GeneratorV3 : Node2D
         DebugMoistureFractal.Texture = ImageTexture.CreateFromImage(genData.DebugMoistureFractal);
 
         Image finalRender = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
-        for (int x = 0; x < genData.mapSize.X; x++)
+
+        for (int chunk_x = 0; chunk_x < genData.x_chunk_count; chunk_x++)
         {
-            for (int y = 0; y < genData.mapSize.Y; y++)
+            for (int chunk_y = 0; chunk_y < genData.y_chunk_count; chunk_y++)
             {
-                finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(genData.Map[x][y].Type));
+                ChunkData chunk = genData.ChunkMap[chunk_x][chunk_y];
+                int local_x = 0;
+                for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
+                {
+                    int local_y = 0;
+                    for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
+                    {
+                        //GD.Print($"Coords: {x} {y}");
+                        finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(chunk.Map[local_x][local_y].Type));
+                        local_y++;
+                    }
+                    local_x++;
+                }
             }
         }
         FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);

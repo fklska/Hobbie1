@@ -48,7 +48,7 @@ func _to_string():
 
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
+	process_mode = Node.PROCESS_MODE_INHERIT
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	process_mode = Node.PROCESS_MODE_INHERIT
+	process_mode = Node.PROCESS_MODE_DISABLED

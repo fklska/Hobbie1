@@ -633,7 +633,7 @@ enableConcentration = false
 [node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_7da7d")
 sprite_frames = SubResource("SpriteFrames_2vylw")
-animation = &"new_animation"
+animation = &"idleStatic"
 offset = Vector2(0, -16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
