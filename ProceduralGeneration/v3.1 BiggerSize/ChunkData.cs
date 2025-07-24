@@ -1,11 +1,13 @@
 using Godot;
-using System;
 
+[GlobalClass]
+[Tool]
 public partial class ChunkData : Resource
 {
     [Export] public Vector2I GlobalCoord;
     [Export] public Godot.Collections.Array<Godot.Collections.Array<Tile>> Map;
     [Export] public Vector4I rect;
+    public Godot.Collections.Array<Node2D> Resourses = new Godot.Collections.Array<Node2D>();
 
     public void ResetData()
     {

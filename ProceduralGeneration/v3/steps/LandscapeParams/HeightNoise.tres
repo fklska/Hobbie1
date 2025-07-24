@@ -1,7 +1,7 @@
 [gd_resource type="FastNoiseLite" format=3 uid="uid://cmpa0acnfcnai"]
 
 [resource]
-seed = -15876779
+seed = -171488491
 frequency = 0.0001
 cellular_distance_function = 2
 cellular_return_type = 0

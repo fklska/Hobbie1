@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Godot.TextServer;
 
 public static partial class GenerationUtils
 {
@@ -42,6 +43,24 @@ public static partial class GenerationUtils
         return borderLine;
     }
 
+    public static HashSet<Vector2I> GetEdgeTiles(List<TileType> typesToSearchFor, List<TileType> typesAdjestedTo, ChunkData chunk)
+    {
+        HashSet<Vector2I> borderLine = new HashSet<Vector2I>();
+
+        for (int x = 0; x < GenerationSettings.CHUNK_SIZE; x++)
+        {
+            for (int y = 0; y < GenerationSettings.CHUNK_SIZE; y++)
+            {
+                if (typesToSearchFor.Contains(chunk.Map[x][y].Type) && IsAdjacentToTiles(x, y, typesAdjestedTo, chunk))
+                {
+                    borderLine.Add(new Vector2I(x, y));
+                }
+            }
+        }
+
+        return borderLine;
+    }
+
     public static HashSet<Vector2I> ExpandEdgeTiles(HashSet<Vector2I> initialLayer, int widht, List<TileType> validTiles, GeneratorData genData)
     {
         HashSet<Vector2I> LastExpendedTiles = new HashSet<Vector2I>();
@@ -57,6 +76,34 @@ public static partial class GenerationUtils
                     if (nCoords.X >= 0 && nCoords.X < genData.mapSize.X && nCoords.Y >= 0 && nCoords.Y < genData.mapSize.Y)
                     {
                         if (validTiles.Contains(genData.Map[nCoords.X][nCoords.Y].Type))
+                        {
+                            initialLayer.Add(nCoords);
+                            LastExpendedTiles.Add(nCoords);
+                        }
+                    }
+                }
+            }
+            currentOutTileLine = LastExpendedTiles;
+            LastExpendedTiles = new HashSet<Vector2I>();
+        }
+        return initialLayer;
+    }
+
+    public static HashSet<Vector2I> ExpandEdgeTiles(HashSet<Vector2I> initialLayer, int widht, List<TileType> validTiles, ChunkData chunk)
+    {
+        HashSet<Vector2I> LastExpendedTiles = new HashSet<Vector2I>();
+        HashSet<Vector2I> currentOutTileLine = new HashSet<Vector2I>(initialLayer); // Нужно создать новый хешсет иначе ошибка
+
+        for (int i = 0; i < widht; i++)
+        {
+            foreach (Vector2I tileCoor in currentOutTileLine)
+            {
+                foreach (Vector2I dir in dirs)
+                {
+                    Vector2I nCoords = tileCoor + dir;
+                    if (nCoords.X >= 0 && nCoords.X < GenerationSettings.CHUNK_SIZE && nCoords.Y >= 0 && nCoords.Y < GenerationSettings.CHUNK_SIZE)
+                    {
+                        if (validTiles.Contains(chunk.Map[nCoords.X][nCoords.Y].Type))
                         {
                             initialLayer.Add(nCoords);
                             LastExpendedTiles.Add(nCoords);
@@ -89,6 +136,25 @@ public static partial class GenerationUtils
         return false;
     }
 
+    public static bool IsAdjacentToTiles(int x, int y, List<TileType> tileTypes, ChunkData chunk)
+    {
+        foreach (Vector2I direction in dirs)
+        {
+            int nx = x + direction.X;
+            int ny = y + direction.Y;
+
+            if (nx >= 0 && nx < GenerationSettings.CHUNK_SIZE && ny >= 0 && ny < GenerationSettings.CHUNK_SIZE)
+            {
+                if (tileTypes.Contains(chunk.Map[nx][ny].Type))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static bool IsEdgeTile(int x, int y, TileType tileType, GeneratorData genData)
     {
         foreach (Vector2I direction in dirs)
@@ -99,6 +165,25 @@ public static partial class GenerationUtils
             if (nx >= 0 && nx < genData.mapSize.X && ny >= 0 && ny < genData.mapSize.Y)
             {
                 if (genData.Map[nx][ny].Type != tileType)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static bool IsEdgeTile(int x, int y, TileType tileType, ChunkData chunk)
+    {
+        foreach (Vector2I direction in dirs)
+        {
+            int nx = x + direction.X;
+            int ny = y + direction.Y;
+
+            if (nx >= 0 && nx < GenerationSettings.CHUNK_SIZE && ny >= 0 && ny < GenerationSettings.CHUNK_SIZE)
+            {
+                if (chunk.Map[nx][ny].Type != tileType)
                 {
                     return true;
                 }
@@ -128,6 +213,38 @@ public static partial class GenerationUtils
             }
         }
         return noiseData;
+    }
+
+    public static Vector2I PixelToChunkCoord(Vector2 coords)
+    {
+        if(coords.X < 0 || coords.Y < 0)
+        {
+            GD.PrintErr("Non valid coord < 0");
+            return Vector2I.Zero;
+        }
+        int pixel_chunk_size = GenerationSettings.CHUNK_SIZE * GenerationSettings.TILE_SIZE;
+        return new Vector2I((int)coords.X / pixel_chunk_size, (int)coords.Y / pixel_chunk_size);
+    }
+
+    public static Godot.Collections.Array<Vector2I> ChunckAreaCoords(Vector2I ChunkCoord)
+    {
+        Godot.Collections.Array<Vector2I> chunks = new Godot.Collections.Array<Vector2I>();
+
+        chunks.Add(ChunkCoord);
+        foreach (Vector2I direction in dirs)
+        {
+            int nx = ChunkCoord.X + direction.X;
+            int ny = ChunkCoord.Y + direction.Y;
+
+            if(nx >= 0 && nx < GenerationSettings.MAP_CHUNK_SIZE_X && ny >= 0 && ny < GenerationSettings.MAP_CHUNK_SIZE_Y)
+            {
+                chunks.Add(new Vector2I(nx, ny));
+            }
+
+        }
+        GD.Print(chunks);
+        return chunks;
+
     }
 
     public static Color getTileTypeColor(TileType tileType)

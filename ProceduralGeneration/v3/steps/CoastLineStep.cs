@@ -30,13 +30,22 @@ public partial class CoastLineStep : GenerationStep
     {
         if (Enabled)
         {
-            HashSet<Vector2I> coastLine = GenerationUtils.GetEdgeTiles(sand_tilesToSearchFor, sand_tilesAdjestedTo, genData);
-
-            HashSet<Vector2I> sandTiles = GenerationUtils.ExpandEdgeTiles(coastLine, CoastLineSize, ValidTilesToExpand, genData);
-
-            foreach (Vector2I sand_coord in sandTiles)
+            for (int chunk_x = 0; chunk_x < GenerationSettings.MAP_CHUNK_SIZE_X; chunk_x++)
             {
-                genData.Map[sand_coord.X][sand_coord.Y].Type = TileType.Desert;
+                for (int chunk_y = 0; chunk_y < GenerationSettings.MAP_CHUNK_SIZE_Y; chunk_y++)
+                {
+                    ChunkData chunk = genData.ChunkMap[chunk_x][chunk_y];
+
+                    HashSet<Vector2I> coastLine = GenerationUtils.GetEdgeTiles(sand_tilesToSearchFor, sand_tilesAdjestedTo, chunk);
+
+                    HashSet<Vector2I> sandTiles = GenerationUtils.ExpandEdgeTiles(coastLine, CoastLineSize, ValidTilesToExpand, chunk);
+
+                    foreach (Vector2I sand_coord in sandTiles)
+                    {
+                        chunk.Map[sand_coord.X][sand_coord.Y].Type = TileType.Desert;
+                    }
+                        
+                }
             }
         }
     }

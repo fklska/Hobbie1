@@ -34,14 +34,11 @@ public partial class GeneratorData : Resource
     [Export] public Gradient MoistureMapRenderColors;
     //Debug
     public Image DebugMoistureFractal;
-    public int x_chunk_count;
-    public int y_chunk_count;
+
     public void ResetData()
     {
 
         mapSize = GenerationSettings.MapSize;
-        x_chunk_count = (int)mapSize.X / GenerationSettings.CHUNK_SIZE;
-        y_chunk_count = (int)mapSize.Y / GenerationSettings.CHUNK_SIZE;
 
         SpawnPoint = new Vector2I(mapSize.X * GenerationUtils.TILE_SIZE / 2, mapSize.Y * GenerationUtils.TILE_SIZE / 2);
         WorldName = GenerationUtils.GenerateNameWorld();
@@ -82,14 +79,14 @@ public partial class GeneratorData : Resource
     public Godot.Collections.Array<Godot.Collections.Array<ChunkData>> InitializeChunkArray()
     {
         Godot.Collections.Array<Godot.Collections.Array<ChunkData>> Map = new Godot.Collections.Array<Godot.Collections.Array<ChunkData>>();
-        Map.Resize(x_chunk_count);
+        Map.Resize(GenerationSettings.MAP_CHUNK_SIZE_X);
 
-        for (int x = 0; x < x_chunk_count; x++)
+        for (int x = 0; x < GenerationSettings.MAP_CHUNK_SIZE_X; x++)
         {
             Map[x] = new Godot.Collections.Array<ChunkData>();
-            Map[x].Resize(y_chunk_count);
+            Map[x].Resize(GenerationSettings.MAP_CHUNK_SIZE_Y);
 
-            for (int y = 0; y < y_chunk_count; y++)
+            for (int y = 0; y < GenerationSettings.MAP_CHUNK_SIZE_Y; y++)
             {
                 Map[x][y] = new ChunkData();
                 Map[x][y].GlobalCoord = new Vector2I(x, y);

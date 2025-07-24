@@ -27,6 +27,8 @@ public partial class GenerationPanel : Control
     public void _on_h_slider_value_changed(int value)
     {
         GenerationSettings.MapSize = new Vector2I(128 * value, 128 * value);
+        GenerationSettings.RecalculateSetting();
+        GD.Print($"{GenerationSettings.MapSize} {GenerationSettings.MAP_CHUNK_SIZE_X}");
     }
 
     public async void _on_generate_button_down()

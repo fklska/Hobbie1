@@ -39,9 +39,9 @@ public partial class BasicLandScapeStep : GenerationStep
             LatitudeMask.Width = generationData.mapSize.X;
 
             Image LatitudeHeatGradient = LatitudeMask.GetImage();
-            for (int chunk_x = 0; chunk_x < generationData.x_chunk_count; chunk_x++)
+            for (int chunk_x = 0; chunk_x < GenerationSettings.MAP_CHUNK_SIZE_X; chunk_x++)
             {
-                for (int chunk_y = 0; chunk_y < generationData.y_chunk_count; chunk_y++)
+                for (int chunk_y = 0; chunk_y < GenerationSettings.MAP_CHUNK_SIZE_Y; chunk_y++)
                 {
                     ChunkData chunk = generationData.ChunkMap[chunk_x][chunk_y];
                     int local_x = 0;

@@ -35,30 +35,43 @@ public partial class EnviromnetGenerationStep : GenerationStep
             NoiseData TreeNoiseData = GenerationUtils.GetNoiseData(TreeNoise, genData.mapSize);
             NoiseData OreNoiseData = GenerationUtils.GetNoiseData(OreNoise, genData.mapSize);
 
-            for (int x = 0; x < genData.mapSize.X; x++)
+            for (int chunk_x = 0; chunk_x < GenerationSettings.MAP_CHUNK_SIZE_X; chunk_x++)
             {
-                for (int y = 0; y < genData.mapSize.Y; y++)
+                for (int chunk_y = 0; chunk_y < GenerationSettings.MAP_CHUNK_SIZE_Y; chunk_y++)
                 {
-                    float treeNoiseValue = (TreeNoiseData.noiseValues[x, y] - TreeNoiseData.min) / (TreeNoiseData.max - TreeNoiseData.min);
+                    ChunkData chunk = genData.ChunkMap[chunk_x][chunk_y];
+                    int local_x = 0;
 
-                    float oreNoiseValue = (OreNoiseData.noiseValues[x, y] - OreNoiseData.min) / (OreNoiseData.max - OreNoiseData.min);
-
-                    if (TreeValidTileTypes.Contains(genData.Map[x][y].Type))
+                    for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
                     {
-                        if(!GenerationUtils.IsEdgeTile(x, y, genData.Map[x][y].Type, genData))
-                        { 
-                            genData.Map[x][y].SetResorsesValues(treeNoiseValue, oreNoiseValue, GetWoodType(treeNoiseValue, genData.Map[x][y].Type));
-                            if(genData.Map[x][y].Resourse != ResorseType.None) genData.TreeCoords.Add(new Vector2I(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE));
-                        }
-                    }
-
-                    /*if (OreValidTileTypes.Contains(genData.Map[x][y].Type))
-                    {
-                        if (genData.Map[x][y].Resourse == ResorseType.None)
+                        int local_y = 0;
+                        for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
                         {
-                            genData.Map[x][y].Resourse = GetOreResType(oreNoiseValue);
+                            float treeNoiseValue = (TreeNoiseData.noiseValues[x, y] - TreeNoiseData.min) / (TreeNoiseData.max - TreeNoiseData.min);
+
+                            float oreNoiseValue = (OreNoiseData.noiseValues[x, y] - OreNoiseData.min) / (OreNoiseData.max - OreNoiseData.min);
+
+                            if (TreeValidTileTypes.Contains(chunk.Map[local_x][local_y].Type))
+                            {
+                                if (!GenerationUtils.IsEdgeTile(local_x, local_y, chunk.Map[local_x][local_y].Type, chunk))
+                                {
+                                    chunk.Map[local_x][local_y].SetResorsesValues(treeNoiseValue, oreNoiseValue, GetWoodType(treeNoiseValue, chunk.Map[local_x][local_y].Type));
+                                    //if (chunk.Map[local_x][local_y].Resourse != ResorseType.None) genData.TreeCoords.Add(new Vector2I(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE));
+                                }
+                            }
+
+                            /*if (OreValidTileTypes.Contains(genData.Map[x][y].Type))
+                            {
+                                if (genData.Map[x][y].Resourse == ResorseType.None)
+                                {
+                                    genData.Map[x][y].Resourse = GetOreResType(oreNoiseValue);
+                                }
+                            }*/
+
+                            local_y++;
                         }
-                    }*/
+                        local_x++;
+                    }
                 }
             }
         }

@@ -15,4 +15,4 @@ func _on_load_world_button_down() -> void:
 	player.position = WorldData.SpawnPoint
 	get_tree().root.add_child(player)
 	get_tree().root.get_node("Menu").visible = false
-	Navigation.bake_all_navigation_map(WorldData.mapSize)
+	#Navigation.bake_all_navigation_map(WorldData.mapSize)

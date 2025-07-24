@@ -4,7 +4,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gcloi"]
 noise_type = 2
-seed = -1299679416
+seed = -171488491
 frequency = 0.0206
 fractal_type = 2
 fractal_octaves = 6
@@ -13,7 +13,7 @@ cellular_return_type = 4
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1knl1"]
 noise_type = 2
-seed = -1299679416
+seed = -171488491
 frequency = 0.1291
 fractal_octaves = 1
 cellular_distance_function = 2
@@ -24,4 +24,4 @@ domain_warp_enabled = true
 script = ExtResource("1_1knl1")
 TreeNoise = SubResource("FastNoiseLite_1knl1")
 OreNoise = SubResource("FastNoiseLite_gcloi")
-Enabled = false
+Enabled = true

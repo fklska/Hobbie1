@@ -25,16 +25,7 @@ public partial class GeneratorV3 : Node2D
 
     public override void _Ready()
     {
-        //ClearTileMapTemlate();
-        genData.ResetData();
-        Stopwatch ExecuteStep = Stopwatch.StartNew();
-        foreach (var step in steps)
-        {
-            step.Execute(genData);
-        }
-        ExecuteStep.Stop();
-        GD.Print($"Every Step Executed in {ExecuteStep}");
-        preRender(genData);
+        
     }
 
     public override void _Process(double delta)
@@ -97,9 +88,9 @@ public partial class GeneratorV3 : Node2D
 
         Image finalRender = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
 
-        for (int chunk_x = 0; chunk_x < genData.x_chunk_count; chunk_x++)
+        for (int chunk_x = 0; chunk_x < GenerationSettings.MAP_CHUNK_SIZE_X; chunk_x++)
         {
-            for (int chunk_y = 0; chunk_y < genData.y_chunk_count; chunk_y++)
+            for (int chunk_y = 0; chunk_y < GenerationSettings.MAP_CHUNK_SIZE_Y; chunk_y++)
             {
                 ChunkData chunk = genData.ChunkMap[chunk_x][chunk_y];
                 int local_x = 0;
@@ -118,6 +109,7 @@ public partial class GeneratorV3 : Node2D
         }
         FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);
     }
+    
 
     public void MapRender(GeneratorData genData, TileMapLayer map, Node2D ResourseRootNode, Node2D owner)
     {
@@ -149,7 +141,7 @@ public partial class GeneratorV3 : Node2D
         TileMapLayer MainMap = (TileMapLayer)GenerationUtils.SetNode2d("DualMap", MainTileMapPrefab, Map);
         Node2D Enviroment = GenerationUtils.SetNode2d("Enviroment", Map);
 
-        MapRender(genData, MainMap, Enviroment, Map);
+        //MapRender(genData, MainMap, Enviroment, Map);
 
         PackedScene.Pack(Map);
 
@@ -158,7 +150,19 @@ public partial class GeneratorV3 : Node2D
 
     public override void _Input(InputEvent @event)
     {
-        /*
+        /*if(!Engine.IsEditorHint())
+        {
+            if (@event.IsActionPressed("LeftMouseButton"))
+            {
+                LoadChunk(GenerationUtils.PixelToChunkCoord(GetGlobalMousePosition()), MainTileMapPrefab, ResorseNode, MainTileMapPrefab);
+            }
+
+            if (@event.IsActionPressed("RightMouseButton"))
+            {
+                UnloadChunk(GenerationUtils.PixelToChunkCoord(GetGlobalMousePosition()), MainTileMapPrefab);
+            }
+        }
+        
         if (@event.IsActionPressed("LeftMouseButton"))
         {
             Vector2I coords = MainTileMapPrefab.LocalToMap(GetGlobalMousePosition());
