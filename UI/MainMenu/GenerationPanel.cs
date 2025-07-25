@@ -57,6 +57,12 @@ public partial class GenerationPanel : Control
         Visible = false;
     }
 
+    public void _on_seed_label_value_changed(float value)
+    {
+        generator.genData.seed = (int)value;
+        seedLabel.Value = (int)value;
+    }
+
     public void PreRender()
     {
         heightMap.Texture = ImageTexture.CreateFromImage(generator.genData.HeightMap);

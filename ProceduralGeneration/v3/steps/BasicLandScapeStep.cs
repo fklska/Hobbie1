@@ -63,7 +63,7 @@ public partial class BasicLandScapeStep : GenerationStep
                             float moistureValue = (1 - heightValue * MoistureHeightCurve.Sample(heightValue)) * (1 + fractalMoistureValue);
 
                             // Store Data
-                            generationData.Map[x][y].UpdateInfo(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
+                            //generationData.Map[x][y].UpdateInfo(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
                             
                             chunk.Map[local_x][local_y].UpdateInfo(heightValue, heatValue, moistureValue, getTileType(heightValue, heatValue, moistureValue));
 
@@ -71,7 +71,7 @@ public partial class BasicLandScapeStep : GenerationStep
                             generationData.HeightMap.SetPixel(x, y, generationData.HeightGrad.Sample(heightValue));
                             generationData.HeatMap.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(heatValue));
                             generationData.MoistureMap.SetPixel(x, y, generationData.MoistureMapRenderColors.Sample(moistureValue));
-                            generationData.BiomeMap.SetPixel(x, y, GenerationUtils.getTileTypeColor(generationData.Map[x][y].Type));
+                            generationData.BiomeMap.SetPixel(x, y, GenerationUtils.getTileTypeColor(chunk.Map[local_x][local_y].Type));
 
                             generationData.DebugLatitudeMask.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(LatitudeHeatGradient.GetPixel(x, y).R));
                             generationData.DebugHeatFractal.SetPixel(x, y, generationData.HeatMapRenderGradient.Sample(fractalHeatValue));

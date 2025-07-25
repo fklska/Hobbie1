@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 [Tool]
 [GlobalClass]
@@ -16,6 +18,10 @@ public partial class WorldScene : Node2D
     public TileMapLayer MainTileMapPrefab;
     public Node2D Enviroment;
     public Node2D Navigator;
+
+    public Vector2I lastPlayerCell;
+
+    public HashSet<Vector2I> currentActiveChunkMap = new HashSet<Vector2I>();
 
     public override void _Ready()
     {
@@ -35,17 +41,19 @@ public partial class WorldScene : Node2D
         GetCell();
     }
 
-    public void InitionalChunkLoad()
+    public async void InitionalChunkLoad()
     {
-        Godot.Collections.Array<Vector2I> loadedChunks = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint));
+        Godot.Collections.Array<Vector2I> loadedChunks = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint), 3);
         foreach (Vector2I chunk in loadedChunks)
         {   
-            LoadChunk(chunk, MainTileMapPrefab, Enviroment, Enviroment);
+            await LoadChunk(chunk, MainTileMapPrefab, Enviroment, Enviroment);
             Navigator.CallDeferred("bake_navigation_on_cell", chunk);
+            currentActiveChunkMap.Add(chunk);
         }
+        lastPlayerCell = GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint);
     }
 
-    public void LoadChunk(Vector2I chunkCoord, TileMapLayer map, Node2D ResourseRootNode, Node2D owner)
+    public async Task LoadChunk(Vector2I chunkCoord, TileMapLayer map, Node2D ResourseRootNode, Node2D owner)
     {
         if (chunkCoord.X > GenerationSettings.MAP_CHUNK_SIZE_X || chunkCoord.Y > GenerationSettings.MAP_CHUNK_SIZE_Y)
         {
@@ -55,6 +63,10 @@ public partial class WorldScene : Node2D
 
         ChunkData chunk = GeneratorData.ChunkMap[chunkCoord.X][chunkCoord.Y];
 
+        if (chunk.Active == true) { return; }
+
+        chunk.Active = true;
+        currentActiveChunkMap.Add(chunkCoord);
         int local_x = 0;
         for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
         {
@@ -71,17 +83,19 @@ public partial class WorldScene : Node2D
                     chunk.Resourses.Add(prefab);
                     prefab.Position = new Vector2(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE); //+ offset;
 
-                    ResourseRootNode.AddChild(prefab);
+                    ResourseRootNode.CallDeferred("add_child", prefab);
                     //prefab.Owner = owner;
                 }
 
                 local_y++;
             }
             local_x++;
+
+            await ToSignal(GetTree(), "process_frame");
         }
     }
 
-    public void UnloadChunk(Vector2I chunkCoord, TileMapLayer map)
+    public async Task UnloadChunk(Vector2I chunkCoord, TileMapLayer map)
     {
         if (chunkCoord.X > GenerationSettings.MAP_CHUNK_SIZE_X || chunkCoord.Y > GenerationSettings.MAP_CHUNK_SIZE_Y)
         {
@@ -90,7 +104,8 @@ public partial class WorldScene : Node2D
         }
 
         ChunkData chunk = GeneratorData.ChunkMap[chunkCoord.X][chunkCoord.Y];
-
+        chunk.Active = false;
+        currentActiveChunkMap.Remove(chunkCoord);
         int local_x = 0;
         for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
         {
@@ -99,14 +114,52 @@ public partial class WorldScene : Node2D
             {
                 map.EraseCell(new Vector2I(x, y));
 
-                foreach (Node2D res in chunk.Resourses)
-                {
-                    res.QueueFree();
-                }
-
                 local_y++;
             }
             local_x++;
+            await ToSignal(GetTree(), "process_frame");
+        }
+
+        int cnt = 0;
+        foreach (Node2D res in chunk.Resourses)
+        {
+            res.CallDeferred("free");
+            cnt++;
+            if (cnt > 50)
+            { await ToSignal(GetTree(), "process_frame"); }
+        }
+        chunk.Resourses.Clear();
+    }
+
+    public async void UpdateChunkAroundPlayer(Vector2 coords)
+    {
+        Vector2I currentCell = GenerationUtils.PixelToChunkCoord(coords);
+
+        if (currentCell !=  lastPlayerCell)
+        {
+            Vector2I diff = currentCell - lastPlayerCell;
+
+            if (Math.Abs(diff.X) > 1 || Math.Abs(diff.Y) > 1)
+            {
+                GD.PrintErr("WTF! TELEPORT?");
+                lastPlayerCell = currentCell;
+                return;
+            }
+
+            Godot.Collections.Array<Vector2I> chunksToDelete = GenerationUtils.GetSideChunkFromDirection(-diff, lastPlayerCell, 4);
+            Godot.Collections.Array<Vector2I> chunksToLoad = GenerationUtils.GetSideChunkFromDirection(diff, currentCell, 4);
+
+            foreach(Vector2I chunk in chunksToDelete)
+            {
+                await UnloadChunk(chunk, MainTileMapPrefab);
+            }
+
+            foreach (Vector2I chunk in chunksToLoad)
+            {
+                await LoadChunk(chunk, MainTileMapPrefab, Enviroment, Enviroment);
+            }
+            //GD.Print($"Diff {diff}; Curr: {currentCell}; Delete: {chunksToDelete}; Load: {chunksToLoad}");
+            lastPlayerCell = currentCell;
         }
     }
 

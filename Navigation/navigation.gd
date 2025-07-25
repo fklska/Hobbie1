@@ -16,7 +16,7 @@ static var cellSize: Vector2i = Vector2i(1024, 1024)
 var source_geometry: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
 
 func _ready() -> void:
-	queue_redraw()
+	#queue_redraw()
 	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 0)
 	NavigationServer2D.set_debug_enabled(true)
 	#bake_all_navigation_map()
@@ -83,6 +83,22 @@ static func polygon_hash_map_manager(cell: Vector2i):
 	region.call_deferred("bake_navigation_polygon")
 	polygon_map[cell] = region
 	return region
+	
+func drawGridAtCell(cell: Vector2i, last_cell: Vector2i):
+	if (cell == last_cell): return
+	
+	var range: int = 2
+	for x in range(-range, range):
+		var nx = cell.x + x
+		for y in range(-range, range):
+			var ny = cell.y + y
+			draw_rect(
+				Rect2i(
+					Vector2i(nx, ny) * cellSize,
+					cellSize
+				),
+				rect_color, false
+			)
 
 static func StaticPixel2cell(pixel:Vector2) -> Vector2i:
 	var x = int(pixel.x/cellSize.x)
@@ -113,4 +129,5 @@ func _input(event: InputEvent) -> void:
 		__rebake_map()
 
 func  _draw() -> void:
-	debug_draw_grid()
+	#debug_draw_grid()
+	pass

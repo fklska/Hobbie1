@@ -25,7 +25,7 @@ public partial class GeneratorV3 : Node2D
 
     public override void _Ready()
     {
-        
+        genData.ResetData();
     }
 
     public override void _Process(double delta)
@@ -56,8 +56,8 @@ public partial class GeneratorV3 : Node2D
         ExecuteStep.Stop();
         GD.Print($"Every Step Executed in {ExecuteStep}");
 
-
         ResourceSaver.Save(genData, $"res://SavedWorlds/{genData.WorldName}.tres");
+
         GeneratorData dupl = ResourceLoader.Load<GeneratorData>($"res://SavedWorlds/{genData.WorldName}.tres");
 
         GenerateScene(dupl);
@@ -119,12 +119,12 @@ public partial class GeneratorV3 : Node2D
         {
             for (int y = 0; y < genData.mapSize.Y; y++)
             {
-                map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x][y].Type), new Vector2I(2, 1), 0);
+                //map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x][y].Type), new Vector2I(2, 1), 0);
 
-                ResorseType currType = genData.Map[x][y].Resourse;
+                ResorseType currType = ResorseType.None; //genData.Map[x][y].Resourse;
                 if (currType != ResorseType.None)
                 {
-                    Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x][y].Resourse).Instantiate();
+                    Node2D prefab = new Node2D(); //(Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x][y].Resourse).Instantiate();
                     Vector2 offset = new Vector2I(GD.RandRange(-50, 50), GD.RandRange(-50, 50));
                     prefab.Position = new Vector2(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE); //+ offset;
                     ResourseRootNode.AddChild(prefab);
@@ -194,11 +194,11 @@ public partial class GeneratorV3 : Node2D
         if (cell.X < genData.mapSize.X && cell.Y < genData.mapSize.Y && DebugInfo && cell != lastcell)
         {
             lastcell = cell;
-            float height = genData.Map[cell.X][cell.Y].heightValue;
-            float heat = genData.Map[cell.X][cell.Y].heatValue;
-            float moisture = genData.Map[cell.X][cell.Y].moistureValue;
-            TileType tileType = genData.Map[cell.X][cell.Y].Type;
-            GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
+            //float height = genData.Map[cell.X][cell.Y].heightValue;
+            //float heat = genData.Map[cell.X][cell.Y].heatValue;
+            //float moisture = genData.Map[cell.X][cell.Y].moistureValue;
+            //TileType tileType = genData.Map[cell.X][cell.Y].Type;
+            //GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
         }
     }
 }

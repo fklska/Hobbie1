@@ -14,6 +14,8 @@ const SPEED = 20.0
 @onready var animPlayer: AnimationPlayer = $AnimationPlayer
 @onready var concentration: ProgressBar = null #$Concentration
 
+var MAP: WorldScene = null
+
 enum {
 	RUN,
 	ATTACK,
@@ -23,7 +25,17 @@ var state = RUN
 
 var current_active_item = null
 
+var last_cell
+
+func _ready():
+	MAP = get_tree().root.get_node("Map")
+	last_cell = Vector2(global_position / (64 * 8))
+
+func _process(delta: float) -> void:
+	await UpdateChunks()
+
 func _physics_process(_delta):
+	redrawGrid()
 	match state:
 		RUN:
 			run()
@@ -32,6 +44,10 @@ func _physics_process(_delta):
 	
 	move_and_slide()
 
+func UpdateChunks():
+	if (is_instance_valid(MAP)):
+		MAP.UpdateChunkAroundPlayer(global_position)
+	
 func run():
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
 	if direction:
@@ -57,8 +73,6 @@ func getAnimByDirection(direction: Vector2):
 			printerr("Непредвиденное направление")
 			return "idleStatic"
 	
-
-
 func add_item(_texture: Texture2D, _amount: int, _type: int):
 	for slot: Slot in INVENTORY.slots:
 		if not slot.is_empty():
@@ -119,6 +133,24 @@ func show_selected_info():
 func get_texture():
 	return anim.sprite_frames.get_frame_texture("idleStatic", 0)
 
+var cell = Vector2(global_position / (64 * 8))
+
+func redrawGrid():
+	cell = Vector2(global_position / (64 * 8))
+	if last_cell != cell:
+		queue_redraw()
+		last_cell = cell
+
+var cellSize = Vector2(512, 512)
+var range = 2
+func drawGridAtCell():
+	var world_offset = cell * cellSize - global_position.floor()
+	for x in range(-range, range + 1):
+		for y in range(-range, range + 1):
+			var offset = Vector2(x, y) * cellSize
+			var chunk_pos = world_offset + offset
+			draw_rect(Rect2(chunk_pos, cellSize), Color.BLACK, false)
+	last_cell = cell
 
 func _on_hot_bar_selected_slot_changed(Item: InventoryItem):
 	if current_active_item:

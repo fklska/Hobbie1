@@ -4,6 +4,8 @@ using Godot;
 [Tool]
 public partial class ChunkData : Resource
 {
+    [Export] public bool Active;
+
     [Export] public Vector2I GlobalCoord;
     [Export] public Godot.Collections.Array<Godot.Collections.Array<Tile>> Map;
     [Export] public Vector4I rect;

@@ -10,8 +10,8 @@ public partial class GeneratorData : Resource
     [Export] public Vector2I mapSize = GenerationSettings.MapSize;
     [Export] public Vector2I SpawnPoint;
     [Export] public String WorldName = GenerationUtils.GenerateNameWorld();
-    [Export] public Godot.Collections.Array<Godot.Collections.Array<Tile>> Map; // Delete
-    [Export] public Godot.Collections.Array<Vector2I> TreeCoords; // Delete
+    public Godot.Collections.Array<Godot.Collections.Array<Tile>> Map; // Delete
+    //[Export] public Godot.Collections.Array<Vector2I> TreeCoords; // Delete
 
     [Export] public Godot.Collections.Array<Godot.Collections.Array<ChunkData>> ChunkMap;
 
@@ -40,11 +40,11 @@ public partial class GeneratorData : Resource
 
         mapSize = GenerationSettings.MapSize;
 
-        SpawnPoint = new Vector2I(mapSize.X * GenerationUtils.TILE_SIZE / 2, mapSize.Y * GenerationUtils.TILE_SIZE / 2);
+        SpawnPoint = new Vector2I((mapSize.X * GenerationUtils.TILE_SIZE / 2) + GenerationSettings.TILE_SIZE * GenerationSettings.CHUNK_SIZE / 2, (mapSize.Y * GenerationUtils.TILE_SIZE / 2) + GenerationSettings.TILE_SIZE * GenerationSettings.CHUNK_SIZE / 2);
         WorldName = GenerationUtils.GenerateNameWorld();
         //GenerateNewSeed();
-        TreeCoords = new Godot.Collections.Array <Vector2I>();
-        Map = InitializeArray();
+        //TreeCoords = new Godot.Collections.Array <Vector2I>();
+        //Map = InitializeArray();
         ChunkMap = InitializeChunkArray();
 
         BiomeMap = Image.CreateEmpty(mapSize.X, mapSize.Y, false, Image.Format.Rgba8);

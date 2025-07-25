@@ -8,7 +8,7 @@ public static partial class GenerationSettings
 
 
     public const int TILE_SIZE = 64;
-    public const int CHUNK_SIZE = 16;
+    public const int CHUNK_SIZE = 8;
 
     public static int MAP_CHUNK_SIZE_X = MapSize.X / CHUNK_SIZE;
     public static int MAP_CHUNK_SIZE_Y = MapSize.Y / CHUNK_SIZE;

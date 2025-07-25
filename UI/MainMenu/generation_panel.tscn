@@ -101,6 +101,7 @@ layout_mode = 2
 text = "Назад"
 metadata/_edit_use_anchors_ = true
 
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/SeedLabel" to="." method="_on_seed_label_value_changed"]
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/NewSeed" to="." method="_on_new_seed_button_down"]
 [connection signal="value_changed" from="VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="button_down" from="VBoxContainer/Generate" to="." method="_on_generate_button_down"]

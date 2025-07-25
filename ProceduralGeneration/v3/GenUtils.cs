@@ -9,15 +9,15 @@ public static partial class GenerationUtils
     public static RandomNumberGenerator rnd = new RandomNumberGenerator();
     public static readonly List<Vector2I> dirs = new List<Vector2I>
     {
-        new Vector2I(1, 0), // right
-        new Vector2I(-1, 0), // left
-        new Vector2I(0, 1), // down in GD
-        new Vector2I(0, -1), // up in gd
-        new Vector2I(1, 1), // right down
-        new Vector2I(-1, 1), // lef down
-        new Vector2I(1, -1), // right top
         new Vector2I(-1, -1), // left top
-
+        new Vector2I(0, -1), // up in gd
+        new Vector2I(1, -1), // right top
+        new Vector2I(-1, 0), // left
+        //new Vector2I(0, 0), // self
+        new Vector2I(1, 0), // right
+        new Vector2I(-1, 1), // lef down
+        new Vector2I(0, 1), // down in GD
+        new Vector2I(1, 1), // right down
     };
     private static string[] Adjectives = { "Dark", "Mysterious", "Ancient", "Frozen", "Lost", "Forgotten", "Eternal" };
     private static string[] Nouns = { "Realm", "Empire", "Kingdom", "Land", "Dominion", "World", "Dimension" };
@@ -226,25 +226,65 @@ public static partial class GenerationUtils
         return new Vector2I((int)coords.X / pixel_chunk_size, (int)coords.Y / pixel_chunk_size);
     }
 
-    public static Godot.Collections.Array<Vector2I> ChunckAreaCoords(Vector2I ChunkCoord)
+    public static Godot.Collections.Array<Vector2I> ChunckAreaCoords(Vector2I ChunkCoord, int distance=2)
     {
         Godot.Collections.Array<Vector2I> chunks = new Godot.Collections.Array<Vector2I>();
 
-        chunks.Add(ChunkCoord);
-        foreach (Vector2I direction in dirs)
+
+        for (int dx = -distance; dx <= distance; dx++)
         {
-            int nx = ChunkCoord.X + direction.X;
-            int ny = ChunkCoord.Y + direction.Y;
-
-            if(nx >= 0 && nx < GenerationSettings.MAP_CHUNK_SIZE_X && ny >= 0 && ny < GenerationSettings.MAP_CHUNK_SIZE_Y)
+            for (int dy = -distance; dy <= distance; dy++)
             {
-                chunks.Add(new Vector2I(nx, ny));
+                int nx = ChunkCoord.X + dx;
+                int ny = ChunkCoord.Y + dy;
+
+                if (nx >= 0 && nx < GenerationSettings.MAP_CHUNK_SIZE_X &&
+                    ny >= 0 && ny < GenerationSettings.MAP_CHUNK_SIZE_Y)
+                {
+                    chunks.Add(new Vector2I(nx, ny));
+                }
             }
-
         }
-        GD.Print(chunks);
-        return chunks;
+        chunks.Add(ChunkCoord);
 
+        return chunks;
+    }
+
+    public static Godot.Collections.Array<Vector2I> GetSideChunkFromDirection(Vector2I directionOffset, Vector2I currCenterChunk, int distance = 2)
+    {
+        var chunks = new Godot.Collections.Array<Vector2I>();
+
+        if (directionOffset.X != 0)
+        {
+            int x = currCenterChunk.X + directionOffset.X * distance;
+
+            for (int dy = -distance; dy <= distance; dy++)
+            {
+                int y = currCenterChunk.Y + dy;
+
+                if (x >= 0 && x < GenerationSettings.MAP_CHUNK_SIZE_X && y >= 0 && y < GenerationSettings.MAP_CHUNK_SIZE_Y)
+                {
+                    chunks.Add(new Vector2I(x, y));
+                }
+            }
+        }
+
+        if (directionOffset.Y != 0)
+        {
+            int y = currCenterChunk.Y + directionOffset.Y * distance;
+
+            for (int dx = -distance; dx <= distance; dx++)
+            {
+                int x = currCenterChunk.X + dx;
+
+                if (x >= 0 && x < GenerationSettings.MAP_CHUNK_SIZE_X && y >= 0 && y < GenerationSettings.MAP_CHUNK_SIZE_Y)
+                {
+                    chunks.Add(new Vector2I(x, y));
+                }
+            }
+        }
+
+        return chunks;
     }
 
     public static Color getTileTypeColor(TileType tileType)

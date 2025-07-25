@@ -15,7 +15,6 @@ func SetWorldAtList(world: SimpleGeneratorData):
 	new_item.WorldName.text = world.WorldName
 	$MarginContainer2/VBoxContainer.add_child(new_item)
 
-
 func _on_back_to_menu_button_down() -> void:
 	visible = false
 	var parent = get_parent()
