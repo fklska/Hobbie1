@@ -20,7 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.507813, 0.464854, 0.382843, 1)
+color = Color(0.508, 0.465, 0.383, 0.425)
 metadata/_edit_use_anchors_ = true
 
 [node name="MainButtons" type="VBoxContainer" parent="."]

@@ -43,7 +43,7 @@ public partial class WorldScene : Node2D
 
     public async void InitionalChunkLoad()
     {
-        Godot.Collections.Array<Vector2I> loadedChunks = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint), 3);
+        Godot.Collections.Array<Vector2I> loadedChunks = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint), 4);
         foreach (Vector2I chunk in loadedChunks)
         {   
             await LoadChunk(chunk, MainTileMapPrefab, Enviroment, Enviroment);
@@ -120,14 +120,11 @@ public partial class WorldScene : Node2D
             await ToSignal(GetTree(), "process_frame");
         }
 
-        int cnt = 0;
         foreach (Node2D res in chunk.Resourses)
         {
             res.CallDeferred("free");
-            cnt++;
-            if (cnt > 50)
-            { await ToSignal(GetTree(), "process_frame"); }
         }
+        await ToSignal(GetTree(), "process_frame");
         chunk.Resourses.Clear();
     }
 

@@ -5,6 +5,14 @@
 [ext_resource type="Script" uid="uid://b5wuccqf64dts" path="res://BuildSystem/BuildManager.gd" id="3_1w5oy"]
 [ext_resource type="Texture2D" uid="uid://b6rd6ckeubmor" path="res://BuildSystem/assets/370PEG2-0.png" id="3_s41en"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufdyt"]
+bg_color = Color(0.666667, 0.690196, 0.705882, 0.588235)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+anti_aliasing_size = 0.56
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r2hbv"]
 content_margin_left = 10.0
 content_margin_right = 10.0
@@ -35,30 +43,24 @@ corner_detail = 2
 anti_aliasing = false
 anti_aliasing_size = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufdyt"]
-bg_color = Color(0.666667, 0.690196, 0.705882, 0.588235)
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-anti_aliasing_size = 0.56
-
 [node name="Menu" type="TabContainer"]
 offset_right = 718.0
 offset_bottom = 384.0
-theme_override_colors/font_selected_color = Color(0.192157, 0.25098, 0.764706, 1)
-theme_override_colors/font_hovered_color = Color(0.917647, 0.113725, 0.227451, 1)
 theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hovered_color = Color(0.917647, 0.113725, 0.227451, 1)
+theme_override_colors/font_selected_color = Color(0.192157, 0.25098, 0.764706, 1)
 theme_override_fonts/font = ExtResource("1_owwux")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ufdyt")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_r2hbv")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_82pde")
-theme_override_styles/panel = SubResource("StyleBoxFlat_ufdyt")
 tab_alignment = 1
+current_tab = 0
 script = ExtResource("2_1xlac")
 
 [node name="Buildings" type="TabBar" parent="."]
 layout_mode = 2
 script = ExtResource("3_1w5oy")
+metadata/_tab_index = 0
 
 [node name="GridContainer" type="GridContainer" parent="Buildings"]
 layout_mode = 1
@@ -86,28 +88,9 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="TownHallButt" type="Button" parent="Buildings/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-text = "fgfg"
-icon = ExtResource("3_s41en")
-icon_alignment = 1
-vertical_icon_alignment = 0
-expand_icon = true
-
-[node name="FireButt" type="Button" parent="Buildings/GridContainer"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-text = "fgfgf"
-icon = ExtResource("3_s41en")
-icon_alignment = 1
-vertical_icon_alignment = 0
-expand_icon = true
-
 [node name="Village" type="TabBar" parent="."]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [connection signal="button_down" from="Buildings/GridContainer/BlacksmithButt" to="Buildings" method="_on_blacksmith_butt_button_down"]
-[connection signal="button_down" from="Buildings/GridContainer/TownHallButt" to="Buildings" method="_on_town_hall_butt_button_down"]
-[connection signal="button_down" from="Buildings/GridContainer/FireButt" to="Buildings" method="_on_fire_butt_button_down"]

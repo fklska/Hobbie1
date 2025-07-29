@@ -15,6 +15,9 @@ func OpenGenMenu():
 	$MainButtons.visible = false
 	$GenerationPanel.visible = true
 
+func ChangeMainMenuState():
+	visible = !visible
+
 func _on_load_world_pressed() -> void:
 	$WorldListPanel.visible = true
 	$MainButtons.visible = false
@@ -43,3 +46,7 @@ func load_world():
 		print("An error occurred when trying to access the path.")
 
 	$WorldListPanel.RenderWorldList(worldList)
+
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("ESC")):
+		ChangeMainMenuState()

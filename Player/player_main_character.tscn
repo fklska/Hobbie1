@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://b0dwhont1cotx"]
+[gd_scene load_steps=75 format=3 uid="uid://b0dwhont1cotx"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_5t8oh"]
 [ext_resource type="Script" uid="uid://dbvr1usn1eihi" path="res://Player/scripts/player.gd" id="2_tll70"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://Player/UI/inventory_ui.tscn" id="8_b474a"]
 [ext_resource type="Texture2D" uid="uid://3hjb50khng1q" path="res://Player/sprites/RUN/run_up.png" id="9_bdpe8"]
 [ext_resource type="PackedScene" uid="uid://c2wv8totvopdf" path="res://DebugConsole/prefabs/debug_stats.tscn" id="9_mede7"]
+[ext_resource type="PackedScene" uid="uid://dp8r3rltfkp5p" path="res://UI/prefabs/StoreButton.tscn" id="15_w41el"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7da7d"]
 resource_local_to_scene = true
@@ -686,5 +687,11 @@ grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
+
+[node name="Button" parent="PlayerUI" index="4" instance=ExtResource("15_w41el")]
+offset_left = 37.0
+offset_top = 583.0
+offset_right = 101.0
+offset_bottom = 647.0
 
 [connection signal="selected_slot_changed" from="PlayerUI/HotBar" to="." method="_on_hot_bar_selected_slot_changed"]
