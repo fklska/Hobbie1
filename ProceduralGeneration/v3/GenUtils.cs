@@ -322,7 +322,21 @@ public static partial class GenerationUtils
             _ => throw new NotImplementedException()
         };
     }
-
+    // Current
+    public static int getResorseAtlacByType(ResorseType type)
+    {
+        return type switch
+        {
+            ResorseType.GiantWood => 0,
+            ResorseType.GiantSnowWood => 1,
+            ResorseType.MediumWood => 2,
+            ResorseType.MediumSnowWood => 3,
+            ResorseType.SmallWood => 4,
+            ResorseType.SmallSnowWood => 5,
+            _ => 0
+        };
+    }
+    // OLD
     public static PackedScene getResorsePrefabByType(ResorseType type)
     {
         return type switch

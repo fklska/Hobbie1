@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://byafm8nk470hk"]
+
+[ext_resource type="TileSet" uid="uid://b4356nalyihnr" path="res://Resourses/v2/TileSetResV2.tres" id="1_ngtn7"]
+
+[node name="TileMapLayer" type="TileMapLayer" groups=["navigation_polygon_source_geometry_group"]]
+z_index = 1
+y_sort_enabled = true
+tile_set = ExtResource("1_ngtn7")

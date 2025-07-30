@@ -13,7 +13,11 @@ public partial class GeneratorV3 : Node2D
 {
     [Export] public GeneratorData genData;
     [Export] public Godot.Collections.Array<GenerationStep> steps;
-    [Export] public TileMapLayer MainTileMapPrefab;
+    [Export] public string LandDualMapPath;
+    public TileMapLayer MainTileMapPrefab;
+
+    [Export] public string EnviromentTileMapPath;
+    public TileMapLayer EnvirometLayer;
 
     [Export] public Node2D ResorseNode; 
 
@@ -26,6 +30,8 @@ public partial class GeneratorV3 : Node2D
     public override void _Ready()
     {
         genData.ResetData();
+        MainTileMapPrefab = (TileMapLayer)GD.Load<PackedScene>(LandDualMapPath).Instantiate();
+        EnvirometLayer = (TileMapLayer)GD.Load<PackedScene>(EnviromentTileMapPath).Instantiate();
     }
 
     public override void _Process(double delta)
@@ -139,6 +145,8 @@ public partial class GeneratorV3 : Node2D
         var PackedScene = new PackedScene();
         WorldScene Map = (WorldScene)GenerationUtils.SetUpWorldNode("Map", genData);
         TileMapLayer MainMap = (TileMapLayer)GenerationUtils.SetNode2d("DualMap", MainTileMapPrefab, Map);
+        TileMapLayer EnvMap = (TileMapLayer)GenerationUtils.SetNode2d("EnviromentLayer", EnvirometLayer, Map);
+
         Node2D Enviroment = GenerationUtils.SetNode2d("Enviroment", Map);
 
         //MapRender(genData, MainMap, Enviroment, Map);

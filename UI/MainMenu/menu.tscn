@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dm2omuqu5juo0" path="res://UI/prefabs/world_list_panel.tscn" id="3_62lfh"]
 
 [node name="Menu" type="Control"]
+z_index = 4
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

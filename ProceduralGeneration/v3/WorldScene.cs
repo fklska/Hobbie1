@@ -16,6 +16,7 @@ public partial class WorldScene : Node2D
     [Export] public bool DebugInfo;
 
     public TileMapLayer MainTileMapPrefab;
+    public TileMapLayer EnviromentLayer;
     public Node2D Enviroment;
     public Node2D Navigator;
 
@@ -29,6 +30,7 @@ public partial class WorldScene : Node2D
         GenerationSettings.MapSize = GeneratorData.mapSize;
         GenerationSettings.RecalculateSetting();
         MainTileMapPrefab = GetNode<TileMapLayer>("DualMap");
+        EnviromentLayer = GetNode<TileMapLayer>("EnviromentLayer");
         Enviroment = GetNode<Node2D>("Enviroment");
         GeneratorData = ResourceLoader.Load<GeneratorData>(GenDataPath);
         Navigator = GetTree().Root.GetNode<Node2D>("GlobalNavigation");
@@ -46,14 +48,13 @@ public partial class WorldScene : Node2D
         Godot.Collections.Array<Vector2I> loadedChunks = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint), 4);
         foreach (Vector2I chunk in loadedChunks)
         {   
-            await LoadChunk(chunk, MainTileMapPrefab, Enviroment, Enviroment);
-            Navigator.CallDeferred("bake_navigation_on_cell", chunk);
-            currentActiveChunkMap.Add(chunk);
+            await LoadChunk(chunk, MainTileMapPrefab, EnviromentLayer, Enviroment, Enviroment);
+            Navigator.Call("bake_navigation_on_cell", chunk);
         }
         lastPlayerCell = GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint);
     }
 
-    public async Task LoadChunk(Vector2I chunkCoord, TileMapLayer map, Node2D ResourseRootNode, Node2D owner)
+    public async Task LoadChunk(Vector2I chunkCoord, TileMapLayer map, TileMapLayer EnvLayer, Node2D ResourseRootNode, Node2D owner)
     {
         if (chunkCoord.X > GenerationSettings.MAP_CHUNK_SIZE_X || chunkCoord.Y > GenerationSettings.MAP_CHUNK_SIZE_Y)
         {
@@ -74,9 +75,15 @@ public partial class WorldScene : Node2D
             for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
             {
                 map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(chunk.Map[local_x][local_y].Type), new Vector2I(2, 1), 0);
+                
                 ResorseType currType = chunk.Map[local_x][local_y].Resourse;
-                //GD.Print($"Coord: {x} {y}; Type: {currType}");
                 if (currType != ResorseType.None)
+                { 
+                    EnvLayer.SetCell(new Vector2I(x, y), GenerationUtils.getResorseAtlacByType(currType), new Vector2I(0, 0), 0); 
+                }
+                // !!!OLD
+                //GD.Print($"Coord: {x} {y}; Type: {currType}");
+                /*if (currType != ResorseType.None)
                 {
                     Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(chunk.Map[local_x][local_y].Resourse).Instantiate();
                     //Vector2 offset = new Vector2I(GD.RandRange(-50, 50), GD.RandRange(-50, 50));
@@ -85,7 +92,7 @@ public partial class WorldScene : Node2D
 
                     ResourseRootNode.CallDeferred("add_child", prefab);
                     //prefab.Owner = owner;
-                }
+                }*/
 
                 local_y++;
             }
@@ -93,9 +100,10 @@ public partial class WorldScene : Node2D
 
             await ToSignal(GetTree(), "process_frame");
         }
+        Navigator.Call("bake_navigation_on_cell", chunkCoord);
     }
 
-    public async Task UnloadChunk(Vector2I chunkCoord, TileMapLayer map)
+    public async Task UnloadChunk(Vector2I chunkCoord, TileMapLayer map, TileMapLayer EnvLayer)
     {
         if (chunkCoord.X > GenerationSettings.MAP_CHUNK_SIZE_X || chunkCoord.Y > GenerationSettings.MAP_CHUNK_SIZE_Y)
         {
@@ -113,19 +121,19 @@ public partial class WorldScene : Node2D
             for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
             {
                 map.EraseCell(new Vector2I(x, y));
-
+                EnvLayer.EraseCell(new Vector2I(x, y));
                 local_y++;
             }
             local_x++;
             await ToSignal(GetTree(), "process_frame");
         }
 
-        foreach (Node2D res in chunk.Resourses)
+        /*foreach (Node2D res in chunk.Resourses)
         {
             res.CallDeferred("free");
         }
         await ToSignal(GetTree(), "process_frame");
-        chunk.Resourses.Clear();
+        chunk.Resourses.Clear();*/
     }
 
     public async void UpdateChunkAroundPlayer(Vector2 coords)
@@ -148,12 +156,12 @@ public partial class WorldScene : Node2D
 
             foreach(Vector2I chunk in chunksToDelete)
             {
-                await UnloadChunk(chunk, MainTileMapPrefab);
+                await UnloadChunk(chunk, MainTileMapPrefab, EnviromentLayer);
             }
 
             foreach (Vector2I chunk in chunksToLoad)
             {
-                await LoadChunk(chunk, MainTileMapPrefab, Enviroment, Enviroment);
+                await LoadChunk(chunk, MainTileMapPrefab, EnviromentLayer, Enviroment, Enviroment);
             }
             //GD.Print($"Diff {diff}; Curr: {currentCell}; Delete: {chunksToDelete}; Load: {chunksToLoad}");
             lastPlayerCell = currentCell;
@@ -165,21 +173,25 @@ public partial class WorldScene : Node2D
     {
         Vector2 mouseCoor = GetGlobalMousePosition();
         Vector2I cell = MainTileMapPrefab.LocalToMap(mouseCoor);
-        if (cell.X < GeneratorData.mapSize.X && cell.Y < GeneratorData.mapSize.Y && DebugInfo && cell != lastcell)
+        if (lastcell != cell)
         {
             lastcell = cell;
-            GD.Print(GeneratorData.Map[cell.X][cell.Y].Type);
-            float height = GeneratorData.Map[cell.X][cell.Y].heightValue;
-            float heat = GeneratorData.Map[cell.X][cell.Y].heatValue;
-            float moisture = GeneratorData.Map[cell.X][cell.Y].moistureValue;
-            float treeValue = GeneratorData.Map[cell.X][cell.Y].treeResValue;
-            float oreValue = GeneratorData.Map[cell.X][cell.Y].oreResValue;
-            TileType tileType = GeneratorData.Map[cell.X][cell.Y].Type;
-            ResorseType resType = GeneratorData.Map[cell.X][cell.Y].Resourse;
-            //GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
-            GD.Print($"Coord: {cell}, Biome: {tileType}, Resourse: {resType}");
-            GD.Print($"Height: {height}, Heat: {heat}, Moist: {moisture}");
-            GD.Print($"TreeValue: {treeValue}, oreValue: {oreValue} \n");
+            if (cell.X < GeneratorData.mapSize.X && cell.Y < GeneratorData.mapSize.Y && DebugInfo)
+            {
+                Vector2I chunkCell = cell / GenerationSettings.CHUNK_SIZE;
+                GD.Print(chunkCell);
+                /*float height = GeneratorData.Map[cell.X][cell.Y].heightValue;
+                float heat = GeneratorData.Map[cell.X][cell.Y].heatValue;
+                float moisture = GeneratorData.Map[cell.X][cell.Y].moistureValue;
+                float treeValue = GeneratorData.Map[cell.X][cell.Y].treeResValue;
+                float oreValue = GeneratorData.Map[cell.X][cell.Y].oreResValue;
+                TileType tileType = GeneratorData.Map[cell.X][cell.Y].Type;
+                ResorseType resType = GeneratorData.Map[cell.X][cell.Y].Resourse;
+                //GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
+                GD.Print($"Coord: {cell}, Biome: {tileType}, Resourse: {resType}");
+                GD.Print($"Height: {height}, Heat: {heat}, Moist: {moisture}");
+                GD.Print($"TreeValue: {treeValue}, oreValue: {oreValue} \n");*/
+            }
         }
     }
 }

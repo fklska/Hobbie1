@@ -35,7 +35,6 @@ func _process(delta: float) -> void:
 	await UpdateChunks()
 
 func _physics_process(_delta):
-	redrawGrid()
 	match state:
 		RUN:
 			run()
@@ -135,22 +134,6 @@ func get_texture():
 
 var cell = Vector2(global_position / (64 * 8))
 
-func redrawGrid():
-	cell = Vector2(global_position / (64 * 8))
-	if last_cell != cell:
-		queue_redraw()
-		last_cell = cell
-
-var cellSize = Vector2(512, 512)
-var range = 2
-func drawGridAtCell():
-	var world_offset = cell * cellSize - global_position.floor()
-	for x in range(-range, range + 1):
-		for y in range(-range, range + 1):
-			var offset = Vector2(x, y) * cellSize
-			var chunk_pos = world_offset + offset
-			draw_rect(Rect2(chunk_pos, cellSize), Color.BLACK, false)
-	last_cell = cell
 
 func _on_hot_bar_selected_slot_changed(Item: InventoryItem):
 	if current_active_item:
