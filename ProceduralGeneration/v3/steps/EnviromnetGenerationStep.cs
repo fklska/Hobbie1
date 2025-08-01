@@ -16,6 +16,7 @@ public partial class EnviromnetGenerationStep : GenerationStep
         TileType.Snow,
         TileType.RegularForest,
         TileType.Taiga,
+        TileType.TropicalForest,
     };
     public HashSet<TileType> OreValidTileTypes = new HashSet<TileType>()
     {
@@ -53,6 +54,8 @@ public partial class EnviromnetGenerationStep : GenerationStep
 
                             if (TreeValidTileTypes.Contains(chunk.Map[local_x][local_y].Type))
                             {
+
+                                if (chunk.Map[local_x][local_y].Type == TileType.TropicalForest) { treeNoiseValue *= 1.2f; }
                                 if (!GenerationUtils.IsEdgeTile(local_x, local_y, chunk.Map[local_x][local_y].Type, chunk))
                                 {
                                     chunk.Map[local_x][local_y].SetResorsesValues(treeNoiseValue, oreNoiseValue, GetWoodType(treeNoiseValue, chunk.Map[local_x][local_y].Type));
@@ -60,13 +63,13 @@ public partial class EnviromnetGenerationStep : GenerationStep
                                 }
                             }
 
-                            /*if (OreValidTileTypes.Contains(genData.Map[x][y].Type))
+                            if (OreValidTileTypes.Contains(chunk.Map[local_x][local_y].Type))
                             {
-                                if (genData.Map[x][y].Resourse == ResorseType.None)
+                                if (chunk.Map[local_x][local_y].Resourse == ResorseType.None)
                                 {
-                                    genData.Map[x][y].Resourse = GetOreResType(oreNoiseValue);
+                                    chunk.Map[local_x][local_y].Resourse = GetOreResType(oreNoiseValue);
                                 }
-                            }*/
+                            }
 
                             local_y++;
                         }
@@ -79,53 +82,62 @@ public partial class EnviromnetGenerationStep : GenerationStep
 
     public ResorseType GetWoodType(float value, TileType biome)
     {
-        if (value < 0.1f) // SmallWood
+        if (value > 0.8f) // GiantWood
         {
-            if (biome != TileType.Desert)
-            {
-                if(biome == TileType.Snow) return ResorseType.SmallSnowWood;
-            }
-            return ResorseType.SmallWood;
+            if (biome == TileType.Snow) return ResorseType.GiantSnowWood;
+
+            if (biome == TileType.Desert) return ResorseType.PalmWood;
+
+            if (biome == TileType.TropicalForest) return ResorseType.None;
+
+            return ResorseType.GiantWood;
         }
 
-        if (value > 0.5f && value < 0.65f) // MediumWood
+        else if (value > 0.7f) // MediumWood
         {
             if (biome == TileType.Snow)
             {
                 return ResorseType.MediumSnowWood;
             }
+
+            if (biome == TileType.TropicalForest)
+            {
+                return ResorseType.TropicWood;
+            }
             return ResorseType.MediumWood;
 
         }
 
-        if (value > 0.95f) // GiantWood
+        else if (value > 0.5f) // SmallWood
         {
-            if (biome == TileType.Snow) return ResorseType.GiantSnowWood;
 
-            if (biome == TileType.Desert) return ResorseType.PalmWood;
-            
-            return ResorseType.GiantWood;
+            if(biome == TileType.Snow) return ResorseType.SmallSnowWood;
+            if (biome == TileType.Desert) return ResorseType.None;
+            if (biome == TileType.TropicalForest) return ResorseType.None;
+
+            return ResorseType.SmallWood;
         }
 
-        return ResorseType.None;
+        else return ResorseType.None;
     }
 
     public ResorseType GetOreResType(float value)
     {
-        if (value < 0.1f)
+        if (value > 0.9f || value < 0.1f)
         {
             return ResorseType.Gold;
         }
 
-        if (value > 0.2f && value < 0.25f)
+        else if (value > 0.8f)
         {
             return ResorseType.Iron;
         }
 
-        if (value > 0.63f && value < 0.7f)
+        else if (value > 0.7f)
         {
             return ResorseType.Stone;
         }
-        return ResorseType.None;
+
+        else return ResorseType.None;
     }
 }

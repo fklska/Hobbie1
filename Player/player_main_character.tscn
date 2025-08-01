@@ -634,7 +634,7 @@ enableConcentration = false
 [node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_7da7d")
 sprite_frames = SubResource("SpriteFrames_2vylw")
-animation = &"idleStatic"
+animation = &"attackDown"
 offset = Vector2(0, -16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
@@ -689,9 +689,13 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 
 [node name="Button" parent="PlayerUI" index="4" instance=ExtResource("15_w41el")]
-offset_left = 37.0
-offset_top = 583.0
-offset_right = 101.0
-offset_bottom = 647.0
+anchors_preset = -1
+anchor_left = 0.0217014
+anchor_top = 0.856481
+anchor_right = 0.0772569
+anchor_bottom = 0.955247
+offset_right = 0.0
+offset_bottom = 0.0
+metadata/_edit_use_anchors_ = true
 
 [connection signal="selected_slot_changed" from="PlayerUI/HotBar" to="." method="_on_hot_bar_selected_slot_changed"]

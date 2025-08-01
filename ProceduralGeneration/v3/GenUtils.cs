@@ -333,6 +333,10 @@ public static partial class GenerationUtils
             ResorseType.MediumSnowWood => 3,
             ResorseType.SmallWood => 4,
             ResorseType.SmallSnowWood => 5,
+            ResorseType.Gold => 6,
+            ResorseType.Iron => 7,
+            ResorseType.Stone => 8,
+            ResorseType.TropicWood => 9,
             _ => 0
         };
     }

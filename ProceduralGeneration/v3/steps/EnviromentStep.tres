@@ -5,20 +5,15 @@
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gcloi"]
 noise_type = 2
 seed = -171488491
-frequency = 0.0206
-fractal_type = 2
-fractal_octaves = 6
-cellular_jitter = 0.73
-cellular_return_type = 4
+frequency = 0.1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1knl1"]
-noise_type = 2
+noise_type = 3
 seed = -171488491
-frequency = 0.1291
-fractal_octaves = 1
+frequency = 0.05
+fractal_octaves = 3
 cellular_distance_function = 2
 cellular_return_type = 0
-domain_warp_enabled = true
 
 [resource]
 script = ExtResource("1_1knl1")

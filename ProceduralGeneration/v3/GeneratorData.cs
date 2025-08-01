@@ -149,6 +149,7 @@ public enum ResorseType
     MediumSnowWood,
     GiantSnowWood,
     PalmWood,
+    TropicWood,
     Stone,
     Iron,
     Gold

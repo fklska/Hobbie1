@@ -17,7 +17,7 @@ var source_geometry: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGe
 
 func _ready() -> void:
 	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, 0)
-	NavigationServer2D.set_debug_enabled(true)
+	NavigationServer2D.set_debug_enabled(false)
 	
 func bake_all_navigation_map(mapSize: Vector2i):
 	var map_size = mapSize / 16

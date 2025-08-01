@@ -113,7 +113,7 @@ func calculate_damage():
 func _input(event: InputEvent):
 	if INVENTORY.visible == false:
 		if event.is_action_pressed("LeftMouseButton"):
-			state = ITEM_ACTION
+			GDUtils
 	
 	if event.is_action_released("LeftMouseButton"):
 		if animPlayer.current_animation == "item_action":
