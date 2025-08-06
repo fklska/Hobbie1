@@ -23,6 +23,7 @@ public partial class CoastLineStep : GenerationStep
     {
         TileType.TropicWater,
         TileType.DeepWater,
+        TileType.TropicalForest
     };
 
     [Export] public Color preRenderColor;

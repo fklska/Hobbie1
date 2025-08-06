@@ -68,7 +68,7 @@ func calculate_polygon_coords(cell: Vector2i) -> PackedVector2Array:
 
 func bake_navigation_on_cell(cell: Vector2i) -> void:
 	var region = polygon_hash_map_manager(cell)
-	region.bake_navigation_polygon()
+	#region.bake_navigation_polygon()
 
 func polygon_hash_map_manager(cell: Vector2i):
 	if polygon_map.has(cell):

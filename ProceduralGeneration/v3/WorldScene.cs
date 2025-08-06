@@ -168,6 +168,23 @@ public partial class WorldScene : Node2D
         }
     }
 
+    public Tile getTile(Vector2I chunk, Vector2I localCoords)
+    {
+        if (chunk < Vector2I.Zero || chunk > new Vector2(GenerationSettings.MAP_CHUNK_SIZE_X, GenerationSettings.MAP_CHUNK_SIZE_Y))
+        {
+            GD.Print("Chunk Out Of Map");
+            return new Tile();
+        }
+
+        if (localCoords < Vector2I.Zero || localCoords > new Vector2I(GenerationSettings.CHUNK_SIZE, GenerationSettings.CHUNK_SIZE))
+        {
+            GD.Print("Incorrect local coords");
+            return new Tile();
+        }
+
+        return GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[localCoords.X][localCoords.Y];
+    }
+
     public Vector2I lastcell = Vector2I.Zero;
     public void GetCell()
     {

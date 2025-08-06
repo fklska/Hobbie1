@@ -1,7 +1,7 @@
-[gd_scene load_steps=75 format=3 uid="uid://b0dwhont1cotx"]
+[gd_scene load_steps=78 format=3 uid="uid://b0dwhont1cotx"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_5t8oh"]
-[ext_resource type="Script" uid="uid://dbvr1usn1eihi" path="res://Player/scripts/player.gd" id="2_tll70"]
+[ext_resource type="Script" uid="uid://cvlvcs80lr4yf" path="res://Player/PlayerMainCharacter.cs" id="2_w41el"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_slw5e"]
 [ext_resource type="PackedScene" uid="uid://cuu8agnq5ro00" path="res://Camera/main_cam.tscn" id="4_d1huh"]
 [ext_resource type="Texture2D" uid="uid://p5axqvlak5s" path="res://Player/sprites/ATTACK 1/attack1_down.png" id="4_vyq5s"]
@@ -15,6 +15,13 @@
 [ext_resource type="Texture2D" uid="uid://3hjb50khng1q" path="res://Player/sprites/RUN/run_up.png" id="9_bdpe8"]
 [ext_resource type="PackedScene" uid="uid://c2wv8totvopdf" path="res://DebugConsole/prefabs/debug_stats.tscn" id="9_mede7"]
 [ext_resource type="PackedScene" uid="uid://dp8r3rltfkp5p" path="res://UI/prefabs/StoreButton.tscn" id="15_w41el"]
+[ext_resource type="PackedScene" uid="uid://nbiotqlwjxva" path="res://Player/effects/mining_parctile.tscn" id="16_yl13i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl13i"]
+bg_color = Color(0.152344, 0.152344, 0.152344, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cvrk"]
+bg_color = Color(1, 0.703125, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7da7d"]
 resource_local_to_scene = true
@@ -619,32 +626,45 @@ _data = {
 &"runUp": SubResource("Animation_aecgs")
 }
 
-[node name="Player_MainCharacter" node_paths=PackedStringArray("INVENTORY", "Hotbar") instance=ExtResource("1_5t8oh")]
+[node name="Player_MainCharacter" node_paths=PackedStringArray("inventory", "HotBar", "ActionProgress", "anim", "miningParticle") instance=ExtResource("1_5t8oh")]
 y_sort_enabled = true
 collision_mask = 31
-script = ExtResource("2_tll70")
-AGILITY = 15
+script = ExtResource("2_w41el")
+inventory = NodePath("PlayerUI/InventoryUI")
+HotBar = NodePath("PlayerUI/HotBar")
+AGILITY = 10
 STRENCH = 10
 INTELECT = 10
-CONCENTRATION = 100
-INVENTORY = NodePath("PlayerUI/InventoryUI")
-Hotbar = NodePath("PlayerUI/HotBar")
-enableConcentration = false
+SPEED = 20.0
+ActionProgress = NodePath("ActionProgress")
+anim = NodePath("AnimationPlayer")
+miningParticle = NodePath("MiningParctile")
 
-[node name="AnimatedSprite2D" parent="." index="0"]
+[node name="ActionProgress" type="ProgressBar" parent="." index="0"]
+custom_minimum_size = Vector2(32, 4)
+offset_left = -16.0
+offset_top = -37.0
+offset_right = 16.0
+offset_bottom = -33.0
+pivot_offset = Vector2(16, 2)
+theme_override_styles/background = SubResource("StyleBoxFlat_yl13i")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7cvrk")
+show_percentage = false
+
+[node name="AnimatedSprite2D" parent="." index="1"]
 material = SubResource("ShaderMaterial_7da7d")
 sprite_frames = SubResource("SpriteFrames_2vylw")
 animation = &"attackDown"
 offset = Vector2(0, -16)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
 &"": SubResource("AnimationLibrary_s431q")
 }
 
-[node name="Camera2D" parent="." index="2" instance=ExtResource("4_d1huh")]
+[node name="Camera2D" parent="." index="3" instance=ExtResource("4_d1huh")]
 
-[node name="PlayerUI" type="CanvasLayer" parent="." index="3"]
+[node name="PlayerUI" type="CanvasLayer" parent="." index="4"]
 layer = 2
 
 [node name="PlayerHealthBar" parent="PlayerUI" index="0" instance=ExtResource("7_jbxtf")]
@@ -697,5 +717,8 @@ anchor_bottom = 0.955247
 offset_right = 0.0
 offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
+
+[node name="MiningParctile" parent="." index="5" instance=ExtResource("16_yl13i")]
+position = Vector2(33.1202, 7.6277)
 
 [connection signal="selected_slot_changed" from="PlayerUI/HotBar" to="." method="_on_hot_bar_selected_slot_changed"]

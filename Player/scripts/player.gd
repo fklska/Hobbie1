@@ -57,8 +57,6 @@ func run():
 		animPlayer.play("idleStatic")
 
 func getAnimByDirection(direction: Vector2):
-	if direction == Vector2.DOWN:
-		return "runDown"
 	match direction:
 		Vector2.DOWN:
 			return "runDown"
@@ -113,7 +111,7 @@ func calculate_damage():
 func _input(event: InputEvent):
 	if INVENTORY.visible == false:
 		if event.is_action_pressed("LeftMouseButton"):
-			GDUtils
+			var chunk = GDUtils.getChunkCell(get_global_mouse_position())
 	
 	if event.is_action_released("LeftMouseButton"):
 		if animPlayer.current_animation == "item_action":

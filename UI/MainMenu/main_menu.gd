@@ -50,3 +50,7 @@ func load_world():
 func _input(event: InputEvent) -> void:
 	if (event.is_action_pressed("ESC")):
 		ChangeMainMenuState()
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

@@ -50,6 +50,11 @@ layout_mode = 2
 text = "Load World
 "
 
+[node name="Quit" type="Button" parent="MainButtons"]
+layout_mode = 2
+text = "Quit
+"
+
 [node name="GenerationPanel" parent="." instance=ExtResource("2_vxkf2")]
 visible = false
 layout_mode = 1
@@ -60,3 +65,4 @@ layout_mode = 1
 
 [connection signal="pressed" from="MainButtons/NewWorld" to="." method="_on_new_world_pressed"]
 [connection signal="pressed" from="MainButtons/LoadWorld" to="." method="_on_load_world_pressed"]
+[connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]

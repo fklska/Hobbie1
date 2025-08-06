@@ -1,10 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://puflxaap1ueo"]
+[gd_scene load_steps=10 format=3 uid="uid://puflxaap1ueo"]
 
 [ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_wjtrd"]
 [ext_resource type="Script" uid="uid://dnntr11vdyrvt" path="res://Light/daynight.gd" id="4_t4ycb"]
 [ext_resource type="Script" uid="uid://dlxknb7a41wrq" path="res://Light/pointLight.gd" id="4_x002e"]
-[ext_resource type="PackedScene" uid="uid://d3g45t3tobnfy" path="res://ProceduralGeneration/v3/generator_v_3.tscn" id="5_nwcac"]
-[ext_resource type="PackedScene" uid="uid://b0dwhont1cotx" path="res://Player/player_main_character.tscn" id="5_x002e"]
 
 [sub_resource type="Environment" id="Environment_wjtrd"]
 background_mode = 3
@@ -27,11 +25,11 @@ glow_bloom = 1.0
 glow_map_strength = 0.6
 volumetric_fog_density = 0.0
 adjustment_enabled = true
-adjustment_saturation = 2.0
+adjustment_saturation = 1.37
 
 [sub_resource type="Gradient" id="Gradient_et4gd"]
 interpolation_mode = 2
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.42)
+colors = PackedColorArray(1, 1, 1, 0.448, 1, 1, 1, 0.42)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sunvg"]
 gradient = SubResource("Gradient_et4gd")
@@ -58,8 +56,8 @@ point_count = 4
 environment = SubResource("Environment_wjtrd")
 
 [node name="Light2D" type="PointLight2D" parent="."]
-position = Vector2(461, 345)
 scale = Vector2(6, 6)
+color = Color(0.26353, 0.256541, 0.27806, 1)
 energy = 0.63
 blend_mode = 2
 shadow_enabled = true
@@ -73,9 +71,9 @@ script = ExtResource("4_x002e")
 SPEED = Vector3(-2, 0, 0)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(672, 675)
 scale = Vector2(1.51072, 1.51857)
-energy = 1.65142
+color = Color(0.26353, 0.256541, 0.27806, 1)
+energy = 1.11857
 shadow_filter = 1
 texture = SubResource("GradientTexture2D_sunvg")
 texture_scale = 11.95
@@ -83,7 +81,6 @@ height = 254.0
 
 [node name="DirectionalLight2D2" type="DirectionalLight2D" parent="."]
 visible = false
-position = Vector2(359, 721)
 scale = Vector2(6.22656, 6.22656)
 blend_mode = 2
 shadow_enabled = true
@@ -91,14 +88,10 @@ shadow_color = Color(0, 0, 0, 1)
 height = 0.42
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." node_paths=PackedStringArray("light", "bloom_light")]
+color = Color(0.26353, 0.256541, 0.27806, 1)
 script = ExtResource("4_t4ycb")
 colors = SubResource("GradientTexture1D_x002e")
 light = NodePath("../Light2D")
 bloom_light = NodePath("../PointLight2D")
-time = 6.99264
+time = 35.4486
 curve = SubResource("Curve_nwcac")
-
-[node name="Player_MainCharacter" parent="." instance=ExtResource("5_x002e")]
-position = Vector2(610, 593)
-
-[node name="Generator v3" parent="." instance=ExtResource("5_nwcac")]
