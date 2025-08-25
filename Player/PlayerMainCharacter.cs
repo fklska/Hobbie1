@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public partial class PlayerMainCharacter : CharacterBody2D
 {
-    [Export] public Control inventory;
+    [Export] public Control InventoryManager;
     [Export] public Control HotBar;
 
     [ExportCategory("Stats")]

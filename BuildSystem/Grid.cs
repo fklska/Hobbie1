@@ -1,5 +1,7 @@
 using Godot;
+using Godot1.Globals;
 using System;
+using System.Collections.Generic;
 
 public partial class Grid : Node2D
 {
@@ -12,7 +14,13 @@ public partial class Grid : Node2D
 
     Vector2I currentCell = Vector2I.Zero;
     bool drawOnce = true;
-    bool buildMode = false;
+    public static bool buildMode = false;
+
+    public WorldScene WorldScene;
+    public override void _Ready()
+    {
+        WorldScene = GetTree().Root.GetNode<WorldScene>("Map");
+    }
 
     public override void _Process(double delta)
     {
@@ -23,6 +31,22 @@ public partial class Grid : Node2D
                 QueueRedraw();
             }
         }
+    }
+
+    public HashSet<TileType> BanTilesToPlace = new HashSet<TileType>()
+    {
+        TileType.DeepWater,
+        TileType.TropicWater
+    };
+
+public bool IsAbleToPlace(Vector2I cell)
+    {
+        Vector2I localCell = Utils.GetLocalCell(globalCell: cell);
+        Vector2I chunk = Utils.GetChunkCoords(cell);
+
+        Tile tile = WorldScene.GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[localCell.X][localCell.Y];
+
+        return !BanTilesToPlace.Contains(tile.Type) && tile.Resourse == ResorseType.None;
     }
 
     public override void _Draw()
@@ -79,18 +103,10 @@ public partial class Grid : Node2D
         }
     }
 
-    public Vector2I pixelToCell(Vector2 coords)
+    public static Vector2I pixelToCell(Vector2 coords)
     {
-        int x = Convert.ToInt32(coords.X) / cellSize.X;
-        if (Mathf.Sign(coords.X) == -1)
-        {
-            x -= 1;
-        };
-        int y = Convert.ToInt32(coords.Y) / cellSize.Y;
-        if (MathF.Sign(coords.Y) == 1)
-        {
-            y -= 1;
-        }
+        int x = Convert.ToInt32(coords.X) / GenerationSettings.TILE_SIZE;
+        int y = Convert.ToInt32(coords.Y) / GenerationSettings.TILE_SIZE;
         return new Vector2I(x, y);
     }
 }

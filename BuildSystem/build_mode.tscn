@@ -3,10 +3,9 @@
 [ext_resource type="Script" uid="uid://dgclgxm42ygsu" path="res://BuildSystem/Grid.cs" id="1_a8g2r"]
 
 [node name="BuildMode" type="Node2D"]
-visible = false
 z_index = 5
 script = ExtResource("1_a8g2r")
-cellSize = Vector2i(64, -64)
-gridSize = Vector2i(5, 5)
-defaultCellColor = Color(0.854, 0.048, 0.579, 1)
-defaultLineColor = Color(0.496, 0.408, 0.081, 1)
+cellSize = Vector2i(64, 64)
+gridSize = Vector2i(6, 6)
+defaultCellColor = Color(0, 0, 0, 1)
+StaticCellColor = Color(0.898, 0, 1, 1)

@@ -1,5 +1,5 @@
 extends Panel
-class_name Slot
+class_name SlotOLD
 
 @export var current_item: InventoryItem
 
@@ -96,7 +96,7 @@ func _on_gui_input(event: InputEvent):
 				current_item = flying_obj
 				update(flying_obj)
 				flying_obj = null
-				InventoryUI.disable_display = true
+				InventoryManager.disable_display = true
 			else:
 				if current_item._compare(flying_obj.type):
 					print_debug("Stack")

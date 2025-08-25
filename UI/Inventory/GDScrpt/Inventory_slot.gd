@@ -1,4 +1,4 @@
-extends Slot
+extends SlotOLD
 class_name InventorySlot
 
 

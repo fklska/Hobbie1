@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwhjtfb2i2et5"
-path="res://.godot/imported/stamina background.png-ecfbdbdab88db9df1eb9a5c2b06ff40b.ctex"
+uid="uid://fjwbiqedknwg"
+path="res://.godot/imported/mana background.png-ab36230aaab505d621428377429ccb11.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/UI/Assets/stamina background.png"
-dest_files=["res://.godot/imported/stamina background.png-ecfbdbdab88db9df1eb9a5c2b06ff40b.ctex"]
+source_file="res://UI/Inventory/Assets/mana background.png"
+dest_files=["res://.godot/imported/mana background.png-ab36230aaab505d621428377429ccb11.ctex"]
 
 [params]
 

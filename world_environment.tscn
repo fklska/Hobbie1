@@ -93,5 +93,5 @@ script = ExtResource("4_t4ycb")
 colors = SubResource("GradientTexture1D_x002e")
 light = NodePath("../Light2D")
 bloom_light = NodePath("../PointLight2D")
-time = 35.4486
+time = 3.14159
 curve = SubResource("Curve_nwcac")

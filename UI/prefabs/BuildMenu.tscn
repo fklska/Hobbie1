@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://vumq2e0d4xkh"]
+[gd_scene load_steps=9 format=3 uid="uid://vumq2e0d4xkh"]
 
 [ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="1_owwux"]
-[ext_resource type="Script" uid="uid://dtrmm8wwd7cop" path="res://UI/Scripts/Menu.gd" id="2_1xlac"]
+[ext_resource type="Script" uid="uid://c2hd6o202acsw" path="res://BuildSystem/UI/BuildMenu.cs" id="2_ktfxd"]
 [ext_resource type="Script" uid="uid://b5wuccqf64dts" path="res://BuildSystem/BuildManager.gd" id="3_1w5oy"]
 [ext_resource type="Texture2D" uid="uid://b6rd6ckeubmor" path="res://BuildSystem/assets/370PEG2-0.png" id="3_s41en"]
+[ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="4_ktfxd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufdyt"]
 bg_color = Color(0.666667, 0.690196, 0.705882, 0.588235)
@@ -43,7 +44,7 @@ corner_detail = 2
 anti_aliasing = false
 anti_aliasing_size = 10.0
 
-[node name="Menu" type="TabContainer"]
+[node name="BuildMenu" type="TabContainer"]
 offset_right = 718.0
 offset_bottom = 384.0
 theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
@@ -55,7 +56,7 @@ theme_override_styles/tab_selected = SubResource("StyleBoxFlat_r2hbv")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_82pde")
 tab_alignment = 1
 current_tab = 0
-script = ExtResource("2_1xlac")
+script = ExtResource("2_ktfxd")
 
 [node name="Buildings" type="TabBar" parent="."]
 layout_mode = 2
@@ -79,6 +80,16 @@ theme_override_constants/h_separation = 64
 theme_override_constants/v_separation = 32
 columns = 4
 
+[node name="TownHall" type="Button" parent="Buildings/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+text = "TawnHall
+"
+icon = ExtResource("4_ktfxd")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
 [node name="BlacksmithButt" type="Button" parent="Buildings/GridContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
@@ -93,4 +104,9 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[connection signal="button_down" from="Buildings/GridContainer/BlacksmithButt" to="Buildings" method="_on_blacksmith_butt_button_down"]
+[node name="FlyingObj" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[connection signal="pressed" from="Buildings/GridContainer/TownHall" to="." method="_on_town_hall_pressed"]

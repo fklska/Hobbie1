@@ -4,8 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://buuxxvn788pgn" path="res://UI/UIAssets/Banners/Pressed.png" id="2_gqkkc"]
 [ext_resource type="Script" uid="uid://0mhyubqyax4r" path="res://UI/Scripts/MenuButton.gd" id="3_0thg8"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8idec"]
-texture = ExtResource("1_d0xop")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btoal"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sm6pt"]
 texture = ExtResource("1_d0xop")
@@ -13,15 +12,16 @@ texture = ExtResource("1_d0xop")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qg1wk"]
 texture = ExtResource("2_gqkkc")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btoal"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8idec"]
+texture = ExtResource("1_d0xop")
 
 [node name="Button" type="Button"]
 offset_right = 64.0
 offset_bottom = 64.0
-theme_override_styles/normal = SubResource("StyleBoxTexture_8idec")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_btoal")
 theme_override_styles/hover = SubResource("StyleBoxTexture_sm6pt")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_qg1wk")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_btoal")
+theme_override_styles/normal = SubResource("StyleBoxTexture_8idec")
 script = ExtResource("3_0thg8")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

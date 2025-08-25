@@ -1,7 +1,10 @@
 extends Control
-class_name InventoryUI
+class_name InventoryManager
 
 var slots: Array
+var ItemSlotMap: Dictionary = {
+	
+}
 
 var display_flying_obj: Sprite2D
 

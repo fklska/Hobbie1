@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lruuof0dxgi"
-path="res://.godot/imported/mana.png-a70a7b736c0c1b58054b47ada9c4aaf8.ctex"
+uid="uid://bd68nv7q1pufo"
+path="res://.godot/imported/HP.png-f00721ba76348d0ae59ff4b2272cefeb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/UI/Assets/mana.png"
-dest_files=["res://.godot/imported/mana.png-a70a7b736c0c1b58054b47ada9c4aaf8.ctex"]
+source_file="res://UI/Inventory/Assets/HP.png"
+dest_files=["res://.godot/imported/HP.png-f00721ba76348d0ae59ff4b2272cefeb.ctex"]
 
 [params]
 

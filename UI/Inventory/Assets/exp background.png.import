@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fjwbiqedknwg"
-path="res://.godot/imported/mana background.png-d1553120495bceb11df8ffe2df838c4b.ctex"
+uid="uid://pcy5bax8vpto"
+path="res://.godot/imported/exp background.png-dc427a9b8ac8f111d9dd9648c678b5ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/UI/Assets/mana background.png"
-dest_files=["res://.godot/imported/mana background.png-d1553120495bceb11df8ffe2df838c4b.ctex"]
+source_file="res://UI/Inventory/Assets/exp background.png"
+dest_files=["res://.godot/imported/exp background.png-dc427a9b8ac8f111d9dd9648c678b5ca.ctex"]
 
 [params]
 

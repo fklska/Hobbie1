@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://b0dwhont1cotx"]
+[gd_scene load_steps=79 format=3 uid="uid://b0dwhont1cotx"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_5t8oh"]
 [ext_resource type="Script" uid="uid://cvlvcs80lr4yf" path="res://Player/PlayerMainCharacter.cs" id="2_w41el"]
@@ -7,13 +7,14 @@
 [ext_resource type="Texture2D" uid="uid://p5axqvlak5s" path="res://Player/sprites/ATTACK 1/attack1_down.png" id="4_vyq5s"]
 [ext_resource type="Texture2D" uid="uid://5av13awi14rb" path="res://Player/sprites/IDLE/idle_down.png" id="5_w41el"]
 [ext_resource type="Texture2D" uid="uid://bset2ium8a8t4" path="res://Player/sprites/RUN/run_down.png" id="6_yl13i"]
-[ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://Player/UI/hot_bar.tscn" id="6_yyv38"]
+[ext_resource type="PackedScene" uid="uid://bx4ha6i7br5tk" path="res://UI/Inventory/hot_bar.tscn" id="6_yyv38"]
 [ext_resource type="Texture2D" uid="uid://chmy5uy4updio" path="res://Player/sprites/RUN/run_left.png" id="7_7cvrk"]
 [ext_resource type="PackedScene" uid="uid://beia5xtps3hg8" path="res://Player/UI/player_health_bar.tscn" id="7_jbxtf"]
 [ext_resource type="Texture2D" uid="uid://cd1x26taa4k6v" path="res://Player/sprites/RUN/run_right.png" id="8_2t76i"]
-[ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://Player/UI/inventory_ui.tscn" id="8_b474a"]
+[ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/Inventory/inventoryManager.tscn" id="8_b474a"]
 [ext_resource type="Texture2D" uid="uid://3hjb50khng1q" path="res://Player/sprites/RUN/run_up.png" id="9_bdpe8"]
 [ext_resource type="PackedScene" uid="uid://c2wv8totvopdf" path="res://DebugConsole/prefabs/debug_stats.tscn" id="9_mede7"]
+[ext_resource type="PackedScene" uid="uid://vumq2e0d4xkh" path="res://UI/prefabs/BuildMenu.tscn" id="15_7cvrk"]
 [ext_resource type="PackedScene" uid="uid://dp8r3rltfkp5p" path="res://UI/prefabs/StoreButton.tscn" id="15_w41el"]
 [ext_resource type="PackedScene" uid="uid://nbiotqlwjxva" path="res://Player/effects/mining_parctile.tscn" id="16_yl13i"]
 
@@ -626,11 +627,10 @@ _data = {
 &"runUp": SubResource("Animation_aecgs")
 }
 
-[node name="Player_MainCharacter" node_paths=PackedStringArray("inventory", "HotBar", "ActionProgress", "anim", "miningParticle") instance=ExtResource("1_5t8oh")]
+[node name="Player_MainCharacter" node_paths=PackedStringArray("HotBar", "ActionProgress", "anim", "miningParticle") instance=ExtResource("1_5t8oh")]
 y_sort_enabled = true
 collision_mask = 31
 script = ExtResource("2_w41el")
-inventory = NodePath("PlayerUI/InventoryUI")
 HotBar = NodePath("PlayerUI/HotBar")
 AGILITY = 10
 STRENCH = 10
@@ -708,7 +708,20 @@ grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="Button" parent="PlayerUI" index="4" instance=ExtResource("15_w41el")]
+[node name="BuildMenu" parent="PlayerUI" index="4" instance=ExtResource("15_7cvrk")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -359.0
+offset_top = -192.0
+offset_right = 359.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" parent="PlayerUI" index="5" instance=ExtResource("15_w41el")]
 anchors_preset = -1
 anchor_left = 0.0217014
 anchor_top = 0.856481

@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://beia5xtps3hg8"]
 
-[ext_resource type="Texture2D" uid="uid://pcy5bax8vpto" path="res://Player/UI/Assets/exp background.png" id="1_kvix7"]
-[ext_resource type="Texture2D" uid="uid://bdbeq7n06ec54" path="res://Player/UI/Assets/exp.png" id="2_bmvaa"]
-[ext_resource type="Texture2D" uid="uid://kj500k8v07au" path="res://Player/UI/Assets/hp background.png" id="3_1b8cr"]
-[ext_resource type="Texture2D" uid="uid://bd68nv7q1pufo" path="res://Player/UI/Assets/HP.png" id="4_r2lxg"]
-[ext_resource type="Texture2D" uid="uid://fjwbiqedknwg" path="res://Player/UI/Assets/mana background.png" id="5_j0lq1"]
-[ext_resource type="Texture2D" uid="uid://lruuof0dxgi" path="res://Player/UI/Assets/mana.png" id="6_0vyu0"]
-[ext_resource type="Texture2D" uid="uid://cwhjtfb2i2et5" path="res://Player/UI/Assets/stamina background.png" id="7_ti7eu"]
-[ext_resource type="Texture2D" uid="uid://bhur1cakxcwov" path="res://Player/UI/Assets/Stamina.png" id="8_mtbpp"]
+[ext_resource type="Texture2D" uid="uid://pcy5bax8vpto" path="res://UI/Inventory/Assets/exp background.png" id="1_kvix7"]
+[ext_resource type="Texture2D" uid="uid://bdbeq7n06ec54" path="res://UI/Inventory/Assets/exp.png" id="2_bmvaa"]
+[ext_resource type="Texture2D" uid="uid://kj500k8v07au" path="res://UI/Inventory/Assets/hp background.png" id="3_1b8cr"]
+[ext_resource type="Texture2D" uid="uid://bd68nv7q1pufo" path="res://UI/Inventory/Assets/HP.png" id="4_r2lxg"]
+[ext_resource type="Texture2D" uid="uid://fjwbiqedknwg" path="res://UI/Inventory/Assets/mana background.png" id="5_j0lq1"]
+[ext_resource type="Texture2D" uid="uid://lruuof0dxgi" path="res://UI/Inventory/Assets/mana.png" id="6_0vyu0"]
+[ext_resource type="Texture2D" uid="uid://cwhjtfb2i2et5" path="res://UI/Inventory/Assets/stamina background.png" id="7_ti7eu"]
+[ext_resource type="Texture2D" uid="uid://bhur1cakxcwov" path="res://UI/Inventory/Assets/Stamina.png" id="8_mtbpp"]
 
 [node name="PlayerHealthBar" type="MarginContainer"]
 anchors_preset = 15

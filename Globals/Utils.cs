@@ -19,6 +19,14 @@ namespace Godot1.Globals
             return new Vector2I(nx, ny);
         }
 
+        public static Vector2I GetLocalCell(Vector2I globalCell)
+        {
+            int nx = globalCell.X % GenerationSettings.CHUNK_SIZE;
+            int ny = globalCell.Y % GenerationSettings.CHUNK_SIZE;
+
+            return new Vector2I(nx, ny);
+        }
+
         public static Vector2I GetGlobalCell(Vector2 coords)
         {
             int nx = (int)coords.X / GenerationSettings.TILE_SIZE;
@@ -31,6 +39,14 @@ namespace Godot1.Globals
         {
             int nx = (int)coords.X / (GenerationSettings.CHUNK_SIZE * GenerationSettings.TILE_SIZE);
             int ny = (int)coords.Y / (GenerationSettings.CHUNK_SIZE * GenerationSettings.TILE_SIZE);
+
+            return new Vector2I(nx, ny);
+        }
+
+        public static Vector2I GetChunkCoords(Vector2I globalCell)
+        {
+            int nx = globalCell.X / (GenerationSettings.CHUNK_SIZE);
+            int ny = globalCell.Y / (GenerationSettings.CHUNK_SIZE);
 
             return new Vector2I(nx, ny);
         }
