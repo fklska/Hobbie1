@@ -1,6 +1,6 @@
 extends TabBar
 
-@onready var buildMenu: Menu = $".."
+@onready var buildMenu = $".."
 var TownHallPrefab = preload("res://BuildSystem/buildings/TownHall.tscn")
 
 func _on_blacksmith_butt_button_down():

@@ -1,6 +1,6 @@
 extends Button
 
-@onready var menu: Menu = $"../BuildMenu"
+@onready var menu = $"../BuildMenu"
 
 func _on_pressed():
 	menu.visible = !menu.visible

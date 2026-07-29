@@ -8,6 +8,17 @@
 [YOUTUBE](https://www.youtube.com/@fklska3995/shorts) канал по игре
 
 ## Updates
+### Update 0.0.6 RL Agents
+Проведены первые успешные попытки обучения RL агента по исследованию карты и сбору ресурсов. Алгоритм - PPO, окружение ускорено в 4 раза. Планируется еще мультиагентное обучение, для вражеских мобов.
+
+
+https://github.com/user-attachments/assets/894a089a-a91d-4b46-b8b0-1f0a3b295bd8
+
+
+https://github.com/user-attachments/assets/f9e11a2a-92d0-46e3-9ec4-ccb425ac5d74
+
+
+
 ### Update 0.0.5 Optimization
 Добавлена чанковая прогрузка карты, теперь вместо всей карты рендериться дистаниция в 3 чанка, также рендеринг карты разбивается на несколько кадров. Это значительно увеличило производительность, теперь на главной сцене больше фпс, а карта загружается намного быстрее из памяти. 
 
@@ -33,8 +44,6 @@ https://github.com/user-attachments/assets/0914b3fc-8088-47cf-a815-b2ee11b8582e
 
 
 
-
-### Внимание, автор не учился на программиста в ВУЗе 
 Напиши [мне](https://t.me/fklska) если хочешь поучаствовать
 
 [Шрифт](https://ggbot.itch.io/kurland-font)
@@ -128,4 +137,3 @@ https://github.com/user-attachments/assets/6cabadb0-bbd5-403d-8143-88bbe25a1529
 Также получилось реализовать что то более менее сностное - эффект сплеша от удара мечом. 
 
 https://github.com/user-attachments/assets/f18a7eae-57c0-4e68-aefc-e7bc1b6d5c1f
-

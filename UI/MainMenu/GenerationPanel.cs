@@ -7,77 +7,77 @@ using System;
 [GlobalClass]
 public partial class GenerationPanel : Control
 {
-    [ExportGroup("Рендер")]
-    [Export] public TextureRect heightMap, heatMap, moistureMap, biomeMap;
+	[ExportGroup("Рендер")]
+	[Export] public TextureRect heightMap, heatMap, moistureMap, biomeMap;
 
-    [Export] public SpinBox seedLabel;
-    [Export] public ProgressBar progressBar;
+	[Export] public SpinBox seedLabel;
+	[Export] public ProgressBar progressBar;
 
-    [Export] public Label statusLabel;
+	[Export] public Label statusLabel;
 
-    public GeneratorV3 generator;
+	public GeneratorV3 generator;
 
-    public override void _Ready()
-    {
-        base._Ready();
-        generator = (GeneratorV3)GetTree().Root.GetNode("GENERATOR");
-        seedLabel.Value = generator.genData.seed;
-    }
+	public override void _Ready()
+	{
+		base._Ready();
+		generator = (GeneratorV3)GetTree().Root.GetNode("GENERATOR");
+		seedLabel.Value = generator.genData.seed;
+	}
 
-    public void _on_h_slider_value_changed(int value)
-    {
-        GenerationSettings.MapSize = new Vector2I(128 * value, 128 * value);
-        GenerationSettings.RecalculateSetting();
-        GD.Print($"{GenerationSettings.MapSize} {GenerationSettings.MAP_CHUNK_SIZE_X}");
-    }
+	public void _on_h_slider_value_changed(int value)
+	{
+		GenerationSettings.MapSize = new Vector2I(128 * value, 128 * value);
+		GenerationSettings.RecalculateSetting();
+		GD.Print($"{GenerationSettings.MapSize} {GenerationSettings.MAP_CHUNK_SIZE_X}");
+	}
 
-    public async void _on_generate_button_down()
-    {
-        ClearPreRender();
-        statusLabel.Text = "Генерация началась!";
-        await generator.Generate(progressBar);
-        statusLabel.Text = "Мир сгенерирован успешно!";
-        PreRender();
-        GetParent<Control>().Set("reloadWorlds", true);
-    }
+	public async void _on_generate_button_down()
+	{
+		ClearPreRender();
+		statusLabel.Text = "Генерация началась!";
+		await generator.Generate(progressBar);
+		statusLabel.Text = "Мир сгенерирован успешно!";
+		PreRender();
+		GetParent<Control>().Set("reloadWorlds", true);
+	}
 
-    public void _on_new_seed_button_down()
-    {
-        generator.genData.GenerateNewSeed();
-        seedLabel.Value = generator.genData.seed;
-    }
+	public void _on_new_seed_button_down()
+	{
+		generator.genData.GenerateNewSeed();
+		seedLabel.Value = generator.genData.seed;
+	}
 
-    public void _on_back_to_menu_button_down()
-    {
-        Control parent = GetParent<Control>();
-        if (IsInstanceValid(parent))
-        {
-            parent.GetNode<Control>("MainButtons").Visible = true;
-        }
-        Visible = false;
-    }
+	public void _on_back_to_menu_button_down()
+	{
+		Control parent = GetParent<Control>();
+		if (IsInstanceValid(parent))
+		{
+			parent.GetNode<Control>("MainButtons").Visible = true;
+		}
+		Visible = false;
+	}
 
-    public void _on_seed_label_value_changed(float value)
-    {
-        generator.genData.seed = (int)value;
-        seedLabel.Value = (int)value;
-    }
+	public void _on_seed_label_value_changed(float value)
+	{
+		generator.genData.seed = (int)value;
+		seedLabel.Value = (int)value;
+	}
 
-    public void PreRender()
-    {
-        heightMap.Texture = ImageTexture.CreateFromImage(generator.genData.HeightMap);
-        heatMap.Texture = ImageTexture.CreateFromImage(generator.genData.HeatMap);
-        moistureMap.Texture = ImageTexture.CreateFromImage(generator.genData.MoistureMap);
-        biomeMap.Texture = ImageTexture.CreateFromImage(generator.genData.BiomeMap);
-    }
+	public void PreRender()
+	{
+		heightMap.Texture = ImageTexture.CreateFromImage(generator.genData.HeightMap);
+		heatMap.Texture = ImageTexture.CreateFromImage(generator.genData.HeatMap);
+		moistureMap.Texture = ImageTexture.CreateFromImage(generator.genData.MoistureMap);
+		biomeMap.Texture = ImageTexture.CreateFromImage(generator.genData.BiomeMap);
+	}
 
-    public void ClearPreRender()
-    {
-        progressBar.Value = 0;
-        heightMap.Texture = null;
-        heatMap.Texture = null;
-        moistureMap.Texture = null;
-        biomeMap.Texture = null;
-    }
+	public void ClearPreRender()
+	{
+		progressBar.Value = 0;
+		heightMap.Texture = null;
+		heatMap.Texture = null;
+		moistureMap.Texture = null;
+		biomeMap.Texture = null;
+	}
 
 }
