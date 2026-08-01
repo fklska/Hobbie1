@@ -8,7 +8,7 @@ const INGAME_TO_REAL_MINUTE_DURATION = (2 * PI) / MINUTES_PER_DAY
 @export var INGAME_SPEED = 20.0
 @export var INITIAL_HOUR = 12
 
-@export var light: PointLight2D
+@export var clouds: PrettyClouds
 @export var bloom_light: PointLight2D
 @export var time = 0
 @export var curve: Curve
@@ -23,10 +23,10 @@ func _process(delta: float) -> void:
 	time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
 	var value = (sin(time) + 1) / 2
 	self.color = colors.gradient.sample(value)
-	light.color = self.color
+	#clouds.modulate = self.color
 	bloom_light.color = self.color
 	if value < 0.5:
 		bloom_light.energy = 3.5 * curve.sample(value)
 	else:
 		bloom_light.energy = value * 2
-	light.color_ramp.set_offset(1, max(0.2, min(value, cloud_conts)))
+	clouds.texture.color_ramp.set_offset(1, max(0.2, min(value, cloud_conts)))

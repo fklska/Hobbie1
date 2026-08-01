@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkvskl1iffhpb"]
+[gd_scene format=3 uid="uid://bkvskl1iffhpb"]
 
-[ext_resource type="PackedScene" uid="uid://b0dwhont1cotx" path="res://Player/player_main_character.tscn" id="1_biouu"]
+[ext_resource type="PackedScene" uid="uid://b0dwhont1cotx" path="res://Player/Player.tscn" id="1_biouu"]
 
 [node name="Chunktest" type="Node2D"]
 

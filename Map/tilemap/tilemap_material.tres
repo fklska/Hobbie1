@@ -1,10 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dsnueub8kpfjf"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dsnueub8kpfjf"]
 
-[ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="1_6x1rl"]
-[ext_resource type="Texture2D" uid="uid://b2j0s02dtpf1x" path="res://ProceduralGeneration/v3/SimpleTileMap/snowMountain.png" id="2_6x1rl"]
+[ext_resource type="Shader" uid="uid://c423fyknd1xnr" path="res://Resourses/v2/EnviromentLayer.gdshader" id="1_hm0oy"]
 
 [resource]
-shader = ExtResource("1_6x1rl")
-shader_parameter/replacement_tex = ExtResource("2_6x1rl")
-shader_parameter/texture_scale = 0.00694444
-shader_parameter/red_threshold = 0.99
+shader = ExtResource("1_hm0oy")
+shader_parameter/player_pos = Vector2(0, 0)
+shader_parameter/reveal_radius = 32.0

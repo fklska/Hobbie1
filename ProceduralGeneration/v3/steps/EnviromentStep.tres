@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnviromnetGenerationStep" load_steps=4 format=3 uid="uid://frlih33p7mfb"]
+[gd_resource type="Resource" script_class="EnviromnetGenerationStep" format=3 uid="uid://frlih33p7mfb"]
 
 [ext_resource type="Script" uid="uid://d2f3lvdol0svi" path="res://ProceduralGeneration/v3/steps/EnviromnetGenerationStep.cs" id="1_1knl1"]
 
@@ -19,4 +19,3 @@ cellular_return_type = 0
 script = ExtResource("1_1knl1")
 TreeNoise = SubResource("FastNoiseLite_1knl1")
 OreNoise = SubResource("FastNoiseLite_gcloi")
-Enabled = true

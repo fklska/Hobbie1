@@ -15,13 +15,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Godot1"
-run/main_scene="uid://dsxe317kkbedc"
+run/main_scene="uid://puflxaap1ueo"
 config/features=PackedStringArray("4.7", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
-BuildMode="*res://BuildSystem/build_mode.tscn"
+BuildMode="res://BuildSystem/build_mode.tscn"
 MouseInfoPanel="*res://UI/prefabs/mouseInfoPanel.tscn"
 GlobalNavigation="*res://Navigation/navigation.tscn"
 GENERATOR="*res://ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn"

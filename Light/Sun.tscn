@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://dg8vfp01w2ird"]
+
+[ext_resource type="Script" uid="uid://c6q877snpllgp" path="res://Light/sun.gd" id="1_g6b8q"]
+[ext_resource type="Script" uid="uid://dlxknb7a41wrq" path="res://Light/pointLight.gd" id="2_g6b8q"]
+[ext_resource type="Shader" uid="uid://bq3rfl8wyggbf" path="res://Light/Sun.gdshader" id="2_qj5qb"]
+[ext_resource type="Script" uid="uid://dnntr11vdyrvt" path="res://Light/daynight.gd" id="3_qj5qb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kl3b6"]
+shader = ExtResource("2_qj5qb")
+shader_parameter/scale = 0.01
+
+[sub_resource type="Gradient" id="Gradient_msx0d"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.28145817)
+colors = PackedColorArray(6.077, 6.077, 6.077, 1, 0.0627451, 0.0627451, 0.0627451, 0.976471)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kl3b6"]
+offset = Vector3(-675.4837, 0, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g6b8q"]
+width = 720
+noise = SubResource("FastNoiseLite_kl3b6")
+color_ramp = SubResource("Gradient_msx0d")
+
+[sub_resource type="Gradient" id="Gradient_et4gd"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.45854923, 1)
+colors = PackedColorArray(1, 1, 1, 0.448, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t4ycb"]
+gradient = SubResource("Gradient_et4gd")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.48168498, 0)
+
+[sub_resource type="Gradient" id="Gradient_t4ycb"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.357143, 0.75)
+colors = PackedColorArray(0, 0.000120074, 0.132813, 1, 0.976563, 0.953287, 0.705719, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x002e"]
+gradient = SubResource("Gradient_t4ycb")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_nwcac"]
+_data = [Vector2(0, 0.0516719), 0.0, 0.0, 0, 0, Vector2(0.201465, 0.515957), 0.0, 0.0, 0, 0, Vector2(0.355311, 0.357903), -1.63443, -1.63443, 0, 0, Vector2(0.505494, 0.239362), -0.929934, -0.929934, 0, 0]
+point_count = 4
+
+[node name="Sun" type="Node2D" unique_id=1864465529]
+script = ExtResource("1_g6b8q")
+
+[node name="Light2D" type="PointLight2D" parent="." unique_id=930617831]
+material = SubResource("ShaderMaterial_kl3b6")
+scale = Vector2(6, 6)
+color = Color(0.81505454, 0.7940792, 0.59250796, 1)
+energy = 0.63
+blend_mode = 2
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+shadow_filter = 1
+shadow_filter_smooth = 3.3
+texture = SubResource("NoiseTexture2D_g6b8q")
+texture_scale = 0.7
+height = 1024.0
+script = ExtResource("2_g6b8q")
+SPEED = Vector3(-1, 0, 0)
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1831322565]
+scale = Vector2(1.51072, 1.51857)
+color = Color(0.81505454, 0.7940792, 0.59250796, 1)
+energy = 1.6269226
+shadow_filter = 1
+texture = SubResource("GradientTexture2D_t4ycb")
+texture_scale = 20.0
+
+[node name="DirectionalLight2D2" type="DirectionalLight2D" parent="." unique_id=1088142840]
+scale = Vector2(6.22656, 6.22656)
+blend_mode = 2
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+height = 0.42
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=269892271 node_paths=PackedStringArray("light", "bloom_light")]
+color = Color(0.81505454, 0.7940792, 0.59250796, 1)
+script = ExtResource("3_qj5qb")
+colors = SubResource("GradientTexture1D_x002e")
+INGAME_SPEED = 2.0
+light = NodePath("../Light2D")
+bloom_light = NodePath("../PointLight2D")
+time = 3.5939462998448364
+curve = SubResource("Curve_nwcac")

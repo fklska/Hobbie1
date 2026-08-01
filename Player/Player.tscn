@@ -1,8 +1,7 @@
-[gd_scene load_steps=79 format=3 uid="uid://b0dwhont1cotx"]
+[gd_scene format=3 uid="uid://b0dwhont1cotx"]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_5t8oh"]
 [ext_resource type="Script" uid="uid://cvlvcs80lr4yf" path="res://Player/PlayerMainCharacter.cs" id="2_w41el"]
-[ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_slw5e"]
 [ext_resource type="PackedScene" uid="uid://cuu8agnq5ro00" path="res://Camera/main_cam.tscn" id="4_d1huh"]
 [ext_resource type="Texture2D" uid="uid://p5axqvlak5s" path="res://Player/sprites/ATTACK 1/attack1_down.png" id="4_vyq5s"]
 [ext_resource type="Texture2D" uid="uid://5av13awi14rb" path="res://Player/sprites/IDLE/idle_down.png" id="5_w41el"]
@@ -16,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c2wv8totvopdf" path="res://DebugConsole/prefabs/debug_stats.tscn" id="9_mede7"]
 [ext_resource type="PackedScene" uid="uid://vumq2e0d4xkh" path="res://UI/prefabs/BuildMenu.tscn" id="15_7cvrk"]
 [ext_resource type="PackedScene" uid="uid://dp8r3rltfkp5p" path="res://UI/prefabs/StoreButton.tscn" id="15_w41el"]
+[ext_resource type="PackedScene" uid="uid://7e21qgyc6cuu" path="res://Light/Light_V3/light.tscn" id="16_8sa4y"]
 [ext_resource type="PackedScene" uid="uid://nbiotqlwjxva" path="res://Player/effects/mining_parctile.tscn" id="16_yl13i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl13i"]
@@ -24,15 +24,8 @@ bg_color = Color(0.152344, 0.152344, 0.152344, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cvrk"]
 bg_color = Color(1, 0.703125, 0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7da7d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3nb2p"]
 resource_local_to_scene = true
-shader = ExtResource("3_slw5e")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 2
-shader_parameter/inside = false
-shader_parameter/add_margins = false
-shader_parameter/enable = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aecgs"]
 atlas = ExtResource("4_vyq5s")
@@ -257,7 +250,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_im4ad")
 }],
-"loop": true,
+"loop": 1,
 "name": &"attackDown",
 "speed": 10.0
 }, {
@@ -286,7 +279,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d2051")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idleDown",
 "speed": 15.0
 }, {
@@ -294,12 +287,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_spbe3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idleStatic",
 "speed": 5.0
 }, {
 "frames": [],
-"loop": true,
+"loop": 1,
 "name": &"new_animation",
 "speed": 5.0
 }, {
@@ -328,7 +321,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rsw28")
 }],
-"loop": true,
+"loop": 1,
 "name": &"runDown",
 "speed": 15.0
 }, {
@@ -357,7 +350,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_62g7m")
 }],
-"loop": true,
+"loop": 1,
 "name": &"runLeft",
 "speed": 15.0
 }, {
@@ -386,7 +379,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cd0j7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"runRight",
 "speed": 15.0
 }, {
@@ -415,7 +408,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o6hnc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"runUp",
 "speed": 15.0
 }]
@@ -627,7 +620,9 @@ _data = {
 &"runUp": SubResource("Animation_aecgs")
 }
 
-[node name="Player_MainCharacter" node_paths=PackedStringArray("HotBar", "ActionProgress", "anim", "miningParticle") instance=ExtResource("1_5t8oh")]
+[node name="Player_MainCharacter" unique_id=833420880 node_paths=PackedStringArray("HotBar", "ActionProgress", "anim", "miningParticle") instance=ExtResource("1_5t8oh")]
+light_mask = 4
+visibility_layer = 4
 y_sort_enabled = true
 collision_mask = 31
 script = ExtResource("2_w41el")
@@ -635,12 +630,12 @@ HotBar = NodePath("PlayerUI/HotBar")
 AGILITY = 10
 STRENCH = 10
 INTELECT = 10
-SPEED = 20.0
+SPEED = 10.0
 ActionProgress = NodePath("ActionProgress")
 anim = NodePath("AnimationPlayer")
 miningParticle = NodePath("MiningParctile")
 
-[node name="ActionProgress" type="ProgressBar" parent="." index="0"]
+[node name="ActionProgress" type="ProgressBar" parent="." index="0" unique_id=1408588808]
 custom_minimum_size = Vector2(32, 4)
 offset_left = -16.0
 offset_top = -37.0
@@ -652,22 +647,22 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_7cvrk")
 show_percentage = false
 
 [node name="AnimatedSprite2D" parent="." index="1"]
-material = SubResource("ShaderMaterial_7da7d")
+light_mask = 4
+visibility_layer = 4
+material = SubResource("ShaderMaterial_3nb2p")
+position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_2vylw")
-animation = &"attackDown"
-offset = Vector2(0, -16)
+animation = &"idleDown"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
-libraries = {
-&"": SubResource("AnimationLibrary_s431q")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2" unique_id=1955806650]
+libraries/ = SubResource("AnimationLibrary_s431q")
 
-[node name="Camera2D" parent="." index="3" instance=ExtResource("4_d1huh")]
+[node name="Camera2D" parent="." index="3" unique_id=236822946 instance=ExtResource("4_d1huh")]
 
-[node name="PlayerUI" type="CanvasLayer" parent="." index="4"]
+[node name="PlayerUI" type="CanvasLayer" parent="." index="4" unique_id=951282800]
 layer = 2
 
-[node name="PlayerHealthBar" parent="PlayerUI" index="0" instance=ExtResource("7_jbxtf")]
+[node name="PlayerHealthBar" parent="PlayerUI" index="0" unique_id=58684463 instance=ExtResource("7_jbxtf")]
 anchors_preset = -1
 anchor_right = 0.244271
 anchor_bottom = 0.100926
@@ -679,7 +674,7 @@ theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 metadata/_edit_use_anchors_ = true
 
-[node name="HotBar" parent="PlayerUI" index="1" instance=ExtResource("6_yyv38")]
+[node name="HotBar" parent="PlayerUI" index="1" unique_id=1995951637 instance=ExtResource("6_yyv38")]
 anchors_preset = -1
 anchor_left = 0.0138889
 anchor_top = 0.12037
@@ -689,7 +684,7 @@ grow_horizontal = 1
 grow_vertical = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="InventoryUI" parent="PlayerUI" index="2" instance=ExtResource("8_b474a")]
+[node name="InventoryUI" parent="PlayerUI" index="2" unique_id=228029492 instance=ExtResource("8_b474a")]
 visible = false
 anchor_left = 0.0138889
 anchor_top = 0.219136
@@ -697,7 +692,7 @@ anchor_bottom = 0.317901
 offset_right = -0.00012207
 offset_bottom = -1.52588e-05
 
-[node name="Stats" parent="PlayerUI" index="3" instance=ExtResource("9_mede7")]
+[node name="Stats" parent="PlayerUI" index="3" unique_id=1841112021 instance=ExtResource("9_mede7")]
 anchor_left = 0.972222
 anchor_top = 0.950617
 anchor_right = 1.0
@@ -708,7 +703,7 @@ grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="BuildMenu" parent="PlayerUI" index="4" instance=ExtResource("15_7cvrk")]
+[node name="BuildMenu" parent="PlayerUI" index="4" unique_id=92634165 instance=ExtResource("15_7cvrk")]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -722,7 +717,7 @@ offset_bottom = 192.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" parent="PlayerUI" index="5" instance=ExtResource("15_w41el")]
+[node name="Button" parent="PlayerUI" index="5" unique_id=1311564877 instance=ExtResource("15_w41el")]
 anchors_preset = -1
 anchor_left = 0.0217014
 anchor_top = 0.856481
@@ -732,7 +727,9 @@ offset_right = 0.0
 offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
 
-[node name="MiningParctile" parent="." index="5" instance=ExtResource("16_yl13i")]
+[node name="MiningParctile" parent="." index="5" unique_id=158831710 instance=ExtResource("16_yl13i")]
 position = Vector2(33.1202, 7.6277)
+
+[node name="Light" parent="." index="6" unique_id=1447621785 instance=ExtResource("16_8sa4y")]
 
 [connection signal="selected_slot_changed" from="PlayerUI/HotBar" to="." method="_on_hot_bar_selected_slot_changed"]

@@ -19,7 +19,7 @@ public partial class Grid : Node2D
 	public WorldScene WorldScene;
 	public override void _Ready()
 	{
-		WorldScene = GetTree().Root.GetNode<WorldScene>("Map");
+		WorldScene = GetTree().Root.GetNode<WorldScene>("/root/Map");
 	}
 
 	public override void _Process(double delta)

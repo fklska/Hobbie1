@@ -1,97 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://puflxaap1ueo"]
+[gd_scene format=3 uid="uid://puflxaap1ueo"]
 
-[ext_resource type="Texture2D" uid="uid://ddeemkwvt6bhg" path="res://Light/cloud_noise.tres" id="2_wjtrd"]
-[ext_resource type="Script" uid="uid://dnntr11vdyrvt" path="res://Light/daynight.gd" id="4_t4ycb"]
-[ext_resource type="Script" uid="uid://dlxknb7a41wrq" path="res://Light/pointLight.gd" id="4_x002e"]
+[ext_resource type="PackedScene" uid="uid://dsxe317kkbedc" path="res://UI/MainMenu/menu.tscn" id="4_nwcac"]
 
-[sub_resource type="Environment" id="Environment_wjtrd"]
-background_mode = 3
-tonemap_mode = 3
-tonemap_exposure = 0.37
-tonemap_white = 0.4
-ssao_radius = 5.88
-ssao_intensity = 3.25
-ssao_power = 1.30583
-ssao_detail = 1.71
-ssao_horizon = 0.91
-sdfgi_use_occlusion = true
-sdfgi_read_sky_light = false
-sdfgi_bounce_feedback = 1.28
-glow_enabled = true
-glow_normalized = true
-glow_intensity = 0.18
-glow_strength = 0.37
-glow_bloom = 1.0
-glow_map_strength = 0.6
-volumetric_fog_density = 0.0
-adjustment_enabled = true
-adjustment_saturation = 1.37
+[sub_resource type="Environment" id="Environment_kl3b6"]
 
-[sub_resource type="Gradient" id="Gradient_et4gd"]
-interpolation_mode = 2
-colors = PackedColorArray(1, 1, 1, 0.448, 1, 1, 1, 0.42)
+[node name="World" type="Node2D" unique_id=953193375]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_sunvg"]
-gradient = SubResource("Gradient_et4gd")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2072196081]
+environment = SubResource("Environment_kl3b6")
 
-[sub_resource type="Gradient" id="Gradient_t4ycb"]
-interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.357143, 0.75)
-colors = PackedColorArray(0, 0.000120074, 0.132813, 1, 0.976563, 0.953287, 0.705719, 1, 1, 1, 1, 1)
+[node name="UI" type="CanvasLayer" parent="." unique_id=610739201]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_x002e"]
-gradient = SubResource("Gradient_t4ycb")
-use_hdr = true
-
-[sub_resource type="Curve" id="Curve_nwcac"]
-_data = [Vector2(0, 0.0516719), 0.0, 0.0, 0, 0, Vector2(0.201465, 0.515957), 0.0, 0.0, 0, 0, Vector2(0.355311, 0.357903), -1.63443, -1.63443, 0, 0, Vector2(0.505494, 0.239362), -0.929934, -0.929934, 0, 0]
-point_count = 4
-
-[node name="World" type="Node2D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_wjtrd")
-
-[node name="Light2D" type="PointLight2D" parent="."]
-scale = Vector2(6, 6)
-color = Color(0.26353, 0.256541, 0.27806, 1)
-energy = 0.63
-blend_mode = 2
-shadow_enabled = true
-shadow_color = Color(0, 0, 0, 1)
-shadow_filter = 1
-shadow_filter_smooth = 3.3
-texture = ExtResource("2_wjtrd")
-texture_scale = 0.59
-height = 1024.0
-script = ExtResource("4_x002e")
-SPEED = Vector3(-2, 0, 0)
-
-[node name="PointLight2D" type="PointLight2D" parent="."]
-scale = Vector2(1.51072, 1.51857)
-color = Color(0.26353, 0.256541, 0.27806, 1)
-energy = 1.11857
-shadow_filter = 1
-texture = SubResource("GradientTexture2D_sunvg")
-texture_scale = 11.95
-height = 254.0
-
-[node name="DirectionalLight2D2" type="DirectionalLight2D" parent="."]
-visible = false
-scale = Vector2(6.22656, 6.22656)
-blend_mode = 2
-shadow_enabled = true
-shadow_color = Color(0, 0, 0, 1)
-height = 0.42
-
-[node name="CanvasModulate" type="CanvasModulate" parent="." node_paths=PackedStringArray("light", "bloom_light")]
-color = Color(0.26353, 0.256541, 0.27806, 1)
-script = ExtResource("4_t4ycb")
-colors = SubResource("GradientTexture1D_x002e")
-light = NodePath("../Light2D")
-bloom_light = NodePath("../PointLight2D")
-time = 3.14159
-curve = SubResource("Curve_nwcac")
+[node name="Menu" parent="UI" unique_id=2065200064 instance=ExtResource("4_nwcac")]

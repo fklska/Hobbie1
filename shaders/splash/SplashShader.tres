@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://ctb2ousderblk"]
+[gd_resource type="VisualShader" format=3 uid="uid://ctb2ousderblk"]
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_kxy8q"]
 expanded_output_ports = [0]
@@ -21,40 +21,6 @@ operator = 2
 operator = 2
 
 [resource]
-code = "shader_type canvas_item;
-render_mode blend_mix, unshaded;
-
-uniform sampler2D Texture2DParameter;
-
-
-
-void fragment() {
-// Input:4
-	vec4 n_out4p0 = COLOR;
-	float n_out4p4 = n_out4p0.a;
-
-
-	vec4 n_out2p0;
-// Texture2D:2
-	n_out2p0 = texture(Texture2DParameter, UV);
-	float n_out2p4 = n_out2p0.a;
-
-
-// VectorOp:5
-	vec4 n_out5p0 = n_out4p0 * n_out2p0;
-
-
-// FloatOp:6
-	float n_out6p0 = n_out4p4 * n_out2p4;
-
-
-// Output:0
-	COLOR.rgb = vec3(n_out5p0.xyz);
-	COLOR.a = n_out6p0;
-
-
-}
-"
 mode = 1
 flags/unshaded = true
 flags/light_only = false

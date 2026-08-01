@@ -1,6 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://pkveavqw2mo0"]
-
-[ext_resource type="Script" uid="uid://hs3nf4ej4jva" path="res://Debugging/TetsSave.cs" id="1_l6ism"]
-
-[resource]
-script = ExtResource("1_l6ism")

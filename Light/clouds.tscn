@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://defa3sb80hkja"]
+
+[ext_resource type="Script" uid="uid://c0swk36cou2rc" path="res://Light/clouds_light.gd" id="1_snoww"]
+
+[sub_resource type="Gradient" id="Gradient_25d06"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.53108805)
+colors = PackedColorArray(1, 1, 1, 0, 0.050980393, 0.050980393, 0.050980393, 0.47843137)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_snoww"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jy1eq"]
+noise = SubResource("FastNoiseLite_snoww")
+color_ramp = SubResource("Gradient_25d06")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_juec1"]
+offset = Vector3(-20511.213, 0, 0)
+
+[node name="PointLight2D" type="PointLight2D" unique_id=2086790375]
+energy = 7.41
+blend_mode = 2
+texture = SubResource("NoiseTexture2D_jy1eq")
+texture_scale = 10.0
+script = ExtResource("1_snoww")
+noise = SubResource("FastNoiseLite_juec1")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1483700964]
+color = Color(1.0558422, 1.0377264, 0.8353106, 1)

@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform vec2 player_pos;      // мировая позиция игрока
+uniform vec2 player_pos;
 uniform float reveal_radius = 32.0;
 
 varying vec2 world_pos;
@@ -12,8 +12,8 @@ void vertex() {
 
 void fragment() {
     vec4 color = texture(TEXTURE, UV);
-    if (distance(world_pos, player_pos) < reveal_radius) {
-        color.a *= 0.5;
+    if (distance(world_pos, player_pos) > reveal_radius) {
+        color.a *= 0.0;
     }
-    COLOR = color;
+    COLOR.a = color.a;
 }

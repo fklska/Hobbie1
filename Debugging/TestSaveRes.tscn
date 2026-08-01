@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbsqqx703mvqv"]
-
-[ext_resource type="Script" uid="uid://rqyblksihg2h" path="res://Debugging/test_save_res.gd" id="1_1b5kv"]
-
-[node name="TestSaveRes" type="Node2D"]
-script = ExtResource("1_1b5kv")

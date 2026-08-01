@@ -4,4 +4,4 @@ extends Button
 
 func _on_pressed():
 	menu.visible = !menu.visible
-	BuildMode.buildMode = true
+	#BuildMode.buildMode = true

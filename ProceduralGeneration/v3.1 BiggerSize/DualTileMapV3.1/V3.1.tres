@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=46 format=3 uid="uid://g648pwt45v8r"]
+[gd_resource type="TileSet" format=3 uid="uid://g648pwt45v8r"]
 
 [ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="1_1ad8b"]
 [ext_resource type="Texture2D" uid="uid://ws4viy75k7ri" path="res://ProceduralGeneration/v3.1 BiggerSize/DualTileMapV3.1/Desert.png" id="2_io45v"]

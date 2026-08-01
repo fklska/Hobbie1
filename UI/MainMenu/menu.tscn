@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsxe317kkbedc"]
+[gd_scene format=3 uid="uid://dsxe317kkbedc"]
 
 [ext_resource type="Script" uid="uid://oolx3r0pang7" path="res://UI/MainMenu/main_menu.gd" id="1_k7f4m"]
 [ext_resource type="PackedScene" uid="uid://pd4inyp1lk58" path="res://UI/MainMenu/generation_panel.tscn" id="2_vxkf2"]
 [ext_resource type="PackedScene" uid="uid://dm2omuqu5juo0" path="res://UI/prefabs/world_list_panel.tscn" id="3_62lfh"]
 
-[node name="Menu" type="Control"]
+[node name="Menu" type="Control" unique_id=2065200064]
 z_index = 4
 layout_mode = 3
 anchors_preset = 15
@@ -13,8 +13,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_k7f4m")
+metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=166795560]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +25,7 @@ grow_vertical = 2
 color = Color(0.508, 0.465, 0.383, 0.425)
 metadata/_edit_use_anchors_ = true
 
-[node name="MainButtons" type="VBoxContainer" parent="."]
+[node name="MainButtons" type="VBoxContainer" parent="." unique_id=1353287557]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -39,27 +40,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="NewWorld" type="Button" parent="MainButtons"]
+[node name="NewWorld" type="Button" parent="MainButtons" unique_id=1921328082]
 custom_minimum_size = Vector2(256, 32)
 layout_mode = 2
 text = "New World"
 
-[node name="LoadWorld" type="Button" parent="MainButtons"]
+[node name="LoadWorld" type="Button" parent="MainButtons" unique_id=906122474]
 custom_minimum_size = Vector2(256, 32)
 layout_mode = 2
 text = "Load World
 "
 
-[node name="Quit" type="Button" parent="MainButtons"]
+[node name="Quit" type="Button" parent="MainButtons" unique_id=1839224810]
 layout_mode = 2
 text = "Quit
 "
 
-[node name="GenerationPanel" parent="." instance=ExtResource("2_vxkf2")]
+[node name="GenerationPanel" parent="." unique_id=460053737 instance=ExtResource("2_vxkf2")]
 visible = false
 layout_mode = 1
 
-[node name="WorldListPanel" parent="." instance=ExtResource("3_62lfh")]
+[node name="WorldListPanel" parent="." unique_id=1079205760 instance=ExtResource("3_62lfh")]
 visible = false
 layout_mode = 1
 

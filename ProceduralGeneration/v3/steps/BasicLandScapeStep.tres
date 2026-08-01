@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BasicLandScapeStep" load_steps=8 format=3 uid="uid://dss481vm4ric3"]
+[gd_resource type="Resource" script_class="BasicLandScapeStep" format=3 uid="uid://dss481vm4ric3"]
 
 [ext_resource type="Curve" uid="uid://bkkqbnl6dlbw6" path="res://ProceduralGeneration/v3/steps/LandscapeParams/HeatCurve.tres" id="1_ibp8x"]
 [ext_resource type="Script" uid="uid://bh7e6cgxlcwx" path="res://ProceduralGeneration/v3/steps/BasicLandScapeStep.cs" id="1_uohbi"]
@@ -21,5 +21,4 @@ HeatFractalStrech = 0.655
 MoistureHeightCurve = ExtResource("4_4b60i")
 fractalMoistureNoise = SubResource("FastNoiseLite_2bpgj")
 MoistureFractalStrech = 1.37
-Enabled = true
 metadata/_custom_type_script = "uid://bh7e6cgxlcwx"
