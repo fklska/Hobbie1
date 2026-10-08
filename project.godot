@@ -27,6 +27,7 @@ GlobalNavigation="*res://Navigation/navigation.tscn"
 GENERATOR="*res://ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn"
 Game="*res://Game/GameManager.cs"
 Sound="*res://Audio/SoundManager.cs"
+Overlay="*res://UI/Overlay/overlay.tscn"
 
 [display]
 
@@ -39,6 +40,10 @@ project/assembly_name="Godot1"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/TileMapDual/plugin.cfg", "res://addons/godot_rl_agents/plugin.cfg")
+
+[gui]
+
+theme/custom="uid://cedhnxugilj7g"
 
 [input]
 

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://8ghaigve22x5"]
+
+[ext_resource type="Script" uid="uid://b7is14osbum3h" path="res://UI/Overlay/overlay.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cnb1fb6yckww5" path="res://UI/Overlay/pause_menu.tscn" id="2_pause"]
+[ext_resource type="PackedScene" uid="uid://blo4a7xjog3cn" path="res://UI/Overlay/settings_panel.tscn" id="3_settings"]
+[ext_resource type="PackedScene" uid="uid://cjyr0vduy2yc2" path="res://UI/Overlay/confirm_dialog.tscn" id="4_confirm"]
+[ext_resource type="PackedScene" uid="uid://dha5lmg13p5kc" path="res://UI/Overlay/loading_screen.tscn" id="5_loading"]
+
+[node name="Overlay" type="CanvasLayer"]
+process_mode = 3
+layer = 20
+script = ExtResource("1_script")
+
+[node name="Fps" type="Label" parent="."]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -36.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_type_variation = &"HudLabel"
+horizontal_alignment = 2
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_pause")]
+
+[node name="SettingsPanel" parent="." instance=ExtResource("3_settings")]
+
+[node name="ConfirmDialog" parent="." instance=ExtResource("4_confirm")]
+
+[node name="LoadingScreen" parent="." instance=ExtResource("5_loading")]
