@@ -8,7 +8,8 @@ public partial class BuildMenu : TabContainer
 	[Export] public Button HireButton;
 	[Export] public OptionButton JobOption;
 	[Export] public Button SwordButton;
-	[Export] public Button BossButton;
+	[Export] public Button ArmMeleeButton;
+	[Export] public Button ArmRangedButton;
 
 	public override void _Ready()
 	{
@@ -18,7 +19,8 @@ public partial class BuildMenu : TabContainer
 		BlacksmithButton.Text = $"Кузница\n{GameManager.CostText("Blacksmith")}";
 		HireButton.Text = $"Нанять жителя ({GameManager.CostText("Worker")})";
 		SwordButton.Text = $"Выковать меч ({GameManager.CostText("Sword")})";
-		BossButton.Text = $"Призвать каменного гиганта ({GameManager.CostText("Boss")})";
+		ArmMeleeButton.Text = $"Вооружить жителя копьём ({GameManager.CostText("spear")})";
+		ArmRangedButton.Text = $"Вооружить жителя луком ({GameManager.CostText("bow")})";
 
 		foreach (string kind in GameManager.Kinds) JobOption.AddItem(GameManager.KindTitles[kind]);
 		JobOption.Selected = System.Array.IndexOf(GameManager.Kinds, GameManager.Instance.WorkerJob);
@@ -37,10 +39,11 @@ public partial class BuildMenu : TabContainer
 		GameManager game = GameManager.Instance;
 		TownHallButton.Disabled = game.HasBuilding("TownHall");
 		BlacksmithButton.Disabled = game.HasBuilding("Blacksmith") || !game.HasBuilding("TownHall");
-		WorkersLabel.Text = $"Жители: {game.Workers.Count}/{GameManager.MaxWorkers}";
+		WorkersLabel.Text = $"Жители: {game.Workers.Count}/{GameManager.MaxWorkers}, с оружием: {game.ArmedWorkers}";
 		HireButton.Disabled = !game.HasBuilding("TownHall") || game.Workers.Count >= GameManager.MaxWorkers;
 		SwordButton.Disabled = game.SwordForged || !game.HasBuilding("Blacksmith");
-		BossButton.Disabled = !game.SwordForged || IsInstanceValid(game.Boss);
+		ArmMeleeButton.Disabled = game.ArmedWorkers >= game.Workers.Count;
+		ArmRangedButton.Disabled = ArmMeleeButton.Disabled;
 	}
 
 	public void OpenMenu()
@@ -69,9 +72,7 @@ public partial class BuildMenu : TabContainer
 
 	public void _on_sword_pressed() => GameManager.Instance.ForgeSword();
 
-	public void _on_boss_pressed()
-	{
-		CloseMenu();
-		GameManager.Instance.SummonBoss();
-	}
+	public void _on_arm_melee_pressed() => GameManager.Instance.ArmNextWorker("spear");
+
+	public void _on_arm_ranged_pressed() => GameManager.Instance.ArmNextWorker("bow");
 }

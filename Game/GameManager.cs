@@ -35,11 +35,9 @@ public partial class GameManager : Node
 		["Blacksmith"] = new() { ["wood"] = 20, ["stone"] = 10 },
 		["Worker"] = new() { ["wood"] = 8 },
 		["Sword"] = new() { ["iron"] = 5, ["wood"] = 5 },
-		["Boss"] = new() { ["gold"] = 2 },
 	};
 
 	public const int MaxWorkers = 5;
-	public const float BossSpawnDistance = 900f;
 
 	public Dictionary<string, int> Stock = new();
 	public WorldScene World;
@@ -98,6 +96,7 @@ public partial class GameManager : Node
 
 		hud = GD.Load<PackedScene>("res://Game/game_hud.tscn").Instantiate<CanvasLayer>();
 		root.AddChild(hud);
+		StartSurvival();
 
 		root.GetNodeOrNull<Control>("World/UI/Menu")?.Hide();
 		EmitSignal(SignalName.StockChanged);
@@ -119,13 +118,15 @@ public partial class GameManager : Node
 
 	private void Cleanup()
 	{
-		foreach (Node node in new Node[] { hud, Player, World })
+		SaveRun();
+		foreach (Node node in new Node[] { Survival, hud, Player, World })
 		{
 			if (!IsInstanceValid(node)) continue;
 			node.GetParent()?.RemoveChild(node);
 			node.QueueFree();
 		}
 		hud = null;
+		Survival = null;
 	}
 
 	public Node2D EntitiesRoot => World?.GetNode<Node2D>("Enviroment");
@@ -304,29 +305,6 @@ public partial class GameManager : Node
 		EmitSignal(SignalName.ProgressChanged);
 	}
 
-	public void SummonBoss()
-	{
-		if (Ended) return;
-		if (IsInstanceValid(Boss))
-		{
-			Notify("Гигант уже идёт к деревне");
-			return;
-		}
-		if (!SwordForged)
-		{
-			Notify("Без меча гиганта не одолеть");
-			return;
-		}
-		if (!TrySpend("Boss")) return;
-
-		Boss = GD.Load<PackedScene>("res://AI/BaseClasses/Enemy/stone_giant.tscn").Instantiate<Node2D>();
-		Boss.Position = BuildingCenter(TownHall) + Vector2.FromAngle(GD.Randf() * Mathf.Tau) * BossSpawnDistance;
-		EntitiesRoot.AddChild(Boss);
-		Boss.Connect("died", Callable.From(() => EndGame(true, "Каменный гигант повержен")));
-		Notify("Каменный гигант пробудился!");
-		EmitSignal(SignalName.ProgressChanged);
-	}
-
 	public static Vector2 BuildingCenter(Node2D building) => (Vector2)building.Call("get_center");
 
 	public void Damage(Node target, int amount)
@@ -343,8 +321,7 @@ public partial class GameManager : Node
 		if (Workers.Count == 0) return $"Наймите жителя во вкладке «Деревня» ({CostText("Worker")})";
 		if (!HasBuilding("Blacksmith")) return $"Постройте кузницу ({CostText("Blacksmith")})";
 		if (!SwordForged) return $"Выкуйте меч в кузнице ({CostText("Sword")})";
-		if (!IsInstanceValid(Boss)) return $"Призовите каменного гиганта ({CostText("Boss")})";
-		return "Победите каменного гиганта, пока он не разрушил ратушу";
+		return SurvivalObjective();
 	}
 
 	public void EndGame(bool victory, string reason)

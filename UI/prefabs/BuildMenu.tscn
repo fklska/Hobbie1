@@ -44,7 +44,7 @@ corner_detail = 2
 anti_aliasing = false
 anti_aliasing_size = 10.0
 
-[node name="BuildMenu" type="TabContainer" node_paths=PackedStringArray("TownHallButton", "BlacksmithButton", "WorkersLabel", "HireButton", "JobOption", "SwordButton", "BossButton")]
+[node name="BuildMenu" type="TabContainer" node_paths=PackedStringArray("TownHallButton", "BlacksmithButton", "WorkersLabel", "HireButton", "JobOption", "SwordButton", "ArmMeleeButton", "ArmRangedButton")]
 offset_right = 718.0
 offset_bottom = 384.0
 theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
@@ -63,7 +63,8 @@ WorkersLabel = NodePath("Village/VBox/WorkersLabel")
 HireButton = NodePath("Village/VBox/Hire")
 JobOption = NodePath("Village/VBox/Job/JobOption")
 SwordButton = NodePath("Village/VBox/Sword")
-BossButton = NodePath("Village/VBox/Boss")
+ArmMeleeButton = NodePath("Village/VBox/ArmMelee")
+ArmRangedButton = NodePath("Village/VBox/ArmRanged")
 
 [node name="Buildings" type="TabBar" parent="."]
 layout_mode = 2
@@ -146,7 +147,10 @@ size_flags_horizontal = 3
 [node name="Sword" type="Button" parent="Village/VBox"]
 layout_mode = 2
 
-[node name="Boss" type="Button" parent="Village/VBox"]
+[node name="ArmMelee" type="Button" parent="Village/VBox"]
+layout_mode = 2
+
+[node name="ArmRanged" type="Button" parent="Village/VBox"]
 layout_mode = 2
 
 [connection signal="pressed" from="Buildings/GridContainer/TownHall" to="." method="_on_town_hall_pressed"]
@@ -154,4 +158,5 @@ layout_mode = 2
 [connection signal="pressed" from="Village/VBox/Hire" to="." method="_on_hire_pressed"]
 [connection signal="item_selected" from="Village/VBox/Job/JobOption" to="." method="_on_job_selected"]
 [connection signal="pressed" from="Village/VBox/Sword" to="." method="_on_sword_pressed"]
-[connection signal="pressed" from="Village/VBox/Boss" to="." method="_on_boss_pressed"]
+[connection signal="pressed" from="Village/VBox/ArmMelee" to="." method="_on_arm_melee_pressed"]
+[connection signal="pressed" from="Village/VBox/ArmRanged" to="." method="_on_arm_ranged_pressed"]

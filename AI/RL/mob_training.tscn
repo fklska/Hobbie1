@@ -1,0 +1,20 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://AI/RL/mob_training.gd" id="1_env"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_sync"]
+[ext_resource type="PackedScene" path="res://AI/Enemies/goblin.tscn" id="3_goblin"]
+[ext_resource type="PackedScene" path="res://AI/Enemies/wolf.tscn" id="4_wolf"]
+[ext_resource type="PackedScene" path="res://AI/Enemies/skeleton_archer.tscn" id="5_archer"]
+[ext_resource type="PackedScene" path="res://AI/Enemies/orc.tscn" id="6_orc"]
+
+[node name="MobTraining" type="Node2D"]
+script = ExtResource("1_env")
+mob_scenes = Array[PackedScene]([ExtResource("3_goblin"), ExtResource("4_wolf"), ExtResource("5_archer"), ExtResource("6_orc")])
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_sync")
+action_repeat = 8
+speed_up = 8.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.4, 0.4)

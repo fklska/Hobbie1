@@ -15,6 +15,7 @@ const DEPOSIT_RANGE := 80.0
 @onready var ai: WorkerController = $AIController2D
 @onready var tool: Sprite2D = $AnimatedSprite2D/Tool
 @onready var carry_label: Label = $Carry
+@onready var combat: VillagerCombat = $Combat
 
 var hp: int
 var act := 4
@@ -26,6 +27,7 @@ var dwell := 0.0
 var dwell_cell := Vector2i(-1, -1)
 var carrying_kind := ""
 var carrying_amount := 0
+var weapon_id := ""
 
 func _ready():
 	super()
@@ -52,6 +54,10 @@ func is_carrying() -> bool:
 func _physics_process(delta: float):
 	if ai.needs_reset and ai.heuristic == "model":
 		reset_episode()
+		return
+	if combat.update(delta):
+		move_and_slide()
+		_animate()
 		return
 	var world = Game.World
 	var town_hall := hall()
@@ -146,8 +152,14 @@ func take_damage(amount: int):
 	modulate = Color(1, 0.5, 0.5)
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.2)
 	if hp <= 0:
+		if not weapon_id.is_empty() and Game.has_method("ReturnWeapon"):
+			Game.call("ReturnWeapon", weapon_id)
 		died.emit()
 		queue_free()
+
+func equip(id: String, stats: Dictionary):
+	weapon_id = id
+	combat.equip(stats)
 
 func reset_episode():
 	var town_hall := hall()
@@ -172,5 +184,6 @@ func get_texture():
 func send_obj_data() -> Dictionary:
 	return {
 		"Description": "Житель-сборщик",
+		"Weapon": combat.stats.get("title", "нет"),
 		"HP": "%d/%d" % [hp, max_hp]
 	}

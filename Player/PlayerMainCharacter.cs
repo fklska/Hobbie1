@@ -82,7 +82,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		Velocity = Vector2.Zero;
 		DisableParticle(miningParticle);
 		anim.Play("idleStatic");
-		GameManager.Instance.EndGame(false, "Герой погиб");
+		GameManager.Instance.OnHeroDied();
 	}
 
 	private void Regenerate(double delta)
@@ -97,6 +97,22 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	{
 		hpBar.MaxValue = MaxHealth;
 		hpBar.Value = Health;
+	}
+
+	public void Heal(float amount)
+	{
+		Health = Math.Min(MaxHealth, Health + amount);
+		UpdateHealthBar();
+	}
+
+	public void Respawn(Vector2 at)
+	{
+		GlobalPosition = at;
+		Velocity = Vector2.Zero;
+		Health = MaxHealth;
+		sinceDamage = 0;
+		IsDead = false;
+		UpdateHealthBar();
 	}
 
 	public void HandAttack(double delta)
