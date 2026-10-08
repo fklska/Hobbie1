@@ -23,18 +23,27 @@
 
 ## Игровой цикл
 
-`Game/GameManager.cs` (автозагрузка `Game`, `GameManager.Instance`) хранит состояние партии: склад (`Stock`, из GDScript через `GetStock(kind)`), здания, жителей, босса, `SwordForged`, `Ended`. Цены и здания заданы словарями `Costs` и `Buildings` в начале файла.
+`Game/GameManager.cs` (автозагрузка `Game`, `GameManager.Instance`) хранит состояние партии: склад (`Stock`, из GDScript через `GetStock(kind)`), здания, жителей, босса, `Ended`. Экономика вынесена в partial `Game/GameManager.Economy.cs`, её данные (цены, здания по уровням, оружие, инструменты, доспехи) в `Game/Economy.cs`.
 
-1. Игрок добывает тайлы (`WorldScene.HarvestTile`), ресурс идёт на склад по `ResorseType` (`KindOf`, `YieldOf`).
-2. Ратуша и кузница ставятся из меню строительства (B): `Grid.StartPlacement(id)`, ЛКМ ставит, ПКМ отменяет.
-3. Вкладка «Деревня»: найм жителей (до `MaxWorkers`), выбор добываемого ресурса, ковка меча (урон героя ×3), вооружение жителей (`ArmWorker`, `ArmNextWorker`).
-4. Победа: рассвет 31-го дня. Поражение: разрушено главное здание (`MainBase`). Погибший герой возрождается у главного здания через 15 с. `EndGame` ставит дерево на паузу, HUD показывает итог.
+1. Партия начинается с костра: `StartWorld` сам ставит центр поселения (`TownHall`, он же `MainBase`) рядом с точкой спавна.
+2. Игрок добывает тайлы (`WorldScene.HarvestTile`), ресурс идёт на склад по `ResorseType` (`KindOf`, `YieldOf`) с учётом вместимости склада.
+3. Меню строительства (B): вкладки «Постройки», «Деревня» (найм, работа жителей, ополчение через `ArmWorker`, `ArmNextWorker`), «Арсенал», «Рынок». `Grid.StartPlacement(id)`, ЛКМ ставит, ПКМ отменяет. Стены ставятся подряд, пока хватает ресурсов.
+4. Победа: рассвет 31-го дня. Поражение: разрушен центр поселения (`MainBase`). Погибший герой возрождается у центра через 15 с. `EndGame` ставит дерево на паузу, HUD показывает итог.
 
 Выживание ведёт `Game/Survival.cs` (узел `Survival`, `Game.Survival`): его создаёт `StartWorld`, убирает `Cleanup`. День берётся из `DayNightCycle` героя (`day_length_minutes = 6`). Каждую ночь (`night_started`) приходит волна мобов из словаря `Survival.Mobs`, бюджет растёт с днём; каждую 5-ю ночь вместе с волной приходит каменный гигант. Мобы роняют монеты (`Stock["coins"]`) и артефакты (`Survival.Artifacts`), их подбирает герой (`Game/Loot/loot_pickup.tscn`). Вооружённые жители (`AI/Village/villager_combat.gd`) по ночам охраняют главное здание, безоружные убегают к нему от врагов. HUD выживания: `Game/survival_hud.tscn`.
 
-Партия сохраняется в `user://Runs/<имя мира>.json` на каждом рассвете, при выходе в меню и при закрытии окна, удаляется при победе или поражении. Код сохранения в `Game/GameManager.Survival.cs` (`SaveRun`, `HasRun`, `ContinueRun`). Экономика сохраняет своё через `SaveEconomy`/`LoadEconomy`, если они есть; на время `ContinueRun` поднят флаг `Game.Restoring`.
+Партия сохраняется в `user://Runs/<имя мира>.json` на каждом рассвете, при выходе в меню и при закрытии окна, удаляется при победе или поражении. Код сохранения в `Game/GameManager.Survival.cs` (`SaveRun`, `HasRun`, `ContinueRun`), здания и экономика сохраняются через `SaveEconomy`/`LoadEconomy`. На время `ContinueRun` поднят флаг `Game.Restoring`, костёр тогда не ставится.
 
-Здания наследуют `BuildSystem/scripts/building.gd` (`Building`: HP, `take_damage`, сигнал `destroyed`, `get_center()`). Урон любому объекту наносится через `Game.Damage(target, amount)`. Группы: `village` (герой, жители, здания — цели мобов), `enemies` (мобы и гигант — цели героя и жителей).
+Здания наследуют `BuildSystem/scripts/building.gd` (`Building`: HP, уровень, `take_damage`, `heal`, сигнал `destroyed`, `get_center()`). Урон любому объекту наносится через `Game.Damage(target, amount)`. Группы: `village` (герой, жители, здания — цели мобов), `enemies` (мобы и гигант — цели героя, жителей и башен).
+
+## Экономика
+
+- Ресурсы: `wood`, `stone`, `iron`, `gold`, `food`, `coins` (`Economy.Resources`, названия в `Economy.ResourceTitles`). Всё, кроме монет, ограничено `Game.Capacity(kind)`: центр плюс склады. Добавлять только через `Game.AddResource(kind, n)` или `Game.AddCoins(n)`, тратить через `TrySpend(cost)`.
+- Здания: `Economy.Buildings[id]` (сцена, размер в клетках, лимит по уровню центра, уровни с ценой, HP и эффектами). Уровень общий для всех зданий одного типа (`Game.GetLevel(id)`), улучшение стоит цену уровня × число зданий. Уровень центра (`CoreLevel`, 1–4: костёр, деревянная ратуша, каменная ратуша, замок) открывает новые здания и уровни, переход требует зданий из `Requires`.
+- Сцены зданий лежат в `BuildSystem/buildings/`, у каждой `building_id` и `level_textures` (картинка на уровень). При `fit_texture = true` картинка масштабируется по ширине footprint и стоит на его нижнем краю. Стены на слое физики 6 (Walls): герой и жители проходят сквозь них.
+- Утро (`day_started` у `DayNightCycle`): фермы дают еду, каждый житель съедает 1, рынок собирает налог. Без еды `Hungry` и жители работают вдвое медленнее.
+- Кузница: инструменты (`ToolTier`, множитель `ToolSpeed` для добычи героя и `WorkSpeed` для жителей), доспех героя (`ArmorTier`, здоровье), оружие ближнего боя. Мастерская: оружие дальнего боя. Выкованное оружие лежит в арсенале (`Armory`, `TakeWeapon`, `ReturnWeapon`), статы для GDScript через `Game.GetWeaponStats(id)`. Урон героя `HeroDamage` берётся от `HeroWeapon`, здоровье `HeroMaxHealth` от доспеха, оба учитывают артефакты.
+- Сохранение экономики: `SaveEconomy()` / `LoadEconomy(data)` (здания с клетками, уровнями и HP, тиры, арсенал; склад сохраняется отдельно).
 
 ## Структура
 
@@ -45,9 +54,9 @@
 | `ProceduralGeneration/v1`, `V2`, `DEBUG`, `scripts/` | Старые генераторы. Оставлены только потому, что на них ссылается `Light/Debug/light_v1.2.tscn`. Не использовать в новом коде. |
 | `Resourses/` | Префабы ресурсов (деревья, камень, железо, золото) и слой окружения `v2/EnviromentLayer.tscn`. |
 | `Player/` | `Player.tscn`, `PlayerMainCharacter.cs`, спрайты. Старый `Player/scripts/player.gd` (`class_name Player`) не удалять: этот тип использует `BaseClasses/ScriptClasses/weapon_item.gd`. |
-| `Game/` | `GameManager.cs` (состояние партии) и HUD `game_hud.tscn`. |
+| `Game/` | `GameManager.cs` (состояние партии), `GameManager.Economy.cs` и `Economy.cs` (экономика), `GameManager.Survival.cs` и `Survival.cs` (выживание, сохранение партии), HUD `game_hud.tscn`. |
 | `AI/` | `Village/worker.tscn` — житель, `Enemies/` — мобы волн (`mob.gd`, гоблин, волк, скелет-лучник, орк) и стрела, `BaseClasses/Enemy/stone_giant.tscn` — босс, `RL/` — RL-контроллеры, модели и сцены обучения. Старое: `AI/training.tscn`, `AI/Prefabs/v2/`. |
-| `BuildSystem/` | Сетка (`Grid.cs`), режим строительства, ратуша, кузница, склад. |
+| `BuildSystem/` | Сетка (`Grid.cs`), меню строительства (`UI/BuildMenu.cs`), сцены зданий `buildings/`, скрипты `scripts/` (`building.gd`, `tower.gd`), временные спрайты `assets/placeholders/`. |
 | `UI/` | Меню, инвентарь (`UI/Inventory/*.cs`, хотбар на GDScript), тема `UI/theme.tres`, шрифт Kurland. |
 | `Light/` | Смена дня и ночи: `DayNight/day_night.tscn` вложена в `Player.tscn`. `DayNightCycle` (`DayNightCycle.instance`, `hour`, `day`, сигналы `hour_changed`, `night_started`, `day_started`, `new_day`; статическое `DayNightCycle.night` от 0 до 1) задаёт палитру по часам, облака и туман рисует шейдер `sky.gdshader`. Ночной фонарь `night_lamp.tscn` вешается на здания из `BuildSystem/buildings/` автоматически, на другие узлы через группу `night_lamp_host` или вручную. `Debug/` — старая отладочная сцена. |
 | `Audio/` | Звук: автозагрузка `SoundManager.cs`, фоновая мелодия и джинглы в `music/`, звуки в `sfx/`, их генератор `tools/synth.py`, источники и лицензии в `CREDITS.md`. |
@@ -63,7 +72,7 @@
 - Не трогать `.godot/`: это кэш редактора, он в `.gitignore`.
 - Коммитить `.uid` рядом со скриптами и шейдерами и `.import` рядом с картинками. Godot ссылается на файлы по `uid://`, без них ссылки ломаются.
 - Переносить и переименовывать файлы лучше в редакторе Godot: он обновит ссылки. Если переносишь вручную, поправь `path=` во всех `ext_resource` и сохрани прежний `uid`.
-- Пути, зашитые строками, ищутся только поиском по тексту. Например, `ProceduralGeneration/v3/GenUtils.cs` грузит префабы `res://Resourses/Prefabs/*.tscn` по строкам, а `GameManager.cs` грузит `res://Player/Player.tscn`, `res://AI/Village/worker.tscn` и сцены зданий.
+- Пути, зашитые строками, ищутся только поиском по тексту. Например, `ProceduralGeneration/v3/GenUtils.cs` грузит префабы `res://Resourses/Prefabs/*.tscn` по строкам, а `GameManager.cs` грузит `res://Player/Player.tscn`, `res://AI/Village/worker.tscn`, а пути сцен зданий заданы в `Game/Economy.cs`.
 - Перед удалением файла проверь, что на него нет ссылок: по `uid://` из его `.uid`/`.import`, по `res://` пути, по `class_name` (GDScript) и по имени класса (C#). Все `.cs` компилируются в одну сборку, поэтому неиспользуемый C#-класс, на который ссылается другой `.cs`, удалять нельзя.
 - Сохранения пишутся только в `user://`. В экспортированной игре `res://` доступен только для чтения.
 - Новые C#-классы, которые вешаются на узлы, делать `partial` и наследовать от типа узла, как в существующем коде.
@@ -99,7 +108,7 @@ godot --headless --path . --quit
 
 Действия заданы в `project.godot`: `ui_left/right/up/down` (WASD и стрелки), `LeftMouseButton`, `RightMouseButton`, `action` (E), `attack` (F), `inventory` (Tab), `HotBar` (1–4), `menu` (B), `zoom+`/`zoom-` (Z/X), `ESC`, `DEBUG` (Alt+9), `test` (L). В коде используй эти имена, новые добавляй туда же.
 
-Слои физики: 1 World, 2 Player, 3 Enemy, 4 Resourses, 5 Buildings.
+Слои физики: 1 World, 2 Player, 3 Enemy, 4 Resourses, 5 Buildings, 6 Walls.
 
 ## RL
 

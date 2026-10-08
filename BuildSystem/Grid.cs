@@ -17,17 +17,19 @@ public partial class Grid : Node2D
 
 	public static string PendingBuilding;
 	private static Texture2D ghostTexture;
-	private static float ghostScale = 1f;
+	private static Rect2 ghostRect;
 	private bool drawn;
 
 	public WorldScene WorldScene => GameManager.Instance?.World;
 
 	public static void StartPlacement(string buildingId)
 	{
-		GameManager.BuildingInfo info = GameManager.Buildings[buildingId];
+		Node building = GD.Load<PackedScene>(Economy.Buildings[buildingId].ScenePath).Instantiate();
+		Godot.Collections.Dictionary preview = building.Call("preview", GameManager.Instance.GetLevel(buildingId)).AsGodotDictionary();
+		building.Free();
 		PendingBuilding = buildingId;
-		ghostTexture = GD.Load<Texture2D>(info.GhostPath);
-		ghostScale = info.GhostScale;
+		ghostTexture = preview.Count > 0 ? preview["texture"].As<Texture2D>() : null;
+		ghostRect = preview.Count > 0 ? preview["rect"].AsRect2() : default;
 		buildMode = true;
 	}
 
@@ -114,11 +116,12 @@ public partial class Grid : Node2D
 	{
 		if (ghostTexture == null) return;
 
-		Vector2I footprint = GameManager.Buildings[PendingBuilding].Footprint;
-		Vector2 size = ghostTexture.GetSize() * ghostScale;
-		Vector2 center = (currentCell * cellSize) + (footprint * cellSize) / 2;
+		Vector2I footprint = Economy.Buildings[PendingBuilding].Footprint;
+		Vector2 origin = currentCell * cellSize;
 		bool ok = GameManager.Instance.CanPlace(PendingBuilding, currentCell);
-		DrawTextureRect(ghostTexture, new Rect2(center - size / 2, size), false, ok ? new Color(0.6f, 1f, 0.6f, 0.7f) : new Color(1f, 0.4f, 0.4f, 0.7f));
+		Color tint = ok ? new Color(0.6f, 1f, 0.6f, 0.7f) : new Color(1f, 0.4f, 0.4f, 0.7f);
+		DrawRect(new Rect2(origin, footprint * cellSize), tint with { A = 0.25f });
+		DrawTextureRect(ghostTexture, new Rect2(origin + ghostRect.Position, ghostRect.Size), false, tint);
 	}
 
 	public void drawLineGridNearMouse()

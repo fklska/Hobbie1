@@ -1,5 +1,4 @@
 using Godot;
-using System.Collections.Generic;
 using System.Linq;
 
 public partial class GameHud : CanvasLayer
@@ -20,6 +19,7 @@ public partial class GameHud : CanvasLayer
 		GameManager game = GameManager.Instance;
 		game.StockChanged += UpdateStock;
 		game.ProgressChanged += UpdateObjective;
+		game.ProgressChanged += UpdateStock;
 		game.Message += ShowMessage;
 		game.GameEnded += ShowEnd;
 		UpdateStock();
@@ -31,6 +31,7 @@ public partial class GameHud : CanvasLayer
 		GameManager game = GameManager.Instance;
 		game.StockChanged -= UpdateStock;
 		game.ProgressChanged -= UpdateObjective;
+		game.ProgressChanged -= UpdateStock;
 		game.Message -= ShowMessage;
 		game.GameEnded -= ShowEnd;
 	}
@@ -51,8 +52,10 @@ public partial class GameHud : CanvasLayer
 
 	private void UpdateStock()
 	{
-		Dictionary<string, int> stock = GameManager.Instance.Stock;
-		StockLabel.Text = string.Join("    ", GameManager.Kinds.Select(k => $"{GameManager.KindTitles[k]}: {stock[k]}"));
+		GameManager game = GameManager.Instance;
+		StockLabel.Text = string.Join("    ", Economy.Resources.Select(k => k == Economy.Coins
+			? $"{Economy.ResourceTitles[k]}: {game.GetStock(k)}"
+			: $"{Economy.ResourceTitles[k]}: {game.GetStock(k)}/{game.Capacity(k)}"));
 	}
 
 	private void UpdateObjective()

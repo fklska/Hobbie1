@@ -8,7 +8,6 @@ public partial class Survival : Node
 
 	public record MobInfo(string Title, string ScenePath, int FromDay, int Cost);
 	public record ArtifactInfo(string Title, string Effect);
-	public record WeaponInfo(string Title, bool Ranged, int Damage, float Range, float Cooldown, float ProjectileSpeed, string Icon, Dictionary<string, int> Cost);
 
 	public const int WinDay = 30;
 	public const int GiantEvery = 5;
@@ -36,12 +35,6 @@ public partial class Survival : Node
 		["banner"] = new("Боевое знамя", "урон жителей +25%"),
 		["totem"] = new("Тотем очага", "главное здание чинится на 1 в секунду"),
 		["lucky_coin"] = new("Счастливая монета", "монет с врагов +50%"),
-	};
-
-	public static readonly Dictionary<string, WeaponInfo> FallbackWeapons = new()
-	{
-		["spear"] = new("Копьё", false, 8, 52f, 0.9f, 0f, "res://Items/Assets/#1---Transparent-Icons_54.png", new() { ["wood"] = 4, ["iron"] = 2, ["coins"] = 3 }),
-		["bow"] = new("Лук", true, 7, 360f, 1.5f, 520f, "", new() { ["wood"] = 6, ["coins"] = 5 }),
 	};
 
 	public int LastWaveDay;
@@ -294,12 +287,8 @@ public partial class Survival : Node
 		PlayerMainCharacter player = game.Player;
 		switch (id)
 		{
-			case "fang":
-				player.AttackDamage += 4 * count;
-				break;
 			case "stone_heart":
-				player.MaxHealth += 20 * count;
-				player.Heal(20 * count);
+				game.ApplyHeroStats();
 				break;
 			case "boots":
 				player.SPEED *= Mathf.Pow(1.08f, count);

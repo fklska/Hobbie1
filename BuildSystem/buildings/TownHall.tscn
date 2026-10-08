@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://h3wbd84xih6v"]
+[gd_scene load_steps=10 format=3 uid="uid://h3wbd84xih6v"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_rj47l"]
 [ext_resource type="Script" uid="uid://bn2m2vb5h58i4" path="res://BuildSystem/scripts/town_hall.gd" id="2_fopta"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="3_35esh"]
 [ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="3_vnq44"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="4_y53ly"]
+[ext_resource type="Texture2D" uid="uid://dlvl5x6y255vy" path="res://BuildSystem/assets/placeholders/campfire.png" id="5_fire"]
+[ext_resource type="Texture2D" uid="uid://dfans6ionvipn" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_05.png" id="6_stone"]
+[ext_resource type="Texture2D" uid="uid://bmsvtw38fh7mx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_02.png" id="7_castle"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wvymk"]
 resource_local_to_scene = true
@@ -22,13 +25,13 @@ collision_layer = 16
 input_pickable = true
 script = ExtResource("2_fopta")
 data = ExtResource("3_35esh")
-max_hp = 400
+building_id = "TownHall"
+footprint = Vector2i(2, 2)
+level_textures = Array[Texture2D]([ExtResource("5_fire"), ExtResource("3_vnq44"), ExtResource("6_stone"), ExtResource("7_castle")])
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_wvymk")
-texture = ExtResource("3_vnq44")
-offset = Vector2(32, 32)
+texture = ExtResource("5_fire")
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(33, 49)
-polygon = PackedVector2Array(-26, 11, -26, -18, 26, -18, 26, 11)
+polygon = PackedVector2Array(8, 48, 120, 48, 120, 124, 8, 124)

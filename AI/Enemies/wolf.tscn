@@ -124,7 +124,7 @@ radius = 6.0
 [node name="Wolf" instance=ExtResource("1_base")]
 z_index = 2
 collision_layer = 4
-collision_mask = 0
+collision_mask = 32
 script = ExtResource("2_mob")
 mob_id = "wolf"
 title = "Волк"
