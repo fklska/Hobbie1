@@ -5,6 +5,7 @@ import numpy as np
 
 warnings.filterwarnings("ignore")
 
+import sdf
 from sdf import Camera, render
 from palette import MATS
 import godot_res as gr
@@ -89,11 +90,44 @@ def hero():
     return render_character(h, "Art/hero", "hero", (64, 64), (32, 52), big={"death": 8})
 
 
-TARGETS = {"hero": hero}
+def render_building(fn, fp, pad_top=220):
+    W, D = fp[0] * 64, fp[1] * 64
+    cam = Camera("oblique", k=BK, w=W, h=D + pad_top, anchor=(0, pad_top))
+    kit = fn()
+    sdf.set_light(sdf.BUILD_LIGHT)
+    img, _, _ = render(kit.prims, MATS, cam, decals=kit.decals, line_depth=3.0)
+    sdf.set_light(sdf.CHAR_LIGHT)
+    a = img[:, :, 3] > 0
+    rows = np.where(a.any(1))[0]
+    top = max(0, rows[0] - 1) if len(rows) else 0
+    if top == 0 and len(rows):
+        print("building clipped at top:", fn.__name__)
+    if a[:, 0].any() or a[:, -1].any():
+        print("touches side:", fn.__name__)
+    return img[top:]
+
+
+def buildings(names=None):
+    import buildings as bd
+    for name, (fp, levels) in bd.BUILDINGS.items():
+        if names and name not in names:
+            continue
+        for i, fn in enumerate(levels):
+            img = render_building(fn, fp)
+            gr.save_png(img, f"Art/buildings/{name}_{i + 1}.png")
+
+
+BK = 0.9
+
+TARGETS = {"hero": hero, "buildings": buildings}
 
 if __name__ == "__main__":
     names = sys.argv[1:] or list(TARGETS)
     for n in names:
         t = time.time()
-        uid = TARGETS[n]()
+        if ":" in n:
+            n, sub = n.split(":")
+            uid = TARGETS[n](sub.split(","))
+        else:
+            uid = TARGETS[n]()
         print(n, uid, f"{time.time() - t:.1f}s")

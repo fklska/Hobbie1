@@ -85,10 +85,10 @@ class Prim:
             d = _capped_cone(q, h, r1, r2)
         elif t == "prism":
             q = self.local(p, k["c"])
-            d = _roof_prism(q, k["w"], k["h"], k["l"])
+            d = _roof_prism(q, k["w"], k["h"], k["l"], k.get("thick"))
         elif t == "torus":
             q = self.local(p, k["c"])
-            qx = np.sqrt(q[:, 0] ** 2 + q[:, 2] ** 2) - k["R"]
+            qx = np.sqrt(q[:, 0] ** 2 + q[:, 2] ** 2) - k["RR"]
             d = np.sqrt(qx ** 2 + q[:, 1] ** 2) - k["r"]
         elif t == "custom":
             d = k["fn"](p)
@@ -127,12 +127,14 @@ def _capped_cone(q, h, r1, r2):
     return s * np.sqrt(np.minimum(cax ** 2 + cay ** 2, cbx ** 2 + cby ** 2))
 
 
-def _roof_prism(q, w, h, l):
+def _roof_prism(q, w, h, l, thick=None):
     # gable roof: ridge along local z, half width w, height h, half length l, base at y=0
     x = np.abs(q[:, 0])
     y = q[:, 1]
     n = norm([h, w])
     slope = x * n[0] + (y - h) * n[1]
+    if thick:
+        slope = np.abs(slope + thick / 2) - thick / 2
     d = np.maximum(slope, -y)
     d = np.maximum(d, np.abs(q[:, 2]) - l)
     return d
@@ -194,6 +196,13 @@ class Material:
 
 
 LIGHT = norm([-0.55, 0.85, 0.45])
+CHAR_LIGHT = LIGHT
+BUILD_LIGHT = norm([-0.7, 0.62, 0.35])
+
+
+def set_light(v):
+    global LIGHT
+    LIGHT = norm(v)
 
 
 def scene_dist(prims, p):
