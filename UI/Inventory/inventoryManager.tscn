@@ -1,42 +1,175 @@
-[gd_scene load_steps=4 format=3 uid="uid://bduu47fsemt20"]
+[gd_scene format=3 uid="uid://bduu47fsemt20"]
 
-[ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/Inventory/slot.tscn" id="1_0agyi"]
 [ext_resource type="Script" uid="uid://6omt3pj8gtoo" path="res://UI/Inventory/InventoryManager.cs" id="1_p8ors"]
+[ext_resource type="Script" uid="uid://bv7nrrp1xkjmg" path="res://UI/Inventory/inventory_stats.gd" id="2_stats"]
+[ext_resource type="PackedScene" uid="uid://dn3w0t2raes5j" path="res://UI/Inventory/slot.tscn" id="1_0agyi"]
 [ext_resource type="Script" uid="uid://2ki7qtkmqagn" path="res://UI/Inventory/InventorySlot.cs" id="3_p8ors"]
 
-[node name="InventoryUI" type="MarginContainer"]
+[node name="InventoryUI" type="Control" groups=["closable_ui"]]
 z_index = 2
-anchors_preset = -1
-anchor_right = 0.246528
-anchor_bottom = 0.425926
-offset_right = -16.0004
-offset_bottom = -212.0
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_p8ors")
-metadata/_edit_use_anchors_ = true
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
 layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Center/Panel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderLabel"
+text = "Инвентарь"
+
+[node name="Close" type="Button" parent="Center/Panel/VBox/Header"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Закрыть (Tab)"
+focus_mode = 0
+theme_type_variation = &"FlatButton"
+text = "×"
+
+[node name="HSeparator" type="HSeparator" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="Body" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Info" type="VBoxContainer" parent="Center/Panel/VBox/Body"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
+script = ExtResource("2_stats")
+
+[node name="HeroTitle" type="Label" parent="Center/Panel/VBox/Body/Info"]
+layout_mode = 2
+theme_type_variation = &"SubheaderLabel"
+text = "Герой"
+
+[node name="Hero" type="VBoxContainer" parent="Center/Panel/VBox/Body/Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Gap" type="Control" parent="Center/Panel/VBox/Body/Info"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="StockTitle" type="Label" parent="Center/Panel/VBox/Body/Info"]
+layout_mode = 2
+theme_type_variation = &"SubheaderLabel"
+text = "Склад деревни"
+
+[node name="Stock" type="VBoxContainer" parent="Center/Panel/VBox/Body/Info"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="VSeparator" type="VSeparator" parent="Center/Panel/VBox/Body"]
+layout_mode = 2
+
+[node name="Bag" type="VBoxContainer" parent="Center/Panel/VBox/Body"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BagTitle" type="Label" parent="Center/Panel/VBox/Body/Bag"]
+layout_mode = 2
+theme_type_variation = &"SubheaderLabel"
+text = "Сумка"
+
+[node name="Grid" type="GridContainer" parent="Center/Panel/VBox/Body/Bag"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
 columns = 4
 
-[node name="Slot" parent="GridContainer" instance=ExtResource("1_0agyi")]
+[node name="Slot" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
 layout_mode = 2
 script = ExtResource("3_p8ors")
 
-[node name="Slot2" parent="GridContainer" instance=ExtResource("1_0agyi")]
+[node name="Slot2" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
 layout_mode = 2
 script = ExtResource("3_p8ors")
 
-[node name="Slot3" parent="GridContainer" instance=ExtResource("1_0agyi")]
+[node name="Slot3" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
 layout_mode = 2
 script = ExtResource("3_p8ors")
 
-[node name="Slot4" parent="GridContainer" instance=ExtResource("1_0agyi")]
+[node name="Slot4" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
 layout_mode = 2
 script = ExtResource("3_p8ors")
+
+[node name="Slot5" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Slot6" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Slot7" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Slot8" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Slot9" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Slot10" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Slot11" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Slot12" parent="Center/Panel/VBox/Body/Bag/Grid" instance=ExtResource("1_0agyi")]
+layout_mode = 2
+script = ExtResource("3_p8ors")
+
+[node name="Hint" type="Label" parent="Center/Panel/VBox/Body/Bag"]
+custom_minimum_size = Vector2(274, 0)
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+text = "Щелчок берёт предмет, щелчок по пустой ячейке кладёт его."
+autowrap_mode = 3
 
 [node name="FlyingObj" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 z_index = 3
 
 [node name="Label" type="Label" parent="FlyingObj"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 44.0
+offset_bottom = 27.0
+theme_type_variation = &"HudLabel"
+
+[connection signal="pressed" from="Center/Panel/VBox/Header/Close" to="." method="hide"]

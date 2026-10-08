@@ -1,5 +1,4 @@
 using Godot;
-using System.Reflection;
 
 [GlobalClass]
 [Tool]
@@ -8,44 +7,43 @@ public partial class Slot : Panel
     [Export]
     public InventoryItem CurrentItem;
 
+    [Export]
+    public string Key = "";
+
+    public static InventoryItem FlyingObj;
+
     protected TextureRect _itemSprite;
     protected Label _itemAmount;
     protected Label _slotNumberLabel;
 
-    public static InventoryItem FlyingObj;
+    private bool _selected;
+    private bool _hovered;
 
-    private readonly Color _emptyStyle = Color.Color8(255, 255, 255, 215);
-    private readonly Color _defaultStyle = Color.Color8(255, 255, 255, 255);
-    private readonly Color _selectedColor = Color.Color8(255, 255, 145, 255);
-
-    public enum State
+    public bool Selected
     {
-        Empty,
-        Fill,
-        Selected
-    }
-
-    public State CurrentState = State.Empty;
-
-    public override void _Process(double delta)
-    {
-        //StateMachine();
+        get => _selected;
+        set
+        {
+            _selected = value;
+            RefreshStyle();
+        }
     }
 
     public override void _Ready()
     {
-        _itemSprite = GetNode<TextureRect>("CenterContainer/item_display");
-        _itemAmount = GetNode<Label>("CenterContainer/item_display/item_amount");
-        _slotNumberLabel = GetNode<Label>("Label");
+        _itemSprite = GetNode<TextureRect>("%Icon");
+        _itemAmount = GetNode<Label>("%Amount");
+        _slotNumberLabel = GetNode<Label>("%Key");
+        _slotNumberLabel.Text = Key;
+        RefreshStyle();
     }
 
     public void Update(InventoryItem item)
     {
         CurrentItem = item;
-        _itemAmount.Text = item.Amount.ToString();
+        _itemAmount.Text = item.Amount > 1 ? item.Amount.ToString() : "";
         _itemSprite.Texture = item.texture;
-
-        RefreshState();
+        RefreshStyle();
     }
 
     public void ClearSlot()
@@ -53,40 +51,7 @@ public partial class Slot : Panel
         CurrentItem = null;
         _itemAmount.Text = "";
         _itemSprite.Texture = null;
-
-        RefreshState();
-    }
-
-    public void StateMachine()
-    {
-        switch (CurrentState)
-        {
-            case State.Empty:
-                SetEmptyStyle();
-                break;
-            case State.Fill:
-                SetDefaultStyle();
-                break;
-            case State.Selected:
-                SetSelectedStyle();
-                break;
-        }
-    }
-
-    public void RefreshState()
-    {
-        if (IsEmpty())
-        {
-            CurrentState = State.Empty;
-        }
-        else if (CurrentState == State.Selected)
-        {
-            CurrentState = State.Selected;
-        }
-        else
-        {
-            CurrentState = State.Fill;
-        }
+        RefreshStyle();
     }
 
     public bool IsEmpty()
@@ -94,73 +59,39 @@ public partial class Slot : Panel
         return CurrentItem == null;
     }
 
-    public void SetEmptyStyle()
+    public void RefreshStyle()
     {
-        Modulate = _emptyStyle;
-    }
-
-    public void SetDefaultStyle()
-    {
-        Modulate = _defaultStyle;
-    }
-
-    public void SetSelectedStyle()
-    {
-        Modulate = _selectedColor;
+        ThemeTypeVariation = _selected ? "SlotPanelSelected" : _hovered ? "SlotPanelHover" : "SlotPanel";
+        if (_itemSprite != null) _itemSprite.Modulate = IsEmpty() ? new Color(1, 1, 1, 0.5f) : Colors.White;
     }
 
     private void OnMouseEntered()
     {
-        CurrentState = State.Selected;
+        _hovered = true;
+        RefreshStyle();
     }
 
     private void OnMouseExited()
     {
-        if (IsEmpty())
-        {
-            CurrentState = State.Empty;
-            return;
-        }
-        CurrentState = State.Fill;
+        _hovered = false;
+        RefreshStyle();
     }
 
     private void OnGuiInput(InputEvent @event)
     {
-        if (@event.IsActionPressed("RightMouseButton"))
-        {
-            GD.Print(this);
-        }
+        if (!@event.IsActionReleased("LeftMouseButton")) return;
 
-        if (@event.IsActionReleased("LeftMouseButton"))
+        if (FlyingObj == null)
         {
-            if (FlyingObj == null) // Take Item
-            {
-                FlyingObj = CurrentItem;
-                ClearSlot();
-                StateMachine();
-            }
-            else // Put Item
-            {
-                if (IsEmpty())
-                {
-                    CurrentItem = FlyingObj;
-                    Update(FlyingObj);
-                    StateMachine();
-                    FlyingObj = null;
-                    InventoryManager.DisableDisplay = true;
-                }
-                else
-                {
-                    if (CurrentItem.IsEqual(FlyingObj))
-                    {
-                        GD.Print("Stack");
-                    }
-                    else
-                    {
-                        GD.Print("Slot zanyat!");
-                    }
-                }
-            }
+            if (IsEmpty()) return;
+            FlyingObj = CurrentItem;
+            ClearSlot();
+        }
+        else if (IsEmpty())
+        {
+            Update(FlyingObj);
+            FlyingObj = null;
+            InventoryManager.DisableDisplay = true;
         }
     }
 }

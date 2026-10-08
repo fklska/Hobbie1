@@ -12,13 +12,13 @@ public partial class InventoryManager : Control
 
     public override void _Ready()
     {
-        DisplayFlyingObj = GetNode<Sprite2D>("FlyingObj");
+        DisplayFlyingObj = GetNode<Sprite2D>("%FlyingObj");
         InitializeSlots();
     }
 
     public void InitializeSlots()
     {
-        foreach (Slot slot in GetNode<GridContainer>("GridContainer").GetChildren())
+        foreach (Slot slot in GetNode<GridContainer>("%Grid").GetChildren())
         {
             Slots.Add(slot);
         }
@@ -43,7 +43,8 @@ public partial class InventoryManager : Control
     {
         foreach (Slot slot in Slots)
         {
-            slot.Update(slot.CurrentItem);
+            if (slot.IsEmpty()) slot.ClearSlot();
+            else slot.Update(slot.CurrentItem);
         }
     }
 
@@ -60,6 +61,7 @@ public partial class InventoryManager : Control
         if (@event.IsActionPressed("inventory"))
         {
             Visible = !Visible;
+            GetViewport().SetInputAsHandled();
         }
     }
 }

@@ -212,6 +212,10 @@ func build_panels() -> void:
 	theme.set_type_variation("RibbonPanel", "PanelContainer")
 	theme.set_stylebox("panel", "RibbonPanel", box("ribbon", [12, 6, 12, 6], [28, 6, 28, 8]))
 
+	for variation in [["SlotPanel", "slot", 6], ["SlotPanelHover", "slot_hover", 6], ["SlotPanelSelected", "slot_selected", 8]]:
+		theme.set_type_variation(variation[0], "Panel")
+		theme.set_stylebox("panel", variation[0], box(variation[1], [variation[2], variation[2], variation[2], variation[2]], [6, 6, 6, 6]))
+
 	theme.set_type_variation("ClearPanel", "PanelContainer")
 	theme.set_stylebox("panel", "ClearPanel", empty())
 

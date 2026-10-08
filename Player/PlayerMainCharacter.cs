@@ -35,13 +35,13 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	private double attackTimer;
 	private double attackAnimTimer;
 	private double sinceDamage;
-	private TextureProgressBar hpBar;
+	private Godot.Range hpBar;
 
 	public override void _Ready()
 	{
 		WorldScene = GetTree().Root.GetNode<WorldScene>("Map");
 		lastChunkCell = Utils.GetChunkCoords(GlobalPosition);
-		hpBar = GetNode<TextureProgressBar>("PlayerUI/PlayerHealthBar/HBoxContainer/VBoxContainer/HPbar");
+		hpBar = GetNode<Godot.Range>("PlayerUI/PlayerHealthBar/HBoxContainer/VBoxContainer/HPbar");
 		Health = MaxHealth;
 		UpdateHealthBar();
 		AddToGroup("village");

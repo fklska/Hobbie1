@@ -8,11 +8,11 @@
 [ext_resource type="Script" uid="uid://b5lf67a02nlha" path="res://Art/directional_sprite.gd" id="11_dirspr"]
 [ext_resource type="PackedScene" uid="uid://beia5xtps3hg8" path="res://Player/UI/player_health_bar.tscn" id="7_jbxtf"]
 [ext_resource type="PackedScene" uid="uid://bduu47fsemt20" path="res://UI/Inventory/inventoryManager.tscn" id="8_b474a"]
-[ext_resource type="PackedScene" uid="uid://c2wv8totvopdf" path="res://DebugConsole/prefabs/debug_stats.tscn" id="9_mede7"]
 [ext_resource type="PackedScene" uid="uid://vumq2e0d4xkh" path="res://UI/prefabs/BuildMenu.tscn" id="15_7cvrk"]
 [ext_resource type="PackedScene" uid="uid://dp8r3rltfkp5p" path="res://UI/prefabs/StoreButton.tscn" id="15_w41el"]
 [ext_resource type="PackedScene" uid="uid://7e21qgyc6cuu" path="res://Light/DayNight/day_night.tscn" id="16_8sa4y"]
 [ext_resource type="PackedScene" uid="uid://nbiotqlwjxva" path="res://Player/effects/mining_parctile.tscn" id="16_yl13i"]
+[ext_resource type="Texture2D" uid="uid://nkoead7ulnme" path="res://UI/Icons/bag.png" id="17_bag"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl13i"]
 bg_color = Color(0.152344, 0.152344, 0.152344, 1)
@@ -65,47 +65,13 @@ script = ExtResource("11_dirspr")
 layer = 2
 
 [node name="PlayerHealthBar" parent="PlayerUI" index="0" unique_id=58684463 instance=ExtResource("7_jbxtf")]
-anchors_preset = -1
-anchor_right = 0.244271
-anchor_bottom = 0.100926
-offset_right = 187.6
-offset_bottom = 43.6
-grow_horizontal = 1
-grow_vertical = 1
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-metadata/_edit_use_anchors_ = true
 
 [node name="HotBar" parent="PlayerUI" index="1" unique_id=1995951637 instance=ExtResource("6_yyv38")]
-anchors_preset = -1
-anchor_left = 0.0138889
-anchor_top = 0.12037
-anchor_right = 0.246528
-anchor_bottom = 0.219136
-grow_horizontal = 1
-grow_vertical = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="InventoryUI" parent="PlayerUI" index="2" unique_id=228029492 instance=ExtResource("8_b474a")]
 visible = false
-anchor_left = 0.0138889
-anchor_top = 0.219136
-anchor_bottom = 0.317901
-offset_right = -0.00012207
-offset_bottom = -1.52588e-05
 
-[node name="Stats" parent="PlayerUI" index="3" unique_id=1841112021 instance=ExtResource("9_mede7")]
-anchor_left = 0.972222
-anchor_top = 0.950617
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 8
-size_flags_vertical = 8
-
-[node name="BuildMenu" parent="PlayerUI" index="4" unique_id=92634165 instance=ExtResource("15_7cvrk")]
+[node name="BuildMenu" parent="PlayerUI" index="3" unique_id=92634165 instance=ExtResource("15_7cvrk")]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -119,19 +85,33 @@ offset_bottom = 192.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" parent="PlayerUI" index="5" unique_id=1311564877 instance=ExtResource("15_w41el")]
-anchors_preset = -1
-anchor_left = 0.0217014
-anchor_top = 0.856481
-anchor_right = 0.0772569
-anchor_bottom = 0.955247
-offset_right = 0.0
-offset_bottom = 0.0
-metadata/_edit_use_anchors_ = true
+[node name="BuildButton" parent="PlayerUI" index="4" unique_id=1311564877 instance=ExtResource("15_w41el")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = -16.0
+grow_vertical = 0
+
+[node name="InventoryButton" parent="PlayerUI" index="5" unique_id=402771856 instance=ExtResource("15_w41el")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 88.0
+offset_top = -80.0
+offset_right = 152.0
+offset_bottom = -16.0
+grow_vertical = 0
+tooltip_text = "Инвентарь (Tab)"
+icon = ExtResource("17_bag")
+target = NodePath("../InventoryUI")
+
+[node name="Key" parent="PlayerUI/InventoryButton" index="0"]
+text = "Tab"
 
 [node name="MiningParctile" parent="." index="5" unique_id=158831710 instance=ExtResource("16_yl13i")]
 position = Vector2(33.1202, 7.6277)
 
 [node name="Light" parent="." index="6" unique_id=1447621785 instance=ExtResource("16_8sa4y")]
-
-[connection signal="selected_slot_changed" from="PlayerUI/HotBar" to="." method="_on_hot_bar_selected_slot_changed"]

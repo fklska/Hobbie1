@@ -580,6 +580,18 @@ def icon_artifact():
     icon("artifact", img)
 
 
+def icon_bag():
+    img, d, px = canvas()
+    d.ellipse((2, 4, 13, 15), fill=(132, 92, 54))
+    d.ellipse((3, 5, 12, 13), fill=(164, 118, 70))
+    d.rectangle((5, 2, 10, 5), fill=(132, 92, 54))
+    d.line((5, 5, 10, 5), fill=(226, 172, 60))
+    d.line((6, 1, 9, 1), fill=(100, 66, 38))
+    d.point((5, 8), fill=(196, 150, 96))
+    d.point((6, 7), fill=(196, 150, 96))
+    icon("bag", img)
+
+
 def build_icons():
     os.makedirs(ICONS, exist_ok=True)
     icon_wood()
@@ -597,6 +609,7 @@ def build_icons():
     icon_house()
     icon_shield()
     icon_artifact()
+    icon_bag()
 
 
 WOOD_HANDLE = ((140, 96, 56, 255), (100, 66, 38, 255))
@@ -608,13 +621,6 @@ def diag(px, x0, y0, length, colors):
         px[x0 + i, y0 - i] = colors[0]
         if y0 - i + 1 < 16:
             px[x0 + i, y0 - i + 1] = colors[1]
-
-
-
-
-
-
-
 
 
 def icon_axe():
