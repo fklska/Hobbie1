@@ -29,7 +29,7 @@ func refresh() -> void:
 		var item: WorldListItem = ITEM.instantiate()
 		list.add_child(item)
 		item.setup(world)
-		item.play_requested.connect(func(w: SimpleGeneratorData, fresh: bool) -> void: WorldStore.play(w, fresh))
+		item.play_requested.connect(_on_play_requested)
 		item.delete_requested.connect(_ask_delete)
 	scroll.visible = not worlds.is_empty()
 	empty.visible = worlds.is_empty()
@@ -38,6 +38,17 @@ func refresh() -> void:
 		%Create.grab_focus.call_deferred()
 	else:
 		%Back.grab_focus.call_deferred()
+
+
+func _on_play_requested(world: SimpleGeneratorData, fresh: bool) -> void:
+	if not fresh or not WorldStore.has_run(world):
+		WorldStore.play(world, fresh)
+		return
+	var day := WorldStore.run_day(world)
+	var body := "Сохранённая партия (день %d из 30) пропадёт." % day if day > 0 else "Сохранённая партия пропадёт."
+	Overlay.confirm("Начать партию заново?", body, "Начать", func() -> void:
+		WorldStore.delete_run(world)
+		WorldStore.play(world, true))
 
 
 func _ask_delete(world: SimpleGeneratorData) -> void:

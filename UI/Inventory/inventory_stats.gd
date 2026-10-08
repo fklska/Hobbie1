@@ -1,14 +1,6 @@
 extends VBoxContainer
 
 const ICONS := "res://UI/Icons/%s.png"
-const STOCK := [
-	["wood", "Дерево"],
-	["stone", "Камень"],
-	["iron", "Железо"],
-	["gold", "Золото"],
-	["food", "Еда"],
-	["coins", "Монеты"],
-]
 
 @onready var hero_list: VBoxContainer = %Hero
 @onready var stock_list: VBoxContainer = %Stock
@@ -22,9 +14,8 @@ func _ready() -> void:
 	_add_row(hero_list, "damage", "sword", "Урон")
 	if Game.get("ToolSpeed") != null:
 		_add_row(hero_list, "tools", "tool_pickaxe", "Скорость добычи")
-	for entry in STOCK:
-		if _has_kind(entry[0]):
-			_add_row(stock_list, entry[0], entry[0], entry[1])
+	for entry in StockBar.available():
+		_add_row(stock_list, entry[0], entry[0], entry[1])
 	visibility_changed.connect(refresh)
 	Game.StockChanged.connect(refresh)
 	refresh()
@@ -46,13 +37,8 @@ func refresh() -> void:
 	values.damage.text = str(_damage(player))
 	if values.has("tools"):
 		values.tools.text = "×%s" % snappedf(Game.get("ToolSpeed"), 0.01)
-	var capped: bool = Game.has_method("Capacity")
-	for entry in STOCK:
-		var kind: String = entry[0]
-		if not values.has(kind):
-			continue
-		var amount: int = Game.GetStock(kind)
-		values[kind].text = "%d / %d" % [amount, Game.Capacity(kind)] if capped and kind != "coins" else str(amount)
+	for entry in StockBar.available():
+		values[entry[0]].text = StockBar.amount_text(entry[0], " / ")
 
 
 func _damage(player) -> int:
@@ -62,15 +48,6 @@ func _damage(player) -> int:
 	if not is_instance_valid(player):
 		return 0
 	return player.AttackDamage * (3 if Game.get("SwordForged") else 1)
-
-
-func _has_kind(kind: String) -> bool:
-	match kind:
-		"food":
-			return Game.has_method("Capacity")
-		"coins":
-			return Game.has_method("Capacity") or Game.has_method("HasRun")
-	return true
 
 
 func _add_row(list: Container, key: String, icon: String, title: String) -> void:

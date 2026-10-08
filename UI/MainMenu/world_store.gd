@@ -2,6 +2,7 @@ class_name WorldStore
 extends RefCounted
 
 const DIR := "user://SavedWorlds/"
+const RUNS_DIR := "user://Runs/"
 
 
 static func list_worlds() -> Array[SimpleGeneratorData]:
@@ -42,6 +43,10 @@ static func exists(world_name: String) -> bool:
 	return FileAccess.file_exists(DIR + world_name + ".tres")
 
 
+static func run_path(world: SimpleGeneratorData) -> String:
+	return RUNS_DIR + scene_path(world).get_file().get_basename() + ".json"
+
+
 static func has_run(world: SimpleGeneratorData) -> bool:
 	return Game.has_method("HasRun") and Game.HasRun(scene_path(world))
 
@@ -56,8 +61,13 @@ static func play(world: SimpleGeneratorData, fresh := false) -> void:
 	Overlay.start_world(scene_path(world), world.SpawnPoint, has_run(world) and not fresh)
 
 
+static func delete_run(world: SimpleGeneratorData) -> void:
+	if FileAccess.file_exists(run_path(world)):
+		DirAccess.remove_absolute(run_path(world))
+
+
 static func delete(world: SimpleGeneratorData) -> void:
-	for path in [world.fullDataPath, scene_path(world), simple_path(world)]:
+	for path in [world.fullDataPath, scene_path(world), simple_path(world), run_path(world)]:
 		if FileAccess.file_exists(path):
 			DirAccess.remove_absolute(path)
 	if GameSettings.last_world() == scene_path(world):

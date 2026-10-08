@@ -90,13 +90,17 @@ func confirm(title: String, body: String, ok_text: String, callback: Callable, d
 
 
 func _ask_to_menu() -> void:
-	confirm("Выйти в главное меню?", "Текущая партия будет прервана.", "Выйти", func() -> void:
+	confirm("Выйти в главное меню?", "Партия сохранится, продолжить можно из меню.", "Выйти", func() -> void:
 		pause_menu.hide()
-		Game.ToMenu())
+		Game.ToMenu(), false)
 
 
 func _ask_quit() -> void:
-	confirm("Выйти из игры?", "", "Выйти", get_tree().quit)
+	var body := "Партия сохранится." if in_game() else ""
+	confirm("Выйти из игры?", body, "Выйти", func() -> void:
+		if in_game() and Game.has_method("SaveRun"):
+			Game.SaveRun()
+		get_tree().quit())
 
 
 func start_world(scene_path: String, spawn: Vector2, continue_run := false) -> void:

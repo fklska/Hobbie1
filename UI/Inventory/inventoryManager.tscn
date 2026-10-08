@@ -48,6 +48,7 @@ size_flags_vertical = 4
 tooltip_text = "Закрыть (Tab)"
 focus_mode = 0
 theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 32
 text = "×"
 
 [node name="HSeparator" type="HSeparator" parent="Center/Panel/VBox"]
