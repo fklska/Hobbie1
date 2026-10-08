@@ -25,6 +25,8 @@ public partial class SoundManager : Node
 		["step"] = (-17f, 0.12f),
 	};
 
+	private static readonly HashSet<string> Loud = new() { "giant_roar" };
+
 	private const float MusicDb = -9f;
 	private const float SilentDb = -60f;
 	private const double MinRepeat = 0.04;
@@ -52,7 +54,7 @@ public partial class SoundManager : Node
 
 		foreach (string id in Sfx.Keys) streams[id] = GD.Load<AudioStream>($"res://Audio/sfx/{id}.wav");
 		for (int i = 0; i < 10; i++) flat.Add(AddPlayer(new AudioStreamPlayer { Bus = "SFX" }));
-		for (int i = 0; i < 24; i++) spatial.Add(AddPlayer(new AudioStreamPlayer2D { Bus = "SFX", MaxDistance = 1600f, Attenuation = 1.5f }));
+		for (int i = 0; i < 24; i++) spatial.Add(AddPlayer(new AudioStreamPlayer2D { Bus = "SFX", Attenuation = 1.5f }));
 
 		AudioStreamOggVorbis theme = GD.Load<AudioStreamOggVorbis>("res://Audio/music/village_theme.ogg");
 		theme.Loop = true;
@@ -100,6 +102,7 @@ public partial class SoundManager : Node
 		AudioStreamPlayer2D player = spatial[spatialNext];
 		spatialNext = (spatialNext + 1) % spatial.Count;
 		player.GlobalPosition = position;
+		player.MaxDistance = Loud.Contains(id) ? 4000f : 1600f;
 		player.Stream = stream;
 		player.VolumeDb = Sfx[id].Db;
 		player.PitchScale = Pitch(id);
