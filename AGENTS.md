@@ -33,7 +33,7 @@
 | `AI/` | Жители и враги. `AI/training.tscn` + `addons/godot_rl_agents` — обучение RL. |
 | `BuildSystem/` | Сетка (`Grid.cs`), режим строительства, ратуша, кузница, склад. |
 | `UI/` | Меню, инвентарь (`UI/Inventory/*.cs`, хотбар на GDScript), тема `UI/theme.tres`, шрифт Kurland. |
-| `Light/` | Смена дня и ночи и облака. |
+| `Light/` | Смена дня и ночи: `DayNight/day_night.tscn` вложена в `Player.tscn`. `DayNightCycle` (`DayNightCycle.instance`, `hour`, `day`, сигналы `hour_changed`, `night_started`, `day_started`, `new_day`; статическое `DayNightCycle.night` от 0 до 1) задаёт палитру по часам, облака и туман рисует шейдер `sky.gdshader`. Ночной фонарь `night_lamp.tscn` вешается на здания из `BuildSystem/buildings/` автоматически, на другие узлы через группу `night_lamp_host` или вручную. `Debug/` — старая отладочная сцена. |
 | `Globals/` | `GenerationSettings.cs` (размер тайла 64, чанк 8 тайлов, путь сохранений), утилиты. |
 | `BaseClasses/` | Базовые GDScript-классы сущностей, предметов и оружия. |
 | `addons/` | `TileMapDual` (dual-grid тайлмапы), `AS2P`, `godot_rl_agents`. Сторонний код, правки только при необходимости. |

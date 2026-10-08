@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://7e21qgyc6cuu"]
+
+[ext_resource type="Script" uid="uid://cxwrvlvevyux6" path="res://Light/DayNight/day_night_cycle.gd" id="1_cycle"]
+[ext_resource type="Script" uid="uid://y500o4t5v5v1" path="res://Light/DayNight/sky_overlay.gd" id="2_sky"]
+[ext_resource type="Shader" uid="uid://dgurs8wdu2qe1" path="res://Light/DayNight/sky.gdshader" id="3_sky"]
+[ext_resource type="PackedScene" uid="uid://cxv4waio5hjp6" path="res://Light/DayNight/night_lamp.tscn" id="4_lamp"]
+[ext_resource type="Script" uid="uid://cf4335u5y36hp" path="res://Light/DayNight/building_lights.gd" id="5_buildings"]
+
+[sub_resource type="Gradient" id="Gradient_ambient"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.2, 0.24, 0.27, 0.31, 0.375, 0.5, 0.7, 0.75, 0.79, 0.825, 0.865, 1)
+colors = PackedColorArray(0.55, 0.62, 0.9, 1, 0.55, 0.62, 0.9, 1, 0.78, 0.74, 0.92, 1, 1, 0.86, 0.84, 1, 1, 0.95, 0.9, 1, 1, 0.99, 0.96, 1, 1, 1, 1, 1, 1, 0.97, 0.9, 1, 1, 0.88, 0.7, 1, 1, 0.76, 0.68, 1, 0.72, 0.66, 0.9, 1, 0.55, 0.62, 0.9, 1, 0.55, 0.62, 0.9, 1)
+
+[sub_resource type="Curve" id="Curve_night"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.27, 0), 0.0, 0.0, 0, 0, Vector2(0.78, 0), 0.0, 0.0, 0, 0, Vector2(0.85, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Curve" id="Curve_cloud_shadow"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.3, 0), 0.0, 0.0, 0, 0, Vector2(0.38, 1), 0.0, 0.0, 0, 0, Vector2(0.71, 1), 0.0, 0.0, 0, 0, Vector2(0.78, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Curve" id="Curve_fog"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.21, 0), 0.0, 0.0, 0, 0, Vector2(0.26, 1), 0.0, 0.0, 0, 0, Vector2(0.3, 0.8), 0.0, 0.0, 0, 0, Vector2(0.38, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sky"]
+noise_type = 1
+frequency = 0.012
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sky"]
+width = 256
+height = 256
+seamless = true
+noise = SubResource("FastNoiseLite_sky")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("3_sky")
+shader_parameter/noise = SubResource("NoiseTexture2D_sky")
+
+[sub_resource type="Gradient" id="Gradient_firefly"]
+offsets = PackedFloat32Array(0, 0.4, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_firefly"]
+gradient = SubResource("Gradient_firefly")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_blink"]
+offsets = PackedFloat32Array(0, 0.15, 0.4, 0.55, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0.15, 1, 1, 1, 1, 1, 1, 1, 0.3, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_blink"]
+gradient = SubResource("Gradient_blink")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fireflies"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(900, 550, 1)
+spread = 180.0
+initial_velocity_min = 4.0
+initial_velocity_max = 14.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.6
+scale_max = 1.2
+color = Color(1.6, 2.2, 0.7, 1)
+color_ramp = SubResource("GradientTexture1D_blink")
+turbulence_enabled = true
+turbulence_noise_scale = 4.0
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.15
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fireflies"]
+blend_mode = 1
+light_mode = 1
+
+[node name="Light" type="Node2D" unique_id=1447621785]
+
+[node name="DayNight" type="CanvasModulate" parent="." node_paths=PackedStringArray("sky", "fireflies")]
+script = ExtResource("1_cycle")
+ambient = SubResource("Gradient_ambient")
+night_curve = SubResource("Curve_night")
+cloud_shadow_curve = SubResource("Curve_cloud_shadow")
+fog_curve = SubResource("Curve_fog")
+sky = NodePath("../Sky")
+fireflies = NodePath("../Fireflies")
+
+[node name="Lantern" parent="." instance=ExtResource("4_lamp")]
+position = Vector2(0, -12)
+texture_scale = 5.0
+max_energy = 0.9
+flicker = 0.06
+random_turn_on = false
+show_glow = false
+
+[node name="Fireflies" type="GPUParticles2D" parent="."]
+z_index = 101
+z_as_relative = false
+material = SubResource("CanvasItemMaterial_fireflies")
+emitting = false
+amount = 60
+amount_ratio = 0.0
+texture = SubResource("GradientTexture2D_firefly")
+lifetime = 6.0
+preprocess = 6.0
+visibility_rect = Rect2(-1000, -650, 2000, 1300)
+process_material = SubResource("ParticleProcessMaterial_fireflies")
+
+[node name="Sky" type="Node2D" parent="."]
+top_level = true
+z_index = 100
+z_as_relative = false
+material = SubResource("ShaderMaterial_sky")
+script = ExtResource("2_sky")
+
+[node name="BuildingLights" type="Node" parent="."]
+script = ExtResource("5_buildings")

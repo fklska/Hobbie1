@@ -1,13 +1,12 @@
 [gd_scene format=3 uid="uid://puflxaap1ueo"]
 
 [ext_resource type="PackedScene" uid="uid://dsxe317kkbedc" path="res://UI/MainMenu/menu.tscn" id="4_nwcac"]
-
-[sub_resource type="Environment" id="Environment_kl3b6"]
+[ext_resource type="Environment" uid="uid://buaski4d00w1e" path="res://Light/DayNight/world_environment.tres" id="5_env"]
 
 [node name="World" type="Node2D" unique_id=953193375]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2072196081]
-environment = SubResource("Environment_kl3b6")
+environment = ExtResource("5_env")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=610739201]
 
