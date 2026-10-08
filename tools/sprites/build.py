@@ -90,6 +90,68 @@ def hero():
     return render_character(h, "Art/hero", "hero", (64, 64), (32, 52), big={"death": 8})
 
 
+MOBS = {
+    "goblin": ("mobs", (64, 64), (32, 52), {"death": 8}),
+    "orc": ("mobs", (96, 96), (48, 78), {"death": 12}),
+    "skeleton_archer": ("mobs", (64, 64), (32, 52), {"death": 8}),
+    "wolf": ("beasts", (64, 64), (32, 46), {"death": 6}),
+}
+
+
+def mobs(names=None):
+    import importlib
+    out = {}
+    for name, (mod, size, anchor, big) in MOBS.items():
+        if names and name not in names:
+            continue
+        m = getattr(importlib.import_module(mod), name)
+        out[name] = render_character(m, f"Art/mobs/{name}", name, size, anchor, big=big)
+    return out
+
+
+def giant():
+    import giant as g
+    return render_character(g, "Art/mobs/stone_giant", "stone_giant", (128, 128), (64, 110), big={"death": 12, "melee": 8})
+
+
+def fit(img, w, h, label):
+    ys, xs = np.where(img[:, :, 3] > 0)
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    if y1 - y0 > h or x1 - x0 > w:
+        print("too big:", label, x1 - x0, y1 - y0)
+    out = np.zeros((h, w, 4))
+    oy, ox = max(0, (h - (y1 - y0)) // 2), max(0, (w - (x1 - x0)) // 2)
+    crop = img[y0:min(y1, y0 + h), x0:min(x1, x0 + w)]
+    out[oy:oy + crop.shape[0], ox:ox + crop.shape[1]] = crop
+    return out
+
+
+def weapons(names=None):
+    import items
+    for name, fn in items.WEAPONS.items():
+        if names and name not in names:
+            continue
+        k = fn()
+        img, _, _ = render(k.prims, MATS, Camera("ortho", pitch=12, w=48, h=48, anchor=(24, 24)), decals=k.decals)
+        gr.save_png(fit(img, 32, 32, name), f"Art/items/weapons/{name}.png")
+
+
+def pickups(names=None):
+    import items
+    for name, (fn, size, anchor, pitch) in items.PICKUPS.items():
+        if names and name not in names:
+            continue
+        k = fn()
+        img, _, _ = render(k.prims, MATS, Camera("ortho", pitch=pitch, w=size[0], h=size[1], anchor=anchor), decals=k.decals)
+        check_clip(img, name)
+        gr.save_png(img, f"Art/items/{name}.png")
+
+
+def beam():
+    import effects
+    return effects.giant_beam()
+
+
 def render_building(fn, fp, pad_top=220):
     W, D = fp[0] * 64, fp[1] * 64
     cam = Camera("oblique", k=BK, w=W, h=D + pad_top, anchor=(0, pad_top))
@@ -119,7 +181,8 @@ def buildings(names=None):
 
 BK = 0.9
 
-TARGETS = {"hero": hero, "buildings": buildings}
+TARGETS = {"hero": hero, "buildings": buildings, "mobs": mobs, "giant": giant,
+           "beam": beam, "weapons": weapons, "pickups": pickups}
 
 if __name__ == "__main__":
     names = sys.argv[1:] or list(TARGETS)

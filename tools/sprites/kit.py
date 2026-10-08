@@ -159,3 +159,11 @@ def lean_frame(axis_dir):
     x = norm(x)
     z = np.cross(x, y)
     return np.stack([x, y, z], 1)
+
+
+def t_rock(cell=4.5, var=0.22, seed=0.0):
+    def f(p, n, val):
+        c = np.floor(p / cell)
+        h = hash2(c[:, 0] + c[:, 2] * 7.1, c[:, 1], seed)
+        return val + (h - 0.5) * var, None
+    return f
