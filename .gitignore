@@ -20,6 +20,10 @@ mono_crash.*.json
 .DS_Store
 *~
 *.blend1
+Thumbs.db
+*.tmp
+*.old
+*.old.*
 
 .android/
 .vs/
