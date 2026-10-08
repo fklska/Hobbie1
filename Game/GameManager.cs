@@ -169,6 +169,7 @@ public partial class GameManager : Node
 	{
 		if (!CanAfford(costId))
 		{
+			SoundManager.Instance.Play("error");
 			Notify($"Не хватает ресурсов: {CostText(costId)}");
 			return false;
 		}
@@ -218,6 +219,7 @@ public partial class GameManager : Node
 		}
 		if (!CanPlace(id, cell))
 		{
+			SoundManager.Instance.Play("error");
 			Notify("Здесь строить нельзя");
 			return false;
 		}
@@ -236,6 +238,7 @@ public partial class GameManager : Node
 		else Blacksmith = building;
 
 		building.Connect("destroyed", Callable.From(() => OnBuildingDestroyed(id)));
+		SoundManager.Instance.PlayAt("build", BuildingCenter(building));
 		Notify($"{info.Title} построена");
 		EmitSignal(SignalName.ProgressChanged);
 		return true;
@@ -301,6 +304,7 @@ public partial class GameManager : Node
 		}
 		if (!TrySpend("Sword")) return;
 		SwordForged = true;
+		SoundManager.Instance.Play("forge");
 		Notify("Меч выкован: урон героя утроен");
 		EmitSignal(SignalName.ProgressChanged);
 	}
@@ -310,6 +314,7 @@ public partial class GameManager : Node
 	public void Damage(Node target, int amount)
 	{
 		if (!IsInstanceValid(target)) return;
+		if (target is Node2D body) SoundManager.Instance.PlayAt(target == Player ? "hurt" : "hit", body.GlobalPosition);
 		if (target.HasMethod("take_damage")) target.Call("take_damage", amount);
 		else if (target.HasMethod(PlayerMainCharacter.MethodName.TakeDamage)) target.Call(PlayerMainCharacter.MethodName.TakeDamage, amount);
 	}

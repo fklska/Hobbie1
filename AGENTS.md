@@ -19,7 +19,7 @@
    - `<имя>.tscn`: сцена мира (`WorldScene`).
 4. «Загрузить мир»: `UI/prefabs/world_list_item.gd` вызывает `Game.StartWorld(путь к .tscn, точка спавна)`. `GameManager` кладёт в корень дерева сцену мира (узел `Map`), `Player/Player.tscn` и HUD `Game/game_hud.tscn`, прячет меню. `Restart()` и `ToMenu()` убирают всё это и начинают заново.
 
-Автозагрузки (`project.godot`): `BuildMode` (`BuildSystem/build_mode.tscn`), `MouseInfoPanel`, `GlobalNavigation` (`Navigation/navigation.tscn`), `GENERATOR` (`ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn`), `Game` (`Game/GameManager.cs`).
+Автозагрузки (`project.godot`): `BuildMode` (`BuildSystem/build_mode.tscn`), `MouseInfoPanel`, `GlobalNavigation` (`Navigation/navigation.tscn`), `GENERATOR` (`ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn`), `Game` (`Game/GameManager.cs`), `Sound` (`Audio/SoundManager.cs`).
 
 ## Игровой цикл
 
@@ -50,6 +50,7 @@
 | `BuildSystem/` | Сетка (`Grid.cs`), режим строительства, ратуша, кузница, склад. |
 | `UI/` | Меню, инвентарь (`UI/Inventory/*.cs`, хотбар на GDScript), тема `UI/theme.tres`, шрифт Kurland. |
 | `Light/` | Смена дня и ночи: `DayNight/day_night.tscn` вложена в `Player.tscn`. `DayNightCycle` (`DayNightCycle.instance`, `hour`, `day`, сигналы `hour_changed`, `night_started`, `day_started`, `new_day`; статическое `DayNightCycle.night` от 0 до 1) задаёт палитру по часам, облака и туман рисует шейдер `sky.gdshader`. Ночной фонарь `night_lamp.tscn` вешается на здания из `BuildSystem/buildings/` автоматически, на другие узлы через группу `night_lamp_host` или вручную. `Debug/` — старая отладочная сцена. |
+| `Audio/` | Звук: автозагрузка `SoundManager.cs`, фоновая мелодия и джинглы в `music/`, звуки в `sfx/`, их генератор `tools/synth.py`, источники и лицензии в `CREDITS.md`. |
 | `Globals/` | `GenerationSettings.cs` (размер тайла 64, чанк 8 тайлов, путь сохранений), утилиты. |
 | `BaseClasses/` | Базовые GDScript-классы сущностей, предметов и оружия. |
 | `addons/` | `TileMapDual` (dual-grid тайлмапы), `AS2P`, `godot_rl_agents`. Сторонний код, правки только при необходимости. |
@@ -84,6 +85,15 @@ godot --headless --path . --quit
 ```
 
 Сборка и экспорт описаны в `BUILD.md`, пресет в `export_presets.cfg`.
+
+## Звук
+
+Шины в `default_bus_layout.tres`: `Master` (с лимитером), `Music`, `SFX`. Автозагрузка `Sound` (`SoundManager.Instance` из C#) сама крутит фоновую мелодию, играет джингл в конце партии, шаги героя и щелчок любой кнопки.
+
+- Звук в точке мира: `Sound.PlayAt("hit", global_position)`, без позиции: `Sound.Play("forge")`. Повтор не чаще раза в N секунд: `PlayEvery(id, pos, N)`. Звук добычи по типу ресурса: `HarvestSound(type)`.
+- Громкостью управляют настройки игры через `AudioServer` по именам шин. Шины не переименовывать.
+- Новый звук: функция в `Audio/tools/synth.py` и словарь `SFX` там же, строка в `Sfx` в `SoundManager.cs` (громкость в дБ и разброс высоты), строка в `Audio/CREDITS.md`. Чужие файлы только с лицензией, разрешающей коммерческий релиз.
+- В геймплейный код звук добавляется одной строкой рядом с действием.
 
 ## Input Map
 

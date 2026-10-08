@@ -26,6 +26,7 @@ MouseInfoPanel="*res://UI/prefabs/mouseInfoPanel.tscn"
 GlobalNavigation="*res://Navigation/navigation.tscn"
 GENERATOR="*res://ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn"
 Game="*res://Game/GameManager.cs"
+Sound="*res://Audio/SoundManager.cs"
 
 [display]
 

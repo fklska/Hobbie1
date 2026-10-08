@@ -125,6 +125,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		attackTimer = AttackCooldown;
 		attackAnimTimer = anim.GetAnimation("attackDown").Length;
 		anim.Play("attackDown");
+		SoundManager.Instance.Play("swing");
 
 		Vector2 aim = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 		int damage = GameManager.Instance.SwordForged ? AttackDamage * 3 : AttackDamage;
@@ -202,6 +203,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 				if (tile.Resourse != ResorseType.None)
 				{
 					EnableParticle(miningParticle, clickPos);
+					SoundManager.Instance.PlayEvery(SoundManager.Instance.HarvestSound(tile.Resourse), clickPos, 0.33f);
 					ActionProgress.Value += delta * STRENCH * 10;
 
 					if (ActionProgress.Value >= 100.0f)
@@ -221,6 +223,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	public void HandActionResult(Vector2I gobalCell)
 	{
 		GameManager.Instance.AddHarvest(WorldScene.HarvestTile(gobalCell));
+		SoundManager.Instance.Play("pickup");
 		ActionProgress.Value = 0;
 	}
 

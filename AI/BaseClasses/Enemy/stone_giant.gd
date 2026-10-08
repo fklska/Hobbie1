@@ -107,6 +107,7 @@ func melee():
 	await get_tree().create_timer(0.4, false).timeout
 	if state == DIE:
 		return
+	Sound.PlayAt("giant_smash", global_position)
 	for node: Node2D in get_tree().get_nodes_in_group("village"):
 		if global_position.distance_to(target_point(node)) <= melee_range + target_radius(node):
 			_hit(node, melee_damage)
@@ -120,6 +121,7 @@ func fire_laser():
 	state = ATTACK
 	laser_timer = laser_cooldown * cooldown_scale()
 	anim.play("cast")
+	Sound.PlayAt("magic_beam", global_position)
 	laser_pivot.rotation = (target_point(target) - laser_pivot.global_position).angle() - LASER_SWEEP / 2
 	laser.visible = true
 	anim_player.play("pre_laser")
@@ -175,6 +177,7 @@ func enrage():
 	laser.visible = false
 	state = ARMOR
 	anim.play("armor")
+	Sound.PlayAt("giant_roar", global_position)
 	await get_tree().create_timer(1.0, false).timeout
 	if state == ARMOR:
 		state = WALK
@@ -186,6 +189,7 @@ func die():
 	laser.visible = false
 	velocity = Vector2.ZERO
 	anim.play("death")
+	Sound.PlayAt("collapse", global_position)
 	ai.done = true
 	await get_tree().create_timer(1.4, false).timeout
 	died.emit()

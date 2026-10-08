@@ -35,6 +35,7 @@ func take_damage(amount: int):
 	modulate = Color(1, 0.6, 0.6)
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.2)
 	if hp == 0:
+		Sound.PlayAt("collapse", get_center())
 		destroyed.emit()
 		queue_free()
 

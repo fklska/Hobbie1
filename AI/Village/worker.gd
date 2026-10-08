@@ -115,6 +115,7 @@ func _collect(world, cell: Vector2i):
 	var type = world.HarvestTile(cell)
 	if type == 0:
 		return
+	Sound.PlayAt(Sound.HarvestSound(type), global_position)
 	carrying_kind = Game.GetKindOf(type)
 	carrying_amount = Game.GetYieldOf(type)
 	carry_label.text = "+%d" % carrying_amount
