@@ -25,7 +25,7 @@ godot --headless --export-release "Windows Desktop" build/windows/Hobbie.exe
 
 ## Что не попадает в билд
 
-`exclude_filter` в пресете убирает: `*.tmp`, `*.old`, `*.psd`, `Thumbs.db`, папки `DEBUG`/`Debug`, `Debugging/`, старые генераторы (`v1`, `V2`, `V2.3 Voronoi`, `Noise_learn`, `scripts/generator.gd`). Ни один из этих файлов не используется главной сценой и автозагрузками.
+`exclude_filter` в пресете убирает: `*.tmp`, `*.old`, `*.psd`, `Thumbs.db`, папки `DEBUG`/`Debug`, `Debugging/`, старые генераторы (`v1`, `V2`, `scripts/generator.gd`). Ни один из этих файлов не используется главной сценой и автозагрузками.
 
 Если сцена из этих папок понадобится в игре, убери её шаблон из фильтра, иначе в билде она не загрузится.
 
@@ -34,3 +34,11 @@ godot --headless --export-release "Windows Desktop" build/windows/Hobbie.exe
 Пакет `Microsoft.ML.OnnxRuntime` подключён в `Godot1.csproj`. При экспорте Godot запускает `dotnet publish -c ExportRelease -r win-x64 --self-contained true`, и NuGet кладёт в результат `Microsoft.ML.OnnxRuntime.dll` и нативные `onnxruntime.dll` (~13 МБ), `onnxruntime_providers_shared.dll`. Godot копирует их в `data_Godot1_windows_x86_64/`. Отдельно ничего ставить не нужно.
 
 Сами модели `.onnx` не ресурсы Godot, поэтому в пресете стоит `include_filter="*.onnx"`: без него модель не попадёт в `.pck` и `ONNXModel` не найдёт файл.
+
+Модель должна быть одним файлом. Модели из RLStudy (PyTorch 2.13) сохранены с весами в отдельном `<имя>.onnx.data`. `ONNXInference.cs` передаёт модель в ONNX Runtime как массив байт, и тогда рантайм ищет `.data` в рабочей папке процесса через ОС, а не рядом с моделью и не внутри `.pck`. В экспортированной игре такая модель не загрузится, в редакторе загрузится только из корня проекта. Перед тем как класть модель в проект, собери её в один файл:
+
+```
+python -c "import onnx,sys; onnx.save_model(onnx.load(sys.argv[1]), sys.argv[2])" model_v9.onnx model_v9_full.onnx
+```
+
+Путь в `onnx_model_path` указывай через `res://`.
