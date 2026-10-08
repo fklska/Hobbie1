@@ -1,7 +1,7 @@
 extends Control
 class_name MainMenu
 
-@export_dir var saveFolderPath: String = "res://SavedWorlds/"
+@export var saveFolderPath: String = "user://SavedWorlds/"
 var reloadWorlds: bool = false
 var loadedWorlds = Set.new()
 
@@ -27,6 +27,7 @@ func _on_load_world_pressed() -> void:
 		reloadWorlds = false
 
 func load_world():
+	DirAccess.make_dir_recursive_absolute(saveFolderPath)
 	var directory = DirAccess.open(saveFolderPath)
 	var worldList: Array[SimpleGeneratorData] = []
 
