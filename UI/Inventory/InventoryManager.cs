@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class InventoryManager : Control
 {
-    public Godot.Collections.Array<Slot> Slots;
+    public Godot.Collections.Array<Slot> Slots = new();
     public Dictionary<Itemtype, Slot> ItemSlotMap = new();
 
     public Sprite2D DisplayFlyingObj;

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 [GlobalClass]
 public partial class WorldScene : Node2D
 {
+	[Signal] public delegate void TileHarvestedEventHandler(Vector2I cell, ResorseType type);
+
 	[Export] public GeneratorData GeneratorData;
 	[Export] public string GenDataPath;
 	[Export] public string WorldName;
@@ -32,7 +34,7 @@ public partial class WorldScene : Node2D
 		MainTileMapPrefab = GetNode<TileMapLayer>("DualMap");
 		EnviromentLayer = GetNode<TileMapLayer>("EnviromentLayer");
 		Enviroment = GetNode<Node2D>("Enviroment");
-		GeneratorData = ResourceLoader.Load<GeneratorData>(GenDataPath);
+		GeneratorData = ResourceLoader.Load<GeneratorData>(GenDataPath, null, ResourceLoader.CacheMode.Ignore);
 		// Navigator = GetTree().Root.GetNode<Node2D>("GlobalNavigation");
 		InitionalChunkLoad();
 	}
@@ -183,6 +185,109 @@ public partial class WorldScene : Node2D
 		}
 
 		return GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[localCoords.X][localCoords.Y];
+	}
+
+	public Tile GetTileAt(Vector2I globalCell)
+	{
+		if (globalCell.X < 0 || globalCell.Y < 0 || globalCell.X >= GeneratorData.mapSize.X || globalCell.Y >= GeneratorData.mapSize.Y) return null;
+		Vector2I chunk = globalCell / GenerationSettings.CHUNK_SIZE;
+		return GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[globalCell.X % GenerationSettings.CHUNK_SIZE][globalCell.Y % GenerationSettings.CHUNK_SIZE];
+	}
+
+	public ResorseType GetResourceAt(Vector2I globalCell) => GetTileAt(globalCell)?.Resourse ?? ResorseType.None;
+
+	public ResorseType HarvestTile(Vector2I globalCell)
+	{
+		Tile tile = GetTileAt(globalCell);
+		if (tile == null || tile.Resourse == ResorseType.None) return ResorseType.None;
+
+		ResorseType type = tile.Resourse;
+		tile.Resourse = ResorseType.None;
+		EnviromentLayer.EraseCell(globalCell);
+		EmitSignal(SignalName.TileHarvested, globalCell, (int)type);
+		return type;
+	}
+
+	public void RestoreTile(Vector2I globalCell, ResorseType type)
+	{
+		Tile tile = GetTileAt(globalCell);
+		if (tile == null) return;
+
+		tile.Resourse = type;
+		if (currentActiveChunkMap.Contains(globalCell / GenerationSettings.CHUNK_SIZE))
+		{
+			EnviromentLayer.SetCell(globalCell, GenerationUtils.getResorseAtlacByType(type), Vector2I.Zero, 0);
+		}
+	}
+
+	public Vector2I FindNearestResource(Vector2 from, int radius, string kind, Rect2 area)
+	{
+		bool bounded = area.HasArea();
+		Vector2I center = new Vector2I((int)from.X, (int)from.Y) / GenerationSettings.TILE_SIZE;
+
+		for (int ring = 0; ring <= radius; ring++)
+		{
+			Vector2I best = new Vector2I(-1, -1);
+			int bestDistance = int.MaxValue;
+
+			for (int x = -ring; x <= ring; x++)
+			{
+				for (int y = -ring; y <= ring; y++)
+				{
+					if (Math.Abs(x) != ring && Math.Abs(y) != ring) continue;
+
+					Vector2I cell = center + new Vector2I(x, y);
+					if (bounded && !area.HasPoint((cell * GenerationSettings.TILE_SIZE) + Vector2.One * GenerationSettings.TILE_SIZE / 2)) continue;
+
+					ResorseType type = GetResourceAt(cell);
+					if (type == ResorseType.None || GameManager.KindOf(type) != kind) continue;
+
+					int distance = x * x + y * y;
+					if (distance < bestDistance)
+					{
+						bestDistance = distance;
+						best = cell;
+					}
+				}
+			}
+
+			if (best.X >= 0) return best;
+		}
+		return new Vector2I(-1, -1);
+	}
+
+	public float CastResourceRay(Vector2 from, Vector2 direction, float length, string kind)
+	{
+		Vector2 position = from / GenerationSettings.TILE_SIZE;
+		Vector2 dir = direction.Normalized();
+		Vector2I cell = new Vector2I(Mathf.FloorToInt(position.X), Mathf.FloorToInt(position.Y));
+		Vector2I step = new Vector2I(dir.X > 0 ? 1 : -1, dir.Y > 0 ? 1 : -1);
+		float deltaX = dir.X == 0 ? float.MaxValue : Mathf.Abs(1f / dir.X);
+		float deltaY = dir.Y == 0 ? float.MaxValue : Mathf.Abs(1f / dir.Y);
+		float nextX = dir.X == 0 ? float.MaxValue : (dir.X > 0 ? cell.X + 1 - position.X : position.X - cell.X) * deltaX;
+		float nextY = dir.Y == 0 ? float.MaxValue : (dir.Y > 0 ? cell.Y + 1 - position.Y : position.Y - cell.Y) * deltaY;
+		float maxDistance = length / GenerationSettings.TILE_SIZE;
+
+		while (true)
+		{
+			float distance;
+			if (nextX < nextY)
+			{
+				cell.X += step.X;
+				distance = nextX;
+				nextX += deltaX;
+			}
+			else
+			{
+				cell.Y += step.Y;
+				distance = nextY;
+				nextY += deltaY;
+			}
+			if (distance > maxDistance) return -1;
+
+			ResorseType type = GetResourceAt(cell);
+			if (type != ResorseType.None && GameManager.KindOf(type) == kind) return distance * GenerationSettings.TILE_SIZE;
+		}
 	}
 
 	public Vector2I lastcell = Vector2I.Zero;
