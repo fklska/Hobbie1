@@ -16,6 +16,7 @@ signal died
 @export var laser_range := 480.0
 @export var laser_cooldown := 5.0
 @export var laser_charge_time := 0.9
+@export var hit_radius := 40.0
 
 const LASER_SWEEP := 2.82743
 const LASER_TIME := 0.65
@@ -90,8 +91,8 @@ func focus_target() -> Node2D:
 			best_distance = distance
 	if best:
 		return best
-	var town_hall = Game.TownHall
-	return town_hall if is_instance_valid(town_hall) else null
+	var main_base = Game.MainBase
+	return main_base if is_instance_valid(main_base) else null
 
 static func target_point(node: Node2D) -> Vector2:
 	return (node as Building).get_center() if node is Building else node.global_position

@@ -40,3 +40,8 @@ func take_damage(amount: int):
 
 func get_texture():
 	return texture.texture
+
+func heal(amount: int):
+	hp = mini(max_hp, hp + amount)
+	hp_bar.value = hp
+	hp_bar.visible = hp < max_hp

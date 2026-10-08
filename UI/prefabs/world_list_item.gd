@@ -8,4 +8,8 @@ class_name WorldListItem
 @export var WorldDataPath: String
 
 func _on_load_world_button_down() -> void:
-	Game.StartWorld(WorldDataPath.get_basename() + ".tscn", WorldData.SpawnPoint)
+	var scene_path := WorldDataPath.get_basename() + ".tscn"
+	if Game.HasRun(scene_path):
+		Game.ContinueRun(scene_path)
+	else:
+		Game.StartWorld(scene_path, WorldData.SpawnPoint)

@@ -1,12 +1,10 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_base"]
-[ext_resource type="Script" path="res://AI/Village/worker.gd" id="2_worker"]
+[ext_resource type="Script" path="res://AI/Enemies/mob.gd" id="2_mob"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_outline"]
 [ext_resource type="Texture2D" uid="uid://t1qt3bqwc0yw" path="res://AI/BaseClasses/Alias/Male4.png" id="4_sheet"]
-[ext_resource type="Texture2D" uid="uid://c75ewspb38miu" path="res://Items/Assets/axe 1.png" id="5_axe"]
-[ext_resource type="Script" path="res://AI/RL/worker_controller.gd" id="6_ai"]
-[ext_resource type="Script" path="res://AI/Village/villager_combat.gd" id="7_combat"]
+[ext_resource type="Script" path="res://AI/RL/mob_controller.gd" id="5_ai"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true
@@ -20,37 +18,53 @@ shader_parameter/enable = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle0"]
 atlas = ExtResource("4_sheet")
-region = Rect2(0, 48, 32, 48)
+region = Rect2(0, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle1"]
 atlas = ExtResource("4_sheet")
-region = Rect2(32, 48, 32, 48)
+region = Rect2(32, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle2"]
 atlas = ExtResource("4_sheet")
-region = Rect2(64, 48, 32, 48)
+region = Rect2(64, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle3"]
 atlas = ExtResource("4_sheet")
-region = Rect2(96, 48, 32, 48)
+region = Rect2(96, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_walk0"]
 atlas = ExtResource("4_sheet")
-region = Rect2(128, 0, 32, 48)
+region = Rect2(128, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_walk1"]
 atlas = ExtResource("4_sheet")
-region = Rect2(160, 0, 32, 48)
+region = Rect2(160, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_walk2"]
 atlas = ExtResource("4_sheet")
-region = Rect2(192, 0, 32, 48)
+region = Rect2(192, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_walk3"]
 atlas = ExtResource("4_sheet")
-region = Rect2(224, 0, 32, 48)
+region = Rect2(224, 192, 32, 48)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_worker"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack0"]
+atlas = ExtResource("4_sheet")
+region = Rect2(0, 192, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack1"]
+atlas = ExtResource("4_sheet")
+region = Rect2(32, 192, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack2"]
+atlas = ExtResource("4_sheet")
+region = Rect2(64, 192, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_attack3"]
+atlas = ExtResource("4_sheet")
+region = Rect2(96, 192, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mob"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -85,54 +99,60 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attack0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attack1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attack2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_attack3")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 12.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_feet"]
-radius = 6.0
+radius = 9.0
 
-[node name="Worker" instance=ExtResource("1_base")]
+[node name="Orc" instance=ExtResource("1_base")]
 z_index = 2
-collision_layer = 0
-collision_mask = 16
-script = ExtResource("2_worker")
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_mob")
+mob_id = "orc"
+title = "Орк-громила"
+description = "Медленный и крепкий. Ломает постройки дубиной."
+max_hp = 110
+speed = 70.0
+damage = 18
+attack_range = 40.0
+attack_cooldown = 1.6
+attack_windup = 0.45
+aggro_range = 400.0
+prefers_buildings = true
+hit_radius = 18.0
+coins = Vector2i(5, 9)
+artifact_chance = 0.08
+faces_left = true
 
 [node name="AnimatedSprite2D" parent="." index="0"]
+self_modulate = Color(0.4, 0.7, 0.35, 1)
 material = SubResource("ShaderMaterial_outline")
-sprite_frames = SubResource("SpriteFrames_worker")
+scale = Vector2(1.35, 1.35)
+sprite_frames = SubResource("SpriteFrames_mob")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Tool" type="Sprite2D" parent="AnimatedSprite2D" index="0"]
-position = Vector2(-7, 4)
-scale = Vector2(0.06, 0.06)
-texture = ExtResource("5_axe")
-offset = Vector2(0, -170)
-
-[node name="Weapon" type="Sprite2D" parent="AnimatedSprite2D" index="1"]
-visible = false
-position = Vector2(8, 6)
-offset = Vector2(0, -8)
-
-[node name="Carry" type="Label" parent="." index="1"]
-visible = false
-offset_left = -20.0
-offset_top = -46.0
-offset_right = 20.0
-offset_bottom = -30.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 12
-horizontal_alignment = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
-position = Vector2(0, 18)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 22)
 shape = SubResource("CircleShape2D_feet")
 
-[node name="AIController2D" type="Node2D" parent="." index="3"]
-script = ExtResource("6_ai")
-onnx_model_path = "res://AI/RL/models/collector_v9.onnx"
-decision_interval = 1
-deterministic = false
-
-[node name="Combat" type="Node2D" parent="." index="4"]
-script = ExtResource("7_combat")
+[node name="AIController2D" type="Node2D" parent="." index="2"]
+script = ExtResource("5_ai")

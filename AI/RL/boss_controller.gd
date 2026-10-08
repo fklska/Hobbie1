@@ -11,7 +11,7 @@ func get_obs() -> Dictionary:
 	var body: StoneGiant = _player
 	var target := body.focus_target()
 	var to_target := _relative(body.target_point(target)) if target else Vector2.ZERO
-	var to_hall := _relative(body.target_point(Game.TownHall)) if is_instance_valid(Game.TownHall) else Vector2.ZERO
+	var to_hall := _relative(body.target_point(Game.MainBase)) if is_instance_valid(Game.MainBase) else Vector2.ZERO
 	var to_player := _relative(Game.Player.global_position) if is_instance_valid(Game.Player) else Vector2.ZERO
 	return {"obs": [
 		to_target.x, to_target.y, to_target.length(),

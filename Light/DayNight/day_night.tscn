@@ -82,6 +82,7 @@ light_mode = 1
 
 [node name="DayNight" type="CanvasModulate" parent="." node_paths=PackedStringArray("sky", "fireflies")]
 script = ExtResource("1_cycle")
+day_length_minutes = 6.0
 ambient = SubResource("Gradient_ambient")
 night_curve = SubResource("Curve_night")
 cloud_shadow_curve = SubResource("Curve_cloud_shadow")
