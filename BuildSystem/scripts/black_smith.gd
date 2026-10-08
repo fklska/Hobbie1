@@ -1,9 +1,10 @@
-extends StaticBodySelectedObject
+extends Building
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation: AnimationPlayer = $AnimationPlayer
 
 func _ready():
+	super()
 	shader = anim.material
 	animation.play("idle")
 
@@ -12,5 +13,6 @@ func get_texture():
 
 func send_obj_data() -> Dictionary:
 	return {
-		"Description": "Кузница"
+		"Description": "Кузница",
+		"HP": "%d/%d" % [hp, max_hp]
 	}

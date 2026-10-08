@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://AI/RL/worker_training.gd" id="1_env"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_sync"]
+
+[node name="WorkerTraining" type="Node2D"]
+script = ExtResource("1_env")
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_sync")
+action_repeat = 8
+speed_up = 8.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)

@@ -15,6 +15,14 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	[Export] public float SPEED = 20;
 	[Export] public ProgressBar ActionProgress;
 
+	[ExportCategory("Combat")]
+	[Export] public int MaxHealth = 100;
+	[Export] public int AttackDamage = 10;
+	[Export] public float AttackRange = 140;
+	[Export] public float AttackCooldown = 0.5f;
+	[Export] public float RegenDelay = 4f;
+	[Export] public float RegenPerSecond = 4f;
+
 	[ExportCategory("Render")]
 	[Export] public AnimationPlayer anim;
 	[Export] public CpuParticles2D miningParticle;
@@ -23,23 +31,96 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	public Vector2I lastChunkCell;
 	public enum State { RUN, ATTACK, ACTION}
 
+	public float Health;
+	public bool IsDead;
+	private double attackTimer;
+	private double attackAnimTimer;
+	private double sinceDamage;
+	private TextureProgressBar hpBar;
+
 	public override void _Ready()
 	{
 		WorldScene = GetTree().Root.GetNode<WorldScene>("Map");
 		lastChunkCell = Utils.GetChunkCoords(GlobalPosition);
+		hpBar = GetNode<TextureProgressBar>("PlayerUI/PlayerHealthBar/HBoxContainer/VBoxContainer/HPbar");
+		Health = MaxHealth;
+		UpdateHealthBar();
+		AddToGroup("village");
 	}
 
 	public override void _Process(double delta)
 	{
+		if (IsDead) return;
 		UpdateChunks();
 		SetEnviromentAlphaShader();
 		HandAction(delta);
+		HandAttack(delta);
+		Regenerate(delta);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (IsDead) return;
 		Run();
 		MoveAndSlide();
+	}
+
+	public void TakeDamage(int amount)
+	{
+		if (IsDead) return;
+		Health = Math.Max(0, Health - amount);
+		sinceDamage = 0;
+		UpdateHealthBar();
+		Modulate = new Color(1, 0.5f, 0.5f);
+		CreateTween().TweenProperty(this, "modulate", Colors.White, 0.2f);
+		if (Health <= 0) Die();
+	}
+
+	private void Die()
+	{
+		IsDead = true;
+		Velocity = Vector2.Zero;
+		DisableParticle(miningParticle);
+		anim.Play("idleStatic");
+		GameManager.Instance.EndGame(false, "Герой погиб");
+	}
+
+	private void Regenerate(double delta)
+	{
+		sinceDamage += delta;
+		if (sinceDamage < RegenDelay || Health >= MaxHealth) return;
+		Health = Math.Min(MaxHealth, Health + (float)(RegenPerSecond * delta));
+		UpdateHealthBar();
+	}
+
+	private void UpdateHealthBar()
+	{
+		hpBar.MaxValue = MaxHealth;
+		hpBar.Value = Health;
+	}
+
+	public void HandAttack(double delta)
+	{
+		attackTimer -= delta;
+		attackAnimTimer -= delta;
+		if (attackTimer > 0 || Grid.buildMode) return;
+		if (!Input.IsActionJustPressed("attack") && !Input.IsActionJustPressed("RightMouseButton")) return;
+
+		attackTimer = AttackCooldown;
+		attackAnimTimer = anim.GetAnimation("attackDown").Length;
+		anim.Play("attackDown");
+
+		Vector2 aim = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+		int damage = GameManager.Instance.SwordForged ? AttackDamage * 3 : AttackDamage;
+		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
+		{
+			if (node is not Node2D enemy) continue;
+			Vector2 toEnemy = enemy.GlobalPosition - GlobalPosition;
+			if (toEnemy.Length() <= AttackRange && aim.Dot(toEnemy.Normalized()) > 0.2f)
+			{
+				GameManager.Instance.Damage(enemy, damage);
+			}
+		}
 	}
 
 	public void SetEnviromentAlphaShader()
@@ -74,7 +155,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 			Velocity = Vector2.Zero;
 		}
 
-		anim.Play(GetANimByDir(direction));
+		if (attackAnimTimer <= 0) anim.Play(GetANimByDir(direction));
 	}
 
 	public void UpdateChunks()
@@ -84,7 +165,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 
 	public void HandAction(double delta)
 	{
-		if (Input.IsMouseButtonPressed(MouseButton.Left)) 
+		if (Input.IsMouseButtonPressed(MouseButton.Left) && !Grid.buildMode) 
 		{
 			Vector2 clickPos = GetGlobalMousePosition();
 			Vector2I globalCell = Utils.GetGlobalCell(clickPos);
@@ -109,7 +190,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 
 					if (ActionProgress.Value >= 100.0f)
 					{
-						HandActionResult(globalCell, chunk, localCell);
+						HandActionResult(globalCell);
 					}
 				}
 				else
@@ -121,10 +202,9 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		}
 	}
 
-	public void HandActionResult(Vector2I gobalCell, Vector2I chunk, Vector2I LocalCell)
+	public void HandActionResult(Vector2I gobalCell)
 	{
-		WorldScene.EnviromentLayer.EraseCell(gobalCell);
-		WorldScene.GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[LocalCell.X][LocalCell.Y].Resourse = ResorseType.None;
+		GameManager.Instance.AddHarvest(WorldScene.HarvestTile(gobalCell));
 		ActionProgress.Value = 0;
 	}
 

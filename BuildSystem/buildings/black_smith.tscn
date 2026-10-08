@@ -99,11 +99,16 @@ _data = {
 }
 
 [node name="BlackSmith" instance=ExtResource("1_blr83")]
+z_index = 2
+collision_layer = 16
 input_pickable = true
 script = ExtResource("2_7a3fy")
+footprint = Vector2i(3, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_3v8t5")
+position = Vector2(96, 64)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_tyxco")
 animation = &"idle"
 frame_progress = 0.59542
@@ -112,15 +117,9 @@ frame_progress = 0.59542
 material = SubResource("ShaderMaterial_n8byl")
 
 [node name="CollisionShape2D" parent="." index="2"]
-polygon = PackedVector2Array(-188, 70, -25, 70, 68, 69, 194, 50, 196, -104, -187, -103)
+polygon = PackedVector2Array(2, 99, 83.5, 99, 130, 98.5, 193, 89, 194, 12, 2.5, 12.5)
 
-[node name="Selector" parent="." index="3"]
-visible = false
-
-[node name="Ebutton" parent="." index="4"]
-visible = false
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_lyd58")
 }

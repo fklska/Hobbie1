@@ -44,7 +44,7 @@ corner_detail = 2
 anti_aliasing = false
 anti_aliasing_size = 10.0
 
-[node name="BuildMenu" type="TabContainer"]
+[node name="BuildMenu" type="TabContainer" node_paths=PackedStringArray("TownHallButton", "BlacksmithButton", "WorkersLabel", "HireButton", "JobOption", "SwordButton", "BossButton")]
 offset_right = 718.0
 offset_bottom = 384.0
 theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
@@ -57,6 +57,13 @@ theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_82pde")
 tab_alignment = 1
 current_tab = 0
 script = ExtResource("2_ktfxd")
+TownHallButton = NodePath("Buildings/GridContainer/TownHall")
+BlacksmithButton = NodePath("Buildings/GridContainer/BlacksmithButt")
+WorkersLabel = NodePath("Village/VBox/WorkersLabel")
+HireButton = NodePath("Village/VBox/Hire")
+JobOption = NodePath("Village/VBox/Job/JobOption")
+SwordButton = NodePath("Village/VBox/Sword")
+BossButton = NodePath("Village/VBox/Boss")
 
 [node name="Buildings" type="TabBar" parent="."]
 layout_mode = 2
@@ -83,8 +90,7 @@ columns = 4
 [node name="TownHall" type="Button" parent="Buildings/GridContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-text = "TawnHall
-"
+text = "Ратуша"
 icon = ExtResource("4_ktfxd")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -104,9 +110,48 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="FlyingObj" type="TextureRect" parent="."]
-visible = false
+[node name="VBox" type="VBoxContainer" parent="Village"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -120.0
+offset_right = 256.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="WorkersLabel" type="Label" parent="Village/VBox"]
 layout_mode = 2
-metadata/_tab_index = 2
+horizontal_alignment = 1
+
+[node name="Hire" type="Button" parent="Village/VBox"]
+layout_mode = 2
+
+[node name="Job" type="HBoxContainer" parent="Village/VBox"]
+layout_mode = 2
+
+[node name="JobLabel" type="Label" parent="Village/VBox/Job"]
+layout_mode = 2
+text = "Жители добывают:"
+
+[node name="JobOption" type="OptionButton" parent="Village/VBox/Job"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Sword" type="Button" parent="Village/VBox"]
+layout_mode = 2
+
+[node name="Boss" type="Button" parent="Village/VBox"]
+layout_mode = 2
 
 [connection signal="pressed" from="Buildings/GridContainer/TownHall" to="." method="_on_town_hall_pressed"]
+[connection signal="pressed" from="Buildings/GridContainer/BlacksmithButt" to="." method="_on_blacksmith_pressed"]
+[connection signal="pressed" from="Village/VBox/Hire" to="." method="_on_hire_pressed"]
+[connection signal="item_selected" from="Village/VBox/Job/JobOption" to="." method="_on_job_selected"]
+[connection signal="pressed" from="Village/VBox/Sword" to="." method="_on_sword_pressed"]
+[connection signal="pressed" from="Village/VBox/Boss" to="." method="_on_boss_pressed"]

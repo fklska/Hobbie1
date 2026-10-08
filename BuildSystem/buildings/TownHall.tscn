@@ -18,13 +18,11 @@ shader_parameter/enable = false
 
 [node name="TownHall" instance=ExtResource("1_rj47l")]
 z_index = 2
+collision_layer = 16
 input_pickable = true
 script = ExtResource("2_fopta")
 data = ExtResource("3_35esh")
-Rectangle = Rect2(0, 0, 64, 64)
-RectColor = Color(0.27451, 0.47451, 0.345098, 0.431373)
-SelectRectColor = Color(0.680279, 0.594012, 0.059898, 1)
-size_on_map = 1
+max_hp = 400
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_wvymk")

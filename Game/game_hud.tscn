@@ -1,0 +1,151 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Game/GameHud.cs" id="1_hud"]
+[ext_resource type="FontFile" uid="uid://cwjy58m75auht" path="res://UI/fonts/Kurland.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.08, 0.1, 0.09, 0.75)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.08, 0.1, 0.09, 0.75)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.78, 0.18, 0.15, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="GameHud" type="CanvasLayer" node_paths=PackedStringArray("StockLabel", "ObjectiveLabel", "MessageLabel", "BossPanel", "BossBar", "EndPanel", "EndTitle", "EndReason")]
+process_mode = 3
+layer = 3
+script = ExtResource("1_hud")
+StockLabel = NodePath("Top/Panel/VBox/Stock")
+ObjectiveLabel = NodePath("Top/Panel/VBox/Objective")
+MessageLabel = NodePath("Top/Message")
+BossPanel = NodePath("Top/Boss")
+BossBar = NodePath("Top/Boss/Bar")
+EndPanel = NodePath("End")
+EndTitle = NodePath("End/Panel/VBox/Title")
+EndReason = NodePath("End/Panel/VBox/Reason")
+
+[node name="Top" type="VBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 12.0
+offset_bottom = 160.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Panel" type="PanelContainer" parent="Top"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Top/Panel"]
+layout_mode = 2
+
+[node name="Stock" type="Label" parent="Top/Panel/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="Objective" type="Label" parent="Top/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.45, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="Boss" type="VBoxContainer" parent="Top"]
+visible = false
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Name" type="Label" parent="Top/Boss"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "Каменный гигант"
+horizontal_alignment = 1
+
+[node name="Bar" type="ProgressBar" parent="Top/Boss"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+show_percentage = false
+
+[node name="Message" type="Label" parent="Top"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="End" type="CenterContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="End"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="End/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="End/Panel/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+
+[node name="Reason" type="Label" parent="End/Panel/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="End/Panel/VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 24
+
+[node name="Restart" type="Button" parent="End/Panel/VBox/Buttons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "Заново"
+
+[node name="Menu" type="Button" parent="End/Panel/VBox/Buttons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+text = "В меню"
+
+[connection signal="pressed" from="End/Panel/VBox/Buttons/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="End/Panel/VBox/Buttons/Menu" to="." method="_on_menu_pressed"]

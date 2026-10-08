@@ -1,5 +1,4 @@
 using Godot;
-using Godot1.Globals;
 using System;
 using System.Collections.Generic;
 
@@ -16,20 +15,57 @@ public partial class Grid : Node2D
 	bool drawOnce = true;
 	public static bool buildMode = false;
 
-	public WorldScene WorldScene;
-	public override void _Ready()
+	public static string PendingBuilding;
+	private static Texture2D ghostTexture;
+	private static float ghostScale = 1f;
+	private bool drawn;
+
+	public WorldScene WorldScene => GameManager.Instance?.World;
+
+	public static void StartPlacement(string buildingId)
 	{
-		WorldScene = GetTree().Root.GetNode<WorldScene>("/root/Map");
+		GameManager.BuildingInfo info = GameManager.Buildings[buildingId];
+		PendingBuilding = buildingId;
+		ghostTexture = GD.Load<Texture2D>(info.GhostPath);
+		ghostScale = info.GhostScale;
+		buildMode = true;
+	}
+
+	public static void StopPlacement()
+	{
+		PendingBuilding = null;
+		ghostTexture = null;
+		buildMode = false;
 	}
 
 	public override void _Process(double delta)
 	{
 		if (buildMode)
 		{
-			if (currentCell != pixelToCell(GetGlobalMousePosition()))
+			if (currentCell != pixelToCell(GetGlobalMousePosition()) || !drawn)
 			{
 				QueueRedraw();
 			}
+		}
+		else if (drawn)
+		{
+			QueueRedraw();
+		}
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!buildMode || @event is not InputEventMouseButton mouse || !mouse.Pressed) return;
+
+		if (mouse.ButtonIndex == MouseButton.Left)
+		{
+			if (GameManager.Instance.PlaceBuilding(PendingBuilding, pixelToCell(GetGlobalMousePosition()))) StopPlacement();
+			GetViewport().SetInputAsHandled();
+		}
+		else if (mouse.ButtonIndex == MouseButton.Right)
+		{
+			StopPlacement();
+			GetViewport().SetInputAsHandled();
 		}
 	}
 
@@ -39,19 +75,21 @@ public partial class Grid : Node2D
 		TileType.TropicWater
 	};
 
-public bool IsAbleToPlace(Vector2I cell)
+	public bool IsAbleToPlace(Vector2I cell)
 	{
-		Vector2I localCell = Utils.GetLocalCell(globalCell: cell);
-		Vector2I chunk = Utils.GetChunkCoords(cell);
-
-		Tile tile = WorldScene.GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[localCell.X][localCell.Y];
+		Tile tile = WorldScene?.GetTileAt(cell);
+		if (tile == null) return false;
 
 		return !BanTilesToPlace.Contains(tile.Type) && tile.Resourse == ResorseType.None;
 	}
 
 	public override void _Draw()
 	{
+		drawn = buildMode;
+		if (!buildMode) return;
+
 		drawGridNearMouse();
+		drawGhost();
 		//drawStaticGrid();
 		// drawLineGridNearMouse();
 	}
@@ -70,6 +108,17 @@ public bool IsAbleToPlace(Vector2I cell)
 				DrawRect(rect, mask, false);
 			}
 		}
+	}
+
+	public void drawGhost()
+	{
+		if (ghostTexture == null) return;
+
+		Vector2I footprint = GameManager.Buildings[PendingBuilding].Footprint;
+		Vector2 size = ghostTexture.GetSize() * ghostScale;
+		Vector2 center = (currentCell * cellSize) + (footprint * cellSize) / 2;
+		bool ok = GameManager.Instance.CanPlace(PendingBuilding, currentCell);
+		DrawTextureRect(ghostTexture, new Rect2(center - size / 2, size), false, ok ? new Color(0.6f, 1f, 0.6f, 0.7f) : new Color(1f, 0.4f, 0.4f, 0.7f));
 	}
 
 	public void drawLineGridNearMouse()
