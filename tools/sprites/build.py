@@ -1,7 +1,9 @@
+import os
 import sys
 import time
 import warnings
 import numpy as np
+from PIL import Image
 
 warnings.filterwarnings("ignore")
 
@@ -13,7 +15,7 @@ import godot_res as gr
 CHAR_PITCH = 30.0
 
 
-def render_character(module, out_dir, name, size, anchor, mats=MATS, dirs=range(8), pitch=CHAR_PITCH, big=None):
+def render_character(module, out_dir, name, size, anchor, mats=MATS, dirs=range(8), pitch=CHAR_PITCH, big=None, only=None):
     anims = {}
     for an, spec in module.ANIMS.items():
         fn, fps, loop = spec[:3]
@@ -26,6 +28,11 @@ def render_character(module, out_dir, name, size, anchor, mats=MATS, dirs=range(
             anc = (anchor[0] + pad, anchor[1] + pad)
         cam = Camera("ortho", pitch=pitch, w=sz[0], h=sz[1], anchor=anc)
         poses = fn()
+        if only and an not in only:
+            sheet = np.array(Image.open(os.path.join(gr.ROOT, f"{out_dir}/{name}_{an}.png")).convert("RGBA")).astype(float)
+            rows = [[sheet[d * sz[1]:(d + 1) * sz[1], j * sz[0]:(j + 1) * sz[0]] for j in range(len(poses))] for d in dirs]
+            anims[an] = (rows, fps, loop)
+            continue
         rows = []
         for d in dirs:
             row = []
@@ -85,9 +92,9 @@ def check_clip(img, label):
         print("clipped:", label)
 
 
-def hero():
+def hero(only=None):
     import hero as h
-    return render_character(h, "Art/hero", "hero", (64, 64), (32, 52), big={"death": 8})
+    return render_character(h, "Art/hero", "hero", (64, 64), (32, 52), big={"death": 8}, only=only)
 
 
 MOBS = {
@@ -109,9 +116,9 @@ def mobs(names=None):
     return out
 
 
-def giant():
+def giant(only=None):
     import giant as g
-    return render_character(g, "Art/mobs/stone_giant", "stone_giant", (128, 128), (64, 110), big={"death": 12, "melee": 8})
+    return render_character(g, "Art/mobs/stone_giant", "stone_giant", (128, 128), (64, 110), big={"death": 12, "melee": 8}, only=only)
 
 
 def fit(img, w, h, label):

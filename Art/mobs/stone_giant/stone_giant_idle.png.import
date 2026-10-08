@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clprqdasu1kj8"
-path="res://.godot/imported/Laser_sheet.png-c56de73230a7463a4b45cdbba0d9f090.ctex"
+uid="uid://xpdeqd0s6g4s"
+path="res://.godot/imported/stone_giant_idle.png-efb551b645cdb2d4bbe4993089672ef4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AI/BaseClasses/Enemy/Laser_sheet.png"
-dest_files=["res://.godot/imported/Laser_sheet.png-c56de73230a7463a4b45cdbba0d9f090.ctex"]
+source_file="res://Art/mobs/stone_giant/stone_giant_idle.png"
+dest_files=["res://.godot/imported/stone_giant_idle.png-efb551b645cdb2d4bbe4993089672ef4.ctex"]
 
 [params]
 

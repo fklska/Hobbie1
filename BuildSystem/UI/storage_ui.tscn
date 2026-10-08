@@ -3,10 +3,10 @@
 [ext_resource type="Theme" uid="uid://cedhnxugilj7g" path="res://UI/theme.tres" id="1_pfvo4"]
 [ext_resource type="Script" uid="uid://dfvygo2ih38md" path="res://BuildSystem/scripts/storage_ui.gd" id="2_cwcl5"]
 [ext_resource type="Texture2D" uid="uid://cg8ljg60on6ua" path="res://UI/UIAssets/Buttons/Button_Hover_3Slides.png" id="3_bby3r"]
-[ext_resource type="Texture2D" uid="uid://t813r58odou6" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_04.png" id="4_ntgfg"]
-[ext_resource type="Texture2D" uid="uid://b06ojyuwegde" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_10.png" id="5_p4ra7"]
-[ext_resource type="Texture2D" uid="uid://dkd27jxqd6ork" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_11.png" id="6_wwf5m"]
-[ext_resource type="Texture2D" uid="uid://k8v3t7pxhf4u" path="res://kenney_medieval-rts/Default size/Environment/medievalEnvironment_12.png" id="7_84k50"]
+[ext_resource type="Texture2D" uid="uid://bx2aqenx8ndq8" path="res://Art/resources/wood.png" id="4_ntgfg"]
+[ext_resource type="Texture2D" uid="uid://cmwqa8t2q1sm" path="res://Art/resources/rock.png" id="5_p4ra7"]
+[ext_resource type="Texture2D" uid="uid://zv8dyr6c8q0k" path="res://Art/resources/iron.png" id="6_wwf5m"]
+[ext_resource type="Texture2D" uid="uid://zi5uvfuhaalz" path="res://Art/resources/gold.png" id="7_84k50"]
 
 [node name="storage_ui" type="TextureRect"]
 custom_minimum_size = Vector2(192, 64)

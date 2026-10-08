@@ -25,6 +25,11 @@ func setup(direction: Vector2, amount: int, hits: StringName, shooter: Node, rea
 		speed = projectile_speed
 
 
+func _ready():
+	if has_node(^"Sprite"):
+		$Sprite.visible = style == Style.ARROW
+
+
 func _physics_process(delta: float):
 	var step := speed * delta
 	position += _direction * step
@@ -43,7 +48,7 @@ func _physics_process(delta: float):
 
 
 func _draw():
-	if has_node(^"Sprite"):
+	if style == Style.ARROW and has_node(^"Sprite"):
 		return
 	match style:
 		Style.STONE:

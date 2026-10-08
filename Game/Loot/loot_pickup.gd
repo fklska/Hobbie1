@@ -19,6 +19,10 @@ func _physics_process(delta: float):
 	_age += delta
 	_bob += delta * 3.0
 	queue_redraw()
+	if has_node(^"Sprite"):
+		$Sprite.visible = artifact.is_empty()
+		$ArtifactSprite.visible = not artifact.is_empty()
+		($ArtifactSprite if not artifact.is_empty() else $Sprite).position = Vector2(0, -4.0 - sin(_bob) * 3.0)
 	if artifact.is_empty() and _age > COIN_LIFETIME:
 		queue_free()
 		return
@@ -42,10 +46,12 @@ func _collect():
 
 
 func _draw():
-	if has_node(^"Sprite"):
-		return
 	var lift := Vector2(0, -4.0 - sin(_bob) * 3.0)
 	draw_circle(Vector2(0, 2), 7.0, Color(0, 0, 0, 0.25))
+	if has_node(^"Sprite"):
+		if not artifact.is_empty():
+			draw_circle(lift, 12.0, Color(ARTIFACT_COLOR, 0.15 + 0.15 * (0.5 + 0.5 * sin(_bob * 1.7))))
+		return
 	if artifact.is_empty():
 		var piles := clampi(coins, 1, 3)
 		for i in piles:

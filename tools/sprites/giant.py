@@ -99,7 +99,7 @@ def crumble(b, t):
         cy = np.mean([k[kk][1] for kk in pts])
         cx = np.mean([k[kk][0] for kk in pts])
         cz = np.mean([k[kk][2] for kk in pts])
-        spread = np.array([cx, 0, cz * 0.3]) * 0.35 + rng.uniform(-4, 4, 3) * [1, 0, 0.4]
+        spread = np.array([cx, 0, cz * 0.3]) * 0.22 + rng.uniform(-4, 4, 3) * [1, 0, 0.4]
         rad = 4.0 + rng.uniform(0, 3)
         target_y = rad * 0.6
         dy = (target_y - cy) * t

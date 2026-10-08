@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://717lxhmpp7ey"
-path="res://.godot/imported/Character_sheet.png-ee50aefab65afce4d811012b8c4c8816.ctex"
+uid="uid://bpx7j0f1rfbu"
+path="res://.godot/imported/stone_giant_cast.png-c2bede3b293657d83929db795b922abf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://AI/BaseClasses/Enemy/Character_sheet.png"
-dest_files=["res://.godot/imported/Character_sheet.png-ee50aefab65afce4d811012b8c4c8816.ctex"]
+source_file="res://Art/mobs/stone_giant/stone_giant_cast.png"
+dest_files=["res://.godot/imported/stone_giant_cast.png-c2bede3b293657d83929db795b922abf.ctex"]
 
 [params]
 

@@ -33,6 +33,7 @@ enum {
 }
 
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var body_sprite: DirectionalSprite = $AnimatedSprite2D
 @onready var laser_pivot: Node2D = $LaserPivot
 @onready var laser: AnimatedSprite2D = $LaserPivot/Laser
 @onready var ai: BossController = $AIController2D
@@ -54,7 +55,7 @@ func _ready():
 	hp = max_hp
 	add_to_group("enemies")
 	ai.init(self)
-	anim.play("idle")
+	body_sprite.play_dir("idle")
 
 func _physics_process(delta):
 	if state == DIE:
@@ -73,8 +74,7 @@ func _physics_process(delta):
 	else:
 		velocity = move_input.limit_length(1.0) * speed * (ENRAGE_SPEED if enraged else 1.0)
 		move_and_slide()
-		if absf(velocity.x) > 1:
-			anim.flip_h = velocity.x < 0
+		body_sprite.play_dir("walk" if velocity.length() > 1.0 else "idle", velocity)
 
 func cooldown_scale() -> float:
 	return ENRAGE_COOLDOWN if enraged else 1.0
@@ -103,7 +103,7 @@ static func target_radius(node: Node2D) -> float:
 func melee():
 	state = ATTACK
 	melee_timer = melee_cooldown * cooldown_scale()
-	anim.play("melee")
+	body_sprite.play_dir("melee", Vector2.ZERO, true)
 	await get_tree().create_timer(0.4, false).timeout
 	if state == DIE:
 		return
@@ -120,7 +120,7 @@ func fire_laser():
 		return
 	state = ATTACK
 	laser_timer = laser_cooldown * cooldown_scale()
-	anim.play("cast")
+	body_sprite.play_dir("cast", target_point(target) - global_position, true)
 	Sound.PlayAt("magic_beam", global_position)
 	laser_pivot.rotation = (target_point(target) - laser_pivot.global_position).angle() - LASER_SWEEP / 2
 	laser.visible = true
@@ -157,7 +157,7 @@ func _hit(node: Node, amount: int):
 func _finish_attack():
 	if state == ATTACK:
 		state = WALK
-		anim.play("idle")
+		body_sprite.play_dir("idle")
 
 func take_damage(amount: int):
 	if state == DIE or state == ARMOR:
@@ -176,26 +176,26 @@ func enrage():
 	firing = false
 	laser.visible = false
 	state = ARMOR
-	anim.play("armor")
+	body_sprite.play_dir("armor", Vector2.ZERO, true)
 	Sound.PlayAt("giant_roar", global_position)
 	await get_tree().create_timer(1.0, false).timeout
 	if state == ARMOR:
 		state = WALK
-		anim.play("idle")
+		body_sprite.play_dir("idle")
 
 func die():
 	state = DIE
 	firing = false
 	laser.visible = false
 	velocity = Vector2.ZERO
-	anim.play("death")
+	body_sprite.play_dir("death", Vector2.ZERO, true)
 	Sound.PlayAt("collapse", global_position)
 	ai.done = true
 	await get_tree().create_timer(1.4, false).timeout
 	died.emit()
 
 func get_texture():
-	return anim.sprite_frames.get_frame_texture("idle", 0)
+	return anim.sprite_frames.get_frame_texture(body_sprite.anim_name("idle"), 0)
 
 func send_obj_data() -> Dictionary:
 	return {
