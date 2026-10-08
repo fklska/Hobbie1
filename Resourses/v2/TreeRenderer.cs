@@ -5,7 +5,7 @@ using System;
 [GlobalClass]
 public partial class TreeRenderer : Node2D
 {
-    GeneratorData genData = ResourceLoader.Load<GeneratorData>("res://SavedWorlds/Mysterious Land of Doom.tres");
+    GeneratorData genData = ResourceLoader.Load<GeneratorData>(GenerationSettings.SAVED_WORLDS_DIR + "Mysterious Land of Doom.tres");
     [Export] public MultiMeshInstance2D MultiMeshInstance2D;
     [Export] public Transform2D Transform2D;
 

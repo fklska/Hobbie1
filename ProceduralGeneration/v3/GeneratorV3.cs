@@ -62,13 +62,14 @@ public partial class GeneratorV3 : Node2D
 		ExecuteStep.Stop();
 		GD.Print($"Every Step Executed in {ExecuteStep}");
 
-		ResourceSaver.Save(genData, $"res://SavedWorlds/{genData.WorldName}.tres");
+		DirAccess.MakeDirRecursiveAbsolute(GenerationSettings.SAVED_WORLDS_DIR);
+		ResourceSaver.Save(genData, $"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres");
 
-		GeneratorData dupl = ResourceLoader.Load<GeneratorData>($"res://SavedWorlds/{genData.WorldName}.tres");
+		GeneratorData dupl = ResourceLoader.Load<GeneratorData>($"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres");
 
 		GenerateScene(dupl);
 
-		ResourceSaver.Save(dupl.ToSimpleData(), String.Format("res://SavedWorlds/__SIMPLE{0}.tres", dupl.WorldName));
+		ResourceSaver.Save(dupl.ToSimpleData(), $"{GenerationSettings.SAVED_WORLDS_DIR}__SIMPLE{dupl.WorldName}.tres");
 
 		progress.Value++;
 		generation.Stop();
@@ -153,7 +154,7 @@ public partial class GeneratorV3 : Node2D
 
 		PackedScene.Pack(Map);
 
-		ResourceSaver.Save(PackedScene, $"res://SavedWorlds/{Map.WorldName}.tscn");
+		ResourceSaver.Save(PackedScene, $"{GenerationSettings.SAVED_WORLDS_DIR}{Map.WorldName}.tscn");
 	}
 
 	public override void _Input(InputEvent @event)
