@@ -147,7 +147,7 @@ public partial class Survival : Node
 		groupTimer = 0;
 		waveDirection = Vector2.FromAngle(GD.Randf() * Mathf.Tau);
 		bool giant = IsGiantDay(day);
-		if (giant) SpawnGiant(day, SpawnPoint(BaseCenter(), waveDirection));
+		if (giant) PlaySound("giant_roar", SpawnGiant(day, SpawnPoint(BaseCenter(), waveDirection)).GlobalPosition);
 		game.Notify(giant ? $"Ночь {day}: каменный гигант идёт к деревне!" : $"Ночь {day}: враги наступают");
 		EmitSignal(SignalName.Changed);
 	}
@@ -254,7 +254,11 @@ public partial class Survival : Node
 	public void DropLoot(Vector2 at, Vector2I coinRange, float artifactChance)
 	{
 		int coins = Mathf.RoundToInt(GD.RandRange(coinRange.X, coinRange.Y) * CoinMultiplier);
-		if (coins > 0) SpawnPickup(at, coins, "");
+		if (coins > 0)
+		{
+			SpawnPickup(at, coins, "");
+			PlaySound("coin", at);
+		}
 		if (GD.Randf() < artifactChance)
 		{
 			string[] ids = Artifacts.Keys.ToArray();
@@ -271,6 +275,8 @@ public partial class Survival : Node
 		game.EntitiesRoot.CallDeferred(Node.MethodName.AddChild, pickup);
 	}
 
+	private void PlaySound(string id, Vector2 at) => GetNodeOrNull("/root/Sound")?.Call("PlayAt", id, at);
+
 	public void CollectCoins(int amount) => game.AddResource("coins", amount);
 
 	public void CollectArtifact(string id)
@@ -278,6 +284,7 @@ public partial class Survival : Node
 		if (!Artifacts.TryGetValue(id, out ArtifactInfo info)) return;
 		Found[id] = Count(id) + 1;
 		ApplyArtifact(id, 1);
+		PlaySound("pickup", game.Player.GlobalPosition);
 		game.Notify($"Артефакт «{info.Title}»: {info.Effect}");
 		EmitSignal(SignalName.Changed);
 	}
