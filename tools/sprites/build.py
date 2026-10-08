@@ -147,6 +147,19 @@ def pickups(names=None):
         gr.save_png(img, f"Art/items/{name}.png")
 
 
+def resources(names=None):
+    import resources as rs
+    for name, fn in rs.RESOURCES.items():
+        if names and name not in names:
+            continue
+        k = fn()
+        sdf.set_light(sdf.BUILD_LIGHT)
+        img, _, _ = render(k.prims, MATS, Camera("oblique", k=BK, w=64, h=64, anchor=(32, 38)), decals=k.decals, line_depth=3.0)
+        sdf.set_light(sdf.CHAR_LIGHT)
+        check_clip(img, name)
+        gr.save_png(img, f"Art/resources/{name}.png")
+
+
 def beam():
     import effects
     return effects.giant_beam()
@@ -182,7 +195,7 @@ def buildings(names=None):
 BK = 0.9
 
 TARGETS = {"hero": hero, "buildings": buildings, "mobs": mobs, "giant": giant,
-           "beam": beam, "weapons": weapons, "pickups": pickups}
+           "beam": beam, "weapons": weapons, "pickups": pickups, "resources": resources}
 
 if __name__ == "__main__":
     names = sys.argv[1:] or list(TARGETS)
