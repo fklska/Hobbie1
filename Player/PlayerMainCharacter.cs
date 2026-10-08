@@ -23,7 +23,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	[Export] public float RegenPerSecond = 4f;
 
 	[ExportCategory("Render")]
-	[Export] public AnimationPlayer anim;
+	[Export] public AnimatedSprite2D anim;
 	[Export] public CpuParticles2D miningParticle;
 
 	public WorldScene WorldScene;
@@ -80,7 +80,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		IsDead = true;
 		Velocity = Vector2.Zero;
 		DisableParticle(miningParticle);
-		anim.Play("idleStatic");
+		anim.Call("play_dir", "death", Vector2.Zero, true);
 		GameManager.Instance.OnHeroDied();
 	}
 
@@ -129,11 +129,11 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		if (!Input.IsActionJustPressed("attack") && !Input.IsActionJustPressed("RightMouseButton")) return;
 
 		attackTimer = AttackCooldown;
-		attackAnimTimer = anim.GetAnimation("attackDown").Length;
-		anim.Play("attackDown");
+		Vector2 aim = (GetGlobalMousePosition() - GlobalPosition).Normalized();
+		attackAnimTimer = (float)anim.Call("action_length", "attack");
+		anim.Call("play_dir", "attack", aim, true);
 		SoundManager.Instance.Play("swing");
 
-		Vector2 aim = (GetGlobalMousePosition() - GlobalPosition).Normalized();
 		int damage = GameManager.Instance.HeroDamage;
 		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
 		{
@@ -178,7 +178,10 @@ public partial class PlayerMainCharacter : CharacterBody2D
 			Velocity = Vector2.Zero;
 		}
 
-		if (attackAnimTimer <= 0) anim.Play(GetANimByDir(direction));
+		if (attackAnimTimer > 0) return;
+		if (direction != Vector2.Zero) anim.Call("play_dir", "walk", direction);
+		else if (miningParticle.Emitting) anim.Call("play_dir", "work", miningParticle.GlobalPosition - GlobalPosition);
+		else anim.Call("play_dir", "idle", Vector2.Zero);
 	}
 
 	public void UpdateChunks()
@@ -263,30 +266,5 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	{
 		focusCell = Utils.GetGlobalCell(GetGlobalMousePosition());
 		ActionProgress.Value = 0;
-	}
-
-	public string GetANimByDir(Vector2 dir)
-	{
-		switch (dir)
-		{
-			case Vector2(0, 0):
-				return "idleStatic";
-
-			case Vector2(0, 1):
-				return "runDown";
-
-			case Vector2(1, 0):
-				return "runRight";
-
-			case Vector2(-1, 0):
-				return "runLeft";
-
-			case Vector2(0, -1):
-				return "runUp";
-
-			default:
-				//GD.PrintErr("Unxepected Dir");
-				return "idleStatic";
-		}
 	}
 }
