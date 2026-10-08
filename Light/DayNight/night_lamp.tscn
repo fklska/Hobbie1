@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cxv4waio5hjp6"]
+
+[ext_resource type="Script" uid="uid://dkc16f2fpwgdl" path="res://Light/DayNight/night_lamp.gd" id="1_lamp"]
+
+[sub_resource type="Gradient" id="Gradient_light"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.3, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.45, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_light"]
+gradient = SubResource("Gradient_light")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_glow"]
+offsets = PackedFloat32Array(0, 0.35, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.6, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_glow"]
+gradient = SubResource("Gradient_glow")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_glow"]
+blend_mode = 1
+light_mode = 1
+
+[node name="NightLamp" type="PointLight2D" node_paths=PackedStringArray("glow")]
+color = Color(1, 0.72, 0.42, 1)
+energy = 0.0
+range_item_cull_mask = 5
+texture = SubResource("GradientTexture2D_light")
+texture_scale = 3.5
+script = ExtResource("1_lamp")
+glow = NodePath("Glow")
+
+[node name="Glow" type="Sprite2D" parent="."]
+z_index = 50
+material = SubResource("CanvasItemMaterial_glow")
+self_modulate = Color(3, 1.9, 0.9, 1)
+texture = SubResource("GradientTexture2D_glow")

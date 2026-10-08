@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c2wv8totvopdf" path="res://DebugConsole/prefabs/debug_stats.tscn" id="9_mede7"]
 [ext_resource type="PackedScene" uid="uid://vumq2e0d4xkh" path="res://UI/prefabs/BuildMenu.tscn" id="15_7cvrk"]
 [ext_resource type="PackedScene" uid="uid://dp8r3rltfkp5p" path="res://UI/prefabs/StoreButton.tscn" id="15_w41el"]
-[ext_resource type="PackedScene" uid="uid://7e21qgyc6cuu" path="res://Light/Light_V3/light.tscn" id="16_8sa4y"]
+[ext_resource type="PackedScene" uid="uid://7e21qgyc6cuu" path="res://Light/DayNight/day_night.tscn" id="16_8sa4y"]
 [ext_resource type="PackedScene" uid="uid://nbiotqlwjxva" path="res://Player/effects/mining_parctile.tscn" id="16_yl13i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl13i"]
