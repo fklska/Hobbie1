@@ -177,7 +177,11 @@ def render_building(fn, fp, pad_top=220):
     cam = Camera("oblique", k=BK, w=W, h=D + pad_top, anchor=(0, pad_top))
     kit = fn()
     sdf.set_light(sdf.BUILD_LIGHT)
-    img, _, _ = render(kit.prims, MATS, cam, decals=kit.decals, line_depth=3.0)
+    draw = lambda prims: render(prims, MATS, cam, decals=kit.decals, line_depth=3.0, occluders=kit.prims)[0]
+    img = draw(kit.prims)
+    ground = [p for p in kit.prims if p.group == "ground"]
+    ground_img = draw(ground) if ground else np.zeros_like(img)
+    parts = [(draw(obj), front_z(obj, W, D) + pad_top) for obj in objects([p for p in kit.prims if p.group != "ground"], W, D)]
     sdf.set_light(sdf.CHAR_LIGHT)
     a = img[:, :, 3] > 0
     rows = np.where(a.any(1))[0]
@@ -186,7 +190,89 @@ def render_building(fn, fp, pad_top=220):
         print("building clipped at top:", fn.__name__)
     if a[:, 0].any() or a[:, -1].any():
         print("touches side:", fn.__name__)
-    return img[top:]
+    return img[top:], ground_img[top:], [(pi[top:], row - top) for pi, row in parts]
+
+
+def _grid(lo, hi, step):
+    axes = [np.arange(lo[i], hi[i] + step * 0.5, step) for i in range(3)]
+    g = np.stack(np.meshgrid(*axes, indexing="ij"), -1)
+    return g.reshape(-1, 3), g.shape[:3]
+
+
+def _bounds(prim, W, D, step=4.0):
+    pts, _ = _grid([-16, -2, -16], [W + 16, 260, D + 16], step)
+    m = prim.dist(pts) <= step
+    if not m.any():
+        return None
+    return pts[m].min(0) - step, pts[m].max(0) + step
+
+
+def objects(prims, W, D, step=1.0, tol=0.8):
+    lo = np.array([-16.0, -2.0, -16.0])
+    shape = (np.array([W + 32, 262, D + 32]) / step).astype(int) + 2
+    owner = np.full(shape, -1, int)
+    parent = list(range(len(prims)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    for i, pr in enumerate(prims):
+        b = _bounds(pr, W, D)
+        if b is None:
+            continue
+        ia = np.clip(((b[0] - lo) / step).astype(int), 0, shape - 1)
+        ib = np.clip(((b[1] - lo) / step).astype(int) + 1, 0, shape - 1)
+        pts, sub_shape = _grid(lo + ia * step, lo + ib * step, step)
+        occ = (pr.dist(pts) <= tol).reshape(sub_shape)
+        sub = owner[ia[0]:ia[0] + sub_shape[0], ia[1]:ia[1] + sub_shape[1], ia[2]:ia[2] + sub_shape[2]]
+        for j in np.unique(sub[occ]):
+            if j >= 0:
+                parent[find(i)] = find(j)
+        sub[occ] = i
+    groups = {}
+    for i in range(len(prims)):
+        groups.setdefault(find(i), []).append(prims[i])
+    return list(groups.values())
+
+
+def front_z(prims, W, D):
+    z = 0.0
+    for pr in prims:
+        b = _bounds(pr, W, D, 2.0)
+        if b is None:
+            continue
+        pts, _ = _grid(b[0], b[1], 0.5)
+        m = pr.dist(pts) <= 0.0
+        if m.any():
+            z = max(z, pts[m][:, 2].max())
+    return z
+
+
+def pack_parts(parts, pad=2):
+    crops = []
+    for img, row in parts:
+        a = img[:, :, 3] > 0
+        if not a.any():
+            continue
+        ys, xs = np.where(a)
+        y0, y1 = max(ys.min() - 1, 0), min(ys.max() + 2, img.shape[0])
+        x0, x1 = max(xs.min() - 1, 0), min(xs.max() + 2, img.shape[1])
+        crops.append((img[y0:y1, x0:x1], (x0, y0), row))
+    crops.sort(key=lambda c: c[2])
+    w = sum(c[0].shape[1] + pad for c in crops) + pad
+    h = max([c[0].shape[0] for c in crops] + [1]) + 2 * pad
+    atlas = np.zeros((h, w, 4))
+    regions = []
+    x = pad
+    for img, pos, row in crops:
+        ch, cw = img.shape[:2]
+        atlas[pad:pad + ch, x:x + cw] = img
+        regions.append(((x, pad, cw, ch), pos, row))
+        x += cw + pad
+    return atlas, regions
 
 
 def buildings(names=None):
@@ -195,8 +281,11 @@ def buildings(names=None):
         if names and name not in names:
             continue
         for i, fn in enumerate(levels):
-            img = render_building(fn, fp)
-            gr.save_png(img, f"Art/buildings/{name}_{i + 1}.png")
+            img, ground, parts = render_building(fn, fp)
+            base = f"Art/buildings/{name}_{i + 1}"
+            gr.save_png(img, base + ".png")
+            atlas, regions = pack_parts(parts)
+            gr.building_parts(base, ground, atlas, regions)
 
 
 BK = 0.9

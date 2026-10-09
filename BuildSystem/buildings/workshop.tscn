@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://38hyfsxmecosf"]
+[gd_scene load_steps=11 format=3 uid="uid://38hyfsxmecosf"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://dp7l6r2uf51t2" path="res://BuildSystem/scripts/building.gd" id="2_script"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bz7vx5a77juqy" path="res://Art/buildings/workshop_1.png" id="4_tex"]
 [ext_resource type="Texture2D" uid="uid://bhox38hxwyf6q" path="res://Art/buildings/workshop_2.png" id="5_tex"]
 [ext_resource type="Texture2D" uid="uid://btlutnkfc98lk" path="res://Art/buildings/workshop_3.png" id="6_tex"]
+[ext_resource type="Resource" uid="uid://bhxmbz7vnk6hz" path="res://Art/buildings/workshop_1_parts.tres" id="20_parts"]
+[ext_resource type="Resource" uid="uid://y81b6m2vsgkb" path="res://Art/buildings/workshop_2_parts.tres" id="21_parts"]
+[ext_resource type="Resource" uid="uid://b26ntdap210j5" path="res://Art/buildings/workshop_3_parts.tres" id="22_parts"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true
@@ -26,6 +29,7 @@ building_id = "Workshop"
 max_hp = 250
 footprint = Vector2i(2, 2)
 level_textures = Array[Texture2D]([ExtResource("4_tex"), ExtResource("5_tex"), ExtResource("6_tex")])
+level_parts = Array[Resource]([ExtResource("20_parts"), ExtResource("21_parts"), ExtResource("22_parts")])
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_outline")

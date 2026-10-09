@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://7xmedn8lrauc" path="res://Art/buildings/blacksmith_1.png" id="4_tex"]
 [ext_resource type="Texture2D" uid="uid://b74ryq544rq3o" path="res://Art/buildings/blacksmith_2.png" id="5_tex"]
 [ext_resource type="Texture2D" uid="uid://bd73jer3g3qqk" path="res://Art/buildings/blacksmith_3.png" id="6_tex"]
+[ext_resource type="Resource" uid="uid://b0662yd5wwfcl" path="res://Art/buildings/blacksmith_1_parts.tres" id="20_parts"]
+[ext_resource type="Resource" uid="uid://bvtdkiz0n2qrq" path="res://Art/buildings/blacksmith_2_parts.tres" id="21_parts"]
+[ext_resource type="Resource" uid="uid://7v1ocnndl9hj" path="res://Art/buildings/blacksmith_3_parts.tres" id="22_parts"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n8byl"]
 resource_local_to_scene = true
@@ -25,6 +28,7 @@ script = ExtResource("2_7a3fy")
 building_id = "Blacksmith"
 footprint = Vector2i(3, 2)
 level_textures = Array[Texture2D]([ExtResource("4_tex"), ExtResource("5_tex"), ExtResource("6_tex")])
+level_parts = Array[Resource]([ExtResource("20_parts"), ExtResource("21_parts"), ExtResource("22_parts")])
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_n8byl")

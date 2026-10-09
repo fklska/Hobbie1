@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BuildingParts" format=3 uid="uid://bq03n04q22yzg"]
+
+[ext_resource type="Script" uid="uid://92gwd5ok7wtj" path="res://BuildSystem/scripts/building_parts.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b8cc7s6y8uy6n" path="res://Art/buildings/tower_2_ground.png" id="2_ground"]
+[ext_resource type="Texture2D" uid="uid://bm9xl65cj9mv9" path="res://Art/buildings/tower_2_parts.png" id="3_atlas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0"]
+atlas = ExtResource("3_atlas")
+region = Rect2(2, 2, 50, 92)
+
+[resource]
+script = ExtResource("1_script")
+ground = ExtResource("2_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_0")])
+positions = PackedVector2Array(7, 0)
+sort_rows = PackedFloat32Array(90.5)

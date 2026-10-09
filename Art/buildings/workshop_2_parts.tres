@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="BuildingParts" format=3 uid="uid://y81b6m2vsgkb"]
+
+[ext_resource type="Script" uid="uid://92gwd5ok7wtj" path="res://BuildSystem/scripts/building_parts.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bb2p5dxaeoyfc" path="res://Art/buildings/workshop_2_ground.png" id="2_ground"]
+[ext_resource type="Texture2D" uid="uid://pf392qg6boed" path="res://Art/buildings/workshop_2_parts.png" id="3_atlas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0"]
+atlas = ExtResource("3_atlas")
+region = Rect2(2, 2, 18, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1"]
+atlas = ExtResource("3_atlas")
+region = Rect2(22, 2, 86, 97)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2"]
+atlas = ExtResource("3_atlas")
+region = Rect2(110, 2, 24, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3"]
+atlas = ExtResource("3_atlas")
+region = Rect2(136, 2, 36, 26)
+
+[resource]
+script = ExtResource("1_script")
+ground = ExtResource("2_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_0"), SubResource("AtlasTexture_1"), SubResource("AtlasTexture_2"), SubResource("AtlasTexture_3")])
+positions = PackedVector2Array(99, 41, 4, 0, 92, 78, 44, 88)
+sort_rows = PackedFloat32Array(65, 96.5, 103, 113)
