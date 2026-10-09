@@ -97,7 +97,7 @@ func _gather(world, delta: float):
 		dwell = 0.0
 	dwell += delta
 	tool.rotation = sin(dwell * 12.0) * 1.2
-	if dwell >= COLLECT_TIME:
+	if dwell >= COLLECT_TIME / Game.WorkSpeed:
 		_collect(world, cell)
 
 func _keep_in_area(delta: float):
@@ -153,8 +153,8 @@ func take_damage(amount: int):
 	modulate = Color(1, 0.5, 0.5)
 	create_tween().tween_property(self, "modulate", Color.WHITE, 0.2)
 	if hp <= 0:
-		if not weapon_id.is_empty() and Game.has_method("ReturnWeapon"):
-			Game.call("ReturnWeapon", weapon_id)
+		if not weapon_id.is_empty():
+			Game.ReturnWeapon(weapon_id)
 		died.emit()
 		queue_free()
 

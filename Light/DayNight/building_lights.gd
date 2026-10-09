@@ -19,6 +19,8 @@ func _on_node_added(node: Node) -> void:
 func _attach(node: Node) -> void:
 	if not is_instance_valid(node) or not node is Node2D or node.has_node(^"NightLamp"):
 		return
+	if node is Building and not node.night_lamp:
+		return
 	var lamp: Node2D = LAMP.instantiate()
 	lamp.name = &"NightLamp"
 	var sprite := node.get_node_or_null(^"Texture") as Sprite2D

@@ -11,8 +11,8 @@ func _ready():
 func get_texture():
 	return anim.sprite_frames.get_frame_texture("idle", 0)
 
-func send_obj_data() -> Dictionary:
-	return {
-		"Description": "Кузница",
-		"HP": "%d/%d" % [hp, max_hp]
-	}
+func preview(_value: int) -> Dictionary:
+	var sprite := get_node("AnimatedSprite2D") as AnimatedSprite2D
+	var tex := sprite.sprite_frames.get_frame_texture("idle", 0)
+	var size := tex.get_size() * sprite.scale
+	return {"texture": tex, "rect": Rect2(sprite.position - size / 2, size)}

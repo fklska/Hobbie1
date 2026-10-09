@@ -103,7 +103,9 @@ z_index = 2
 collision_layer = 16
 input_pickable = true
 script = ExtResource("2_7a3fy")
+building_id = "Blacksmith"
 footprint = Vector2i(3, 2)
+fit_texture = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_3v8t5")

@@ -17,7 +17,6 @@ public partial class PlayerMainCharacter : CharacterBody2D
 
 	[ExportCategory("Combat")]
 	[Export] public int MaxHealth = 100;
-	[Export] public int AttackDamage = 10;
 	[Export] public float AttackRange = 140;
 	[Export] public float AttackCooldown = 0.5f;
 	[Export] public float RegenDelay = 4f;
@@ -85,6 +84,13 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		GameManager.Instance.OnHeroDied();
 	}
 
+	public void SetMaxHealth(int value)
+	{
+		Health = Math.Clamp(Health + value - MaxHealth, 1, value);
+		MaxHealth = value;
+		UpdateHealthBar();
+	}
+
 	private void Regenerate(double delta)
 	{
 		sinceDamage += delta;
@@ -128,7 +134,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		SoundManager.Instance.Play("swing");
 
 		Vector2 aim = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-		int damage = GameManager.Instance.SwordForged ? AttackDamage * 3 : AttackDamage;
+		int damage = GameManager.Instance.HeroDamage;
 		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
 		{
 			if (node is not Node2D enemy) continue;
@@ -204,7 +210,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 				{
 					EnableParticle(miningParticle, clickPos);
 					SoundManager.Instance.PlayEvery(SoundManager.Instance.HarvestSound(tile.Resourse), clickPos, 0.33f);
-					ActionProgress.Value += delta * STRENCH * 10;
+					ActionProgress.Value += delta * STRENCH * 10 * GameManager.Instance.ToolSpeed;
 
 					if (ActionProgress.Value >= 100.0f)
 					{
