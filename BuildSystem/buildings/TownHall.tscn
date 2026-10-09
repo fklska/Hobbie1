@@ -3,11 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_rj47l"]
 [ext_resource type="Script" uid="uid://bn2m2vb5h58i4" path="res://BuildSystem/scripts/town_hall.gd" id="2_fopta"]
 [ext_resource type="Resource" uid="uid://dsoblcqn2trh0" path="res://BuildSystem/Resourses/TownHallData.tres" id="3_35esh"]
-[ext_resource type="Texture2D" uid="uid://b6obsxdh87kmx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_19.png" id="3_vnq44"]
+[ext_resource type="Texture2D" uid="uid://b7q4azrh9qe2f" path="res://Art/buildings/town_hall_2.png" id="3_vnq44"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="4_y53ly"]
-[ext_resource type="Texture2D" uid="uid://dlvl5x6y255vy" path="res://BuildSystem/assets/placeholders/campfire.png" id="5_fire"]
-[ext_resource type="Texture2D" uid="uid://dfans6ionvipn" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_05.png" id="6_stone"]
-[ext_resource type="Texture2D" uid="uid://bmsvtw38fh7mx" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_02.png" id="7_castle"]
+[ext_resource type="Texture2D" uid="uid://bvz8a1n3tbd6b" path="res://Art/buildings/town_hall_1.png" id="5_fire"]
+[ext_resource type="Texture2D" uid="uid://ucda4ai9iuf" path="res://Art/buildings/town_hall_3.png" id="6_stone"]
+[ext_resource type="Texture2D" uid="uid://igb2wzpm5rlc" path="res://Art/buildings/town_hall_4.png" id="7_castle"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wvymk"]
 resource_local_to_scene = true

@@ -134,14 +134,14 @@ public static class Economy
 
 	public static readonly Dictionary<string, WeaponInfo> Weapons = new()
 	{
-		["club"] = new("Дубина", WeaponKind.Melee, 10, 60, 0.9f, 0, C(("wood", 5)), "Blacksmith", 1, "res://Items/Assets/weapons/club.png"),
-		["spear"] = new("Копьё", WeaponKind.Melee, 15, 90, 1.0f, 0, C(("wood", 6), ("iron", 3)), "Blacksmith", 1, "res://Items/Assets/weapons/spear.png"),
-		["sword"] = new("Меч", WeaponKind.Melee, 24, 70, 0.7f, 0, C(("wood", 2), ("iron", 8), (Coins, 10)), "Blacksmith", 2, "res://Items/Assets/weapons/sword.png"),
-		["halberd"] = new("Алебарда", WeaponKind.Melee, 36, 100, 1.1f, 0, C(("wood", 6), ("iron", 12), ("gold", 1), (Coins, 25)), "Blacksmith", 3, "res://Items/Assets/weapons/halberd.png"),
-		["sling"] = new("Праща", WeaponKind.Ranged, 6, 300, 1.2f, 600, C(("wood", 3), ("food", 2)), "Workshop", 1, "res://Items/Assets/weapons/sling.png"),
-		["bow"] = new("Лук", WeaponKind.Ranged, 10, 420, 1.0f, 800, C(("wood", 8), (Coins, 5)), "Workshop", 1, "res://Items/Assets/weapons/bow.png"),
-		["crossbow"] = new("Арбалет", WeaponKind.Ranged, 18, 460, 1.6f, 1000, C(("wood", 8), ("iron", 5), (Coins, 15)), "Workshop", 2, "res://Items/Assets/weapons/crossbow.png"),
-		["musket"] = new("Мушкет", WeaponKind.Ranged, 40, 520, 2.8f, 1600, C(("wood", 5), ("iron", 10), ("gold", 2), (Coins, 30)), "Workshop", 3, "res://Items/Assets/weapons/musket.png"),
+		["club"] = new("Дубина", WeaponKind.Melee, 10, 60, 0.9f, 0, C(("wood", 5)), "Blacksmith", 1, "res://Art/items/weapons/club.png"),
+		["spear"] = new("Копьё", WeaponKind.Melee, 15, 90, 1.0f, 0, C(("wood", 6), ("iron", 3)), "Blacksmith", 1, "res://Art/items/weapons/spear.png"),
+		["sword"] = new("Меч", WeaponKind.Melee, 24, 70, 0.7f, 0, C(("wood", 2), ("iron", 8), (Coins, 10)), "Blacksmith", 2, "res://Art/items/weapons/sword.png"),
+		["halberd"] = new("Алебарда", WeaponKind.Melee, 36, 100, 1.1f, 0, C(("wood", 6), ("iron", 12), ("gold", 1), (Coins, 25)), "Blacksmith", 3, "res://Art/items/weapons/halberd.png"),
+		["sling"] = new("Праща", WeaponKind.Ranged, 6, 300, 1.2f, 600, C(("wood", 3), ("food", 2)), "Workshop", 1, "res://Art/items/weapons/sling.png"),
+		["bow"] = new("Лук", WeaponKind.Ranged, 10, 420, 1.0f, 800, C(("wood", 8), (Coins, 5)), "Workshop", 1, "res://Art/items/weapons/bow.png"),
+		["crossbow"] = new("Арбалет", WeaponKind.Ranged, 18, 460, 1.6f, 1000, C(("wood", 8), ("iron", 5), (Coins, 15)), "Workshop", 2, "res://Art/items/weapons/crossbow.png"),
+		["musket"] = new("Мушкет", WeaponKind.Ranged, 40, 520, 2.8f, 1600, C(("wood", 5), ("iron", 10), ("gold", 2), (Coins, 30)), "Workshop", 3, "res://Art/items/weapons/musket.png"),
 	};
 
 	public static readonly Tier[] Tools =

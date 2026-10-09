@@ -53,17 +53,19 @@
 | `ProceduralGeneration/v3.1 BiggerSize/` | Сцена генератора (автозагрузка), чанки `ChunkData.cs`, тайлсет `DualTileMapV3.1/V3.1.tres`. |
 | `ProceduralGeneration/v1`, `V2`, `DEBUG`, `scripts/` | Старые генераторы. Оставлены только потому, что на них ссылается `Light/Debug/light_v1.2.tscn`. Не использовать в новом коде. |
 | `Resourses/` | Префабы ресурсов (деревья, камень, железо, золото) и слой окружения `v2/EnviromentLayer.tscn`. |
-| `Player/` | `Player.tscn`, `PlayerMainCharacter.cs`, спрайты. Старый `Player/scripts/player.gd` (`class_name Player`) не удалять: этот тип использует `BaseClasses/ScriptClasses/weapon_item.gd`. |
+| `Player/` | `Player.tscn`, `PlayerMainCharacter.cs`. Старый `Player/scripts/player.gd` (`class_name Player`) не удалять: этот тип использует `BaseClasses/ScriptClasses/weapon_item.gd`. |
 | `Game/` | `GameManager.cs` (состояние партии), `GameManager.Economy.cs` и `Economy.cs` (экономика), `GameManager.Survival.cs` и `Survival.cs` (выживание, сохранение партии), HUD `game_hud.tscn`. |
 | `AI/` | `Village/worker.tscn` — житель, `Enemies/` — мобы волн (`mob.gd`, гоблин, волк, скелет-лучник, орк) и стрела, `BaseClasses/Enemy/stone_giant.tscn` — босс, `RL/` — RL-контроллеры, модели и сцены обучения. Старое: `AI/training.tscn`, `AI/Prefabs/v2/`. |
-| `BuildSystem/` | Сетка (`Grid.cs`), меню строительства (`UI/BuildMenu.cs`), сцены зданий `buildings/`, скрипты `scripts/` (`building.gd`, `tower.gd`), временные спрайты `assets/placeholders/`. |
+| `BuildSystem/` | Сетка (`Grid.cs`), меню строительства (`UI/BuildMenu.cs`), сцены зданий `buildings/`, скрипты `scripts/` (`building.gd`, `tower.gd`). Спрайты зданий в `Art/buildings/`. |
 | `UI/` | Меню, инвентарь (`UI/Inventory/*.cs`, хотбар на GDScript), тема `UI/theme.tres`, шрифт Kurland. |
 | `Light/` | Смена дня и ночи: `DayNight/day_night.tscn` вложена в `Player.tscn`. `DayNightCycle` (`DayNightCycle.instance`, `hour`, `day`, сигналы `hour_changed`, `night_started`, `day_started`, `new_day`; статическое `DayNightCycle.night` от 0 до 1) задаёт палитру по часам, облака и туман рисует шейдер `sky.gdshader`. Ночной фонарь `night_lamp.tscn` вешается на здания из `BuildSystem/buildings/` автоматически, на другие узлы через группу `night_lamp_host` или вручную. `Debug/` — старая отладочная сцена. |
+| `Art/` | Своя графика игры: герой (`hero/`), мобы и гигант (`mobs/`), здания по уровням (`buildings/<id>_<уровень>.png`), ресурсы (`resources/`), оружие, стрела, монеты, артефакт (`items/`). `directional_sprite.gd` (`DirectionalSprite`) выбирает анимацию по направлению. Всё рисует генератор `tools/sprites/`. |
 | `Audio/` | Звук: автозагрузка `SoundManager.cs`, фоновая мелодия и джинглы в `music/`, звуки в `sfx/`, их генератор `tools/synth.py`, источники и лицензии в `CREDITS.md`. |
 | `Globals/` | `GenerationSettings.cs` (размер тайла 64, чанк 8 тайлов, путь сохранений), утилиты. |
 | `BaseClasses/` | Базовые GDScript-классы сущностей, предметов и оружия. |
 | `addons/` | `TileMapDual` (dual-grid тайлмапы), `AS2P`, `godot_rl_agents`. Сторонний код, правки только при необходимости. |
-| `kenney_medieval-rts/`, `UI/UIAssets/` | Сторонние ассет-паки. Используется малая часть, остальное оставлено как запас. |
+| `kenney_medieval-rts/`, `UI/UIAssets/` | Сторонние ассет-паки. Используется малая часть, остальное оставлено как запас. Новую графику брать из `Art/`. |
+| `tools/` | Инструменты вне игры (`.gdignore`): `tools/sprites/` — генератор спрайтов на Python. |
 
 Опечатки в именах (`Resourses`, `Enviroment`, `GDScrpt`, `CoatsLineStep`) исторические. Не переименовывать без необходимости: пути зашиты в сцены и код.
 
@@ -103,6 +105,15 @@ godot --headless --path . --quit
 - Громкостью управляют настройки игры через `AudioServer` по именам шин. Шины не переименовывать.
 - Новый звук: функция в `Audio/tools/synth.py` и словарь `SFX` там же, строка в `Sfx` в `SoundManager.cs` (громкость в дБ и разброс высоты), строка в `Audio/CREDITS.md`. Чужие файлы только с лицензией, разрешающей коммерческий релиз.
 - В геймплейный код звук добавляется одной строкой рядом с действием.
+
+## Графика
+
+Спрайты героя, мобов, зданий и предметов рисует генератор `tools/sprites/` (Python 3, numpy, Pillow): объёмные модели из примитивов, общая палитра `palette.py`, контур и тени в одном стиле. Как перегенерировать, в `tools/sprites/README.md`. Чужих ассетов в `Art/` нет.
+
+- Персонажи смотрят в 8 сторон. Анимация называется `<действие>_<сторона>`, стороны `e se s sw w nw n ne` (по часовой от востока, как `Vector2.angle()`). Листы: строка на сторону, кадр на столбец; `SpriteFrames` лежит рядом (`<имя>_frames.tres`).
+- `DirectionalSprite.play_dir(действие, направление, restart)` выбирает сторону и сохраняет кадр при повороте. Мобы делают то же в `mob.gd` (`_resolve`).
+- Масштаб 1:1, клетка 64 px. Ноги персонажа в точке привязки кадра: герой, гоблин и скелет 64×64 (ноги на y = 52), волк 64×64 (y = 46), орк 96×96 (y = 78), гигант 128×128 (y = 110). Смерть и удар гиганта рисуются в увеличенном кадре с тем же центром.
+- Здания шириной `footprint.x × 64`, низ спрайта на южном краю клетки.
 
 ## Input Map
 

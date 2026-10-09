@@ -1,0 +1,121 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://fjqqjj9k41l6"]
+
+[ext_resource type="Texture2D" uid="uid://bqtrhzm5m1vty" path="res://Art/mobs/stone_giant/stone_giant_beam.png" id="1_stone_giant_beam"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_0"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 0, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_1"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 64, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_2"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 128, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_3"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 192, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_4"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 256, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_5"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 320, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_6"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 384, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_7"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 448, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre_laser_8"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 512, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laser_0"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 576, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laser_1"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 640, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laser_2"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 704, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laser_3"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 768, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laser_4"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 832, 520, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laser_5"]
+atlas = ExtResource("1_stone_giant_beam")
+region = Rect2(0, 896, 520, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pre_laser_8")
+}],
+"loop": true,
+"name": &"pre_laser",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laser_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laser_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laser_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laser_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laser_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laser_5")
+}],
+"loop": true,
+"name": &"laser",
+"speed": 10.0
+}]

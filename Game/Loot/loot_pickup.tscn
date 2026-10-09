@@ -1,7 +1,16 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://Game/Loot/loot_pickup.gd" id="1_loot"]
+[ext_resource type="Texture2D" uid="uid://dq0whgo1pv6t" path="res://Art/items/coins.png" id="2_coins"]
+[ext_resource type="Texture2D" uid="uid://bs9xz27twv1py" path="res://Art/items/artifact.png" id="3_artifact"]
 
 [node name="LootPickup" type="Node2D"]
 z_index = 1
 script = ExtResource("1_loot")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_coins")
+
+[node name="ArtifactSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_artifact")

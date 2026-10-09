@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://dp7l6r2uf51t2" path="res://BuildSystem/scripts/building.gd" id="2_script"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_outline"]
-[ext_resource type="Texture2D" uid="uid://tod1wlc262nv" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_08.png" id="4_tex"]
-[ext_resource type="Texture2D" uid="uid://dfans6ionvipn" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_05.png" id="5_tex"]
-[ext_resource type="Texture2D" uid="uid://cgyld8h4y8f3h" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_06.png" id="6_tex"]
+[ext_resource type="Texture2D" uid="uid://b0pvyqiiffwxx" path="res://Art/buildings/barracks_1.png" id="4_tex"]
+[ext_resource type="Texture2D" uid="uid://0hl2jtgkl8va" path="res://Art/buildings/barracks_2.png" id="5_tex"]
+[ext_resource type="Texture2D" uid="uid://j29ooduzc0ht" path="res://Art/buildings/barracks_3.png" id="6_tex"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true

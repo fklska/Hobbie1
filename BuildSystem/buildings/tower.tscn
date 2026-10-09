@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://yhj47t41lkkf" path="res://BuildSystem/scripts/tower.gd" id="2_script"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_outline"]
-[ext_resource type="Texture2D" uid="uid://juob5nsgta66" path="res://BuildSystem/assets/placeholders/tower_wood.png" id="4_tex"]
-[ext_resource type="Texture2D" uid="uid://dggwk3g4wnns0" path="res://BuildSystem/assets/placeholders/tower_watch.png" id="5_tex"]
-[ext_resource type="Texture2D" uid="uid://cpgujllae5ky6" path="res://BuildSystem/assets/placeholders/tower_stone.png" id="6_tex"]
+[ext_resource type="Texture2D" uid="uid://nazu1x2u3j1m" path="res://Art/buildings/tower_1.png" id="4_tex"]
+[ext_resource type="Texture2D" uid="uid://b0pav24btger0" path="res://Art/buildings/tower_2.png" id="5_tex"]
+[ext_resource type="Texture2D" uid="uid://bgcepctzkq71d" path="res://Art/buildings/tower_3.png" id="6_tex"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true
