@@ -1,57 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://bml80fbyn2s8k"]
+[gd_scene format=3 uid="uid://bml80fbyn2s8k"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_blr83"]
 [ext_resource type="Script" uid="uid://dec36puysm3jy" path="res://BuildSystem/scripts/black_smith.gd" id="2_7a3fy"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_3hssb"]
-[ext_resource type="Texture2D" uid="uid://b6rd6ckeubmor" path="res://BuildSystem/assets/370PEG2-0.png" id="4_qio1e"]
-[ext_resource type="Texture2D" uid="uid://bv88axqotujox" path="res://BuildSystem/assets/370PEG2-1.png" id="5_acy30"]
-[ext_resource type="Texture2D" uid="uid://c7b27ryw78d4o" path="res://BuildSystem/assets/370PEG2-2.png" id="6_cc7py"]
-[ext_resource type="Texture2D" uid="uid://c7ongmupys70o" path="res://BuildSystem/assets/370PEG2-3.png" id="7_knk0c"]
-[ext_resource type="Texture2D" uid="uid://cnixa2dd5nhvv" path="res://BuildSystem/assets/370PEG2-4.png" id="8_6wqod"]
-[ext_resource type="Texture2D" uid="uid://cdjgpvn35if0d" path="res://BuildSystem/assets/370PEG2-5.png" id="9_f4p2h"]
-[ext_resource type="Texture2D" uid="uid://yfasm1uwcvlt" path="res://BuildSystem/assets/370PEG2-6.png" id="10_akycc"]
-[ext_resource type="Texture2D" uid="uid://c3qmrhnba51os" path="res://BuildSystem/assets/370PEG2-7.png" id="11_kfy01"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3v8t5"]
-shader = ExtResource("3_3hssb")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 2
-shader_parameter/inside = false
-shader_parameter/add_margins = false
-shader_parameter/enable = false
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_tyxco"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("4_qio1e")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_acy30")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_cc7py")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_knk0c")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_6wqod")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_f4p2h")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_akycc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_kfy01")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 9.0
-}]
+[ext_resource type="Texture2D" uid="uid://7xmedn8lrauc" path="res://Art/buildings/blacksmith_1.png" id="4_tex"]
+[ext_resource type="Texture2D" uid="uid://b74ryq544rq3o" path="res://Art/buildings/blacksmith_2.png" id="5_tex"]
+[ext_resource type="Texture2D" uid="uid://bd73jer3g3qqk" path="res://Art/buildings/blacksmith_3.png" id="6_tex"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n8byl"]
 resource_local_to_scene = true
@@ -63,41 +17,6 @@ shader_parameter/inside = false
 shader_parameter/add_margins = false
 shader_parameter/enable = false
 
-[sub_resource type="Animation" id="Animation_ty6v6"]
-resource_name = "idle"
-length = 0.888889
-loop_mode = 1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["idle"]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lyd58"]
-_data = {
-&"idle": SubResource("Animation_ty6v6")
-}
-
 [node name="BlackSmith" instance=ExtResource("1_blr83")]
 z_index = 2
 collision_layer = 16
@@ -105,23 +24,11 @@ input_pickable = true
 script = ExtResource("2_7a3fy")
 building_id = "Blacksmith"
 footprint = Vector2i(3, 2)
-fit_texture = false
+level_textures = Array[Texture2D]([ExtResource("4_tex"), ExtResource("5_tex"), ExtResource("6_tex")])
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
-material = SubResource("ShaderMaterial_3v8t5")
-position = Vector2(96, 64)
-scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_tyxco")
-animation = &"idle"
-frame_progress = 0.59542
-
-[node name="Texture" parent="." index="1"]
+[node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_n8byl")
+texture = ExtResource("4_tex")
 
-[node name="CollisionShape2D" parent="." index="2"]
-polygon = PackedVector2Array(2, 99, 83.5, 99, 130, 98.5, 193, 89, 194, 12, 2.5, 12.5)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
-libraries = {
-"": SubResource("AnimationLibrary_lyd58")
-}
+[node name="CollisionShape2D" parent="." index="1"]
+polygon = PackedVector2Array(8, 48, 184, 48, 184, 124, 8, 124)

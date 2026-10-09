@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://dp7l6r2uf51t2" path="res://BuildSystem/scripts/building.gd" id="2_script"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_outline"]
-[ext_resource type="Texture2D" uid="uid://d37c7myjseel6" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_23.png" id="4_tex"]
-[ext_resource type="Texture2D" uid="uid://qgc330guppjh" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_20.png" id="5_tex"]
-[ext_resource type="Texture2D" uid="uid://mcywatryw3lv" path="res://kenney_medieval-rts/Default size/Structure/medievalStructure_04.png" id="6_tex"]
+[ext_resource type="Texture2D" uid="uid://bz7vx5a77juqy" path="res://Art/buildings/workshop_1.png" id="4_tex"]
+[ext_resource type="Texture2D" uid="uid://bhox38hxwyf6q" path="res://Art/buildings/workshop_2.png" id="5_tex"]
+[ext_resource type="Texture2D" uid="uid://btlutnkfc98lk" path="res://Art/buildings/workshop_3.png" id="6_tex"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true
