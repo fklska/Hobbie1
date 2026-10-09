@@ -56,7 +56,7 @@
 | `ProceduralGeneration/v3.1 BiggerSize/` | Сцена генератора (автозагрузка), тайлсет `DualTileMapV3.1/V3.1.tres`, `SimpleGeneratorData.cs`, `ChunkData.cs` (только для старых миров). |
 | `ProceduralGeneration/v1`, `V2`, `DEBUG`, `scripts/` | Старые генераторы. Оставлены только потому, что на них ссылается `Light/Debug/light_v1.2.tscn`. Не использовать в новом коде. |
 | `Resourses/` | Префабы ресурсов (деревья, камень, железо, золото) и слой окружения `v2/EnviromentLayer.tscn`. |
-| `Player/` | `Player.tscn`, `PlayerMainCharacter.cs`. Старый `Player/scripts/player.gd` (`class_name Player`) не удалять: этот тип использует `BaseClasses/ScriptClasses/weapon_item.gd`. |
+| `Player/` | `Player.tscn`, `PlayerMainCharacter.cs`. Прогресс действия над головой героя: узел `ActionProgress` (`Range` со скриптом `Player/UI/action_progress.gd`), круг заполняется по `value` до `max_value` и вспыхивает на максимуме, цвет в `color`. Старый `Player/scripts/player.gd` (`class_name Player`) не удалять: этот тип использует `BaseClasses/ScriptClasses/weapon_item.gd`. |
 | `Game/` | `GameManager.cs` (состояние партии), `GameManager.Economy.cs` и `Economy.cs` (экономика), `GameManager.Survival.cs` и `Survival.cs` (выживание, сохранение партии), HUD `game_hud.tscn`. |
 | `AI/` | `Village/worker.tscn` — житель, `Enemies/` — мобы волн (`mob.gd`, гоблин, волк, скелет-лучник, орк) и стрела, `BaseClasses/Enemy/stone_giant.tscn` — босс, `RL/` — RL-контроллеры, модели и сцены обучения. Старое: `AI/training.tscn`, `AI/Prefabs/v2/`. |
 | `BuildSystem/` | Сетка (`Grid.cs`), меню строительства (`UI/BuildMenu.cs`), сцены зданий `buildings/`, скрипты `scripts/` (`building.gd`, `tower.gd`). Спрайты зданий в `Art/buildings/`. |
