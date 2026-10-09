@@ -126,6 +126,15 @@ godot --headless --path . --quit
 - Здания: генератор (`tools/sprites`) режет каждый уровень на землю `<id>_<ур>_ground.png` (рисуется на `z_index` 1 под всеми) и отдельные предметы в атласе `<id>_<ур>_parts.png`; `<id>_<ур>_parts.tres` хранит, где стоит каждый предмет и строку его переднего края. `building.gd` создаёт по `Sprite2D` на предмет, поэтому герой может стоять за палаткой и перед костром одного здания.
 - Маска героя: `shaders/hero_reveal.gdshaderinc`, глобальный uniform `hero_position` (объявлен в `project.godot`, его каждый кадр ставит `PlayerMainCharacter`). Объект, который стоит перед героем (его `MODEL_MATRIX` origin ниже ног героя), становится полупрозрачным в овале вокруг героя. Включено у деревьев и камней (`EnviromentLayer.gdshader`) и у зданий (`reveal_hero` в `shaders/outline.gdshader`, его ставит `building.gd`). Жители и мобы маску не получают и не вызывают.
 
+## Вода
+
+Мелководье (`TileType.TropicWater`) проходимо, океан (`TileType.DeepWater`) и всё за краем карты нет. Код в `ProceduralGeneration/v3/Water/` и `WorldScene.Water.cs`, считается на C# при загрузке мира.
+
+- `WaterMap`: сетка суша/мелководье/океан, связные участки суши, поле расстояний до берега для шейдера, поиск пути вокруг океана (Дейкстра в фоне, кэш по клетке цели).
+- Запрет океана без физики (у героя и гиганта нет формы столкновений): перед `move_and_slide` скорость проходит через `Game.World.KeepOffOcean`. В GDScript у наследников `KinematicBodyEntity` это `keep_off_ocean(delta)`, направление к цели в обход воды `steer_to(точка)`.
+- Точки появления: `SafeSpawn` (герой на крупном участке суши), `ReachableNear` (мобы на суше, откуда можно дойти до базы), `Walkable` (позиции из сохранения).
+- Шейдер мелководья `Water/shallow_water.gdshader` стоит на источнике 8 тайлсета `V3.1.tres`: волны к берегу по полю `water_field`, следы существ из `water_trails`. Оба поля и их параметры заданы как глобальные шейдерные параметры в `project.godot` (`[shader_globals]`), заполняет их C#. Следы ставит узел `WaterTrails`: каждое тело из групп `village` и `enemies` в кадре на мелководье оставляет точку, движущееся рисует V-образный след, стоящее расходящиеся круги.
+
 ## Input Map
 
 Действия заданы в `project.godot`: `ui_left/right/up/down` (WASD и стрелки), `LeftMouseButton`, `RightMouseButton`, `action` (E), `attack` (F), `inventory` (Tab), `HotBar` (1–4), `menu` (B), `zoom+`/`zoom-` (Z/X), `ESC`, `DEBUG` (Alt+9), `test` (L). В коде используй эти имена, новые добавляй туда же.

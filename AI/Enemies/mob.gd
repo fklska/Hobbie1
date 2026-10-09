@@ -65,6 +65,7 @@ func _physics_process(delta: float):
 		velocity = move_input.limit_length(1.0) * speed
 		if velocity.length() > 5.0:
 			facing = velocity.normalized()
+	keep_off_ocean(delta)
 	move_and_slide()
 	if not attacking:
 		_play(&"walk" if velocity.length() > 5.0 else &"idle")
@@ -190,6 +191,8 @@ func die():
 
 func reset_episode():
 	global_position = base_point() + Vector2.from_angle(randf() * TAU) * randf_range(SPAWN_RING.x, SPAWN_RING.y)
+	if is_instance_valid(Game.World):
+		global_position = Game.World.ReachableNear(global_position, base_point())
 	hp = max_hp
 	dead = false
 	attacking = false

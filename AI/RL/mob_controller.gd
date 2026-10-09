@@ -110,7 +110,7 @@ func heuristic_action() -> Dictionary:
 		return {"move": [0.0, 0.0], "attack": 0}
 	var to_target := Mob.target_point(target) - body.global_position
 	var gap := body.gap_to(target)
-	var direction := to_target.normalized()
+	var direction := body.steer_to(Mob.target_point(target))
 	var move := Vector2.ZERO
 	if body.ranged:
 		if gap > body.attack_range * 0.85:

@@ -61,6 +61,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	{
 		if (IsDead) return;
 		Run();
+		if (IsInstanceValid(WorldScene)) Velocity = WorldScene.KeepOffOcean(GlobalPosition, Velocity, delta);
 		MoveAndSlide();
 	}
 

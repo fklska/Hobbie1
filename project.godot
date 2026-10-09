@@ -172,3 +172,19 @@ hero_position={
 "type": "vec2",
 "value": Vector2(0, 0)
 }
+water_field={
+"type": "sampler2D",
+"value": ""
+}
+water_field_size={
+"type": "vec2",
+"value": Vector2(8192, 8192)
+}
+water_trails={
+"type": "sampler2D",
+"value": ""
+}
+water_trail_count={
+"type": "int",
+"value": 0
+}

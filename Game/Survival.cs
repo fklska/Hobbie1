@@ -196,7 +196,7 @@ public partial class Survival : Node
 	{
 		Vector2 point = center + direction * (SpawnDistance + (float)GD.RandRange(0.0, 200.0));
 		Vector2 size = game.World.GeneratorData.mapSize * GenerationSettings.TILE_SIZE;
-		return point.Clamp(Vector2.One * 64f, size - Vector2.One * 64f);
+		return game.World.ReachableNear(point.Clamp(Vector2.One * 64f, size - Vector2.One * 64f), center);
 	}
 
 	public Node2D SpawnMob(string id, Vector2 position)

@@ -55,6 +55,7 @@ public partial class GameManager : Node
 		World = GD.Load<PackedScene>(scenePath).Instantiate<WorldScene>();
 		root.AddChild(World);
 
+		spawnPoint = spawn = World.SafeSpawn(spawn);
 		Player = GD.Load<PackedScene>("res://Player/Player.tscn").Instantiate<PlayerMainCharacter>();
 		Player.Position = spawn;
 		EntitiesRoot.AddChild(Player);

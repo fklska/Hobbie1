@@ -47,6 +47,7 @@ public partial class WorldScene : Node2D
 		Enviroment.YSortEnabled = true;
 		Enviroment.ZIndex = 0;
 		GeneratorData = ResourceLoader.Load<GeneratorData>(GenDataPath, null, ResourceLoader.CacheMode.Ignore);
+		if (!Engine.IsEditorHint()) SetUpWater();
 		// Navigator = GetTree().Root.GetNode<Node2D>("GlobalNavigation");
 		InitionalChunkLoad();
 	}
@@ -59,7 +60,7 @@ public partial class WorldScene : Node2D
 
 	public async void InitionalChunkLoad()
 	{
-		Vector2I center = GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint);
+		Vector2I center = GenerationUtils.PixelToChunkCoord(SafeSpawn(GeneratorData.SpawnPoint));
 		List<Vector2I> chunks = new List<Vector2I>(GenerationUtils.ChunckAreaCoords(center, 4));
 		chunks.Sort((a, b) => (a - center).LengthSquared().CompareTo((b - center).LengthSquared()));
 		foreach (Vector2I chunk in chunks)
@@ -67,7 +68,7 @@ public partial class WorldScene : Node2D
 			await LoadChunk(chunk, MainTileMapPrefab, EnviromentLayer, Enviroment, Enviroment);
 			// Navigator.Call("bake_navigation_on_cell", chunk);
 		}
-		lastPlayerCell = GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint);
+		lastPlayerCell = center;
 	}
 
 	public async Task LoadChunk(Vector2I chunkCoord, TileMapLayer map, TileMapLayer EnvLayer, Node2D ResourseRootNode, Node2D owner)

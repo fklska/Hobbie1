@@ -56,6 +56,7 @@ func _physics_process(delta: float):
 		reset_episode()
 		return
 	if combat.update(delta):
+		keep_off_ocean(delta)
 		move_and_slide()
 		_animate()
 		return
@@ -70,6 +71,7 @@ func _physics_process(delta: float):
 		_return_to(town_hall)
 	else:
 		_gather(world, delta)
+	keep_off_ocean(delta)
 	move_and_slide()
 	_animate()
 
@@ -129,8 +131,9 @@ func _return_to(town_hall: Building):
 		velocity = Vector2.ZERO
 		_deposit()
 		return
-	heading = to_hall.angle()
-	current_velocity = to_hall.normalized() * SPEED
+	var direction := steer_to(town_hall.get_center())
+	heading = direction.angle()
+	current_velocity = direction * SPEED
 	velocity = current_velocity
 
 func _deposit():

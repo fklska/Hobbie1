@@ -73,6 +73,7 @@ func _physics_process(delta):
 		fire_laser()
 	else:
 		velocity = move_input.limit_length(1.0) * speed * (ENRAGE_SPEED if enraged else 1.0)
+		keep_off_ocean(delta)
 		move_and_slide()
 		body_sprite.play_dir("walk" if velocity.length() > 1.0 else "idle", velocity)
 

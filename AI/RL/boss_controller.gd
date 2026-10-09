@@ -57,5 +57,5 @@ func heuristic_action() -> Dictionary:
 		attack = 1
 	elif distance > body.melee_range * 0.8 and distance <= body.laser_range and body.laser_timer <= 0:
 		attack = 2
-	var move := to_target.normalized() if distance > body.melee_range * 0.7 else Vector2.ZERO
+	var move := body.steer_to(body.target_point(target)) if distance > body.melee_range * 0.7 else Vector2.ZERO
 	return {"move": [move.x, move.y], "attack": attack}
