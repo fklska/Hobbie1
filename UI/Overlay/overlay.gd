@@ -1,6 +1,9 @@
 extends CanvasLayer
 
 const CLOSABLE_GROUP := &"closable_ui"
+const GROUND_BUDGET_MS := 30.0
+const GROUND_TIMEOUT := 20.0
+const GROUND_RADIUS := 4
 
 @onready var pause_menu: Control = $PauseMenu
 @onready var settings: Control = $SettingsPanel
@@ -130,4 +133,27 @@ func start_world(scene_path: String, spawn: Vector2, continue_run := false) -> v
 		Game.StartWorld(scene_path, spawn)
 	scene = null
 	await get_tree().process_frame
+	await _wait_for_ground()
 	loading.close()
+
+
+func _wait_for_ground() -> void:
+	var world = Game.World
+	if not is_instance_valid(world) or not is_instance_valid(Game.Player):
+		return
+	var tree := get_tree()
+	var was_paused := tree.paused
+	tree.paused = true
+	world.LoadBudgetMs = GROUND_BUDGET_MS
+	var waited := 0.0
+	var ratio: float = world.LoadedAround(Game.Player.global_position, GROUND_RADIUS)
+	while ratio < 1.0 and waited < GROUND_TIMEOUT:
+		loading.set_ratio(0.9 + ratio * 0.1, "Прогружаем землю")
+		await tree.process_frame
+		if not is_instance_valid(world) or not is_instance_valid(Game.Player):
+			break
+		waited += get_process_delta_time()
+		ratio = world.LoadedAround(Game.Player.global_position, GROUND_RADIUS)
+	if is_instance_valid(world):
+		world.LoadBudgetMs = 0.0
+	tree.paused = was_paused

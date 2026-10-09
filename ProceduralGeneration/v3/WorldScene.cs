@@ -25,6 +25,11 @@ public partial class WorldScene : Node2D
 	public Vector2I lastPlayerCell;
 
 	public HashSet<Vector2I> currentActiveChunkMap = new HashSet<Vector2I>();
+	private readonly HashSet<Vector2I> loadedChunks = new HashSet<Vector2I>();
+
+	public double LoadBudgetMs;
+	private ulong sliceFrame;
+	private ulong sliceStart;
 
 	public override void _Ready()
 	{
@@ -47,8 +52,10 @@ public partial class WorldScene : Node2D
 
 	public async void InitionalChunkLoad()
 	{
-		Godot.Collections.Array<Vector2I> loadedChunks = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint), 4);
-		foreach (Vector2I chunk in loadedChunks)
+		Vector2I center = GenerationUtils.PixelToChunkCoord(GeneratorData.SpawnPoint);
+		List<Vector2I> chunks = new List<Vector2I>(GenerationUtils.ChunckAreaCoords(center, 4));
+		chunks.Sort((a, b) => (a - center).LengthSquared().CompareTo((b - center).LengthSquared()));
+		foreach (Vector2I chunk in chunks)
 		{   
 			await LoadChunk(chunk, MainTileMapPrefab, EnviromentLayer, Enviroment, Enviroment);
 			// Navigator.Call("bake_navigation_on_cell", chunk);
@@ -100,9 +107,33 @@ public partial class WorldScene : Node2D
 			}
 			local_x++;
 
-			await ToSignal(GetTree(), "process_frame");
+			await NextColumn();
 		}
+		if (chunk.Active) loadedChunks.Add(chunkCoord);
 		// Navigator.Call("bake_navigation_on_cell", chunkCoord);
+	}
+
+	private async Task NextColumn()
+	{
+		ulong frame = Engine.GetProcessFrames();
+		if (frame != sliceFrame)
+		{
+			sliceFrame = frame;
+			sliceStart = Time.GetTicksUsec();
+		}
+		if (LoadBudgetMs > 0 && Time.GetTicksUsec() - sliceStart < LoadBudgetMs * 1000) return;
+		await ToSignal(GetTree(), "process_frame");
+	}
+
+	public float LoadedAround(Vector2 at, int distance)
+	{
+		Godot.Collections.Array<Vector2I> area = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(at), distance);
+		int done = 0;
+		foreach (Vector2I chunk in area)
+		{
+			if (loadedChunks.Contains(chunk)) done++;
+		}
+		return area.Count == 0 ? 1f : (float)done / area.Count;
 	}
 
 	public async Task UnloadChunk(Vector2I chunkCoord, TileMapLayer map, TileMapLayer EnvLayer)
@@ -116,6 +147,7 @@ public partial class WorldScene : Node2D
 		ChunkData chunk = GeneratorData.ChunkMap[chunkCoord.X][chunkCoord.Y];
 		chunk.Active = false;
 		currentActiveChunkMap.Remove(chunkCoord);
+		loadedChunks.Remove(chunkCoord);
 		int local_x = 0;
 		for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
 		{

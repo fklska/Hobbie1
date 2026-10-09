@@ -17,7 +17,7 @@
    - `<имя>.tres`: полные данные (`GeneratorData`);
    - `__SIMPLE<имя>.tres`: краткие данные для списка миров (`SimpleGeneratorData`);
    - `<имя>.tscn`: сцена мира (`WorldScene`).
-4. «Мои миры» и «Продолжить»: `WorldStore.play()` (`UI/MainMenu/world_store.gd`) вызывает `Overlay.start_world()`, тот грузит сцену мира в потоке и вызывает `Game.ContinueRun` (есть сохранённая партия) или `Game.StartWorld(путь к .tscn, точка спавна)`. `GameManager` кладёт в корень дерева сцену мира (узел `Map`), `Player/Player.tscn` и HUD `Game/game_hud.tscn`, прячет меню. `Restart()` и `ToMenu()` убирают всё это и начинают заново.
+4. «Мои миры» и «Продолжить»: `WorldStore.play()` (`UI/MainMenu/world_store.gd`) вызывает `Overlay.start_world()`, тот грузит сцену мира в потоке и вызывает `Game.ContinueRun` (есть сохранённая партия) или `Game.StartWorld(путь к .tscn, точка спавна)`. `GameManager` кладёт в корень дерева сцену мира (узел `Map`), `Player/Player.tscn` и HUD `Game/game_hud.tscn`, прячет меню. Пока на паузе грузятся чанки вокруг героя (`WorldScene.LoadedAround`, `LoadBudgetMs`), экран загрузки не закрывается. `Restart()` идёт через тот же `Overlay.start_world()`, `ToMenu()` убирает мир и возвращает меню.
 
 Автозагрузки (`project.godot`): `BuildMode` (`BuildSystem/build_mode.tscn`), `MouseInfoPanel`, `GlobalNavigation` (`Navigation/navigation.tscn`), `GENERATOR` (`ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn`), `Game` (`Game/GameManager.cs`), `Sound` (`Audio/SoundManager.cs`), `Overlay` (`UI/Overlay/overlay.tscn`: экран загрузки, пауза по Esc, настройки, окно подтверждения).
 

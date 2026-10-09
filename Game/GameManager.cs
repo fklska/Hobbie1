@@ -71,7 +71,10 @@ public partial class GameManager : Node
 
 	public void Restart()
 	{
-		if (worldScenePath != null) StartWorld(worldScenePath, spawnPoint);
+		if (worldScenePath == null) return;
+		Node overlay = GetTree().Root.GetNodeOrNull("Overlay");
+		if (overlay != null) overlay.Call("start_world", worldScenePath, spawnPoint);
+		else StartWorld(worldScenePath, spawnPoint);
 	}
 
 	public void ToMenu()
