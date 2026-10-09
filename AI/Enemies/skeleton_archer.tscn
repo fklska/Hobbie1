@@ -21,6 +21,7 @@ radius = 6.0
 
 [node name="SkeletonArcher" instance=ExtResource("1_base")]
 z_index = 2
+y_sort_enabled = true
 collision_layer = 4
 collision_mask = 32
 script = ExtResource("2_mob")
@@ -40,11 +41,12 @@ coins = Vector2i(2, 4)
 artifact_chance = 0.04
 
 [node name="AnimatedSprite2D" parent="." index="0"]
-position = Vector2(0, -4)
 material = SubResource("ShaderMaterial_outline")
+position = Vector2(0, 16)
 sprite_frames = ExtResource("4_frames")
 animation = &"idle_s"
 autoplay = "idle_s"
+offset = Vector2(0, -20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, 16)

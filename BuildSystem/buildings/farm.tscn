@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://no6bm80o2rak1"]
+[gd_scene load_steps=11 format=3 uid="uid://no6bm80o2rak1"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://dp7l6r2uf51t2" path="res://BuildSystem/scripts/building.gd" id="2_script"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://suslg64yse9c" path="res://Art/buildings/farm_1.png" id="4_tex"]
 [ext_resource type="Texture2D" uid="uid://bfm9h9ub31lmi" path="res://Art/buildings/farm_2.png" id="5_tex"]
 [ext_resource type="Texture2D" uid="uid://bp54si649qv2l" path="res://Art/buildings/farm_3.png" id="6_tex"]
+[ext_resource type="Resource" uid="uid://bdqepxn3e7tr9" path="res://Art/buildings/farm_1_parts.tres" id="20_parts"]
+[ext_resource type="Resource" uid="uid://8gqk8ycvlqke" path="res://Art/buildings/farm_2_parts.tres" id="21_parts"]
+[ext_resource type="Resource" uid="uid://99ja8s6naspe" path="res://Art/buildings/farm_3_parts.tres" id="22_parts"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true
@@ -26,6 +29,7 @@ building_id = "Farm"
 max_hp = 120
 footprint = Vector2i(2, 2)
 level_textures = Array[Texture2D]([ExtResource("4_tex"), ExtResource("5_tex"), ExtResource("6_tex")])
+level_parts = Array[Resource]([ExtResource("20_parts"), ExtResource("21_parts"), ExtResource("22_parts")])
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_outline")

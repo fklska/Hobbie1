@@ -4,5 +4,3 @@
 
 [resource]
 shader = ExtResource("1_hm0oy")
-shader_parameter/player_pos = Vector2(0, 0)
-shader_parameter/reveal_radius = 32.0

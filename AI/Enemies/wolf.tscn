@@ -21,6 +21,7 @@ radius = 6.0
 
 [node name="Wolf" instance=ExtResource("1_base")]
 z_index = 2
+y_sort_enabled = true
 collision_layer = 4
 collision_mask = 32
 script = ExtResource("2_mob")
@@ -40,9 +41,11 @@ artifact_chance = 0.02
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_outline")
+position = Vector2(0, 14)
 sprite_frames = ExtResource("4_frames")
 animation = &"idle_s"
 autoplay = "idle_s"
+offset = Vector2(0, -14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, 14)
