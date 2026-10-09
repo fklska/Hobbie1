@@ -531,7 +531,7 @@ public partial class GameManager
 	{
 		Godot.Collections.Array buildings = new();
 		foreach (PlacedBuilding p in Placed.Where(p => IsInstanceValid(p.Node)))
-			buildings.Add(new Godot.Collections.Dictionary { ["id"] = p.Id, ["cell"] = p.Cell, ["hp"] = p.Node.Get("hp") });
+			buildings.Add(new Godot.Collections.Dictionary { ["id"] = p.Id, ["cell"] = new Godot.Collections.Array { p.Cell.X, p.Cell.Y }, ["hp"] = p.Node.Get("hp") });
 
 		Godot.Collections.Dictionary levels = new();
 		foreach (var l in Levels) levels[l.Key] = l.Value;
@@ -578,10 +578,17 @@ public partial class GameManager
 		{
 			var b = entry.AsGodotDictionary();
 			string id = b["id"].AsString();
-			if (Economy.Buildings.ContainsKey(id)) SpawnBuilding(id, b["cell"].AsVector2I(), b["hp"].AsInt32());
+			if (Economy.Buildings.ContainsKey(id)) SpawnBuilding(id, ReadCell(b["cell"]), b["hp"].AsInt32());
 		}
 		ApplyHeroStats();
 		EmitSignal(SignalName.StockChanged);
 		EmitSignal(SignalName.ProgressChanged);
+	}
+
+	private static Vector2I ReadCell(Variant cell)
+	{
+		if (cell.VariantType == Variant.Type.String) return GD.StrToVar("Vector2i" + cell.AsString()).AsVector2I();
+		var xy = cell.AsGodotArray();
+		return new Vector2I(xy[0].AsInt32(), xy[1].AsInt32());
 	}
 }
