@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://q1zxoi65fdhjk"]
+[gd_scene load_steps=11 format=3 uid="uid://q1zxoi65fdhjk"]
 
 [ext_resource type="PackedScene" uid="uid://b1uwin6oqyhns" path="res://BaseClasses/ScenePrefabs/static_body_selected_obj.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://yhj47t41lkkf" path="res://BuildSystem/scripts/tower.gd" id="2_script"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://nazu1x2u3j1m" path="res://Art/buildings/tower_1.png" id="4_tex"]
 [ext_resource type="Texture2D" uid="uid://b0pav24btger0" path="res://Art/buildings/tower_2.png" id="5_tex"]
 [ext_resource type="Texture2D" uid="uid://bgcepctzkq71d" path="res://Art/buildings/tower_3.png" id="6_tex"]
+[ext_resource type="Resource" uid="uid://bo1fznq942yhk" path="res://Art/buildings/tower_1_parts.tres" id="20_parts"]
+[ext_resource type="Resource" uid="uid://bq03n04q22yzg" path="res://Art/buildings/tower_2_parts.tres" id="21_parts"]
+[ext_resource type="Resource" uid="uid://b8afxai49zn6l" path="res://Art/buildings/tower_3_parts.tres" id="22_parts"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true
@@ -26,6 +29,7 @@ building_id = "Tower"
 max_hp = 200
 footprint = Vector2i(1, 1)
 level_textures = Array[Texture2D]([ExtResource("4_tex"), ExtResource("5_tex"), ExtResource("6_tex")])
+level_parts = Array[Resource]([ExtResource("20_parts"), ExtResource("21_parts"), ExtResource("22_parts")])
 
 [node name="Texture" parent="." index="0"]
 material = SubResource("ShaderMaterial_outline")

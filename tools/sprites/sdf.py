@@ -267,7 +267,7 @@ def ao_term(prims, p, n, step=1.2, count=4):
 
 
 def render(prims, mats, cam, layers=None, decals=(), shadows=True, ao=True, outline=True,
-           inner_lines=True, line_depth=2.5, light_steps=None, bands=None):
+           inner_lines=True, line_depth=2.5, light_steps=None, bands=None, occluders=None):
     o = cam.rays()
     tmax = cam.D * 2 if cam.kind == "ortho" else cam.Y0 * 3
     t, hit = march(prims, o, cam.d, tmax)
@@ -296,11 +296,11 @@ def render(prims, mats, cam, layers=None, decals=(), shadows=True, ao=True, outl
         val = 0.5 + 0.5 * lam
         val = np.clip(val, 0, 1)
         if shadows:
-            sh = shadow_ray(prims, p + nrm * 0.3)
+            sh = shadow_ray(occluders or prims, p + nrm * 0.3)
             castm = np.array([mats[prims[i].mat].shadow for i in ids])
             val = np.where(castm, val * (0.55 + 0.45 * sh), val)
         if ao:
-            a = ao_term(prims, p, nrm)
+            a = ao_term(occluders or prims, p, nrm)
             aom = np.array([mats[prims[i].mat].ao for i in ids])
             val = np.where(aom, val * (0.6 + 0.4 * a), val)
         view = -cam.d

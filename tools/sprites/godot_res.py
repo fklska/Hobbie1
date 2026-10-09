@@ -136,3 +136,25 @@ def directional_character(out_dir, name, anims):
             rects = [(j * frame_w, di * frame_h, frame_w, frame_h) for j in range(len(rows[di]))]
             entries.append(dict(name=f"{an}_{dn}", sheet_rel=srel, uid=suid, rects=rects, fps=fps, loop=loop))
     return write_sprite_frames(f"{out_dir}/{name}_frames.tres", entries)
+
+
+PARTS_SCRIPT = "res://BuildSystem/scripts/building_parts.gd"
+
+
+def building_parts(base, ground, atlas, regions):
+    ground_uid = save_png(ground, base + "_ground.png")
+    atlas_uid = save_png(atlas, base + "_parts.png")
+    rel = base + "_parts.tres"
+    lines = [f'[gd_resource type="Resource" script_class="BuildingParts" format=3 uid="{uid_for(res_path(rel))}"]', "",
+             f'[ext_resource type="Script" uid="{uid_for(PARTS_SCRIPT)}" path="{PARTS_SCRIPT}" id="1_script"]',
+             f'[ext_resource type="Texture2D" uid="{ground_uid}" path="{res_path(base + "_ground.png")}" id="2_ground"]',
+             f'[ext_resource type="Texture2D" uid="{atlas_uid}" path="{res_path(base + "_parts.png")}" id="3_atlas"]', ""]
+    for k, ((x, y, w, h), _, _) in enumerate(regions):
+        lines += [f'[sub_resource type="AtlasTexture" id="AtlasTexture_{k}"]', 'atlas = ExtResource("3_atlas")',
+                  f"region = Rect2({x}, {y}, {w}, {h})", ""]
+    num = lambda v: ("%g" % v)
+    lines += ["[resource]", 'script = ExtResource("1_script")', 'ground = ExtResource("2_ground")',
+              "parts = Array[Texture2D]([%s])" % ", ".join(f'SubResource("AtlasTexture_{k}")' for k in range(len(regions))),
+              "positions = PackedVector2Array(%s)" % ", ".join(f"{num(p[0])}, {num(p[1])}" for _, p, _ in regions),
+              "sort_rows = PackedFloat32Array(%s)" % ", ".join(num(r) for _, _, r in regions)]
+    open(os.path.join(ROOT, rel), "w").write("\n".join(lines) + "\n")

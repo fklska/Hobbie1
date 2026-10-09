@@ -26,7 +26,7 @@ resource_local_to_scene = true
 [node name="Player_MainCharacter" unique_id=833420880 node_paths=PackedStringArray("HotBar", "ActionProgress", "anim", "miningParticle") instance=ExtResource("1_5t8oh")]
 light_mask = 4
 visibility_layer = 4
-y_sort_enabled = true
+z_index = 2
 collision_mask = 31
 script = ExtResource("2_w41el")
 HotBar = NodePath("PlayerUI/HotBar")
@@ -39,6 +39,7 @@ anim = NodePath("AnimatedSprite2D")
 miningParticle = NodePath("MiningParctile")
 
 [node name="ActionProgress" type="ProgressBar" parent="." index="0" unique_id=1408588808]
+z_index = 1
 custom_minimum_size = Vector2(32, 4)
 offset_left = -16.0
 offset_top = -37.0

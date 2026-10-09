@@ -1,19 +1,15 @@
 shader_type canvas_item;
 
-uniform vec2 player_pos;      // мировая позиция игрока
-uniform float reveal_radius = 32.0;
+#include "res://shaders/hero_reveal.gdshaderinc"
 
 varying vec2 world_pos;
+varying float sort_y;
 
 void vertex() {
-    // Переводим локальную вершину в мировые координаты
-    world_pos = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+	world_pos = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+	sort_y = MODEL_MATRIX[3].y;
 }
 
 void fragment() {
-    vec4 color = texture(TEXTURE, UV);
-    if (distance(world_pos, player_pos) < reveal_radius) {
-        color.a *= 0.5;
-    }
-    COLOR = color;
+	COLOR.a *= hero_reveal(world_pos, sort_y);
 }

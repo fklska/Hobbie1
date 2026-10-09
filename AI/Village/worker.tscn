@@ -92,29 +92,33 @@ radius = 6.0
 
 [node name="Worker" instance=ExtResource("1_base")]
 z_index = 2
+y_sort_enabled = true
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("2_worker")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_outline")
+position = Vector2(0, 17)
 sprite_frames = SubResource("SpriteFrames_worker")
 animation = &"idle"
 autoplay = "idle"
+offset = Vector2(0, -17)
 
 [node name="Tool" type="Sprite2D" parent="AnimatedSprite2D" index="0"]
-position = Vector2(-7, 4)
+position = Vector2(-7, -13)
 scale = Vector2(0.06, 0.06)
 texture = ExtResource("5_axe")
 offset = Vector2(0, -170)
 
 [node name="Weapon" type="Sprite2D" parent="AnimatedSprite2D" index="1"]
 visible = false
-position = Vector2(8, 6)
+position = Vector2(8, -11)
 offset = Vector2(0, -8)
 
 [node name="Carry" type="Label" parent="." index="1"]
 visible = false
+z_index = 1
 offset_left = -20.0
 offset_top = -46.0
 offset_right = 20.0

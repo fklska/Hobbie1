@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="BuildingParts" format=3 uid="uid://99ja8s6naspe"]
+
+[ext_resource type="Script" uid="uid://92gwd5ok7wtj" path="res://BuildSystem/scripts/building_parts.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://g7yrxj1q706n" path="res://Art/buildings/farm_3_ground.png" id="2_ground"]
+[ext_resource type="Texture2D" uid="uid://cb1vuyhr9q72" path="res://Art/buildings/farm_3_parts.png" id="3_atlas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0"]
+atlas = ExtResource("3_atlas")
+region = Rect2(2, 2, 56, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1"]
+atlas = ExtResource("3_atlas")
+region = Rect2(60, 2, 56, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2"]
+atlas = ExtResource("3_atlas")
+region = Rect2(118, 2, 56, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3"]
+atlas = ExtResource("3_atlas")
+region = Rect2(176, 2, 56, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4"]
+atlas = ExtResource("3_atlas")
+region = Rect2(234, 2, 56, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5"]
+atlas = ExtResource("3_atlas")
+region = Rect2(292, 2, 46, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6"]
+atlas = ExtResource("3_atlas")
+region = Rect2(340, 2, 78, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7"]
+atlas = ExtResource("3_atlas")
+region = Rect2(420, 2, 78, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8"]
+atlas = ExtResource("3_atlas")
+region = Rect2(500, 2, 121, 61)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_9"]
+atlas = ExtResource("3_atlas")
+region = Rect2(623, 2, 126, 16)
+
+[resource]
+script = ExtResource("1_script")
+ground = ExtResource("2_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_0"), SubResource("AtlasTexture_1"), SubResource("AtlasTexture_2"), SubResource("AtlasTexture_3"), SubResource("AtlasTexture_4"), SubResource("AtlasTexture_5"), SubResource("AtlasTexture_6"), SubResource("AtlasTexture_7"), SubResource("AtlasTexture_8"), SubResource("AtlasTexture_9")])
+positions = PackedVector2Array(6, 18, 6, 26, 6, 34, 6, 42, 6, 50, 75, 0, 6, 60, 6, 68, 6, 62, 1, 115)
+sort_rows = PackedFloat32Array(34, 42, 50, 58, 66, 66, 76, 84, 121, 129.5)
