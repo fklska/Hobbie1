@@ -9,6 +9,7 @@ static var _models := {}
 var _frame := 0
 var _last_action := {}
 var _own_model: ONNXModel
+var _flat := false
 var _rng := RandomNumberGenerator.new()
 
 func _physics_process(delta: float):
@@ -52,7 +53,15 @@ func _load_model() -> bool:
 		model.set_action_means_only(get_action_space())
 		_models[onnx_model_path] = model
 	_own_model = _models[onnx_model_path]
+	_flat = _own_model.action_output_size == _flat_size()
 	return true
+
+func _flat_size() -> int:
+	var size := 0
+	for key in get_action_space():
+		var space: Dictionary = get_action_space()[key]
+		size += space["size"] if space["action_type"] == "continuous" else 1
+	return size
 
 func _infer() -> Dictionary:
 	var inference := _own_model.run_inference(get_obs(), 1)
@@ -64,15 +73,18 @@ func _infer() -> Dictionary:
 	for key in get_action_space():
 		var space: Dictionary = get_action_space()[key]
 		var size: int = space["size"]
-		if space["action_type"] == "discrete":
-			result[key] = _pick(output.slice(index, index + size))
-			index += size
-		else:
+		if space["action_type"] == "continuous":
 			var values := []
 			for i in size:
 				values.append(clampf(output[index + i], -1.0, 1.0))
 			result[key] = values
-			index += size if _own_model.action_means_only else size * 2
+			index += size if _flat or _own_model.action_means_only else size * 2
+		elif _flat:
+			result[key] = 1 if output[index] > 0.0 else 0
+			index += 1
+		else:
+			result[key] = _pick(output.slice(index, index + size))
+			index += size
 	return result
 
 func _pick(logits: Array) -> int:
