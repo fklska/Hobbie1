@@ -103,15 +103,16 @@ func _fight():
 	var gap := to_enemy.length() - Mob.target_radius(target)
 	var reach: float = stats.get("range", 40.0)
 	var direction := to_enemy.normalized()
+	var path := body.steer_to(target.global_position)
 	if is_ranged():
 		if gap > reach * 0.9:
-			_move(direction)
+			_move(path)
 		elif gap < reach * 0.4:
 			_move(-direction)
 		else:
 			_move(Vector2.ZERO)
 	else:
-		_move(direction if gap > reach * 0.8 else Vector2.ZERO)
+		_move(path if gap > reach * 0.8 else Vector2.ZERO)
 	if gap <= reach and cooldown <= 0.0:
 		_strike(direction)
 
@@ -143,8 +144,7 @@ func _move(direction: Vector2):
 
 
 func _go_to(point: Vector2, tolerance: float):
-	var offset := point - body.global_position
-	_move(offset.normalized() if offset.length() > tolerance else Vector2.ZERO)
+	_move(body.steer_to(point) if body.global_position.distance_to(point) > tolerance else Vector2.ZERO)
 
 
 func _guard_spot() -> Vector2:

@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://g648pwt45v8r"]
 
 [ext_resource type="Shader" uid="uid://pn4vfaksqoeu" path="res://Map/tilemap/grass.gdshader" id="1_1ad8b"]
+[ext_resource type="Shader" uid="uid://cq56jdhwt4q4v" path="res://ProceduralGeneration/v3/Water/shallow_water.gdshader" id="26_water"]
 [ext_resource type="Texture2D" uid="uid://ws4viy75k7ri" path="res://ProceduralGeneration/v3.1 BiggerSize/DualTileMapV3.1/Desert.png" id="2_io45v"]
 [ext_resource type="Texture2D" uid="uid://cdi4gv1x1itp0" path="res://ProceduralGeneration/v3/SimpleTileMap/desert.png" id="2_iqp6w"]
 [ext_resource type="Texture2D" uid="uid://bmqs4ebymfqfa" path="res://ProceduralGeneration/v3/SimpleTileMap/tropicWater.png" id="4_pnclt"]
@@ -1088,7 +1089,7 @@ texture_region_size = Vector2i(64, 64)
 2:1/0/terrains_peering_bit/top_right_corner = 5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f1si2"]
-shader = ExtResource("1_1ad8b")
+shader = ExtResource("26_water")
 shader_parameter/replacement_tex = ExtResource("4_pnclt")
 shader_parameter/texture_scale = 0.00694444
 shader_parameter/red_threshold = 0.99

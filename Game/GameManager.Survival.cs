@@ -120,11 +120,11 @@ public partial class GameManager
 		foreach (Variant entry in data["workers"].AsGodotArray())
 		{
 			var worker = entry.AsGodotDictionary();
-			RestoreWorker(ToVector(worker["pos"]), worker["hp"].AsInt32(), worker["weapon"].AsString());
+			RestoreWorker(World.Walkable(ToVector(worker["pos"])), worker["hp"].AsInt32(), worker["weapon"].AsString());
 		}
 
 		var hero = data["hero"].AsGodotDictionary();
-		Player.GlobalPosition = ToVector(hero["pos"]);
+		Player.GlobalPosition = World.Walkable(ToVector(hero["pos"]));
 		Player.Health = hero["hp"].AsSingle();
 		Player.Heal(0);
 

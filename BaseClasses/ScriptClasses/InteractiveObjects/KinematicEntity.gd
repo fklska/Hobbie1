@@ -10,6 +10,15 @@ func _ready():
 	if shader == null:
 		print_debug("SHADER INSTALL")
 
+func keep_off_ocean(delta: float) -> void:
+	if is_instance_valid(Game.World):
+		velocity = Game.World.KeepOffOcean(global_position, velocity, delta)
+
+func steer_to(point: Vector2) -> Vector2:
+	if is_instance_valid(Game.World):
+		return Game.World.Steer(global_position, point)
+	return global_position.direction_to(point)
+
 func set_outline():
 	shader.set_shader_parameter("enable", true)
 	
