@@ -13,11 +13,14 @@
 
 1. Главная сцена `world_environment.tscn` содержит только меню `UI/MainMenu/menu.tscn`.
 2. «Новый мир»: `UI/MainMenu/generation_panel.gd` вызывает `GENERATOR.StartGeneration(полоса, имя, сид, размер)` и ждёт сигнал `GenerationFinished`. Шаги и сохранение `GeneratorV3.Generate` идут в `Task.Run`, этапы приходят сигналом `StageChanged` на экран загрузки.
-3. Генератор сохраняет мир в `user://SavedWorlds/` (константа `GenerationSettings.SAVED_WORLDS_DIR`):
-   - `<имя>.tres`: полные данные (`GeneratorData`);
+3. Генератор сохраняет мир в `user://SavedWorlds/` (константа `GenerationSettings.SAVED_WORLDS_DIR`, пути в `WorldFiles`):
+   - `<имя>.world`: карта (`WorldMap`), бинарный файл со сжатием Zstd;
+   - `<имя>.png`: превью для списка миров;
    - `__SIMPLE<имя>.tres`: краткие данные для списка миров (`SimpleGeneratorData`);
-   - `<имя>.tscn`: сцена мира (`WorldScene`).
-4. «Мои миры» и «Продолжить»: `WorldStore.play()` (`UI/MainMenu/world_store.gd`) вызывает `Overlay.start_world()`, тот грузит сцену мира в потоке и вызывает `Game.ContinueRun` (есть сохранённая партия) или `Game.StartWorld(путь к .tscn, точка спавна)`. `GameManager` кладёт в корень дерева сцену мира (узел `Map`), `Player/Player.tscn` и HUD `Game/game_hud.tscn`, прячет меню. Пока на паузе грузятся чанки вокруг героя (`WorldScene.LoadedAround`, `LoadBudgetMs`), экран загрузки не закрывается. `Restart()` идёт через тот же `Overlay.start_world()`, `ToMenu()` убирает мир и возвращает меню.
+   - `<имя>.tscn`: маленькая сцена-наследник `ProceduralGeneration/v3/world.tscn` с путём к `.world` в `WorldPath`.
+
+   Мир старого формата (`<имя>.tres` с `GeneratorData`) `Overlay.start_world()` переводит в новый при первом открытии (`GENERATOR.NeedsUpgrade`, `UpgradeWorld`), партия в `user://Runs/` при этом сохраняется.
+4. «Мои миры» и «Продолжить»: `WorldStore.play()` (`UI/MainMenu/world_store.gd`) вызывает `Overlay.start_world()`, тот грузит сцену мира в потоке и вызывает `Game.ContinueRun` (есть сохранённая партия) или `Game.StartWorld(путь к .tscn, точка спавна)`. `GameManager` кладёт в корень дерева сцену мира (узел `Map`), `Player/Player.tscn` и HUD `Game/game_hud.tscn`, прячет меню. Пока на паузе грузятся чанки вокруг героя (`WorldScene.LoadedAround`, `LoadBudgetMs`), экран загрузки не закрывается. Сцену мира грузить в потоке только с `use_sub_threads = false`: с подпотоками тайлсет приходит без источников и земля не рисуется. `Restart()` идёт через тот же `Overlay.start_world()`, `ToMenu()` убирает мир и возвращает меню.
 
 Автозагрузки (`project.godot`): `BuildMode` (`BuildSystem/build_mode.tscn`), `MouseInfoPanel`, `GlobalNavigation` (`Navigation/navigation.tscn`), `GENERATOR` (`ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn`), `Game` (`Game/GameManager.cs`), `Sound` (`Audio/SoundManager.cs`), `Overlay` (`UI/Overlay/overlay.tscn`: экран загрузки, пауза по Esc, настройки, окно подтверждения).
 
@@ -49,8 +52,8 @@
 
 | Папка | Что внутри |
 |---|---|
-| `ProceduralGeneration/v3/` | Актуальный код генератора: `GeneratorV3.cs`, `WorldScene.cs`, `GeneratorData.cs`, шаги `steps/*.cs` (ресурсы `GenerationStep`). |
-| `ProceduralGeneration/v3.1 BiggerSize/` | Сцена генератора (автозагрузка), чанки `ChunkData.cs`, тайлсет `DualTileMapV3.1/V3.1.tres`. |
+| `ProceduralGeneration/v3/` | Актуальный код генератора и мира: `GeneratorV3.cs`, `WorldGen.cs`, шаги `steps/*.cs`, `WorldMap.cs`, `WorldFiles.cs`, `SpawnFinder.cs`, `WorldScene.cs`, `TerrainRules.cs`, сцена `world.tscn`, вода `Water/`. `GeneratorData.cs` нужен только для перевода старых миров. |
+| `ProceduralGeneration/v3.1 BiggerSize/` | Сцена генератора (автозагрузка), тайлсет `DualTileMapV3.1/V3.1.tres`, `SimpleGeneratorData.cs`, `ChunkData.cs` (только для старых миров). |
 | `ProceduralGeneration/v1`, `V2`, `DEBUG`, `scripts/` | Старые генераторы. Оставлены только потому, что на них ссылается `Light/Debug/light_v1.2.tscn`. Не использовать в новом коде. |
 | `Resourses/` | Префабы ресурсов (деревья, камень, железо, золото) и слой окружения `v2/EnviromentLayer.tscn`. |
 | `Player/` | `Player.tscn`, `PlayerMainCharacter.cs`. Старый `Player/scripts/player.gd` (`class_name Player`) не удалять: этот тип использует `BaseClasses/ScriptClasses/weapon_item.gd`. |
@@ -63,7 +66,7 @@
 | `Audio/` | Звук: автозагрузка `SoundManager.cs`, фоновая мелодия и джинглы в `music/`, звуки в `sfx/`, их генератор `tools/synth.py`, источники и лицензии в `CREDITS.md`. |
 | `Globals/` | `GenerationSettings.cs` (размер тайла 64, чанк 8 тайлов, путь сохранений), утилиты. |
 | `BaseClasses/` | Базовые GDScript-классы сущностей, предметов и оружия. |
-| `addons/` | `TileMapDual` (dual-grid тайлмапы), `AS2P`, `godot_rl_agents`. Сторонний код, правки только при необходимости. |
+| `addons/` | `AS2P`, `godot_rl_agents`. Сторонний код, правки только при необходимости. |
 | `kenney_medieval-rts/`, `UI/UIAssets/` | Сторонние ассет-паки. Используется малая часть, остальное оставлено как запас. Новую графику брать из `Art/`. |
 | `tools/` | Инструменты вне игры (`.gdignore`): `tools/sprites/` — генератор спрайтов на Python. |
 | `docs/` | Гифки и видео для `README.md` (`.gdignore`): `docs/updates/<версия>.gif` и `.mp4`. |
@@ -116,11 +119,25 @@ godot --headless --path . --quit
 - Масштаб 1:1, клетка 64 px. Ноги персонажа в точке привязки кадра: герой, гоблин и скелет 64×64 (ноги на y = 52), волк 64×64 (y = 46), орк 96×96 (y = 78), гигант 128×128 (y = 110). Смерть и удар гиганта рисуются в увеличенном кадре с тем же центром.
 - Здания шириной `footprint.x × 64`, низ спрайта на южном краю клетки.
 
+## Генерация мира
+
+Вся генерация и отрисовка карты на C#. `GeneratorV3` (автозагрузка `GENERATOR`) создаёт `WorldGen` (массивы высоты, климата, поверхности, биомов и ресурсов) и по очереди вызывает шаги из `steps` в сцене генератора, всё в `Task.Run`:
+
+1. `ReliefStep`: рельеф из шума с искажением и хребтами, остров к центру карты, уровень моря по доле суши `LandRatio`, океан у краёв. Вода, касающаяся края, становится океаном, закрытая вода озером.
+2. `RiverStep`: заполнение впадин от океана, сток, реки от `RiverThreshold` клеток стока, озёра во впадинах.
+3. `ClimateStep`: температура по широте (север холодный) и высоте, влажность от шума и воды рядом, таблица биомов, сглаживание.
+4. `CoastStep`: мелководье шириной от `ShallowWidth` между сушей и океаном, глубокая вода в центре больших озёр, пляжи (`Desert`) у океана.
+5. `ResourceStep`: место старта (`SpawnFinder`), леса по биомам, камень в горах, рудные жилы, гарантированные ресурсы у старта (деревья и камень в 10 клетках, железо в 12–22, золото в 24–40).
+
+У каждого шума свой сид из сида мира и имени шума (`WorldGen.Noise`). Новый шаг: класс от `GenerationStep` с `Execute(WorldGen gen)`, ресурс `.tres` и строка в `steps` сцены генератора и в `STAGES` `UI/MainMenu/generation_panel.gd`. Слои для экрана создания мира отдаёт `GENERATOR.GetLayer(i)`.
+
+`WorldScene` (корень `world.tscn`, узел `Map`) читает `WorldMap` и рисует чанки 8×8 в `ProcessFrame`, тоже на паузе: радиус `LoadRadius` вокруг `FocusTarget` (герой, его ставит `GameManager`), чанки дальше `KeepRadius` стираются, на кадр не больше `FrameBudgetMs` (на экране загрузки `LoadBudgetMs`). `LoadAround(точка)` сразу рисует чанки рядом с точкой. Земля в `Terrain/Ground` (базовый тайл (2, 1) каждого биома), переходы между биомами в `Terrain/Edges` со сдвигом (−32, −32): тайл выбирает `TerrainRules` по биомам четырёх углов и terrain peering bits тайлсета (dual-grid, как раньше делал аддон TileMapDual). Ресурсы в `EnviromentLayer`. Добытые клетки меняются в `WorldMap` и пишутся в партию, файл мира не меняется.
+
 ## Порядок отрисовки
 
 Объекты мира сортируются по Y в одном списке: `WorldScene` в `_Ready` включает `y_sort_enabled` у себя, у `EnviromentLayer` (деревья и камни) и у `Enviroment` (здания, жители, мобы, лут, герой). Герой тоже кладётся в `Enviroment`.
 
-- `z_index`: 0 земля (`DualMap`), 1 земля под зданиями и лут, 2 всё, что стоит (`WorldScene.ObjectsZ`), выше эффекты и полоски HP. Сортировка по Y работает только внутри одного `z_index`.
+- `z_index`: 0 земля (`Terrain/Ground`, `Terrain/Edges`), 1 земля под зданиями и лут, 2 всё, что стоит (`WorldScene.ObjectsZ`), выше эффекты и полоски HP. Сортировка по Y работает только внутри одного `z_index`.
 - Точка сортировки = ноги. У героя корень узла стоит в ногах. У жителей и мобов корень выше ног, поэтому у корня включён `y_sort_enabled`, а `AnimatedSprite2D` сдвинут в ноги (`position`) и обратно рисуется через `offset`. Подписи и лучи у таких сцен на `z_index = 1`, иначе их закроют деревья.
 - Деревья и камни: точка сортировки задана в тайлсете `Resourses/v2/TileSetResV2.tres` (`y_sort_origin` у тайла, основание ствола).
 - Здания: генератор (`tools/sprites`) режет каждый уровень на землю `<id>_<ур>_ground.png` (рисуется на `z_index` 1 под всеми) и отдельные предметы в атласе `<id>_<ур>_parts.png`; `<id>_<ур>_parts.tres` хранит, где стоит каждый предмет и строку его переднего края. `building.gd` создаёт по `Sprite2D` на предмет, поэтому герой может стоять за палаткой и перед костром одного здания.

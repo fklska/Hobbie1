@@ -27,26 +27,12 @@ public class WaterMap
 	private readonly Queue<Vector2I> flowOrder = new();
 	private readonly HashSet<Vector2I> pending = new();
 
-	public WaterMap(GeneratorData data)
+	public WaterMap(WorldMap map)
 	{
-		Width = data.mapSize.X;
-		Height = data.mapSize.Y;
+		Width = map.Width;
+		Height = map.Height;
 		kinds = new Kind[Width * Height];
-		foreach (var row in data.ChunkMap)
-		{
-			foreach (ChunkData chunk in row)
-			{
-				for (int x = 0; x < GenerationSettings.CHUNK_SIZE; x++)
-				{
-					var column = chunk.Map[x];
-					for (int y = 0; y < GenerationSettings.CHUNK_SIZE; y++)
-					{
-						int gx = chunk.rect.X + x, gy = chunk.rect.Y + y;
-						if (gx < Width && gy < Height) kinds[gy * Width + gx] = KindOf(column[y].Type);
-					}
-				}
-			}
-		}
+		for (int i = 0; i < kinds.Length; i++) kinds[i] = KindOf((TileType)map.Biomes[i]);
 
 		regions = new int[kinds.Length];
 		Array.Fill(regions, -1);

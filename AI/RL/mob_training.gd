@@ -20,13 +20,17 @@ func _ready():
 	if data == null:
 		push_error("Нет сохранённых миров в %s: сгенерируйте мир через меню игры" % SAVED_WORLDS_DIR)
 		return
-	_world = load(data.fullDataPath.get_basename() + ".tscn").instantiate()
+	var scene_path := data.fullDataPath.get_basename() + ".tscn"
+	if GENERATOR.NeedsUpgrade(scene_path) and not GENERATOR.UpgradeWorldNow(scene_path):
+		push_error("Не удалось перевести мир %s в новый формат" % scene_path)
+		return
+	_world = load(scene_path).instantiate()
 	add_child(_world)
 	Game.ResetState()
 	Game.World = _world
 	Game.AddResource("wood", 100)
 	Game.AddResource("stone", 100)
-	Game.PlaceBuilding("TownHall", Vector2i(data.SpawnPoint / 64))
+	Game.PlaceBuilding("TownHall", Vector2i(_world.SpawnPosition() / 64))
 	DayNightCycle.night = night
 
 	_center = Game.MainBase.get_center()

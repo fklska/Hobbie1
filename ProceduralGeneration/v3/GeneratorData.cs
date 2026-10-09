@@ -136,7 +136,9 @@ public enum TileType
     RegularForest,
     TropicalForest,
     Savanna,
-    Desert
+    Desert,
+    Swamp,
+    StoneMountain
 }
 
 public enum ResorseType
@@ -153,11 +155,4 @@ public enum ResorseType
     Stone,
     Iron,
     Gold
-}
-
-public struct NoiseData
-{
-    public float[,] noiseValues;
-    public float min;
-    public float max;
 }

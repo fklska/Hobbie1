@@ -10,10 +10,10 @@ public partial class WorldScene
 
 	private void SetUpWater()
 	{
-		Water = new WaterMap(GeneratorData);
+		Water = new WaterMap(Map);
 		shoreTexture = ImageTexture.CreateFromImage(Water.ShoreField());
 		RenderingServer.GlobalShaderParameterSet("water_field", shoreTexture);
-		RenderingServer.GlobalShaderParameterSet("water_field_size", (Vector2)(GeneratorData.mapSize * GenerationSettings.TILE_SIZE));
+		RenderingServer.GlobalShaderParameterSet("water_field_size", (Vector2)(Map.Size * GenerationSettings.TILE_SIZE));
 		RenderingServer.GlobalShaderParameterSet("water_trail_count", 0);
 
 		AddChild(new WaterTrails { Name = "WaterTrails", World = this });

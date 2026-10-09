@@ -14,4 +14,5 @@ public partial class SimpleGeneratorData : Resource
     [Export] public Image BiomeMap;
     [Export] public int seed;
     [Export] public string fullDataPath;
+    [Export] public string PreviewPath = "";
 }

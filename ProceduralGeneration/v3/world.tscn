@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b0g027vyndma1"]
+
+[ext_resource type="Script" uid="uid://6hihy0epj1w6" path="res://ProceduralGeneration/v3/WorldScene.cs" id="1_world"]
+[ext_resource type="TileSet" uid="uid://g648pwt45v8r" path="res://ProceduralGeneration/v3.1 BiggerSize/DualTileMapV3.1/V3.1.tres" id="2_tiles"]
+[ext_resource type="PackedScene" uid="uid://byafm8nk470hk" path="res://Resourses/v2/EnviromentLayer.tscn" id="3_env"]
+
+[node name="Map" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_world")
+
+[node name="Terrain" type="Node2D" parent="."]
+
+[node name="Ground" type="TileMapLayer" parent="Terrain"]
+tile_set = ExtResource("2_tiles")
+rendering_quadrant_size = 8
+
+[node name="Edges" type="TileMapLayer" parent="Terrain"]
+position = Vector2(-32, -32)
+tile_set = ExtResource("2_tiles")
+rendering_quadrant_size = 8
+
+[node name="EnviromentLayer" parent="." instance=ExtResource("3_env")]
+
+[node name="Enviroment" type="Node2D" parent="."]
+y_sort_enabled = true

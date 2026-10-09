@@ -109,7 +109,15 @@ func _ask_quit() -> void:
 func start_world(scene_path: String, spawn: Vector2, continue_run := false) -> void:
 	loading.open("Загрузка мира", "Читаем сохранение")
 	await get_tree().process_frame
-	if ResourceLoader.load_threaded_request(scene_path, "", true) != OK:
+	if GENERATOR.NeedsUpgrade(scene_path):
+		loading.set_stage("Переводим мир в новый формат")
+		GENERATOR.UpgradeWorld(scene_path)
+		var upgraded: Array = await GENERATOR.WorldUpgraded
+		if not upgraded[1]:
+			loading.close()
+			confirm("Мир не загрузился", "Не удалось перевести мир в новый формат.", "Понятно", Callable(), false)
+			return
+	if ResourceLoader.load_threaded_request(scene_path, "", false) != OK:
 		loading.close()
 		return
 	var progress := []
@@ -132,6 +140,10 @@ func start_world(scene_path: String, spawn: Vector2, continue_run := false) -> v
 	else:
 		Game.StartWorld(scene_path, spawn)
 	scene = null
+	if not is_instance_valid(Game.World):
+		loading.close()
+		confirm("Мир не загрузился", "Файл мира повреждён или удалён.", "Понятно", Callable(), false)
+		return
 	await get_tree().process_frame
 	await _wait_for_ground()
 	loading.close()

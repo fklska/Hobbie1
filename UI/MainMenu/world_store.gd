@@ -23,7 +23,7 @@ static func scene_path(world: SimpleGeneratorData) -> String:
 
 
 static func simple_path(world: SimpleGeneratorData) -> String:
-	return world.fullDataPath.get_base_dir().path_join("__SIMPLE" + world.fullDataPath.get_file())
+	return world.fullDataPath.get_base_dir().path_join("__SIMPLE" + world.fullDataPath.get_file().get_basename() + ".tres")
 
 
 static func modified_time(world: SimpleGeneratorData) -> int:
@@ -40,7 +40,7 @@ static func find(path: String) -> SimpleGeneratorData:
 
 
 static func exists(world_name: String) -> bool:
-	return FileAccess.file_exists(DIR + world_name + ".tres")
+	return FileAccess.file_exists(DIR + world_name + ".tscn") or FileAccess.file_exists(DIR + "__SIMPLE" + world_name + ".tres")
 
 
 static func run_path(world: SimpleGeneratorData) -> String:
@@ -67,8 +67,7 @@ static func delete_run(world: SimpleGeneratorData) -> void:
 
 
 static func delete(world: SimpleGeneratorData) -> void:
-	for path in [world.fullDataPath, scene_path(world), simple_path(world), run_path(world)]:
-		if FileAccess.file_exists(path):
-			DirAccess.remove_absolute(path)
+	GENERATOR.DeleteWorld(scene_path(world))
+	delete_run(world)
 	if GameSettings.last_world() == scene_path(world):
 		GameSettings.set_last_world("")

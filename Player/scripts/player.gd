@@ -45,7 +45,7 @@ func _physics_process(_delta):
 
 func UpdateChunks():
 	if (is_instance_valid(MAP)):
-		MAP.UpdateChunkAroundPlayer(global_position)
+		MAP.FocusOn(global_position)
 	
 func run():
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()

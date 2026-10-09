@@ -18,7 +18,9 @@ var world: SimpleGeneratorData
 
 func setup(data: SimpleGeneratorData) -> void:
 	world = data
-	if data.BiomeMap != null:
+	if data.PreviewPath != "" and FileAccess.file_exists(data.PreviewPath):
+		preview.texture = ImageTexture.create_from_image(Image.load_from_file(data.PreviewPath))
+	elif data.BiomeMap != null:
 		preview.texture = ImageTexture.create_from_image(data.BiomeMap)
 	world_name.text = data.WorldName
 	var size_name: String = SIZE_NAMES.get(data.mapSize.x, "Мир")
