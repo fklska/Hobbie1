@@ -51,7 +51,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	{
 		if (IsDead) return;
 		UpdateChunks();
-		SetEnviromentAlphaShader();
+		RenderingServer.GlobalShaderParameterSet("hero_position", GlobalPosition);
 		HandAction(delta);
 		HandAttack(delta);
 		Regenerate(delta);
@@ -144,12 +144,6 @@ public partial class PlayerMainCharacter : CharacterBody2D
 				GameManager.Instance.Damage(enemy, damage);
 			}
 		}
-	}
-
-	public void SetEnviromentAlphaShader()
-	{
-		ShaderMaterial EnvShader = (ShaderMaterial)WorldScene.EnviromentLayer.Material;
-		EnvShader.SetShaderParameter("player_pos", GlobalPosition);
 	}
 
 	private Vector2I focusCell;

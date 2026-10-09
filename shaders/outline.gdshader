@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+#include "res://shaders/hero_reveal.gdshaderinc"
+
 uniform vec4 color : source_color = vec4(1.0);
 uniform float width : hint_range(0, 10) = 1.0;
 uniform int pattern : hint_range(0, 2) = 2; // diamond, circle, square
@@ -7,11 +9,17 @@ uniform bool inside = false;
 uniform bool add_margins = false; // only useful when inside is false
 
 uniform bool enable = false;
+uniform bool reveal_hero = false;
+
+varying vec2 world_pos;
+varying float sort_y;
 
 void vertex() {
 	if (add_margins) {
 		VERTEX += (UV * 2.0 - 1.0) * width;
 	}
+	world_pos = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+	sort_y = MODEL_MATRIX[3].y;
 }
 
 bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, sampler2D texture) {
@@ -61,5 +69,9 @@ void fragment() {
 	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, TEXTURE)) {
 		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;
 		COLOR.a += (1.0 - COLOR.a) * color.a;
+	}
+
+	if (reveal_hero) {
+		COLOR.a *= hero_reveal(world_pos, sort_y);
 	}
 }
