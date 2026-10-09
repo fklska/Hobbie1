@@ -98,7 +98,7 @@ func gap_to(node: Node2D) -> float:
 	return global_position.distance_to(target_point(node)) - target_radius(node)
 
 
-func in_reach(node: Node2D) -> bool:
+func in_reach(node) -> bool:
 	return alive(node) and gap_to(node) <= attack_range
 
 

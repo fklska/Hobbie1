@@ -36,7 +36,7 @@ func _ready():
 	_center = Game.MainBase.get_center()
 	$Camera2D.position = _center
 	for i in defender_count:
-		_add_defender(i, false)
+		_add_defender(i)
 	for scene in mob_scenes:
 		for i in mobs_per_scene:
 			var mob: Mob = scene.instantiate()
@@ -52,15 +52,14 @@ func _find_world() -> SimpleGeneratorData:
 	return null
 
 
-func _add_defender(index: int, late: bool):
+func _add_defender(index: int):
 	var worker: Worker = WORKER.instantiate()
 	worker.position = _center + Vector2.from_angle(TAU * index / defender_count) * 120.0
-	if not late:
-		worker.get_node("AIController2D").control_mode = AIController2D.ControlModes.HUMAN
 	_world.get_node("Enviroment").add_child(worker)
+	worker.get_node("AIController2D").remove_from_group("AGENT")
 	if not defender_weapons.is_empty():
 		var weapon: String = defender_weapons[index % defender_weapons.size()]
-		worker.equip(weapon, Game.WeaponStats(weapon))
+		worker.equip(weapon, Game.GetWeaponStats(weapon))
 
 
 func _physics_process(_delta: float):
@@ -71,4 +70,4 @@ func _physics_process(_delta: float):
 		base.heal(base.max_hp)
 	var defenders := get_tree().get_nodes_in_group("village").filter(func(node): return node is Worker)
 	for i in range(defenders.size(), defender_count):
-		_add_defender(i, true)
+		_add_defender(i)
