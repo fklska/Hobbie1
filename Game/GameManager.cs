@@ -57,7 +57,7 @@ public partial class GameManager : Node
 
 		Player = GD.Load<PackedScene>("res://Player/Player.tscn").Instantiate<PlayerMainCharacter>();
 		Player.Position = spawn;
-		root.AddChild(Player);
+		EntitiesRoot.AddChild(Player);
 
 		hud = GD.Load<PackedScene>("res://Game/game_hud.tscn").Instantiate<CanvasLayer>();
 		root.AddChild(hud);

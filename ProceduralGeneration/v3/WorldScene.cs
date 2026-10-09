@@ -27,6 +27,8 @@ public partial class WorldScene : Node2D
 	public HashSet<Vector2I> currentActiveChunkMap = new HashSet<Vector2I>();
 	private readonly HashSet<Vector2I> loadedChunks = new HashSet<Vector2I>();
 
+	public const int ObjectsZ = 2;
+
 	public double LoadBudgetMs;
 	private ulong sliceFrame;
 	private ulong sliceStart;
@@ -39,6 +41,11 @@ public partial class WorldScene : Node2D
 		MainTileMapPrefab = GetNode<TileMapLayer>("DualMap");
 		EnviromentLayer = GetNode<TileMapLayer>("EnviromentLayer");
 		Enviroment = GetNode<Node2D>("Enviroment");
+		YSortEnabled = true;
+		EnviromentLayer.YSortEnabled = true;
+		EnviromentLayer.ZIndex = ObjectsZ;
+		Enviroment.YSortEnabled = true;
+		Enviroment.ZIndex = 0;
 		GeneratorData = ResourceLoader.Load<GeneratorData>(GenDataPath, null, ResourceLoader.CacheMode.Ignore);
 		// Navigator = GetTree().Root.GetNode<Node2D>("GlobalNavigation");
 		InitionalChunkLoad();
