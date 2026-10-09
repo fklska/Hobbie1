@@ -74,20 +74,6 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Gap" type="Control" parent="Center/Panel/VBox/Body/Info"]
-custom_minimum_size = Vector2(0, 8)
-layout_mode = 2
-
-[node name="StockTitle" type="Label" parent="Center/Panel/VBox/Body/Info"]
-layout_mode = 2
-theme_type_variation = &"SubheaderLabel"
-text = "Склад деревни"
-
-[node name="Stock" type="VBoxContainer" parent="Center/Panel/VBox/Body/Info"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 4
-
 [node name="VSeparator" type="VSeparator" parent="Center/Panel/VBox/Body"]
 layout_mode = 2
 
