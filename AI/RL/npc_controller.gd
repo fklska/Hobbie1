@@ -45,7 +45,7 @@ func apply_action(_action: Dictionary) -> void:
 func _load_model() -> bool:
 	if _own_model:
 		return true
-	if onnx_model_path.is_empty() or not FileAccess.file_exists(onnx_model_path):
+	if onnx_model_path.is_empty() or OS.has_feature("ios") or not FileAccess.file_exists(onnx_model_path):
 		return false
 	if not _models.has(onnx_model_path):
 		var model := ONNXModel.new(onnx_model_path, 1)
