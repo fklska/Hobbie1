@@ -1,27 +1,34 @@
-[gd_scene load_steps=8 format=3 uid="uid://dp8r3rltfkp5p"]
+[gd_scene format=3 uid="uid://dp8r3rltfkp5p"]
 
-[ext_resource type="Texture2D" uid="uid://cs5l2vf81elrr" path="res://UI/UIAssets/Banners/Carved_RegularNew.png" id="1_d0xop"]
-[ext_resource type="Texture2D" uid="uid://buuxxvn788pgn" path="res://UI/UIAssets/Banners/Pressed.png" id="2_gqkkc"]
-[ext_resource type="Script" uid="uid://0mhyubqyax4r" path="res://UI/Scripts/MenuButton.gd" id="3_0thg8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_btoal"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sm6pt"]
-texture = ExtResource("1_d0xop")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qg1wk"]
-texture = ExtResource("2_gqkkc")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8idec"]
-texture = ExtResource("1_d0xop")
+[ext_resource type="Script" uid="uid://0mhyubqyax4r" path="res://UI/Scripts/MenuButton.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://clhnaxfwbiyy0" path="res://UI/Icons/hammer.png" id="2_icon"]
 
 [node name="Button" type="Button"]
+custom_minimum_size = Vector2(64, 64)
 offset_right = 64.0
 offset_bottom = 64.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_btoal")
-theme_override_styles/hover = SubResource("StyleBoxTexture_sm6pt")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_qg1wk")
-theme_override_styles/normal = SubResource("StyleBoxTexture_8idec")
-script = ExtResource("3_0thg8")
+tooltip_text = "Строительство (B)"
+focus_mode = 0
+icon = ExtResource("2_icon")
+icon_alignment = 1
+script = ExtResource("1_script")
+
+[node name="Key" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -24.0
+offset_right = -6.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_type_variation = &"HudLabel"
+theme_override_font_sizes/font_size = 15
+text = "B"
+horizontal_alignment = 2
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

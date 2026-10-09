@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://cnb1fb6yckww5"]
+
+[ext_resource type="Script" uid="uid://bsvfl5qn8npxa" path="res://UI/Overlay/pause_menu.gd" id="1_script"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.02, 0.03, 0.6)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "Пауза"
+horizontal_alignment = 1
+
+[node name="WorldName" type="Label" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "Продолжить"
+
+[node name="Settings" type="Button" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Настройки"
+
+[node name="ToMenu" type="Button" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Главное меню"
+
+[node name="Quit" type="Button" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DangerButton"
+text = "Выйти из игры"
+
+[node name="Hint" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+text = "Esc: вернуться в игру"
+horizontal_alignment = 1

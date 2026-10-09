@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://blo4a7xjog3cn"]
+
+[ext_resource type="Script" uid="uid://q51iruihoro0" path="res://UI/Overlay/settings_panel.gd" id="1_script"]
+
+[node name="SettingsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.02, 0.03, 0.6)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "Настройки"
+horizontal_alignment = 1
+
+[node name="Tabs" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SoundTab" type="Button" parent="Center/Panel/VBox/Tabs"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Звук"
+
+[node name="VideoTab" type="Button" parent="Center/Panel/VBox/Tabs"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Изображение"
+
+[node name="ControlsTab" type="Button" parent="Center/Panel/VBox/Tabs"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Управление"
+
+[node name="Pages" type="PanelContainer" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 340)
+layout_mode = 2
+theme_type_variation = &"InsetPanel"
+
+[node name="Sound" type="VBoxContainer" parent="Center/Panel/VBox/Pages"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Video" type="VBoxContainer" parent="Center/Panel/VBox/Pages"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Fullscreen" type="CheckButton" parent="Center/Panel/VBox/Pages/Video"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Полноэкранный режим"
+
+[node name="VSync" type="CheckButton" parent="Center/Panel/VBox/Pages/Video"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Вертикальная синхронизация"
+
+[node name="ShowFps" type="CheckButton" parent="Center/Panel/VBox/Pages/Video"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Показывать FPS"
+
+[node name="FpsRow" type="HBoxContainer" parent="Center/Panel/VBox/Pages/Video"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Center/Panel/VBox/Pages/Video/FpsRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ограничение FPS"
+
+[node name="FpsOption" type="OptionButton" parent="Center/Panel/VBox/Pages/Video/FpsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="ScaleRow" type="HBoxContainer" parent="Center/Panel/VBox/Pages/Video"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Center/Panel/VBox/Pages/Video/ScaleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Масштаб изображения"
+
+[node name="ScaleOption" type="OptionButton" parent="Center/Panel/VBox/Pages/Video/ScaleRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="ScaleHint" type="Label" parent="Center/Panel/VBox/Pages/Video"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+text = "Масштаб увеличивает и интерфейс, и мир. «Авто» подбирает его под высоту окна."
+autowrap_mode = 3
+
+[node name="Controls" type="VBoxContainer" parent="Center/Panel/VBox/Pages"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Scroll" type="ScrollContainer" parent="Center/Panel/VBox/Pages/Controls"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel/VBox/Pages/Controls/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 16
+
+[node name="ControlsList" type="VBoxContainer" parent="Center/Panel/VBox/Pages/Controls/Scroll/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Hint" type="Label" parent="Center/Panel/VBox/Pages/Controls"]
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+text = "Нажми на клавишу и затем новую. Esc отменяет."
+
+[node name="Footer" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="Reset" type="Button" parent="Center/Panel/VBox/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Сбросить управление"
+
+[node name="Spacer" type="Control" parent="Center/Panel/VBox/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Done" type="Button" parent="Center/Panel/VBox/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "Готово"

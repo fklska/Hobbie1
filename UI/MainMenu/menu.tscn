@@ -3,8 +3,24 @@
 [ext_resource type="Script" uid="uid://oolx3r0pang7" path="res://UI/MainMenu/main_menu.gd" id="1_k7f4m"]
 [ext_resource type="PackedScene" uid="uid://pd4inyp1lk58" path="res://UI/MainMenu/generation_panel.tscn" id="2_vxkf2"]
 [ext_resource type="PackedScene" uid="uid://dm2omuqu5juo0" path="res://UI/prefabs/world_list_panel.tscn" id="3_62lfh"]
+[ext_resource type="Texture2D" uid="uid://cugkwkpmc1ivo" path="res://UI/MainMenu/art/menu_bg.png" id="4_bg"]
+[ext_resource type="Texture2D" uid="uid://c4ldppni8osdy" path="res://UI/MainMenu/art/menu_clouds.png" id="5_clouds"]
+[ext_resource type="Shader" uid="uid://by7sq0rtmld4a" path="res://UI/MainMenu/art/menu_background.gdshader" id="6_shader"]
 
-[node name="Menu" type="Control" unique_id=2065200064]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
+shader = ExtResource("6_shader")
+shader_parameter/clouds = ExtResource("5_clouds")
+
+[sub_resource type="Gradient" id="Gradient_shade"]
+offsets = PackedFloat32Array(0, 0.45, 1)
+colors = PackedColorArray(0.05, 0.03, 0.06, 0.78, 0.05, 0.03, 0.06, 0.45, 0.05, 0.03, 0.06, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_shade"]
+gradient = SubResource("Gradient_shade")
+width = 256
+height = 4
+
+[node name="Menu" type="Control"]
 z_index = 4
 layout_mode = 3
 anchors_preset = 15
@@ -13,57 +29,106 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_k7f4m")
-metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=166795560]
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_bg")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.508, 0.465, 0.383, 0.425)
-metadata/_edit_use_anchors_ = true
+texture = ExtResource("4_bg")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="MainButtons" type="VBoxContainer" parent="." unique_id=1353287557]
+[node name="Shade" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -20.0
-offset_right = 32.0
-offset_bottom = 20.0
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 760.0
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_shade")
+expand_mode = 1
+
+[node name="Main" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 40
 
-[node name="NewWorld" type="Button" parent="MainButtons" unique_id=1921328082]
-custom_minimum_size = Vector2(256, 32)
+[node name="VBox" type="VBoxContainer" parent="Main"]
 layout_mode = 2
-text = "New World"
+size_flags_horizontal = 0
+theme_override_constants/separation = 6
 
-[node name="LoadWorld" type="Button" parent="MainButtons" unique_id=906122474]
-custom_minimum_size = Vector2(256, 32)
+[node name="Title" type="Label" parent="Main/VBox"]
 layout_mode = 2
-text = "Load World
-"
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 96
+text = "Hobbie"
 
-[node name="Quit" type="Button" parent="MainButtons" unique_id=1839224810]
+[node name="Tagline" type="Label" parent="Main/VBox"]
 layout_mode = 2
-text = "Quit
-"
+theme_type_variation = &"SubheaderLabel"
+text = "Построй деревню и продержись 30 дней"
 
-[node name="GenerationPanel" parent="." unique_id=460053737 instance=ExtResource("2_vxkf2")]
+[node name="Spacer" type="Control" parent="Main/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Main/VBox"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 12
+
+[node name="Continue" type="Button" parent="Main/VBox/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "Продолжить"
+
+[node name="ContinueHint" type="Label" parent="Main/VBox/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+horizontal_alignment = 1
+text_overrun_behavior = 3
+
+[node name="NewWorld" type="Button" parent="Main/VBox/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Новый мир"
+
+[node name="LoadWorld" type="Button" parent="Main/VBox/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Мои миры"
+
+[node name="Settings" type="Button" parent="Main/VBox/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Настройки"
+
+[node name="Quit" type="Button" parent="Main/VBox/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DangerButton"
+text = "Выход"
+
+[node name="GenerationPanel" parent="." instance=ExtResource("2_vxkf2")]
 visible = false
 layout_mode = 1
 
-[node name="WorldListPanel" parent="." unique_id=1079205760 instance=ExtResource("3_62lfh")]
+[node name="WorldListPanel" parent="." instance=ExtResource("3_62lfh")]
 visible = false
 layout_mode = 1
-
-[connection signal="pressed" from="MainButtons/NewWorld" to="." method="_on_new_world_pressed"]
-[connection signal="pressed" from="MainButtons/LoadWorld" to="." method="_on_load_world_pressed"]
-[connection signal="pressed" from="MainButtons/Quit" to="." method="_on_quit_pressed"]

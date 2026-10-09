@@ -1,23 +1,57 @@
 extends Control
 
-@onready var world_item: WorldListItem = preload("res://UI/prefabs/world_list_item.tscn").instantiate()
+signal back_requested
+signal create_requested
 
-func RenderWorldList(worldsList: Array[SimpleGeneratorData]):
-	for world: SimpleGeneratorData in worldsList:
-		SetWorldAtList(world)
+const ITEM := preload("res://UI/prefabs/world_list_item.tscn")
 
-func SetWorldAtList(world: SimpleGeneratorData):
-	var new_item: WorldListItem = world_item.duplicate()
-	new_item.WorldData = world
-	new_item.WorldDataPath = world.fullDataPath
-	new_item.WorldPreview.texture = ImageTexture.create_from_image(world.BiomeMap)
-	new_item.WorldSeed.value = world.seed
-	new_item.WorldName.text = world.WorldName
-	$MarginContainer2/VBoxContainer.add_child(new_item)
+@onready var list: VBoxContainer = %List
+@onready var scroll: ScrollContainer = %Scroll
+@onready var empty: Control = %Empty
+@onready var count: Label = %Count
 
-func _on_back_to_menu_button_down() -> void:
-	visible = false
-	var parent = get_parent()
-	if (is_instance_valid(parent)):
-		parent.get_node("MainButtons").visible = true
-		
+
+func _ready() -> void:
+	%Back.pressed.connect(back_requested.emit)
+	%Create.pressed.connect(create_requested.emit)
+
+
+func open() -> void:
+	show()
+	refresh()
+
+
+func refresh() -> void:
+	for child in list.get_children():
+		child.queue_free()
+	var worlds := WorldStore.list_worlds()
+	for world in worlds:
+		var item: WorldListItem = ITEM.instantiate()
+		list.add_child(item)
+		item.setup(world)
+		item.play_requested.connect(_on_play_requested)
+		item.delete_requested.connect(_ask_delete)
+	scroll.visible = not worlds.is_empty()
+	empty.visible = worlds.is_empty()
+	count.text = "Миров: %d" % worlds.size()
+	if worlds.is_empty():
+		%Create.grab_focus.call_deferred()
+	else:
+		%Back.grab_focus.call_deferred()
+
+
+func _on_play_requested(world: SimpleGeneratorData, fresh: bool) -> void:
+	if not fresh or not WorldStore.has_run(world):
+		WorldStore.play(world, fresh)
+		return
+	var day := WorldStore.run_day(world)
+	var body := "Сохранённая партия (день %d из 30) пропадёт." % day if day > 0 else "Сохранённая партия пропадёт."
+	Overlay.confirm("Начать партию заново?", body, "Начать", func() -> void:
+		WorldStore.delete_run(world)
+		WorldStore.play(world, true))
+
+
+func _ask_delete(world: SimpleGeneratorData) -> void:
+	Overlay.confirm("Удалить мир «%s»?" % world.WorldName, "Мир и его сохранение пропадут насовсем.", "Удалить", func() -> void:
+		WorldStore.delete(world)
+		refresh())

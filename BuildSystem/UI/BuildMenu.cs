@@ -61,9 +61,9 @@ public partial class BuildMenu : TabContainer
 		return list;
 	}
 
-	private record Card(Label Title, Label Info, Label Lock, HBoxContainer Buttons, TextureRect Icon);
+	private record Card(Label Title, Label Info, Label Lock, HFlowContainer Buttons, TextureRect Icon);
 
-	private static Card AddCard(VBoxContainer list, Texture2D icon)
+	private static Card AddCard(VBoxContainer list, Texture2D icon, int iconSize = 56)
 	{
 		PanelContainer panel = new() { ThemeTypeVariation = "InsetPanel" };
 		HBoxContainer row = new();
@@ -71,7 +71,7 @@ public partial class BuildMenu : TabContainer
 		TextureRect iconRect = new()
 		{
 			Texture = icon,
-			CustomMinimumSize = new Vector2(56, 56),
+			CustomMinimumSize = new Vector2(iconSize, iconSize),
 			ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
 			StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
 			Visible = icon != null,
@@ -81,7 +81,9 @@ public partial class BuildMenu : TabContainer
 		Label info = new() { ThemeTypeVariation = "SubtleLabel", AutowrapMode = TextServer.AutowrapMode.WordSmart };
 		Label lockLabel = new() { AutowrapMode = TextServer.AutowrapMode.WordSmart };
 		lockLabel.AddThemeColorOverride("font_color", LockColor);
-		HBoxContainer buttons = new() { Alignment = BoxContainer.AlignmentMode.End };
+		HFlowContainer buttons = new() { Alignment = FlowContainer.AlignmentMode.End };
+		buttons.AddThemeConstantOverride("h_separation", 8);
+		buttons.AddThemeConstantOverride("v_separation", 6);
 		text.AddChild(title);
 		text.AddChild(info);
 		text.AddChild(lockLabel);
@@ -113,6 +115,8 @@ public partial class BuildMenu : TabContainer
 		card.Lock.Text = reason;
 		card.Lock.Visible = reason != "";
 	}
+
+	private static Texture2D ResourceIcon(string kind) => GD.Load<Texture2D>($"res://UI/Icons/{kind}.png");
 
 	private static Texture2D BuildingIcon(string id, int level)
 	{
@@ -304,7 +308,7 @@ public partial class BuildMenu : TabContainer
 	private void BuildMarketTab(VBoxContainer list)
 	{
 		AddHeader(list, "Торговля");
-		Card market = AddCard(list, null);
+		Card market = AddCard(list, ResourceIcon(Economy.Coins), 48);
 		refreshers.Add(() =>
 		{
 			bool open = game.HasBuilding("Market");
@@ -315,7 +319,7 @@ public partial class BuildMenu : TabContainer
 
 		foreach (string kind in Economy.Tradable)
 		{
-			Card card = AddCard(list, null);
+			Card card = AddCard(list, ResourceIcon(kind), 48);
 			Button sell = AddButton(card.Buttons, () => game.Sell(kind));
 			Button buy = AddButton(card.Buttons, () => game.Buy(kind));
 			refreshers.Add(() =>

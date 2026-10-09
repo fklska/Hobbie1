@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://c2hd6o202acsw" path="res://BuildSystem/UI/BuildMenu.cs" id="2_ktfxd"]
 
 [node name="BuildMenu" type="TabContainer"]
-custom_minimum_size = Vector2(860, 560)
-offset_right = 718.0
-offset_bottom = 384.0
+custom_minimum_size = Vector2(600, 360)
+offset_right = 600.0
+offset_bottom = 360.0
 tab_alignment = 1
 script = ExtResource("2_ktfxd")

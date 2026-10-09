@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://dha5lmg13p5kc"]
+
+[ext_resource type="Script" uid="uid://bmf0tdf6hcnl3" path="res://UI/Overlay/loading_screen.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cugkwkpmc1ivo" path="res://UI/MainMenu/art/menu_bg.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://c4ldppni8osdy" path="res://UI/MainMenu/art/menu_clouds.png" id="3_clouds"]
+[ext_resource type="Shader" uid="uid://by7sq0rtmld4a" path="res://UI/MainMenu/art/menu_background.gdshader" id="4_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bg"]
+shader = ExtResource("4_shader")
+shader_parameter/clouds = ExtResource("3_clouds")
+
+[node name="LoadingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_bg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.03, 0.05, 0.45)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "Загрузка"
+horizontal_alignment = 1
+
+[node name="Stage" type="Label" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Bar" type="ProgressBar" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+max_value = 1.0
+
+[node name="HSeparator" type="HSeparator" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="Tip" type="Label" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+horizontal_alignment = 1
+autowrap_mode = 3

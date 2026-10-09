@@ -12,14 +12,14 @@
 ## Как запускается игра
 
 1. Главная сцена `world_environment.tscn` содержит только меню `UI/MainMenu/menu.tscn`.
-2. «Новый мир»: `UI/MainMenu/GenerationPanel.cs` берёт автозагрузку `GENERATOR` (`GeneratorV3`) и вызывает `Generate()`.
+2. «Новый мир»: `UI/MainMenu/generation_panel.gd` вызывает `GENERATOR.StartGeneration(полоса, имя, сид, размер)` и ждёт сигнал `GenerationFinished`. Шаги и сохранение `GeneratorV3.Generate` идут в `Task.Run`, этапы приходят сигналом `StageChanged` на экран загрузки.
 3. Генератор сохраняет мир в `user://SavedWorlds/` (константа `GenerationSettings.SAVED_WORLDS_DIR`):
    - `<имя>.tres`: полные данные (`GeneratorData`);
    - `__SIMPLE<имя>.tres`: краткие данные для списка миров (`SimpleGeneratorData`);
    - `<имя>.tscn`: сцена мира (`WorldScene`).
-4. «Загрузить мир»: `UI/prefabs/world_list_item.gd` вызывает `Game.StartWorld(путь к .tscn, точка спавна)`. `GameManager` кладёт в корень дерева сцену мира (узел `Map`), `Player/Player.tscn` и HUD `Game/game_hud.tscn`, прячет меню. `Restart()` и `ToMenu()` убирают всё это и начинают заново.
+4. «Мои миры» и «Продолжить»: `WorldStore.play()` (`UI/MainMenu/world_store.gd`) вызывает `Overlay.start_world()`, тот грузит сцену мира в потоке и вызывает `Game.ContinueRun` (есть сохранённая партия) или `Game.StartWorld(путь к .tscn, точка спавна)`. `GameManager` кладёт в корень дерева сцену мира (узел `Map`), `Player/Player.tscn` и HUD `Game/game_hud.tscn`, прячет меню. Пока на паузе грузятся чанки вокруг героя (`WorldScene.LoadedAround`, `LoadBudgetMs`), экран загрузки не закрывается. `Restart()` идёт через тот же `Overlay.start_world()`, `ToMenu()` убирает мир и возвращает меню.
 
-Автозагрузки (`project.godot`): `BuildMode` (`BuildSystem/build_mode.tscn`), `MouseInfoPanel`, `GlobalNavigation` (`Navigation/navigation.tscn`), `GENERATOR` (`ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn`), `Game` (`Game/GameManager.cs`), `Sound` (`Audio/SoundManager.cs`).
+Автозагрузки (`project.godot`): `BuildMode` (`BuildSystem/build_mode.tscn`), `MouseInfoPanel`, `GlobalNavigation` (`Navigation/navigation.tscn`), `GENERATOR` (`ProceduralGeneration/v3.1 BiggerSize/generator_v_3.1.tscn`), `Game` (`Game/GameManager.cs`), `Sound` (`Audio/SoundManager.cs`), `Overlay` (`UI/Overlay/overlay.tscn`: экран загрузки, пауза по Esc, настройки, окно подтверждения).
 
 ## Игровой цикл
 
@@ -57,7 +57,7 @@
 | `Game/` | `GameManager.cs` (состояние партии), `GameManager.Economy.cs` и `Economy.cs` (экономика), `GameManager.Survival.cs` и `Survival.cs` (выживание, сохранение партии), HUD `game_hud.tscn`. |
 | `AI/` | `Village/worker.tscn` — житель, `Enemies/` — мобы волн (`mob.gd`, гоблин, волк, скелет-лучник, орк) и стрела, `BaseClasses/Enemy/stone_giant.tscn` — босс, `RL/` — RL-контроллеры, модели и сцены обучения. Старое: `AI/training.tscn`, `AI/Prefabs/v2/`. |
 | `BuildSystem/` | Сетка (`Grid.cs`), меню строительства (`UI/BuildMenu.cs`), сцены зданий `buildings/`, скрипты `scripts/` (`building.gd`, `tower.gd`). Спрайты зданий в `Art/buildings/`. |
-| `UI/` | Меню, инвентарь (`UI/Inventory/*.cs`, хотбар на GDScript), тема `UI/theme.tres`, шрифт Kurland. |
+| `UI/` | Меню (`MainMenu/`), пауза, настройки и загрузка (`Overlay/`, настройки в `user://settings.cfg` через `GameSettings`), инвентарь (`UI/Inventory/*.cs`, хотбар на GDScript), тема `UI/theme.tres`, шрифт Kurland. Тема собирается из скина: `Skin/source/make_skin.py` рисует `Skin/*.png` и иконки `Icons/*.png`, `godot --headless --path . -s res://UI/Skin/source/build_theme.gd` пересобирает `theme.tres`. В сценах используй варианты темы (`PrimaryButton`, `HudPanel`, `HeaderLabel` и др.) вместо своих стилей. Окна в группе `closable_ui` закрываются по Esc раньше паузы. |
 | `Light/` | Смена дня и ночи: `DayNight/day_night.tscn` вложена в `Player.tscn`. `DayNightCycle` (`DayNightCycle.instance`, `hour`, `day`, сигналы `hour_changed`, `night_started`, `day_started`, `new_day`; статическое `DayNightCycle.night` от 0 до 1) задаёт палитру по часам, облака и туман рисует шейдер `sky.gdshader`. Ночной фонарь `night_lamp.tscn` вешается на здания из `BuildSystem/buildings/` автоматически, на другие узлы через группу `night_lamp_host` или вручную. `Debug/` — старая отладочная сцена. |
 | `Art/` | Своя графика игры: герой (`hero/`), мобы и гигант (`mobs/`), здания по уровням (`buildings/<id>_<уровень>.png`), ресурсы (`resources/`), оружие, стрела, монеты, артефакт (`items/`). `directional_sprite.gd` (`DirectionalSprite`) выбирает анимацию по направлению. Всё рисует генератор `tools/sprites/`. |
 | `Audio/` | Звук: автозагрузка `SoundManager.cs`, фоновая мелодия и джинглы в `music/`, звуки в `sfx/`, их генератор `tools/synth.py`, источники и лицензии в `CREDITS.md`. |

@@ -40,40 +40,80 @@ public partial class GeneratorV3 : Node2D
 		//GetCell();
 	}
 
-	public async Task Generate(ProgressBar progress)
+	[Signal] public delegate void StageChangedEventHandler(string stage, int index, int count);
+	[Signal] public delegate void GenerationFinishedEventHandler(bool success, string worldName);
+
+	public bool Busy { get; private set; }
+
+	public async void StartGeneration(ProgressBar progress, string worldName, int seed, int size)
 	{
-		Stopwatch generation = Stopwatch.StartNew();
-		Stopwatch resetData = Stopwatch.StartNew();
-		Stopwatch ExecuteStep = Stopwatch.StartNew();
-
-		progress.MaxValue = 2 + steps.Count;
-		genData.ResetData();
-		progress.Value++;
-		await ToSignal(GetTree(), "process_frame");
-		resetData.Stop();
-		GD.Print($"GEN data Reseted in {resetData}");
-
-		foreach (var step in steps)
+		GenerationSettings.MapSize = new Vector2I(size, size);
+		GenerationSettings.RecalculateSetting();
+		genData.seed = seed;
+		try
 		{
-			step.Execute(genData);
-			progress.Value++;
-			await ToSignal(GetTree(), "process_frame");
+			await Generate(progress, worldName);
+			EmitSignal(SignalName.GenerationFinished, true, genData.WorldName);
 		}
-		ExecuteStep.Stop();
-		GD.Print($"Every Step Executed in {ExecuteStep}");
+		catch (Exception e)
+		{
+			GD.PushError(e.ToString());
+			EmitSignal(SignalName.GenerationFinished, false, "");
+		}
+	}
 
-		DirAccess.MakeDirRecursiveAbsolute(GenerationSettings.SAVED_WORLDS_DIR);
-		ResourceSaver.Save(genData, $"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres");
+	public async Task Generate(ProgressBar progress, string worldName = null)
+	{
+		Busy = true;
+		Stopwatch generation = Stopwatch.StartNew();
+		int count = 3 + steps.Count;
+		int index = 0;
+		progress.MaxValue = count;
+		progress.Value = 0;
 
-		GeneratorData dupl = ResourceLoader.Load<GeneratorData>($"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres");
+		void Stage(string stage)
+		{
+			progress.Value = index;
+			EmitSignal(SignalName.StageChanged, stage, index, count);
+			index++;
+		}
 
-		GenerateScene(dupl);
+		try
+		{
+			Stage("reset");
+			await Task.Run(() =>
+			{
+				genData.ResetData();
+				if (!string.IsNullOrWhiteSpace(worldName)) genData.WorldName = worldName.Trim();
+			});
 
-		ResourceSaver.Save(dupl.ToSimpleData(), $"{GenerationSettings.SAVED_WORLDS_DIR}__SIMPLE{dupl.WorldName}.tres");
+			foreach (var step in steps)
+			{
+				Stage(step.GetType().Name);
+				await Task.Run(() => step.Execute(genData));
+			}
 
-		progress.Value++;
-		generation.Stop();
-		GD.Print($"Generated in {generation}");
+			Stage("save");
+			GeneratorData dupl = await Task.Run(() =>
+			{
+				DirAccess.MakeDirRecursiveAbsolute(GenerationSettings.SAVED_WORLDS_DIR);
+				ResourceSaver.Save(genData, $"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres");
+				return ResourceLoader.Load<GeneratorData>($"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres", null, ResourceLoader.CacheMode.Replace);
+			});
+
+			Stage("scene");
+			await Task.Run(() =>
+			{
+				GenerateScene(dupl);
+				ResourceSaver.Save(dupl.ToSimpleData(), $"{GenerationSettings.SAVED_WORLDS_DIR}__SIMPLE{dupl.WorldName}.tres");
+			});
+			progress.Value = count;
+		}
+		finally
+		{
+			Busy = false;
+		}
+		GD.Print($"Generated in {generation.Elapsed}");
 	}
 
 	public void ClearTileMapTemlate(TileMapLayer map)

@@ -1,9 +1,9 @@
 using Godot;
-using System.Linq;
+using System.Collections.Generic;
 
 public partial class GameHud : CanvasLayer
 {
-	[Export] public Label StockLabel;
+	[Export] public HBoxContainer StockBar;
 	[Export] public Label ObjectiveLabel;
 	[Export] public Label MessageLabel;
 	[Export] public Control BossPanel;
@@ -12,6 +12,9 @@ public partial class GameHud : CanvasLayer
 	[Export] public Label EndTitle;
 	[Export] public Label EndReason;
 
+	private static readonly Color FullColor = new(1f, 0.6f, 0.5f);
+
+	private readonly Dictionary<string, Label> stockLabels = new();
 	private double messageTimer;
 
 	public override void _Ready()
@@ -22,6 +25,7 @@ public partial class GameHud : CanvasLayer
 		game.ProgressChanged += UpdateStock;
 		game.Message += ShowMessage;
 		game.GameEnded += ShowEnd;
+		BuildStock();
 		UpdateStock();
 		UpdateObjective();
 	}
@@ -50,12 +54,37 @@ public partial class GameHud : CanvasLayer
 		}
 	}
 
+	private void BuildStock()
+	{
+		foreach (string kind in Economy.Resources)
+		{
+			HBoxContainer item = new() { TooltipText = Economy.ResourceTitles[kind], MouseFilter = Control.MouseFilterEnum.Pass };
+			item.AddThemeConstantOverride("separation", 6);
+			item.AddChild(new TextureRect
+			{
+				Texture = GD.Load<Texture2D>($"res://UI/Icons/{kind}.png"),
+				CustomMinimumSize = new Vector2(24, 24),
+				ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+				StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+				SizeFlagsVertical = Control.SizeFlags.ShrinkCenter,
+			});
+			Label label = new() { ThemeTypeVariation = "HudLabel" };
+			item.AddChild(label);
+			StockBar.AddChild(item);
+			stockLabels[kind] = label;
+		}
+	}
+
 	private void UpdateStock()
 	{
 		GameManager game = GameManager.Instance;
-		StockLabel.Text = string.Join("    ", Economy.Resources.Select(k => k == Economy.Coins
-			? $"{Economy.ResourceTitles[k]}: {game.GetStock(k)}"
-			: $"{Economy.ResourceTitles[k]}: {game.GetStock(k)}/{game.Capacity(k)}"));
+		foreach (var (kind, label) in stockLabels)
+		{
+			int amount = game.GetStock(kind);
+			bool capped = kind != Economy.Coins;
+			label.Text = capped ? $"{amount}/{game.Capacity(kind)}" : $"{amount}";
+			label.Modulate = capped && amount >= game.Capacity(kind) ? FullColor : Colors.White;
+		}
 	}
 
 	private void UpdateObjective()

@@ -1,108 +1,235 @@
-[gd_scene load_steps=2 format=3 uid="uid://pd4inyp1lk58"]
+[gd_scene format=3 uid="uid://pd4inyp1lk58"]
 
-[ext_resource type="Script" uid="uid://ci7ea2ggpub0n" path="res://UI/MainMenu/GenerationPanel.cs" id="1_qstll"]
+[ext_resource type="Script" uid="uid://63gp7vpkl45o" path="res://UI/MainMenu/generation_panel.gd" id="1_script"]
 
-[node name="GenerationPanel" type="Control" node_paths=PackedStringArray("heightMap", "heatMap", "moistureMap", "biomeMap", "seedLabel", "progressBar", "statusLabel")]
+[node name="GenerationPanel" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_qstll")
-heightMap = NodePath("VBoxContainer/HBoxContainer2/HeightMap")
-heatMap = NodePath("VBoxContainer/HBoxContainer2/HeatMap")
-moistureMap = NodePath("VBoxContainer/HBoxContainer2/MoistureMap")
-biomeMap = NodePath("VBoxContainer/HBoxContainer2/BiomeMap")
-seedLabel = NodePath("VBoxContainer/HBoxContainer/SeedLabel")
-progressBar = NodePath("VBoxContainer/ProgressBar")
-statusLabel = NodePath("VBoxContainer/StatusLabel")
-metadata/_edit_use_anchors_ = true
+script = ExtResource("1_script")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(512, 0)
+[node name="Center" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -158.0
-offset_right = 256.0
-offset_bottom = 158.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(900, 0)
 layout_mode = 2
-max_value = 5.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
 layout_mode = 2
-alignment = 1
+theme_override_constants/separation = 10
 
-[node name="SeedLabel" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_type_variation = &"HeaderLabel"
+text = "Новый мир"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Center/Panel/VBox"]
+layout_mode = 2
+
+[node name="Body" type="HBoxContainer" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Form" type="VBoxContainer" parent="Center/Panel/VBox/Body"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NameLabel" type="Label" parent="Center/Panel/VBox/Body/Form"]
+layout_mode = 2
+theme_type_variation = &"SubheaderLabel"
+text = "Название"
+
+[node name="NameRow" type="HBoxContainer" parent="Center/Panel/VBox/Body/Form"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="LineEdit" parent="Center/Panel/VBox/Body/Form/NameRow"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-step = 1000.0
-value = -1.71488e+08
+placeholder_text = "Название мира"
+max_length = 40
+
+[node name="RandomName" type="Button" parent="Center/Panel/VBox/Body/Form/NameRow"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Придумать другое название"
+text = "Другое"
+
+[node name="SeedLabel" type="Label" parent="Center/Panel/VBox/Body/Form"]
+layout_mode = 2
+theme_type_variation = &"SubheaderLabel"
+text = "Сид"
+
+[node name="SeedRow" type="HBoxContainer" parent="Center/Panel/VBox/Body/Form"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Seed" type="SpinBox" parent="Center/Panel/VBox/Body/Form/SeedRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 2147483646.0
+rounded = true
 allow_greater = true
 allow_lesser = true
-alignment = 1
-prefix = "Seed"
+tooltip_text = "Один и тот же сид даёт одинаковый мир"
 
-[node name="NewSeed" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="RandomSeed" type="Button" parent="Center/Panel/VBox/Body/Form/SeedRow"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Новый Seed"
+tooltip_text = "Случайный сид"
+text = "Другой"
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer"]
+[node name="SizeLabel" type="Label" parent="Center/Panel/VBox/Body/Form"]
 layout_mode = 2
-min_value = 1.0
-max_value = 3.0
-value = 1.0
+theme_type_variation = &"SubheaderLabel"
+text = "Размер"
 
-[node name="Generate" type="Button" parent="VBoxContainer"]
+[node name="SizeRow" type="HBoxContainer" parent="Center/Panel/VBox/Body/Form"]
 layout_mode = 2
-size_flags_vertical = 4
-text = "Generate"
+theme_override_constants/separation = 4
 
-[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+[node name="Small" type="Button" parent="Center/Panel/VBox/Body/Form/SizeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Малый"
+
+[node name="Medium" type="Button" parent="Center/Panel/VBox/Body/Form/SizeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Средний"
+
+[node name="Large" type="Button" parent="Center/Panel/VBox/Body/Form/SizeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Большой"
+
+[node name="SizeHint" type="Label" parent="Center/Panel/VBox/Body/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="Center/Panel/VBox/Body/Form"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Status" type="Label" parent="Center/Panel/VBox/Body/Form"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ValueLabel"
+autowrap_mode = 3
+
+[node name="Preview" type="VBoxContainer" parent="Center/Panel/VBox/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="MapFrame" type="PanelContainer" parent="Center/Panel/VBox/Body/Preview"]
+custom_minimum_size = Vector2(0, 340)
+layout_mode = 2
+theme_type_variation = &"InsetPanel"
+
+[node name="Map" type="TextureRect" parent="Center/Panel/VBox/Body/Preview/MapFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Placeholder" type="Label" parent="Center/Panel/VBox/Body/Preview/MapFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SubtleLabel"
+text = "Здесь появится карта нового мира"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Layers" type="HBoxContainer" parent="Center/Panel/VBox/Body/Preview"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Biomes" type="Button" parent="Center/Panel/VBox/Body/Preview/Layers"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Биомы"
+
+[node name="Height" type="Button" parent="Center/Panel/VBox/Body/Preview/Layers"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Высоты"
+
+[node name="Heat" type="Button" parent="Center/Panel/VBox/Body/Preview/Layers"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Тепло"
+
+[node name="Moisture" type="Button" parent="Center/Panel/VBox/Body/Preview/Layers"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"TabButton"
+toggle_mode = true
+text = "Влажность"
+
+[node name="HSeparator2" type="HSeparator" parent="Center/Panel/VBox"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 128)
+[node name="Footer" type="HBoxContainer" parent="Center/Panel/VBox"]
 layout_mode = 2
-alignment = 1
+theme_override_constants/separation = 12
 
-[node name="HeightMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-expand_mode = 3
-stretch_mode = 4
-
-[node name="HeatMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-expand_mode = 3
-stretch_mode = 4
-
-[node name="MoistureMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-expand_mode = 3
-stretch_mode = 4
-
-[node name="BiomeMap" type="TextureRect" parent="VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-expand_mode = 3
-stretch_mode = 4
-
-[node name="BackToMenu" type="Button" parent="VBoxContainer"]
+[node name="Back" type="Button" parent="Center/Panel/VBox/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 text = "Назад"
-metadata/_edit_use_anchors_ = true
 
-[connection signal="value_changed" from="VBoxContainer/HBoxContainer/SeedLabel" to="." method="_on_seed_label_value_changed"]
-[connection signal="button_down" from="VBoxContainer/HBoxContainer/NewSeed" to="." method="_on_new_seed_button_down"]
-[connection signal="value_changed" from="VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
-[connection signal="button_down" from="VBoxContainer/Generate" to="." method="_on_generate_button_down"]
-[connection signal="button_down" from="VBoxContainer/BackToMenu" to="." method="_on_back_to_menu_button_down"]
+[node name="Spacer" type="Control" parent="Center/Panel/VBox/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Generate" type="Button" parent="Center/Panel/VBox/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "Создать мир"
+
+[node name="Play" type="Button" parent="Center/Panel/VBox/Footer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "Играть"

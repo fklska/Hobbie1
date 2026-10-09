@@ -37,8 +37,8 @@ bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, sampler2D texture) {
 				}
 			}
 		}
-		return false;
 	}
+	return false;
 }
 
 void fragment() {
