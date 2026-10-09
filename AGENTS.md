@@ -66,6 +66,7 @@
 | `addons/` | `TileMapDual` (dual-grid тайлмапы), `AS2P`, `godot_rl_agents`. Сторонний код, правки только при необходимости. |
 | `kenney_medieval-rts/`, `UI/UIAssets/` | Сторонние ассет-паки. Используется малая часть, остальное оставлено как запас. Новую графику брать из `Art/`. |
 | `tools/` | Инструменты вне игры (`.gdignore`): `tools/sprites/` — генератор спрайтов на Python. |
+| `docs/` | Гифки и видео для `README.md` (`.gdignore`): `docs/updates/<версия>.gif` и `.mp4`. |
 
 Опечатки в именах (`Resourses`, `Enviroment`, `GDScrpt`, `CoatsLineStep`) исторические. Не переименовывать без необходимости: пути зашиты в сцены и код.
 
