@@ -50,7 +50,6 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	public override void _Process(double delta)
 	{
 		if (IsDead) return;
-		UpdateChunks();
 		RenderingServer.GlobalShaderParameterSet("hero_position", GlobalPosition);
 		HandAction(delta);
 		HandAttack(delta);
@@ -179,11 +178,6 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		else anim.Call("play_dir", "idle", Vector2.Zero);
 	}
 
-	public void UpdateChunks()
-	{
-		if (IsInstanceValid(WorldScene)) WorldScene.UpdateChunkAroundPlayer(GlobalPosition);
-	}
-
 	public void HandAction(double delta)
 	{
 		if (Input.IsMouseButtonPressed(MouseButton.Left) && !Grid.buildMode) 
@@ -199,15 +193,12 @@ public partial class PlayerMainCharacter : CharacterBody2D
 					return;
 				}
 
-				Vector2I chunk = Utils.GetChunkCoords(clickPos);
-				Vector2I localCell = Utils.GetLocalCell(clickPos);
+				ResorseType resource = WorldScene.GetResourceAt(globalCell);
 
-				Tile tile = WorldScene.getTile(chunk, localCell);
-
-				if (tile.Resourse != ResorseType.None)
+				if (resource != ResorseType.None)
 				{
 					EnableParticle(miningParticle, clickPos);
-					SoundManager.Instance.PlayEvery(SoundManager.Instance.HarvestSound(tile.Resourse), clickPos, 0.33f);
+					SoundManager.Instance.PlayEvery(SoundManager.Instance.HarvestSound(resource), clickPos, 0.33f);
 					ActionProgress.Value += delta * STRENCH * 10 * GameManager.Instance.ToolSpeed;
 
 					if (ActionProgress.Value >= 100.0f)
@@ -249,7 +240,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	{
 		if (GlobalPosition.DistanceSquaredTo(coords) > SquareActionRadius) return false;
 
-		if (coords.X < 0 || coords.Y < 0 || coords > WorldScene.GeneratorData.mapSize * GenerationSettings.TILE_SIZE)
+		if (coords.X < 0 || coords.Y < 0 || coords.X >= WorldScene.MapSize.X * GenerationSettings.TILE_SIZE || coords.Y >= WorldScene.MapSize.Y * GenerationSettings.TILE_SIZE)
 		{
 			GD.PrintErr("OutOfMap");
 			return false;

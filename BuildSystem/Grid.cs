@@ -79,10 +79,10 @@ public partial class Grid : Node2D
 
 	public bool IsAbleToPlace(Vector2I cell)
 	{
-		Tile tile = WorldScene?.GetTileAt(cell);
-		if (tile == null) return false;
+		WorldScene world = WorldScene;
+		if (!IsInstanceValid(world) || world.Map == null || !world.Map.InBounds(cell)) return false;
 
-		return !BanTilesToPlace.Contains(tile.Type) && tile.Resourse == ResorseType.None;
+		return !BanTilesToPlace.Contains(world.GetBiomeAt(cell)) && world.GetResourceAt(cell) == ResorseType.None;
 	}
 
 	public override void _Draw()

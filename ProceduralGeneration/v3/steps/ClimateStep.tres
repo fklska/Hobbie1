@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ClimateStep" format=3 uid="uid://cny307sl3bhwv"]
+
+[ext_resource type="Script" uid="uid://de66ur5ndnp34" path="res://ProceduralGeneration/v3/steps/ClimateStep.cs" id="1_step"]
+
+[resource]
+script = ExtResource("1_step")

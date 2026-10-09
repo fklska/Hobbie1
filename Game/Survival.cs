@@ -195,7 +195,7 @@ public partial class Survival : Node
 	private Vector2 SpawnPoint(Vector2 center, Vector2 direction)
 	{
 		Vector2 point = center + direction * (SpawnDistance + (float)GD.RandRange(0.0, 200.0));
-		Vector2 size = game.World.GeneratorData.mapSize * GenerationSettings.TILE_SIZE;
+		Vector2 size = game.World.MapSize * GenerationSettings.TILE_SIZE;
 		return game.World.ReachableNear(point.Clamp(Vector2.One * 64f, size - Vector2.One * 64f), center);
 	}
 
@@ -311,14 +311,7 @@ public partial class Survival : Node
 		game.Player.AddToGroup("village");
 	}
 
-	public void LoadAround(Vector2 at)
-	{
-		WorldScene world = game.World;
-		Vector2I chunk = GenerationUtils.PixelToChunkCoord(at);
-		foreach (Vector2I c in GenerationUtils.ChunckAreaCoords(chunk, 4))
-			_ = world.LoadChunk(c, world.MainTileMapPrefab, world.EnviromentLayer, world.Enviroment, world.Enviroment);
-		world.lastPlayerCell = chunk;
-	}
+	public void LoadAround(Vector2 at) => game.World.LoadAround(at);
 
 	private void RegenBase(double delta)
 	{

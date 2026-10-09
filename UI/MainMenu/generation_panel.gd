@@ -3,21 +3,19 @@ extends Control
 signal back_requested
 
 const SIZES := [
-	[128, "Малый", "128×128 тайлов, создаётся за несколько секунд."],
-	[256, "Средний", "256×256 тайлов, создаётся около 20 секунд."],
-	[384, "Большой", "384×384 тайла, создаётся около минуты."],
+	[128, "Малый", "128×128 тайлов, один остров."],
+	[256, "Средний", "256×256 тайлов, остров с заливами и озёрами."],
+	[384, "Большой", "384×384 тайла, большой остров и архипелаг."],
 ]
 
 const STAGES := {
-	"reset": "Подготовка карты",
-	"BasicLandScapeStep": "Рельеф, климат и биомы",
-	"CoastLineStep": "Береговая линия",
-	"EnviromnetGenerationStep": "Леса и залежи руды",
+	"ReliefStep": "Рельеф и острова",
+	"RiverStep": "Реки и озёра",
+	"ClimateStep": "Климат и биомы",
+	"CoastStep": "Пляжи и мелководье",
+	"ResourceStep": "Леса, руда и место старта",
 	"save": "Сохранение мира",
-	"scene": "Сборка сцены",
 }
-
-const LAYERS := ["BiomeMap", "HeightMap", "HeatMap", "MoistureMap"]
 
 const NOUNS := [
 	["долина", 1], ["край", 0], ["остров", 0], ["земля", 1], ["пустошь", 1], ["лес", 0],
@@ -139,7 +137,7 @@ func generate() -> void:
 	reset_preview()
 	var world_name := unique_name(name_edit.text)
 	name_edit.text = world_name
-	Overlay.loading.open("Создание мира «%s»" % world_name, STAGES["reset"])
+	Overlay.loading.open("Создание мира «%s»" % world_name, STAGES["ReliefStep"])
 	await get_tree().process_frame
 	GENERATOR.StartGeneration(Overlay.loading.bar, world_name, int(seed_box.value), SIZES[size_index][0])
 	var result: Array = await GENERATOR.GenerationFinished
@@ -149,9 +147,10 @@ func generate() -> void:
 		status.text = "Не удалось создать мир. Подробности в логе."
 		return
 	created_world = result[1]
-	var data = GENERATOR.genData
-	for layer in LAYERS:
-		layers.append(ImageTexture.create_from_image(data.get(layer)))
+	for i in layer_buttons.size():
+		var image: Image = GENERATOR.GetLayer(i)
+		if image != null:
+			layers.append(ImageTexture.create_from_image(image))
 	for button in layer_buttons:
 		button.disabled = false
 	placeholder.hide()

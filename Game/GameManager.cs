@@ -54,11 +54,20 @@ public partial class GameManager : Node
 		Window root = GetTree().Root;
 		World = GD.Load<PackedScene>(scenePath).Instantiate<WorldScene>();
 		root.AddChild(World);
+		if (World.Map == null)
+		{
+			root.RemoveChild(World);
+			World.QueueFree();
+			World = null;
+			worldScenePath = null;
+			return;
+		}
 
 		spawnPoint = spawn = World.SafeSpawn(spawn);
 		Player = GD.Load<PackedScene>("res://Player/Player.tscn").Instantiate<PlayerMainCharacter>();
 		Player.Position = spawn;
 		EntitiesRoot.AddChild(Player);
+		World.FocusTarget = Player;
 
 		hud = GD.Load<PackedScene>("res://Game/game_hud.tscn").Instantiate<CanvasLayer>();
 		root.AddChild(hud);

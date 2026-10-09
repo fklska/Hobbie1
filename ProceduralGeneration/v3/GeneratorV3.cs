@@ -1,59 +1,32 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-[Tool]
 [GlobalClass]
-public partial class GeneratorV3 : Node2D
+public partial class GeneratorV3 : Node
 {
-	[Export] public GeneratorData genData;
 	[Export] public Godot.Collections.Array<GenerationStep> steps;
-	[Export] public string LandDualMapPath;
-	public TileMapLayer MainTileMapPrefab;
-
-	[Export] public string EnviromentTileMapPath;
-	public TileMapLayer EnvirometLayer;
-
-	[Export] public Node2D ResorseNode; 
-
-	[Export] public TextureRect FinalMap;
-	[Export] public TextureRect HeightMap, HeatMap, MoistureMap;
-	[Export] public TextureRect DebugLatitudeMask, DebugHeatFractal, DebugLatFractalMask;
-	[Export] public TextureRect DebugMoistureFractal;
-
-
-	public override void _Ready()
-	{
-		genData.ResetData();
-		MainTileMapPrefab = (TileMapLayer)GD.Load<PackedScene>(LandDualMapPath).Instantiate();
-		EnvirometLayer = (TileMapLayer)GD.Load<PackedScene>(EnviromentTileMapPath).Instantiate();
-	}
-
-	public override void _Process(double delta)
-	{
-		base._Process(delta);
-		//GetCell();
-	}
+	[Export] public Gradient HeightGradient;
+	[Export] public Gradient HeatGradient;
+	[Export] public Gradient MoistureGradient;
 
 	[Signal] public delegate void StageChangedEventHandler(string stage, int index, int count);
 	[Signal] public delegate void GenerationFinishedEventHandler(bool success, string worldName);
+	[Signal] public delegate void WorldUpgradedEventHandler(string scenePath, bool success);
 
 	public bool Busy { get; private set; }
 
+	private Image[] layers = Array.Empty<Image>();
+
+	public Image GetLayer(int index) => index >= 0 && index < layers.Length ? layers[index] : null;
+
 	public async void StartGeneration(ProgressBar progress, string worldName, int seed, int size)
 	{
-		GenerationSettings.MapSize = new Vector2I(size, size);
-		GenerationSettings.RecalculateSetting();
-		genData.seed = seed;
 		try
 		{
-			await Generate(progress, worldName);
-			EmitSignal(SignalName.GenerationFinished, true, genData.WorldName);
+			string name = await Generate(progress, worldName, seed, size);
+			EmitSignal(SignalName.GenerationFinished, true, name);
 		}
 		catch (Exception e)
 		{
@@ -62,192 +35,78 @@ public partial class GeneratorV3 : Node2D
 		}
 	}
 
-	public async Task Generate(ProgressBar progress, string worldName = null)
+	public async Task<string> Generate(ProgressBar progress, string worldName, int seed, int size)
 	{
 		Busy = true;
-		Stopwatch generation = Stopwatch.StartNew();
-		int count = 3 + steps.Count;
+		Stopwatch watch = Stopwatch.StartNew();
+		string name = string.IsNullOrWhiteSpace(worldName) ? GenerationUtils.GenerateNameWorld() : worldName.Trim();
+		int count = steps.Count + 1;
 		int index = 0;
-		progress.MaxValue = count;
-		progress.Value = 0;
+		if (progress != null)
+		{
+			progress.MaxValue = count;
+			progress.Value = 0;
+		}
 
 		void Stage(string stage)
 		{
-			progress.Value = index;
+			if (progress != null) progress.Value = index;
 			EmitSignal(SignalName.StageChanged, stage, index, count);
 			index++;
 		}
 
 		try
 		{
-			Stage("reset");
-			await Task.Run(() =>
-			{
-				genData.ResetData();
-				if (!string.IsNullOrWhiteSpace(worldName)) genData.WorldName = worldName.Trim();
-			});
-
-			foreach (var step in steps)
+			var gen = new WorldGen(size, size, seed);
+			foreach (GenerationStep step in steps)
 			{
 				Stage(step.GetType().Name);
-				await Task.Run(() => step.Execute(genData));
+				await Task.Run(() => step.Execute(gen));
 			}
 
 			Stage("save");
-			GeneratorData dupl = await Task.Run(() =>
-			{
-				DirAccess.MakeDirRecursiveAbsolute(GenerationSettings.SAVED_WORLDS_DIR);
-				ResourceSaver.Save(genData, $"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres");
-				return ResourceLoader.Load<GeneratorData>($"{GenerationSettings.SAVED_WORLDS_DIR}{genData.WorldName}.tres", null, ResourceLoader.CacheMode.Replace);
-			});
-
-			Stage("scene");
 			await Task.Run(() =>
 			{
-				GenerateScene(dupl);
-				ResourceSaver.Save(dupl.ToSimpleData(), $"{GenerationSettings.SAVED_WORLDS_DIR}__SIMPLE{dupl.WorldName}.tres");
+				WorldMap map = gen.ToMap(name);
+				Image preview = map.Preview();
+				layers = new[]
+				{
+					preview,
+					gen.Layer(gen.Elevation, HeightGradient),
+					gen.Layer(gen.Temperature, HeatGradient),
+					gen.Layer(gen.Moisture, MoistureGradient),
+				};
+				Error error = WorldFiles.Save(map, name, preview);
+				if (error != Error.Ok) throw new Exception($"Не удалось сохранить мир «{name}»: {error}");
 			});
-			progress.Value = count;
+			if (progress != null) progress.Value = count;
 		}
 		finally
 		{
 			Busy = false;
 		}
-		GD.Print($"Generated in {generation.Elapsed}");
+		GD.Print($"Generated {name} ({size}x{size}, seed {seed}) in {watch.Elapsed}");
+		return name;
 	}
 
-	public void ClearTileMapTemlate(TileMapLayer map)
+	public bool NeedsUpgrade(string scenePath) => WorldFiles.NeedsUpgrade(scenePath);
+
+	public async void UpgradeWorld(string scenePath)
 	{
-		map.Clear();
+		bool ok;
+		try
+		{
+			ok = await Task.Run(() => WorldFiles.Upgrade(scenePath));
+		}
+		catch (Exception e)
+		{
+			GD.PushError(e.ToString());
+			ok = false;
+		}
+		EmitSignal(SignalName.WorldUpgraded, scenePath, ok);
 	}
 
-	public void preRender(GeneratorData genData)
-	{
-		HeightMap.Texture = ImageTexture.CreateFromImage(genData.HeightMap);
-		HeatMap.Texture = ImageTexture.CreateFromImage(genData.HeatMap);
-		MoistureMap.Texture = ImageTexture.CreateFromImage(genData.MoistureMap);
+	public bool UpgradeWorldNow(string scenePath) => WorldFiles.Upgrade(scenePath);
 
-		DebugLatitudeMask.Texture = ImageTexture.CreateFromImage(genData.DebugLatitudeMask);
-		DebugHeatFractal.Texture = ImageTexture.CreateFromImage(genData.DebugHeatFractal);
-		DebugLatFractalMask.Texture = ImageTexture.CreateFromImage(genData.DebugLatFractal);
-
-		DebugMoistureFractal.Texture = ImageTexture.CreateFromImage(genData.DebugMoistureFractal);
-
-		Image finalRender = Image.CreateEmpty(genData.mapSize.X, genData.mapSize.Y, false, Image.Format.Rgba8);
-
-		for (int chunk_x = 0; chunk_x < GenerationSettings.MAP_CHUNK_SIZE_X; chunk_x++)
-		{
-			for (int chunk_y = 0; chunk_y < GenerationSettings.MAP_CHUNK_SIZE_Y; chunk_y++)
-			{
-				ChunkData chunk = genData.ChunkMap[chunk_x][chunk_y];
-				int local_x = 0;
-				for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
-				{
-					int local_y = 0;
-					for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
-					{
-						//GD.Print($"Coords: {x} {y}");
-						finalRender.SetPixel(x, y, GenerationUtils.getTileTypeColor(chunk.Map[local_x][local_y].Type));
-						local_y++;
-					}
-					local_x++;
-				}
-			}
-		}
-		FinalMap.Texture = ImageTexture.CreateFromImage(finalRender);
-	}
-	
-
-	public void MapRender(GeneratorData genData, TileMapLayer map, Node2D ResourseRootNode, Node2D owner)
-	{
-		ClearTileMapTemlate(map);
-
-		for (int x = 0; x < genData.mapSize.X; x++)
-		{
-			for (int y = 0; y < genData.mapSize.Y; y++)
-			{
-				//map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(genData.Map[x][y].Type), new Vector2I(2, 1), 0);
-
-				ResorseType currType = ResorseType.None; //genData.Map[x][y].Resourse;
-				if (currType != ResorseType.None)
-				{
-					Node2D prefab = new Node2D(); //(Node2D)GenerationUtils.getResorsePrefabByType(genData.Map[x][y].Resourse).Instantiate();
-					Vector2 offset = new Vector2I(GD.RandRange(-50, 50), GD.RandRange(-50, 50));
-					prefab.Position = new Vector2(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE); //+ offset;
-					ResourseRootNode.AddChild(prefab);
-					prefab.Owner = owner;
-				}
-			}
-		}
-	}
-
-	public void GenerateScene(GeneratorData genData)
-	{
-		var PackedScene = new PackedScene();
-		WorldScene Map = (WorldScene)GenerationUtils.SetUpWorldNode("Map", genData);
-		TileMapLayer MainMap = (TileMapLayer)GenerationUtils.SetNode2d("DualMap", MainTileMapPrefab, Map);
-		TileMapLayer EnvMap = (TileMapLayer)GenerationUtils.SetNode2d("EnviromentLayer", EnvirometLayer, Map);
-
-		Node2D Enviroment = GenerationUtils.SetNode2d("Enviroment", Map);
-
-		//MapRender(genData, MainMap, Enviroment, Map);
-
-		PackedScene.Pack(Map);
-
-		ResourceSaver.Save(PackedScene, $"{GenerationSettings.SAVED_WORLDS_DIR}{Map.WorldName}.tscn");
-	}
-
-	public override void _Input(InputEvent @event)
-	{
-		/*if(!Engine.IsEditorHint())
-		{
-			if (@event.IsActionPressed("LeftMouseButton"))
-			{
-				LoadChunk(GenerationUtils.PixelToChunkCoord(GetGlobalMousePosition()), MainTileMapPrefab, ResorseNode, MainTileMapPrefab);
-			}
-
-			if (@event.IsActionPressed("RightMouseButton"))
-			{
-				UnloadChunk(GenerationUtils.PixelToChunkCoord(GetGlobalMousePosition()), MainTileMapPrefab);
-			}
-		}
-		
-		if (@event.IsActionPressed("LeftMouseButton"))
-		{
-			Vector2I coords = MainTileMapPrefab.LocalToMap(GetGlobalMousePosition());
-			float heightValue = genData.Map[coords.X, coords.Y].heightValue;
-			float heatValue = genData.Map[coords.X, coords.Y].heatValue;
-			float moistureValue = genData.Map[coords.X, coords.Y].moistureValue;
-			GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\n", [coords, heightValue, heatValue, moistureValue]));
-		}
-
-		if (@event.IsActionPressed("DEBUG"))
-		{
-			GD.Print("WORK");
-			foreach (var step in steps)
-			{
-				step.Execute(genData);
-			}
-			_Ready();
-		}
-		*/
-
-	}
-
-	[Export] public bool DebugInfo;
-	public Vector2I lastcell = Vector2I.Zero;
-	public void GetCell()
-	{
-		Vector2 mouseCoor = GetGlobalMousePosition();
-		Vector2I cell = MainTileMapPrefab.LocalToMap(mouseCoor);
-		if (cell.X < genData.mapSize.X && cell.Y < genData.mapSize.Y && DebugInfo && cell != lastcell)
-		{
-			lastcell = cell;
-			//float height = genData.Map[cell.X][cell.Y].heightValue;
-			//float heat = genData.Map[cell.X][cell.Y].heatValue;
-			//float moisture = genData.Map[cell.X][cell.Y].moistureValue;
-			//TileType tileType = genData.Map[cell.X][cell.Y].Type;
-			//GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
-		}
-	}
+	public void DeleteWorld(string scenePath) => WorldFiles.Delete(scenePath);
 }

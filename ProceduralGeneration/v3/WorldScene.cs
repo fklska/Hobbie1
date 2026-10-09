@@ -1,44 +1,48 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-[Tool]
 [GlobalClass]
 public partial class WorldScene : Node2D
 {
 	[Signal] public delegate void TileHarvestedEventHandler(Vector2I cell, ResorseType type);
 
-	[Export] public GeneratorData GeneratorData;
-	[Export] public string GenDataPath;
-	[Export] public string WorldName;
-	[Export] public int WorldSeed;
-	[Export] public Texture2D WorldPreview;
-
-	[Export] public bool DebugInfo;
-
-	public TileMapLayer MainTileMapPrefab;
-	public TileMapLayer EnviromentLayer;
-	public Node2D Enviroment;
-	public Node2D Navigator;
-
-	public Vector2I lastPlayerCell;
-
-	public HashSet<Vector2I> currentActiveChunkMap = new HashSet<Vector2I>();
-	private readonly HashSet<Vector2I> loadedChunks = new HashSet<Vector2I>();
+	[Export] public string WorldPath;
 
 	public const int ObjectsZ = 2;
+	public const int LoadRadius = 4;
+	public const int KeepRadius = 5;
+	public const double FrameBudgetMs = 3;
 
+	public WorldMap Map { get; private set; }
+	public string WorldName = "";
+	public int WorldSeed;
+
+	public TileMapLayer Ground;
+	public TileMapLayer Edges;
+	public TileMapLayer EnviromentLayer;
+	public Node2D Enviroment;
+
+	public Node2D FocusTarget;
 	public double LoadBudgetMs;
-	private ulong sliceFrame;
-	private ulong sliceStart;
+
+	private TerrainRules rules;
+	private Vector2 focus;
+	private Vector2I focusChunk = new(int.MinValue, int.MinValue);
+	private readonly HashSet<Vector2I> loaded = new();
+	private readonly List<Vector2I> pending = new();
+	private readonly List<Vector2I> stale = new();
+
+	public Vector2I MapSize => Map?.Size ?? Vector2I.Zero;
+
+	public override void _EnterTree() => GetTree().ProcessFrame += Stream;
+
+	public override void _ExitTree() => GetTree().ProcessFrame -= Stream;
 
 	public override void _Ready()
 	{
-		base._Ready();
-		GenerationSettings.MapSize = GeneratorData.mapSize;
-		GenerationSettings.RecalculateSetting();
-		MainTileMapPrefab = GetNode<TileMapLayer>("DualMap");
+		Ground = GetNode<TileMapLayer>("Terrain/Ground");
+		Edges = GetNode<TileMapLayer>("Terrain/Edges");
 		EnviromentLayer = GetNode<TileMapLayer>("EnviromentLayer");
 		Enviroment = GetNode<Node2D>("Enviroment");
 		YSortEnabled = true;
@@ -46,218 +50,185 @@ public partial class WorldScene : Node2D
 		EnviromentLayer.ZIndex = ObjectsZ;
 		Enviroment.YSortEnabled = true;
 		Enviroment.ZIndex = 0;
-		GeneratorData = ResourceLoader.Load<GeneratorData>(GenDataPath, null, ResourceLoader.CacheMode.Ignore);
-		if (!Engine.IsEditorHint()) SetUpWater();
-		// Navigator = GetTree().Root.GetNode<Node2D>("GlobalNavigation");
-		InitionalChunkLoad();
-	}
 
-	public override void _Process(double delta)
-	{
-		base._Process(delta);
-		GetCell();
-	}
-
-	public async void InitionalChunkLoad()
-	{
-		Vector2I center = GenerationUtils.PixelToChunkCoord(SafeSpawn(GeneratorData.SpawnPoint));
-		List<Vector2I> chunks = new List<Vector2I>(GenerationUtils.ChunckAreaCoords(center, 4));
-		chunks.Sort((a, b) => (a - center).LengthSquared().CompareTo((b - center).LengthSquared()));
-		foreach (Vector2I chunk in chunks)
-		{   
-			await LoadChunk(chunk, MainTileMapPrefab, EnviromentLayer, Enviroment, Enviroment);
-			// Navigator.Call("bake_navigation_on_cell", chunk);
-		}
-		lastPlayerCell = center;
-	}
-
-	public async Task LoadChunk(Vector2I chunkCoord, TileMapLayer map, TileMapLayer EnvLayer, Node2D ResourseRootNode, Node2D owner)
-	{
-		if (chunkCoord.X > GenerationSettings.MAP_CHUNK_SIZE_X || chunkCoord.Y > GenerationSettings.MAP_CHUNK_SIZE_Y)
+		Map = WorldMap.Load(WorldPath);
+		if (Map == null)
 		{
-			GD.PrintErr("Out of Map");
+			GD.PushError($"Не удалось прочитать мир {WorldPath}");
 			return;
 		}
-
-		ChunkData chunk = GeneratorData.ChunkMap[chunkCoord.X][chunkCoord.Y];
-
-		if (chunk.Active == true) { return; }
-
-		chunk.Active = true;
-		currentActiveChunkMap.Add(chunkCoord);
-		int local_x = 0;
-		for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
-		{
-			int local_y = 0;
-			for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
-			{
-				map.SetCell(new Vector2I(x, y), GenerationUtils.getTileTypeAtlas(chunk.Map[local_x][local_y].Type), new Vector2I(2, 1), 0);
-				
-				ResorseType currType = chunk.Map[local_x][local_y].Resourse;
-				if (currType != ResorseType.None)
-				{ 
-					EnvLayer.SetCell(new Vector2I(x, y), GenerationUtils.getResorseAtlacByType(currType), new Vector2I(0, 0), 0); 
-				}
-				// !!!OLD
-				//GD.Print($"Coord: {x} {y}; Type: {currType}");
-				/*if (currType != ResorseType.None)
-				{
-					Node2D prefab = (Node2D)GenerationUtils.getResorsePrefabByType(chunk.Map[local_x][local_y].Resourse).Instantiate();
-					//Vector2 offset = new Vector2I(GD.RandRange(-50, 50), GD.RandRange(-50, 50));
-					chunk.Resourses.Add(prefab);
-					prefab.Position = new Vector2(x * GenerationUtils.TILE_SIZE, y * GenerationUtils.TILE_SIZE); //+ offset;
-
-					ResourseRootNode.CallDeferred("add_child", prefab);
-					//prefab.Owner = owner;
-				}*/
-
-				local_y++;
-			}
-			local_x++;
-
-			await NextColumn();
-		}
-		if (chunk.Active) loadedChunks.Add(chunkCoord);
-		// Navigator.Call("bake_navigation_on_cell", chunkCoord);
+		WorldName = Map.Name;
+		WorldSeed = Map.Seed;
+		GenerationSettings.MapSize = Map.Size;
+		GenerationSettings.RecalculateSetting();
+		SetUpWater();
+		focus = SafeSpawn(Map.SpawnPosition);
 	}
 
-	private async Task NextColumn()
+	public Vector2 SpawnPosition() => Map == null ? Vector2.Zero : SafeSpawn(Map.SpawnPosition);
+
+	public void FocusOn(Vector2 position) => focus = position;
+
+	public void LoadAround(Vector2 position)
 	{
-		ulong frame = Engine.GetProcessFrames();
-		if (frame != sliceFrame)
-		{
-			sliceFrame = frame;
-			sliceStart = Time.GetTicksUsec();
-		}
-		if (LoadBudgetMs > 0 && Time.GetTicksUsec() - sliceStart < LoadBudgetMs * 1000) return;
-		await ToSignal(GetTree(), "process_frame");
+		rules ??= TerrainRules.For(Ground.TileSet);
+		if (Map == null || rules == null) return;
+		focus = position;
+		Vector2I center = ChunkOf(position);
+		Refocus(center);
+		for (int y = center.Y - 1; y <= center.Y + 1; y++)
+			for (int x = center.X - 1; x <= center.X + 1; x++)
+				DrawChunk(new Vector2I(x, y));
 	}
 
 	public float LoadedAround(Vector2 at, int distance)
 	{
-		Godot.Collections.Array<Vector2I> area = GenerationUtils.ChunckAreaCoords(GenerationUtils.PixelToChunkCoord(at), distance);
-		int done = 0;
-		foreach (Vector2I chunk in area)
+		if (Map == null) return 1f;
+		Vector2I center = ChunkOf(at);
+		int total = 0, done = 0;
+		for (int y = center.Y - distance; y <= center.Y + distance; y++)
 		{
-			if (loadedChunks.Contains(chunk)) done++;
-		}
-		return area.Count == 0 ? 1f : (float)done / area.Count;
-	}
-
-	public async Task UnloadChunk(Vector2I chunkCoord, TileMapLayer map, TileMapLayer EnvLayer)
-	{
-		if (chunkCoord.X > GenerationSettings.MAP_CHUNK_SIZE_X || chunkCoord.Y > GenerationSettings.MAP_CHUNK_SIZE_Y)
-		{
-			GD.PrintErr("Out of Map");
-			return;
-		}
-
-		ChunkData chunk = GeneratorData.ChunkMap[chunkCoord.X][chunkCoord.Y];
-		chunk.Active = false;
-		currentActiveChunkMap.Remove(chunkCoord);
-		loadedChunks.Remove(chunkCoord);
-		int local_x = 0;
-		for (int x = chunk.rect.X; x < chunk.rect.Z; x++)
-		{
-			int local_y = 0;
-			for (int y = chunk.rect.Y; y < chunk.rect.W; y++)
+			for (int x = center.X - distance; x <= center.X + distance; x++)
 			{
-				map.EraseCell(new Vector2I(x, y));
-				EnvLayer.EraseCell(new Vector2I(x, y));
-				local_y++;
+				var chunk = new Vector2I(x, y);
+				if (!HasChunk(chunk)) continue;
+				total++;
+				if (loaded.Contains(chunk)) done++;
 			}
-			local_x++;
-			await ToSignal(GetTree(), "process_frame");
 		}
-
-		/*foreach (Node2D res in chunk.Resourses)
-		{
-			res.CallDeferred("free");
-		}
-		await ToSignal(GetTree(), "process_frame");
-		chunk.Resourses.Clear();*/
+		return total == 0 ? 1f : (float)done / total;
 	}
 
-	public async void UpdateChunkAroundPlayer(Vector2 coords)
+	private static Vector2I ChunkOf(Vector2 position)
 	{
-		Vector2I currentCell = GenerationUtils.PixelToChunkCoord(coords);
+		const float size = GenerationSettings.CHUNK_SIZE * GenerationSettings.TILE_SIZE;
+		return new Vector2I(Mathf.FloorToInt(position.X / size), Mathf.FloorToInt(position.Y / size));
+	}
 
-		if (currentCell !=  lastPlayerCell)
+	private bool HasChunk(Vector2I chunk) => chunk.X >= 0 && chunk.Y >= 0 && chunk.X < Map.Chunks.X && chunk.Y < Map.Chunks.Y;
+
+	private static bool Near(Vector2I a, Vector2I b, int radius) => Math.Abs(a.X - b.X) <= radius && Math.Abs(a.Y - b.Y) <= radius;
+
+	private void Stream()
+	{
+		if (Map == null) return;
+		rules ??= TerrainRules.For(Ground.TileSet);
+		if (rules == null) return;
+		if (IsInstanceValid(FocusTarget)) focus = FocusTarget.GlobalPosition;
+		Vector2I center = ChunkOf(focus);
+		if (center != focusChunk) Refocus(center);
+		if (pending.Count == 0 && stale.Count == 0) return;
+
+		ulong start = Time.GetTicksUsec();
+		ulong budget = (ulong)((LoadBudgetMs > 0 ? LoadBudgetMs : FrameBudgetMs) * 1000);
+		while (pending.Count > 0 && Time.GetTicksUsec() - start < budget)
 		{
-			Vector2I diff = currentCell - lastPlayerCell;
+			Vector2I chunk = pending[^1];
+			pending.RemoveAt(pending.Count - 1);
+			if (Near(chunk, focusChunk, LoadRadius)) DrawChunk(chunk);
+		}
+		while (stale.Count > 0 && Time.GetTicksUsec() - start < budget)
+		{
+			Vector2I chunk = stale[^1];
+			stale.RemoveAt(stale.Count - 1);
+			if (!Near(chunk, focusChunk, KeepRadius)) EraseChunk(chunk);
+		}
+	}
 
-			if (Math.Abs(diff.X) > 1 || Math.Abs(diff.Y) > 1)
+	private void Refocus(Vector2I center)
+	{
+		focusChunk = center;
+		pending.Clear();
+		for (int y = center.Y - LoadRadius; y <= center.Y + LoadRadius; y++)
+		{
+			for (int x = center.X - LoadRadius; x <= center.X + LoadRadius; x++)
 			{
-				GD.PrintErr("WTF! TELEPORT?");
-				lastPlayerCell = currentCell;
-				return;
+				var chunk = new Vector2I(x, y);
+				if (HasChunk(chunk) && !loaded.Contains(chunk)) pending.Add(chunk);
 			}
-
-			Godot.Collections.Array<Vector2I> chunksToDelete = GenerationUtils.GetSideChunkFromDirection(-diff, lastPlayerCell, 4);
-			Godot.Collections.Array<Vector2I> chunksToLoad = GenerationUtils.GetSideChunkFromDirection(diff, currentCell, 4);
-
-			foreach(Vector2I chunk in chunksToDelete)
-			{
-				await UnloadChunk(chunk, MainTileMapPrefab, EnviromentLayer);
-			}
-
-			foreach (Vector2I chunk in chunksToLoad)
-			{
-				await LoadChunk(chunk, MainTileMapPrefab, EnviromentLayer, Enviroment, Enviroment);
-			}
-			//GD.Print($"Diff {diff}; Curr: {currentCell}; Delete: {chunksToDelete}; Load: {chunksToLoad}");
-			lastPlayerCell = currentCell;
 		}
+		pending.Sort((a, b) => (b - center).LengthSquared().CompareTo((a - center).LengthSquared()));
+		stale.Clear();
+		foreach (Vector2I chunk in loaded)
+			if (!Near(chunk, center, KeepRadius)) stale.Add(chunk);
 	}
 
-	public Tile getTile(Vector2I chunk, Vector2I localCoords)
+	private int TerrainAt(int x, int y) => Map.InBounds(x, y) ? rules.TerrainOf[Map.Biomes[y * Map.Width + x]] : -1;
+
+	private (int x0, int y0, int x1, int y1) CellsOf(Vector2I chunk)
 	{
-		if (chunk < Vector2I.Zero || chunk > new Vector2(GenerationSettings.MAP_CHUNK_SIZE_X, GenerationSettings.MAP_CHUNK_SIZE_Y))
+		int x0 = chunk.X * GenerationSettings.CHUNK_SIZE, y0 = chunk.Y * GenerationSettings.CHUNK_SIZE;
+		return (x0, y0, Math.Min(x0 + GenerationSettings.CHUNK_SIZE, Map.Width), Math.Min(y0 + GenerationSettings.CHUNK_SIZE, Map.Height));
+	}
+
+	private void DrawChunk(Vector2I chunk)
+	{
+		if (!HasChunk(chunk) || !loaded.Add(chunk)) return;
+		(int x0, int y0, int x1, int y1) = CellsOf(chunk);
+		for (int y = y0; y < y1; y++)
 		{
-			GD.Print("Chunk Out Of Map");
-			return new Tile();
+			for (int x = x0; x < x1; x++)
+			{
+				int i = y * Map.Width + x;
+				int source = rules.SourceOf[Map.Biomes[i]];
+				if (source >= 0) Ground.SetCell(new Vector2I(x, y), source, TerrainRules.BaseTile);
+				if (Map.Resources[i] != 0) EnviromentLayer.SetCell(new Vector2I(x, y), GenerationUtils.getResorseAtlacByType((ResorseType)Map.Resources[i]), Vector2I.Zero);
+			}
 		}
 
-		if (localCoords < Vector2I.Zero || localCoords > new Vector2I(GenerationSettings.CHUNK_SIZE, GenerationSettings.CHUNK_SIZE))
+		int ex = x1 == Map.Width ? x1 + 1 : x1, ey = y1 == Map.Height ? y1 + 1 : y1;
+		for (int y = y0; y < ey; y++)
 		{
-			GD.Print("Incorrect local coords");
-			return new Tile();
+			for (int x = x0; x < ex; x++)
+			{
+				int tile = rules.Edge(TerrainAt(x - 1, y - 1), TerrainAt(x, y - 1), TerrainAt(x - 1, y), TerrainAt(x, y));
+				if (tile < 0) continue;
+				Vector2I coords = TerrainRules.CoordsOf(tile);
+				if (coords == TerrainRules.BaseTile) continue;
+				Edges.SetCell(new Vector2I(x, y), TerrainRules.SourceOfTile(tile), coords);
+			}
 		}
-
-		return GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[localCoords.X][localCoords.Y];
 	}
 
-	public Tile GetTileAt(Vector2I globalCell)
+	private void EraseChunk(Vector2I chunk)
 	{
-		if (globalCell.X < 0 || globalCell.Y < 0 || globalCell.X >= GeneratorData.mapSize.X || globalCell.Y >= GeneratorData.mapSize.Y) return null;
-		Vector2I chunk = globalCell / GenerationSettings.CHUNK_SIZE;
-		return GeneratorData.ChunkMap[chunk.X][chunk.Y].Map[globalCell.X % GenerationSettings.CHUNK_SIZE][globalCell.Y % GenerationSettings.CHUNK_SIZE];
+		if (!loaded.Remove(chunk)) return;
+		(int x0, int y0, int x1, int y1) = CellsOf(chunk);
+		for (int y = y0; y < y1; y++)
+		{
+			for (int x = x0; x < x1; x++)
+			{
+				Ground.EraseCell(new Vector2I(x, y));
+				if (Map.Resources[y * Map.Width + x] != 0) EnviromentLayer.EraseCell(new Vector2I(x, y));
+			}
+		}
+		int ex = x1 == Map.Width ? x1 + 1 : x1, ey = y1 == Map.Height ? y1 + 1 : y1;
+		for (int y = y0; y < ey; y++)
+			for (int x = x0; x < ex; x++)
+				Edges.EraseCell(new Vector2I(x, y));
 	}
 
-	public ResorseType GetResourceAt(Vector2I globalCell) => GetTileAt(globalCell)?.Resourse ?? ResorseType.None;
+	public TileType GetBiomeAt(Vector2I cell) => Map?.BiomeAt(cell) ?? TileType.None;
 
-	public ResorseType HarvestTile(Vector2I globalCell)
+	public ResorseType GetResourceAt(Vector2I cell) => Map?.ResourceAt(cell) ?? ResorseType.None;
+
+	public ResorseType HarvestTile(Vector2I cell)
 	{
-		Tile tile = GetTileAt(globalCell);
-		if (tile == null || tile.Resourse == ResorseType.None) return ResorseType.None;
-
-		ResorseType type = tile.Resourse;
-		tile.Resourse = ResorseType.None;
-		EnviromentLayer.EraseCell(globalCell);
-		EmitSignal(SignalName.TileHarvested, globalCell, (int)type);
+		ResorseType type = GetResourceAt(cell);
+		if (type == ResorseType.None) return ResorseType.None;
+		Map.SetResource(cell, ResorseType.None);
+		EnviromentLayer.EraseCell(cell);
+		EmitSignal(SignalName.TileHarvested, cell, (int)type);
 		return type;
 	}
 
-	public void RestoreTile(Vector2I globalCell, ResorseType type)
+	public void RestoreTile(Vector2I cell, ResorseType type)
 	{
-		Tile tile = GetTileAt(globalCell);
-		if (tile == null) return;
-
-		tile.Resourse = type;
-		if (currentActiveChunkMap.Contains(globalCell / GenerationSettings.CHUNK_SIZE))
-		{
-			EnviromentLayer.SetCell(globalCell, GenerationUtils.getResorseAtlacByType(type), Vector2I.Zero, 0);
-		}
+		if (Map == null || !Map.InBounds(cell)) return;
+		Map.SetResource(cell, type);
+		if (!loaded.Contains(cell / GenerationSettings.CHUNK_SIZE)) return;
+		if (type == ResorseType.None) EnviromentLayer.EraseCell(cell);
+		else EnviromentLayer.SetCell(cell, GenerationUtils.getResorseAtlacByType(type), Vector2I.Zero);
 	}
 
 	public Vector2I FindNearestResource(Vector2 from, int radius, string kind, Rect2 area)
@@ -327,33 +298,6 @@ public partial class WorldScene : Node2D
 
 			ResorseType type = GetResourceAt(cell);
 			if (type != ResorseType.None && GameManager.KindOf(type) == kind) return distance * GenerationSettings.TILE_SIZE;
-		}
-	}
-
-	public Vector2I lastcell = Vector2I.Zero;
-	public void		GetCell()
-	{
-		Vector2 mouseCoor = GetGlobalMousePosition();
-		Vector2I cell = MainTileMapPrefab.LocalToMap(mouseCoor);
-		if (lastcell != cell)
-		{
-			lastcell = cell;
-			if (cell.X < GeneratorData.mapSize.X && cell.Y < GeneratorData.mapSize.Y && DebugInfo)
-			{
-				Vector2I chunkCell = cell / GenerationSettings.CHUNK_SIZE;
-				GD.Print(chunkCell);
-				/*float height = GeneratorData.Map[cell.X][cell.Y].heightValue;
-				float heat = GeneratorData.Map[cell.X][cell.Y].heatValue;
-				float moisture = GeneratorData.Map[cell.X][cell.Y].moistureValue;
-				float treeValue = GeneratorData.Map[cell.X][cell.Y].treeResValue;
-				float oreValue = GeneratorData.Map[cell.X][cell.Y].oreResValue;
-				TileType tileType = GeneratorData.Map[cell.X][cell.Y].Type;
-				ResorseType resType = GeneratorData.Map[cell.X][cell.Y].Resourse;
-				//GD.Print(String.Format("Coords: {0};\nHeight: {1};\nHeat: {2};\nMoisture: {3};\nBiome: {4};\n", [cell, height, heat, moisture, tileType]));
-				GD.Print($"Coord: {cell}, Biome: {tileType}, Resourse: {resType}");
-				GD.Print($"Height: {height}, Heat: {heat}, Moist: {moisture}");
-				GD.Print($"TreeValue: {treeValue}, oreValue: {oreValue} \n");*/
-			}
 		}
 	}
 }

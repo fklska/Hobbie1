@@ -63,6 +63,7 @@ public partial class GameManager
 		Restoring = true;
 		StartWorld(scenePath, ToVector(data["spawn"]));
 		Restoring = false;
+		if (!IsInstanceValid(World)) return;
 		ApplyRun(data);
 	}
 
