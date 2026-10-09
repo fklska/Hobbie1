@@ -95,7 +95,9 @@ public class WorldMap
 
 	public static WorldMap FromLegacy(GeneratorData data)
 	{
-		var map = new WorldMap(data.mapSize.X, data.mapSize.Y) { Name = data.WorldName ?? "", Seed = data.seed };
+		int width = data.ChunkMap.Count * GenerationSettings.CHUNK_SIZE;
+		int height = data.ChunkMap.Count > 0 ? data.ChunkMap[0].Count * GenerationSettings.CHUNK_SIZE : 0;
+		var map = new WorldMap(width, height) { Name = data.WorldName ?? "", Seed = data.seed };
 		foreach (var row in data.ChunkMap)
 		{
 			foreach (ChunkData chunk in row)

@@ -20,8 +20,7 @@ public static class WorldFiles
 
 	public static bool NeedsUpgrade(string scenePath)
 	{
-		string name = NameOf(scenePath);
-		return !FileAccess.FileExists(DataPath(name)) && FileAccess.FileExists(LegacyPath(name));
+		return FileAccess.FileExists(LegacyPath(NameOf(scenePath)));
 	}
 
 	public static Error Save(WorldMap map, string name, Image preview)
@@ -60,7 +59,7 @@ public static class WorldFiles
 	{
 		string name = NameOf(scenePath);
 		var legacy = ResourceLoader.Load<GeneratorData>(LegacyPath(name), null, ResourceLoader.CacheMode.Ignore);
-		if (legacy?.ChunkMap == null) return false;
+		if (legacy?.ChunkMap == null || legacy.ChunkMap.Count == 0 || legacy.ChunkMap[0].Count == 0) return false;
 		WorldMap map = WorldMap.FromLegacy(legacy);
 		if (string.IsNullOrEmpty(map.Name)) map.Name = name;
 		if (Save(map, name, map.Preview()) != Error.Ok) return false;

@@ -107,6 +107,8 @@ func _ask_quit() -> void:
 
 
 func start_world(scene_path: String, spawn: Vector2, continue_run := false) -> void:
+	if loading.visible:
+		return
 	loading.open("Загрузка мира", "Читаем сохранение")
 	await get_tree().process_frame
 	if GENERATOR.NeedsUpgrade(scene_path):
