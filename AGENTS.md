@@ -5,7 +5,7 @@
 ## Проект
 
 - Hobbie: 2D стратегия с RPG-элементами (деревня, жители, ресурсы, босс) на процедурно сгенерированной карте.
-- Движок: Godot 4.7.1 .NET (`Godot.NET.Sdk/4.7.1`), .NET 8. Рендерер Mobile, `viewport/hdr_2d` включён.
+- Движок: Godot 4.7.1 .NET (`Godot.NET.Sdk/4.7.1`), .NET 8 (под Android `net9.0`, см. `BUILD.md`). Рендерер Mobile, `viewport/hdr_2d` включён.
 - Языки: C# и GDScript вперемешку. Генерация мира, игрок, сетка строительства и инвентарь на C#. UI, жители, ресурсы, режим строительства и навигация на GDScript.
 - Рабочая ветка `Godot-develop`, PR открываются в неё. Ветка `master` старая, в неё не коммитить.
 
@@ -99,7 +99,7 @@ godot --headless --import
 godot --headless --path . --quit
 ```
 
-Сборка и экспорт описаны в `BUILD.md`, пресет в `export_presets.cfg`.
+Сборка под Windows, Android и iOS описана в `BUILD.md`, пресеты в `export_presets.cfg`.
 
 ## Звук
 
@@ -162,7 +162,7 @@ godot --headless --path . --quit
 
 NPC не используют `NavigationAgent2D`: каждого ведёт `AIController2D` из аддона `godot_rl_agents`, движение прямое, без навмеша.
 
-- `AI/RL/npc_controller.gd` (`NPCController`): база. Вне обучения (`heuristic == "human"`) сам раз в `decision_interval` кадров берёт действие из ONNX-модели (`onnx_model_path`), если она есть, иначе из `heuristic_action()`. `deterministic = false` сэмплирует действие из softmax, как при обучении.
+- `AI/RL/npc_controller.gd` (`NPCController`): база. Вне обучения (`heuristic == "human"`) сам раз в `decision_interval` кадров берёт действие из ONNX-модели (`onnx_model_path`), если она есть, иначе из `heuristic_action()`. На iOS ONNX Runtime не подключён, там всегда эвристика. `deterministic = false` сэмплирует действие из softmax, как при обучении.
 - `AI/RL/worker_controller.gd`: житель по контракту Collector из RLStudy, то есть модель `model_v9` подходит без переобучения. Наблюдение 23 числа: позиция в зоне 3840×3840 вокруг ратуши / 3840, флаг «стою на ресурсе», 5 лучей в конусе 145° на 1000 px по `[стена, ресурс, касание, дистанция]`. Действие `rotate` из 5: вперёд, назад, поворот +, поворот −, стоп/сбор. Сбор: 2.94 с на клетке. Несёт добычу в ратушу житель по скрипту, сеть только ищет и собирает.
 - `AI/RL/models/collector_v9.onnx`: `model_v9`, сохранённый одним файлом (ONNX-модели только одним файлом, см. `BUILD.md`).
 - `AI/RL/boss_controller.gd`: босс. Наблюдение 12 чисел, действия `move` (непрерывное 2) и `attack` (дискретное 3: ничего, удар, лазер). Модели пока нет, работает эвристика.

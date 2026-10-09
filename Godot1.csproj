@@ -1,9 +1,26 @@
 <Project Sdk="Godot.NET.Sdk/4.7.1">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.21.0" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.21.0" GeneratePathProperty="true" />
   </ItemGroup>
+  <Target Name="OnnxRuntimeMobile" AfterTargets="ComputeResolvedFilesToPublishList" Condition=" '$(GodotTargetPlatform)' == 'android' or '$(GodotTargetPlatform)' == 'ios' ">
+    <PropertyGroup>
+      <OnnxAndroidAbi Condition=" $(RuntimeIdentifier.EndsWith('-arm64')) ">arm64-v8a</OnnxAndroidAbi>
+      <OnnxAndroidAbi Condition=" $(RuntimeIdentifier.EndsWith('-x64')) ">x86_64</OnnxAndroidAbi>
+      <OnnxAndroidAbi Condition=" $(RuntimeIdentifier.EndsWith('-arm')) ">armeabi-v7a</OnnxAndroidAbi>
+      <OnnxAndroidAbi Condition=" $(RuntimeIdentifier.EndsWith('-x86')) ">x86</OnnxAndroidAbi>
+      <OnnxAndroidDir>$(IntermediateOutputPath)onnxruntime-android/</OnnxAndroidDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition=" $([System.String]::Copy('%(Filename)').StartsWith('onnxruntime')) and '%(Extension)' != '.so' " />
+    </ItemGroup>
+    <Unzip Condition=" '$(GodotTargetPlatform)' == 'android' " SourceFiles="$(PkgMicrosoft_ML_OnnxRuntime)/runtimes/android/native/onnxruntime.aar" DestinationFolder="$(OnnxAndroidDir)" Include="jni/$(OnnxAndroidAbi)/libonnxruntime.so" />
+    <ItemGroup Condition=" '$(GodotTargetPlatform)' == 'android' ">
+      <ResolvedFileToPublish Include="$(OnnxAndroidDir)jni/$(OnnxAndroidAbi)/libonnxruntime.so" RelativePath="libonnxruntime.so" CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
 </Project>
