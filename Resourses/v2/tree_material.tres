@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bixs9j34vjjs3"]
+
+[ext_resource type="Shader" uid="uid://b1a00necfb847" path="res://Resourses/v2/tree_sway.gdshader" id="1_sway"]
+
+[resource]
+shader = ExtResource("1_sway")

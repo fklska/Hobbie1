@@ -41,7 +41,6 @@ public partial class Survival : Node
 	public readonly List<string> SpawnQueue = new();
 	public readonly List<Node2D> AliveMobs = new();
 	public readonly Dictionary<string, int> Found = new();
-	public readonly Dictionary<Vector2I, int> Harvested = new();
 	public Node2D Giant;
 	public double RespawnTimer;
 	public Node Cycle { get; private set; }
@@ -87,7 +86,6 @@ public partial class Survival : Node
 		Cycle.Connect("night_started", Callable.From<int>(OnNightStarted));
 		Cycle.Connect("day_started", Callable.From<int>(OnDayStarted));
 		Cycle.Connect("new_day", Callable.From<int>(_ => EmitSignal(SignalName.Changed)));
-		game.World.TileHarvested += OnTileHarvested;
 		game.GameEnded += OnGameEnded;
 		AddChild(GD.Load<PackedScene>(HudScene).Instantiate());
 	}
@@ -160,8 +158,6 @@ public partial class Survival : Node
 	}
 
 	private void OnGameEnded(bool victory, string reason) => game.DeleteRun();
-
-	private void OnTileHarvested(Vector2I cell, ResorseType type) => Harvested[cell] = (int)type;
 
 	public static List<string> ComposeWave(int day)
 	{
@@ -342,8 +338,6 @@ public partial class Survival : Node
 		foreach (string id in SpawnQueue) queue.Add(id);
 		var found = new Godot.Collections.Dictionary();
 		foreach (var (id, count) in Found) found[id] = count;
-		var harvested = new Godot.Collections.Array();
-		foreach (Vector2I cell in Harvested.Keys) harvested.Add(new Godot.Collections.Array { cell.X, cell.Y });
 		return new Godot.Collections.Dictionary
 		{
 			["day"] = Day,
@@ -352,7 +346,7 @@ public partial class Survival : Node
 			["queue"] = queue,
 			["mobs"] = mobs,
 			["artifacts"] = found,
-			["harvested"] = harvested,
+			["harvested"] = game.World.CaptureHarvest(),
 		};
 	}
 
@@ -364,11 +358,7 @@ public partial class Survival : Node
 		Cycle.Set("is_night", NightAt(time));
 		LastWaveDay = data["last_wave"].AsInt32();
 		foreach (Variant id in data["queue"].AsGodotArray()) SpawnQueue.Add(id.AsString());
-		foreach (Variant cell in data["harvested"].AsGodotArray())
-		{
-			var xy = cell.AsGodotArray();
-			game.World.HarvestTile(new Vector2I(xy[0].AsInt32(), xy[1].AsInt32()));
-		}
+		game.World.RestoreHarvest(data["harvested"].AsGodotArray());
 		foreach (var (id, count) in data["artifacts"].AsGodotDictionary())
 		{
 			if (!Artifacts.ContainsKey(id.AsString())) continue;

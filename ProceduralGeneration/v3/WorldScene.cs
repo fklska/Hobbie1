@@ -62,6 +62,7 @@ public partial class WorldScene : Node2D
 		GenerationSettings.MapSize = Map.Size;
 		GenerationSettings.RecalculateSetting();
 		SetUpWater();
+		SetUpResources();
 		focus = SafeSpawn(Map.SpawnPosition);
 	}
 
@@ -172,7 +173,7 @@ public partial class WorldScene : Node2D
 				int i = y * Map.Width + x;
 				int source = rules.SourceOf[Map.Biomes[i]];
 				if (source >= 0) Ground.SetCell(new Vector2I(x, y), source, TerrainRules.BaseTile);
-				if (Map.Resources[i] != 0) EnviromentLayer.SetCell(new Vector2I(x, y), GenerationUtils.getResorseAtlacByType((ResorseType)Map.Resources[i]), Vector2I.Zero);
+				if (Map.Resources[i] != 0) DrawResource(new Vector2I(x, y));
 			}
 		}
 
@@ -211,25 +212,6 @@ public partial class WorldScene : Node2D
 	public TileType GetBiomeAt(Vector2I cell) => Map?.BiomeAt(cell) ?? TileType.None;
 
 	public ResorseType GetResourceAt(Vector2I cell) => Map?.ResourceAt(cell) ?? ResorseType.None;
-
-	public ResorseType HarvestTile(Vector2I cell)
-	{
-		ResorseType type = GetResourceAt(cell);
-		if (type == ResorseType.None) return ResorseType.None;
-		Map.SetResource(cell, ResorseType.None);
-		EnviromentLayer.EraseCell(cell);
-		EmitSignal(SignalName.TileHarvested, cell, (int)type);
-		return type;
-	}
-
-	public void RestoreTile(Vector2I cell, ResorseType type)
-	{
-		if (Map == null || !Map.InBounds(cell)) return;
-		Map.SetResource(cell, type);
-		if (!loaded.Contains(cell / GenerationSettings.CHUNK_SIZE)) return;
-		if (type == ResorseType.None) EnviromentLayer.EraseCell(cell);
-		else EnviromentLayer.SetCell(cell, GenerationUtils.getResorseAtlacByType(type), Vector2I.Zero);
-	}
 
 	public Vector2I FindNearestResource(Vector2 from, int radius, string kind, Rect2 area)
 	{

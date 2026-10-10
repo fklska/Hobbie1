@@ -12,9 +12,10 @@ python3 build.py                      # всё
 python3 build.py hero mobs giant      # отдельные цели
 python3 build.py buildings:house,farm # только перечисленные здания
 python3 build.py giant:death          # одна анимация, остальные берутся из готовых листов
+python3 build.py nature:oak,birch     # только перечисленные деревья и камни карты
 ```
 
-Цели: `hero`, `classes` (маг и друид), `summons` (звери друида), `spells` (заклинания и взрывы), `mobs`, `giant`, `beam`, `buildings`, `weapons`, `pickups`, `resources`. Персонажи рендерятся долго (гигант около 8 минут), остальное за секунды.
+Цели: `hero`, `classes` (маг и друид), `summons` (звери друида), `spells` (заклинания и взрывы), `mobs`, `giant`, `beam`, `buildings`, `weapons`, `pickups`, `resources`, `nature` (деревья и камни карты). Персонажи рендерятся долго (гигант около 8 минут), остальное за секунды.
 
 Скрипт сам пишет `.png`, `.import` и `SpriteFrames` (`.tres`). `uid` берётся из пути файла, поэтому при перегенерации ссылки в сценах не ломаются.
 
@@ -30,6 +31,7 @@ python3 build.py giant:death          # одна анимация, осталь�
 | `hero_classes.py` | Маг и друид: тот же скелет героя с другой одеждой и посохом, анимация каста. Тяжёлый удар воина (`heavy_windup`, `heavy`) в `hero.py`. |
 | `spells.py` | Огонь, огненный шар, метеорит, взрыв, ударная волна, вихрь, оглушение, призыв, кратер: 2D-шум, полосы палитры и дизеринг. Пишет `Art/effects/*.png` и `spell_frames.tres`. |
 | `buildings.py` | Здания по уровням. |
+| `nature.py`, `nature_tiles.json` | Деревья и камни карты: породы под биомы, камень, железо и золото в четырёх видах (гранит, снег, песчаник, мох). У каждого 4 стадии добычи в одном столбце (`Art/resources/world/<имя>.png`). Пишет тайлсет `Resourses/v2/TileSetResV2.tres`, размеры кадров хранит в `nature_tiles.json`, чтобы перегенерировать один вид. |
 | `items.py`, `resources.py`, `effects.py` | Оружие, стрела, монеты, артефакт, ресурсы, луч гиганта. |
 | `godot_res.py`, `build.py` | Запись ресурсов Godot и цели сборки. |
 | `preview.py` | Склейка кадров в одну картинку для просмотра. |
@@ -39,3 +41,4 @@ python3 build.py giant:death          # одна анимация, осталь�
 - Новый моб-человечек: класс `Spec` в `mobs.py` (пропорции, материалы, детали головы и тела) и экземпляр `Mob` со словарём анимаций, затем строка в `MOBS` в `build.py`.
 - Новое здание: функция в `buildings.py`, которая возвращает `Kit`, и запись в `BUILDINGS` (размер в клетках и список уровней). Примитивы с `group="ground"` (`ground_patch`) уходят в слой земли `_ground.png`, остальные делятся на предметы по касанию в 3D и попадают в `_parts.png` и `_parts.tres`. В сцене здания добавь `.tres` в `level_parts`.
 - Новое оружие или предмет: функция в `items.py` и запись в `WEAPONS` или `PICKUPS`.
+- Новая порода дерева: функция `<имя>(stage)` в `nature.py`, которая возвращает `Plant` для стадии 0–3 (`k.gone(rank)` убирает части по стадии, `notch`, `chips`, `log` рисуют следы рубки), и запись в `TREES` (размер 1–3). Затем `python3 build.py nature:<имя>` и тип в `ProceduralGeneration/v3/WorldResources.cs` (см. AGENTS.md, «Ресурсы на карте»).

@@ -142,5 +142,4 @@ func _burn_resources(origin: Vector2) -> void:
 			var center := (Vector2(cell) + Vector2(0.5, 0.5)) * tile
 			if center.distance_to(origin) > HARVEST_RADIUS:
 				continue
-			if Game.World.GetResourceAt(cell) != 0:
-				Game.World.HarvestTile(cell)
+			Game.World.ClearTile(cell)
