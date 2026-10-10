@@ -16,7 +16,6 @@ public partial class GameManager : Node
 	public Node2D TownHall;
 	public Node2D Boss;
 	public List<Node2D> Workers = new();
-	public string WorkerJob = "wood";
 	public bool Ended;
 
 	private CanvasLayer hud;
@@ -37,7 +36,6 @@ public partial class GameManager : Node
 		TownHall = null;
 		Boss = null;
 		Workers.Clear();
-		WorkerJob = "wood";
 		Ended = false;
 		ResetEconomy();
 		ResetHero();
@@ -75,6 +73,7 @@ public partial class GameManager : Node
 		StartEconomy(spawn);
 		StartSurvival();
 		StartHero();
+		StartVillage();
 
 		root.GetNodeOrNull<Control>("World/UI/Menu")?.Hide();
 		EmitSignal(SignalName.StockChanged);
@@ -100,7 +99,7 @@ public partial class GameManager : Node
 	private void Cleanup()
 	{
 		SaveRun();
-		foreach (Node node in new Node[] { Survival, hud, heroHud, classPicker, Player, World })
+		foreach (Node node in new Node[] { Survival, hud, heroHud, classPicker, villageHud, Player, World })
 		{
 			if (!IsInstanceValid(node)) continue;
 			node.GetParent()?.RemoveChild(node);
@@ -109,6 +108,7 @@ public partial class GameManager : Node
 		hud = null;
 		heroHud = null;
 		classPicker = null;
+		villageHud = null;
 		Survival = null;
 	}
 

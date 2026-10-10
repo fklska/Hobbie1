@@ -11,9 +11,10 @@ const AREA_SIZE := 3840.0
 const DEPOSIT_RANGE := 80.0
 
 @export var max_hp := 40
+@export var profession := "woodcutter"
 
 @onready var ai: WorkerController = $AIController2D
-@onready var tool: Sprite2D = $AnimatedSprite2D/Tool
+@onready var body_sprite: DirectionalSprite = $AnimatedSprite2D
 @onready var carry_label: Label = $Carry
 @onready var combat: VillagerCombat = $Combat
 
@@ -28,11 +29,19 @@ var dwell_cell := Vector2i(-1, -1)
 var carrying_kind := ""
 var carrying_amount := 0
 var weapon_id := ""
+var info := {}
+var kinds := PackedStringArray()
 
 func _ready():
 	super()
 	hp = max_hp
 	heading = randf() * TAU
+	info = Game.GetProfession(profession)
+	kinds = info.get("kinds", PackedStringArray(["wood"]))
+	var frames: String = info.get("frames", "")
+	if not frames.is_empty() and ResourceLoader.exists(frames):
+		body_sprite.sprite_frames = load(frames)
+	body_sprite.play_dir("idle", Vector2.from_angle(heading))
 	add_to_group("village")
 	ai.init(self)
 
@@ -44,9 +53,11 @@ func hall() -> Building:
 	return town_hall if is_instance_valid(town_hall) else null
 
 func area() -> Rect2:
-	var town_hall := hall()
-	var center := town_hall.get_center() if town_hall else global_position
+	var center: Vector2 = Game.WorkCenter(profession, global_position)
 	return Rect2(center - Vector2.ONE * AREA_SIZE / 2, Vector2.ONE * AREA_SIZE)
+
+func gathers(type) -> bool:
+	return kinds.has(Game.GetKindOf(type))
 
 func is_carrying() -> bool:
 	return carrying_amount > 0
@@ -68,7 +79,7 @@ func _physics_process(delta: float):
 		return
 
 	if is_carrying():
-		_return_to(town_hall)
+		_return_to(Game.DropOffPoint(profession, global_position))
 	else:
 		_gather(world, delta)
 	keep_off_ocean(delta)
@@ -89,21 +100,24 @@ func _gather(world, delta: float):
 	_keep_in_area(delta)
 
 	var cell := Vector2i((global_position / 64).floor())
-	on_cell = Game.GetKindOf(world.GetResourceAt(cell)) == Game.WorkerJob
+	on_cell = gathers(world.GetResourceAt(cell))
 	if not on_cell:
 		dwell = 0.0
-		tool.rotation = 0
 		return
 	if cell != dwell_cell:
 		dwell_cell = cell
 		dwell = 0.0
 	dwell += delta
-	tool.rotation = sin(dwell * 12.0) * 1.2
-	if dwell >= COLLECT_TIME / Game.WorkSpeed:
+	if dwell >= COLLECT_TIME / Game.JobSpeed(profession):
 		_collect(world, cell)
 
 func _keep_in_area(delta: float):
 	var bounds := area()
+	if not bounds.has_point(global_position):
+		velocity = steer_to(bounds.get_center()) * SPEED
+		current_velocity = velocity
+		heading = velocity.angle()
+		return
 	var next := global_position + velocity * delta
 	var clamped := next.clamp(bounds.position, bounds.end)
 	if clamped != next:
@@ -113,7 +127,6 @@ func _keep_in_area(delta: float):
 
 func _collect(world, cell: Vector2i):
 	dwell = 0.0
-	tool.rotation = 0
 	var type = world.HarvestTile(cell)
 	if type == 0:
 		return
@@ -125,13 +138,12 @@ func _collect(world, cell: Vector2i):
 	on_cell = false
 	ai.on_collect()
 
-func _return_to(town_hall: Building):
-	var to_hall := town_hall.get_center() - global_position
-	if to_hall.length() <= DEPOSIT_RANGE:
+func _return_to(point: Vector2):
+	if global_position.distance_to(point) <= DEPOSIT_RANGE:
 		velocity = Vector2.ZERO
 		_deposit()
 		return
-	var direction := steer_to(town_hall.get_center())
+	var direction := steer_to(point)
 	heading = direction.angle()
 	current_velocity = direction * SPEED
 	velocity = current_velocity
@@ -144,10 +156,14 @@ func _deposit():
 
 func _animate():
 	if velocity.length() > 5:
-		anim.play("walk")
-		anim.flip_h = velocity.x > 0
+		body_sprite.play_dir("walk", velocity)
+	elif is_instance_valid(combat.target) and combat.is_armed():
+		var facing: Vector2 = combat.target.global_position - global_position
+		body_sprite.play_dir("idle" if combat.is_ranged() else "work", facing)
+	elif on_cell and not is_carrying():
+		body_sprite.play_dir("work", Vector2.from_angle(heading))
 	else:
-		anim.play("idle")
+		body_sprite.play_dir("idle")
 
 func take_damage(amount: int):
 	if hp <= 0:
@@ -178,16 +194,15 @@ func reset_episode():
 	carrying_amount = 0
 	carrying_kind = ""
 	carry_label.visible = false
-	tool.rotation = 0
 	ai.reset()
 	ai.done = true
 
 func get_texture():
-	return anim.sprite_frames.get_frame_texture("idle", 0)
+	return body_sprite.sprite_frames.get_frame_texture("idle_s", 0)
 
 func send_obj_data() -> Dictionary:
 	return {
-		"Description": "Житель-сборщик",
+		"Description": info.get("title", "Житель"),
 		"Weapon": combat.stats.get("title", "нет"),
 		"HP": "%d/%d" % [hp, max_hp]
 	}

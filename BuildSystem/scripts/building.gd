@@ -11,6 +11,7 @@ signal destroyed
 @export var level_parts: Array[Resource] = []
 @export var fit_texture := true
 @export var night_lamp := true
+@export_range(0, 3) var turn := 0
 
 const GROUND_LIFT := 64.0
 
@@ -18,9 +19,11 @@ var hp: int
 var level := 1
 var hp_bar: ProgressBar
 var _parts: Array[Sprite2D] = []
+var base_footprint := Vector2i.ZERO
 
 func _ready():
 	super()
+	_apply_turn()
 	y_sort_enabled = true
 	shader.set_shader_parameter("reveal_hero", true)
 	hp = max_hp
@@ -50,29 +53,57 @@ func restore_hp(value: int):
 	hp_bar.value = hp
 	hp_bar.visible = hp < max_hp
 
-func level_texture(value: int) -> Texture2D:
+func footprint_for(t: int) -> Vector2i:
+	var base := base_footprint if base_footprint != Vector2i.ZERO else footprint
+	return Vector2i(base.y, base.x) if t % 2 else base
+
+func _apply_turn():
+	base_footprint = footprint
+	footprint = footprint_for(turn)
+	var shape := get_node_or_null("CollisionShape2D") as CollisionPolygon2D
+	if turn == 0 or shape == null:
+		return
+	var points := PackedVector2Array()
+	for point in shape.polygon:
+		points.append((point - Vector2(base_footprint * 32)).rotated(-PI / 2 * turn) + Vector2(footprint * 32))
+	shape.polygon = points
+
+func level_texture(value: int, t := -1) -> Texture2D:
 	if level_textures.is_empty():
 		return null
+	var layers := level_layers(value, t)
+	if layers and layers.preview:
+		return layers.preview
 	return level_textures[clampi(value, 1, level_textures.size()) - 1]
 
-func level_layers(value: int) -> BuildingParts:
+func level_layers(value: int, t := -1) -> BuildingParts:
 	if level_parts.is_empty():
 		return null
-	return level_parts[clampi(value, 1, level_parts.size()) - 1] as BuildingParts
+	var layers := level_parts[clampi(value, 1, level_parts.size()) - 1] as BuildingParts
+	return layers.turned(turn if t < 0 else t) if layers else null
 
-func fit_rect(tex: Texture2D) -> Rect2:
-	var size := tex.get_size() * (footprint.x * 64.0 / tex.get_width())
-	return Rect2(Vector2(footprint.x * 32.0 - size.x / 2, footprint.y * 64.0 - size.y), size)
+func fit_rect(tex: Texture2D, fp := Vector2i.ZERO) -> Rect2:
+	if fp == Vector2i.ZERO:
+		fp = footprint
+	var size := tex.get_size() * (fp.x * 64.0 / tex.get_width())
+	return Rect2(Vector2(fp.x * 32.0 - size.x / 2, fp.y * 64.0 - size.y), size)
 
-func preview(value: int) -> Dictionary:
+func hit_rect() -> Rect2:
+	var area := Rect2(Vector2.ZERO, Vector2(footprint * 64))
+	var tex := level_texture(level)
+	if tex and fit_texture:
+		area = area.merge(fit_rect(tex))
+	return Rect2(global_position + area.position, area.size)
+
+func preview(value: int, t := 0) -> Dictionary:
 	var sprite := get_node("Texture") as Sprite2D
-	var tex := level_texture(value)
+	var tex := level_texture(value, t)
 	if tex == null:
 		tex = sprite.texture
 	if tex == null:
 		return {}
 	if fit_texture:
-		return {"texture": tex, "rect": fit_rect(tex)}
+		return {"texture": tex, "rect": fit_rect(tex, footprint_for(t))}
 	var rect := Rect2(sprite.offset - (tex.get_size() / 2 if sprite.centered else Vector2.ZERO), tex.get_size())
 	return {"texture": tex, "rect": Rect2(sprite.position + rect.position * sprite.scale, rect.size * sprite.scale)}
 

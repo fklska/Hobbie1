@@ -8,6 +8,7 @@ public partial class GameManager
 	{
 		public string Id;
 		public Vector2I Cell;
+		public int Turn;
 		public Node2D Node;
 	}
 
@@ -37,6 +38,7 @@ public partial class GameManager
 		ArmorTier = 0;
 		HeroWeapon = Economy.StartHeroWeapon;
 		Hungry = false;
+		ResetVillage();
 	}
 
 	private void StartEconomy(Vector2 spawn)
@@ -63,6 +65,7 @@ public partial class GameManager
 	{
 		Node cycle = Player?.FindChildren("*", "", true, false).FirstOrDefault(n => n.HasSignal("day_started"));
 		cycle?.Connect("day_started", Callable.From<int>(OnDayStarted));
+		cycle?.Connect("hour_changed", Callable.From<int>(_ => CheckResearch()));
 	}
 
 	public Economy.Level LevelInfo(string id) => Economy.Buildings[id].Levels[Levels[id] - 1];
@@ -177,11 +180,13 @@ public partial class GameManager
 
 	public int UpgradeTimes(string id) => Mathf.Max(1, CountOf(id));
 
-	public bool CanPlace(string id, Vector2I cell)
+	public bool CanPlace(string id, Vector2I cell) => CanPlaceAt(id, cell, 0);
+
+	public bool CanPlaceAt(string id, Vector2I cell, int turn)
 	{
 		if (World == null) return false;
 		Grid grid = GetNode<Grid>("/root/BuildMode");
-		Vector2I footprint = Economy.Buildings[id].Footprint;
+		Vector2I footprint = Economy.Footprint(id, turn);
 		for (int x = 0; x < footprint.X; x++)
 			for (int y = 0; y < footprint.Y; y++)
 			{
@@ -191,9 +196,12 @@ public partial class GameManager
 		return true;
 	}
 
-	public bool PlaceBuilding(string id, Vector2I cell)
+	public bool PlaceBuilding(string id, Vector2I cell) => PlaceBuildingAt(id, cell, 0);
+
+	public bool PlaceBuildingAt(string id, Vector2I cell, int turn)
 	{
 		if (Ended) return true;
+		if (Economy.Buildings[id].Fixed) turn = 0;
 		if (id == Economy.Core)
 		{
 			if (!IsInstanceValid(TownHall)) SpawnBuilding(id, CanPlace(id, cell) ? cell : FindFreeCell(id, cell));
@@ -205,7 +213,7 @@ public partial class GameManager
 			Notify(lockReason);
 			return true;
 		}
-		if (!CanPlace(id, cell))
+		if (!CanPlaceAt(id, cell, turn))
 		{
 			SoundManager.Instance.Play("error");
 			Notify("Здесь строить нельзя");
@@ -214,21 +222,23 @@ public partial class GameManager
 		Economy.Level level = LevelInfo(id);
 		if (!TrySpend(level.Cost)) return true;
 
-		SoundManager.Instance.PlayAt("build", BuildingCenter(SpawnBuilding(id, cell)));
+		SoundManager.Instance.PlayAt("build", BuildingCenter(SpawnBuilding(id, cell, 0, turn)));
 		Notify($"Построено: {level.Title}");
 		return !Economy.Buildings[id].Repeat || BuildLock(id) != "" || !CanAfford(LevelInfo(id).Cost);
 	}
 
-	private Node2D SpawnBuilding(string id, Vector2I cell, int hp = 0)
+	private Node2D SpawnBuilding(string id, Vector2I cell, int hp = 0, int turn = 0)
 	{
 		Economy.BuildingInfo info = Economy.Buildings[id];
+		turn = info.Fixed ? 0 : Mathf.PosMod(turn, 4);
 		Node2D node = GD.Load<PackedScene>(info.ScenePath).Instantiate<Node2D>();
 		node.Position = cell * GenerationSettings.TILE_SIZE;
+		node.Set("turn", turn);
 		EntitiesRoot.AddChild(node);
 		node.Call("set_level", Levels[id], LevelInfo(id).Hp);
 		if (hp > 0) node.Call("restore_hp", hp);
 
-		PlacedBuilding placed = new() { Id = id, Cell = cell, Node = node };
+		PlacedBuilding placed = new() { Id = id, Cell = cell, Turn = turn, Node = node };
 		Placed.Add(placed);
 		SetCells(placed, true);
 		if (id == Economy.Core) TownHall = node;
@@ -239,7 +249,7 @@ public partial class GameManager
 
 	private void SetCells(PlacedBuilding placed, bool occupied)
 	{
-		Vector2I footprint = Economy.Buildings[placed.Id].Footprint;
+		Vector2I footprint = Economy.Footprint(placed.Id, placed.Turn);
 		for (int x = 0; x < footprint.X; x++)
 			for (int y = 0; y < footprint.Y; y++)
 			{
@@ -283,40 +293,6 @@ public partial class GameManager
 		Notify($"Улучшено: {next.Title}");
 		EmitSignal(SignalName.ProgressChanged);
 		EmitSignal(SignalName.StockChanged);
-	}
-
-	public void HireWorker()
-	{
-		if (Ended) return;
-		if (!IsInstanceValid(TownHall))
-		{
-			Notify("Нет центра поселения");
-			return;
-		}
-		if (Workers.Count >= PopulationCap)
-		{
-			Notify("Нет места для жителей: постройте или улучшите жильё");
-			return;
-		}
-		if (!TrySpend(Economy.HireCost)) return;
-
-		Node2D worker = GD.Load<PackedScene>("res://AI/Village/worker.tscn").Instantiate<Node2D>();
-		worker.Position = BuildingCenter(TownHall) + Vector2.FromAngle(GD.Randf() * Mathf.Tau) * 96f;
-		EntitiesRoot.AddChild(worker);
-		Workers.Add(worker);
-		worker.TreeExiting += () => OnWorkerGone(worker);
-		EmitSignal(SignalName.ProgressChanged);
-	}
-
-	private void OnWorkerGone(Node2D worker)
-	{
-		if (!Workers.Remove(worker)) return;
-		EmitSignal(SignalName.ProgressChanged);
-	}
-
-	public void SetWorkerJob(string kind)
-	{
-		if (Economy.Gatherable.Contains(kind)) WorkerJob = kind;
 	}
 
 	private void OnDayStarted(int day)
@@ -518,7 +494,7 @@ public partial class GameManager
 	public string EconomyObjective()
 	{
 		if (!IsInstanceValid(TownHall)) return "";
-		if (Workers.Count == 0) return $"Наймите жителя во вкладке «Деревня» ({Economy.CostText(Economy.HireCost)})";
+		if (Workers.Count == 0) return $"Нажмите на центр поселения и наймите дровосека ({Economy.CostText(Economy.Professions[Economy.StartProfession].Cost)})";
 		if (!HasBuilding("Farm")) return $"Постройте огород, чтобы прокормить жителей ({Economy.CostText(LevelInfo("Farm").Cost)})";
 		Economy.Level next = NextLevel(Economy.Core);
 		if (next == null) return "Поселение достигло расцвета";
@@ -531,7 +507,7 @@ public partial class GameManager
 	{
 		Godot.Collections.Array buildings = new();
 		foreach (PlacedBuilding p in Placed.Where(p => IsInstanceValid(p.Node)))
-			buildings.Add(new Godot.Collections.Dictionary { ["id"] = p.Id, ["cell"] = new Godot.Collections.Array { p.Cell.X, p.Cell.Y }, ["hp"] = p.Node.Get("hp") });
+			buildings.Add(new Godot.Collections.Dictionary { ["id"] = p.Id, ["cell"] = new Godot.Collections.Array { p.Cell.X, p.Cell.Y }, ["turn"] = p.Turn, ["hp"] = p.Node.Get("hp") });
 
 		Godot.Collections.Dictionary levels = new();
 		foreach (var l in Levels) levels[l.Key] = l.Value;
@@ -546,8 +522,8 @@ public partial class GameManager
 			["tool_tier"] = ToolTier,
 			["armor_tier"] = ArmorTier,
 			["hero_weapon"] = HeroWeapon,
-			["worker_job"] = WorkerJob,
 			["hungry"] = Hungry,
+			["research"] = SaveResearch(),
 		};
 	}
 
@@ -571,14 +547,15 @@ public partial class GameManager
 		ArmorTier = Mathf.Clamp(data["armor_tier"].AsInt32(), 0, Economy.Armor.Length - 1);
 		string hero = data["hero_weapon"].AsString();
 		HeroWeapon = Economy.Weapons.ContainsKey(hero) ? hero : Economy.StartHeroWeapon;
-		SetWorkerJob(data["worker_job"].AsString());
+		legacyProfession = Economy.ProfessionOf(data.ContainsKey("worker_job") ? data["worker_job"].AsString() : "");
 		Hungry = data["hungry"].AsBool();
+		LoadResearch(data.ContainsKey("research") ? data["research"].AsGodotDictionary() : new());
 
 		foreach (Variant entry in data["buildings"].AsGodotArray())
 		{
 			var b = entry.AsGodotDictionary();
 			string id = b["id"].AsString();
-			if (Economy.Buildings.ContainsKey(id)) SpawnBuilding(id, ReadCell(b["cell"]), b["hp"].AsInt32());
+			if (Economy.Buildings.ContainsKey(id)) SpawnBuilding(id, ReadCell(b["cell"]), b["hp"].AsInt32(), b.ContainsKey("turn") ? b["turn"].AsInt32() : 0);
 		}
 		ApplyHeroStats();
 		EmitSignal(SignalName.StockChanged);

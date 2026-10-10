@@ -41,7 +41,7 @@ public partial class ClassPicker : CanvasLayer
 
 	public override void _Process(double delta)
 	{
-		if (!GetTree().Paused) GetTree().Paused = true;
+		if (!IsQueuedForDeletion() && !GetTree().Paused) GetTree().Paused = true;
 	}
 
 	private static Control Card(HeroClasses.ClassInfo info)

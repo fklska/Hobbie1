@@ -93,6 +93,7 @@ public partial class GameManager
 				["pos"] = Vec(worker.GlobalPosition),
 				["hp"] = worker.Get("hp"),
 				["weapon"] = worker.Get("weapon_id"),
+				["job"] = worker.Get("profession"),
 			});
 		}
 
@@ -123,7 +124,8 @@ public partial class GameManager
 		foreach (Variant entry in data["workers"].AsGodotArray())
 		{
 			var worker = entry.AsGodotDictionary();
-			RestoreWorker(World.Walkable(ToVector(worker["pos"])), worker["hp"].AsInt32(), worker["weapon"].AsString());
+			string job = worker.ContainsKey("job") ? worker["job"].AsString() : legacyProfession;
+			RestoreWorker(World.Walkable(ToVector(worker["pos"])), worker["hp"].AsInt32(), worker["weapon"].AsString(), job);
 		}
 
 		var hero = data["hero"].AsGodotDictionary();
@@ -139,13 +141,9 @@ public partial class GameManager
 		Notify($"Партия продолжается: день {Survival.Day}");
 	}
 
-	private void RestoreWorker(Vector2 position, int hp, string weapon)
+	private void RestoreWorker(Vector2 position, int hp, string weapon, string profession)
 	{
-		Node2D worker = GD.Load<PackedScene>("res://AI/Village/worker.tscn").Instantiate<Node2D>();
-		worker.Position = position;
-		EntitiesRoot.AddChild(worker);
-		Workers.Add(worker);
-		worker.TreeExiting += () => OnWorkerGone(worker);
+		Node2D worker = SpawnWorker(profession, position);
 		worker.Set("hp", hp);
 		if (Economy.Weapons.ContainsKey(weapon)) worker.Call("equip", weapon, GetWeaponStats(weapon));
 	}
