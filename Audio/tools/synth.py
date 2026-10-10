@@ -554,6 +554,117 @@ def defeat():
     return jingle(flutes, plucks, 4.2)
 
 
+def crackle(d, density, amp=0.12):
+    out = np.zeros(int(SR * d))
+    for _ in range(int(d * density)):
+        place(out, rng.uniform(0.3, 1) * amp * burst(0.012, 1500, 9000, rng.uniform(0.001, 0.004)), rng.uniform(0, d - 0.02))
+    return out
+
+
+def fire_cast():
+    d = 0.6
+    t = ts(d)
+    centers = 300 + 2600 * np.minimum(t / 0.25, 1) ** 0.6 * np.exp(-np.maximum(t - 0.25, 0) / 0.2)
+    whoosh = svf_sweep(noise(d), centers, 1.2) * np.sin(np.pi * np.minimum(t / 0.5, 1)) ** 1.5
+    roar = band(noise(d), 60, 500) * np.minimum(1, t / 0.08) * np.exp(-t / 0.25)
+    out = whoosh + 0.7 * roar + crackle(d, 40, 0.25)
+    return finish(np.tanh(out * 1.3), 0.18)
+
+
+def burn():
+    d = 0.5
+    t = ts(d)
+    hiss = band(noise(d), 1200, 5000) * 0.25 * np.sin(np.pi * t / d)
+    return finish(hiss + crackle(d, 60, 0.4), 0.1)
+
+
+def meteor_fall():
+    d = 1.7
+    t = ts(d)
+    centers = 3200 * np.exp(-t / 0.9) + 250
+    whoosh = svf_sweep(noise(d), centers, 2.2) * np.minimum(1, (t / 1.4) ** 2)
+    rumble = band(noise(d), 30, 160) * (t / d) ** 2
+    tone = 0.25 * sweep_sine(d, 900, 180, 10, 0.7) * np.minimum(1, t / 0.6)
+    out = whoosh + 0.9 * rumble + tone + crackle(d, 30, 0.15) * (t / d)
+    return finish(np.tanh(out * 1.2), 0.18)
+
+
+def meteor_impact():
+    d = 2.2
+    out = np.zeros(int(SR * d))
+    place(out, 1.2 * sweep_sine(1.2, 110, 25, 0.45, 0.15), 0)
+    place(out, burst(2.0, 0, 380, 0.6, 0.002), 0)
+    place(out, 0.8 * burst(0.15, 600, 7000, 0.05), 0)
+    place(out, 0.5 * band(noise(1.6), 150, 2500) * np.exp(-ts(1.6) / 0.5), 0.02)
+    for _ in range(60):
+        at = rng.exponential(0.35) + 0.05
+        f = rng.uniform(500, 3000)
+        place(out, rng.uniform(0.04, 0.18) * modes(0.06, [f, f * 1.6], [1, 0.4], [rng.uniform(0.006, 0.02)] * 2), at)
+    place(out, crackle(2.0, 70, 0.2), 0.1)
+    return finish(np.tanh(out * 1.8), 0.26)
+
+
+def slam():
+    d = 0.9
+    out = np.zeros(int(SR * d))
+    place(out, sweep_sine(0.7, 120, 35, 0.22, 0.06), 0)
+    place(out, 0.8 * burst(0.6, 0, 500, 0.18, 0.002), 0)
+    place(out, 0.6 * burst(0.05, 1500, 7000, 0.01), 0)
+    place(out, 0.4 * modes(0.3, [420, 690, 1150], [1, 0.6, 0.3], [0.08, 0.05, 0.03]), 0)
+    for _ in range(18):
+        at = rng.exponential(0.12) + 0.03
+        place(out, rng.uniform(0.05, 0.15) * burst(0.03, 800, 4000, 0.008), at)
+    return finish(np.tanh(out * 1.7), 0.24)
+
+
+def summon():
+    d = 1.3
+    out = np.zeros(int(SR * d))
+    for k, m in enumerate((62, 66, 69, 74, 78)):
+        place(out, 0.4 * modes(d - k * 0.07, [midi(m), midi(m) * 2.01, midi(m) * 3.02], [1, 0.3, 0.12], [0.45, 0.2, 0.1], 0.004), k * 0.07)
+    t = ts(d)
+    rustle = band(noise(d), 1500, 7000) * (0.5 + 0.5 * np.sin(2 * np.pi * 13 * t)) ** 3 * np.sin(np.pi * np.minimum(t / 0.9, 1))
+    out += 0.3 * rustle
+    out += 0.4 * band(noise(d), 80, 400) * np.minimum(1, t / 0.05) * np.exp(-t / 0.3)
+    return finish(out, 0.15)
+
+
+def crow():
+    d = 0.75
+    out = np.zeros(int(SR * d))
+    for at in (0.0, 0.32):
+        dd = 0.26
+        t = ts(dd)
+        f = 640 + 260 * np.sin(np.pi * np.minimum(t / 0.2, 1)) - 300 * t
+        voice = saw(f, 40)
+        voice = band(voice, 600, 3200) + 0.5 * band(voice, 1600, 2400)
+        grit = 0.6 + 0.4 * np.sign(np.sin(2 * np.pi * 70 * t))
+        env = np.minimum(1, t / 0.015) * np.exp(-np.maximum(t - 0.12, 0) / 0.05)
+        place(out, voice * grit * env, at)
+    return finish(np.tanh(out * 2.0), 0.16)
+
+
+def growl():
+    d = 1.0
+    t = ts(d)
+    f = 85 + 25 * np.sin(np.pi * np.minimum(t / 0.8, 1)) + 4 * np.sin(2 * np.pi * 9 * t)
+    voice = saw(f, 50)
+    voice = band(voice, 0, 1600) + 0.5 * band(voice, 300, 700)
+    gravel = band(noise(d), 80, 900) * (0.5 + 0.5 * np.sin(2 * np.pi * 23 * t)) ** 2
+    env = np.minimum(1, t / 0.12) * np.where(t > 0.7, np.exp(-(t - 0.7) / 0.1), 1)
+    return finish(np.tanh((voice + 0.6 * gravel) * env * 1.8), 0.2)
+
+
+def skill_learn():
+    d = 1.0
+    out = np.zeros(int(SR * d))
+    for k, m in enumerate((69, 73, 76, 81)):
+        place(out, (0.6 + 0.15 * k) * modes(d - k * 0.09, [midi(m), midi(m) * 2, midi(m) * 3.01], [1, 0.35, 0.1], [0.35, 0.15, 0.08], 0.003), k * 0.09)
+    t = ts(d)
+    out += 0.12 * band(noise(d), 5000, 11000) * np.exp(-t / 0.4) * np.minimum(1, t / 0.2)
+    return finish(out, 0.14)
+
+
 SFX = {
     "chop": chop,
     "mine": mine,
@@ -571,6 +682,15 @@ SFX = {
     "magic_beam": magic_beam,
     "collapse": collapse,
     "step": step,
+    "fire_cast": fire_cast,
+    "burn": burn,
+    "meteor_fall": meteor_fall,
+    "meteor_impact": meteor_impact,
+    "slam": slam,
+    "summon": summon,
+    "crow": crow,
+    "growl": growl,
+    "skill_learn": skill_learn,
 }
 
 MUSIC = {"village_theme": village_theme, "victory": victory, "defeat": defeat}

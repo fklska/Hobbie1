@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://dw2q4no5n7jjv" path="res://AI/Summons/summon.gd" id="2_summon"]
+[ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_outline"]
+[ext_resource type="SpriteFrames" uid="uid://n9n8snyw6z9u" path="res://Art/summons/crow/crow_frames.tres" id="4_frames"]
+[ext_resource type="Script" uid="uid://b5lf67a02nlha" path="res://Art/directional_sprite.gd" id="5_dir"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
+resource_local_to_scene = true
+shader = ExtResource("3_outline")
+shader_parameter/color = Color(0.55, 1, 0.45, 0.8)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_feet"]
+radius = 6.0
+
+[node name="Crow" instance=ExtResource("1_base")]
+z_index = 2
+y_sort_enabled = true
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_summon")
+kind = "crow"
+title = "Ворон"
+description = "Зверь друида. Клюёт врагов рядом с героем, враги его не трогают."
+speed = 260.0
+attack_range = 22.0
+attack_cooldown = 0.7
+attack_windup = 0.15
+aggro_range = 420.0
+flying = true
+targetable = false
+area_attack = false
+hit_radius = 10.0
+bar_height = 44.0
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_outline")
+position = Vector2(0, 20)
+sprite_frames = ExtResource("4_frames")
+animation = &"idle_s"
+autoplay = "idle_s"
+offset = Vector2(0, -20)
+script = ExtResource("5_dir")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 20)
+shape = SubResource("CircleShape2D_feet")

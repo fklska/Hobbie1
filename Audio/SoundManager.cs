@@ -23,9 +23,18 @@ public partial class SoundManager : Node
 		["magic_beam"] = (-5f, 0.03f),
 		["collapse"] = (-3f, 0.05f),
 		["step"] = (-17f, 0.12f),
+		["fire_cast"] = (-6f, 0.08f),
+		["burn"] = (-16f, 0.15f),
+		["meteor_fall"] = (-4f, 0.03f),
+		["meteor_impact"] = (-1f, 0.04f),
+		["slam"] = (-3f, 0.06f),
+		["summon"] = (-6f, 0.04f),
+		["crow"] = (-9f, 0.12f),
+		["growl"] = (-5f, 0.1f),
+		["skill_learn"] = (-6f, 0f),
 	};
 
-	private static readonly HashSet<string> Loud = new() { "giant_roar" };
+	private static readonly HashSet<string> Loud = new() { "giant_roar", "meteor_impact" };
 
 	private const float MusicDb = -9f;
 	private const float SilentDb = -60f;

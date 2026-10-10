@@ -53,6 +53,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		RenderingServer.GlobalShaderParameterSet("hero_position", GlobalPosition);
 		HandAction(delta);
 		HandAttack(delta);
+		HandSkills(delta);
 		Regenerate(delta);
 	}
 
@@ -118,6 +119,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		Health = MaxHealth;
 		sinceDamage = 0;
 		IsDead = false;
+		ResetSkills();
 		UpdateHealthBar();
 	}
 
@@ -125,23 +127,22 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	{
 		attackTimer -= delta;
 		attackAnimTimer -= delta;
-		if (attackTimer > 0 || Grid.buildMode) return;
-		if (!Input.IsActionJustPressed("attack") && !Input.IsActionJustPressed("RightMouseButton")) return;
+		if (attackTimer > 0 || Grid.buildMode || Casting || whirlTimer > 0) return;
+		if (!AttackHeld()) return;
 
-		attackTimer = AttackCooldown;
+		Swing swing = NextSwing();
+		attackTimer = swing.Interval;
 		Vector2 aim = (GetGlobalMousePosition() - GlobalPosition).Normalized();
-		attackAnimTimer = (float)anim.Call("action_length", "attack");
-		anim.Call("play_dir", "attack", aim, true);
+		PlayAction("attack", aim, swing.AnimSpeed);
 		SoundManager.Instance.Play("swing");
 
-		int damage = GameManager.Instance.HeroDamage;
 		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
 		{
 			if (node is not Node2D enemy) continue;
 			Vector2 toEnemy = enemy.GlobalPosition - GlobalPosition;
-			if (toEnemy.Length() <= AttackRange && aim.Dot(toEnemy.Normalized()) > 0.2f)
+			if (toEnemy.Length() <= swing.Range && aim.Dot(toEnemy.Normalized()) > swing.Arc)
 			{
-				GameManager.Instance.Damage(enemy, damage);
+				GameManager.Instance.Damage(enemy, swing.Damage);
 			}
 		}
 	}
@@ -162,10 +163,15 @@ public partial class PlayerMainCharacter : CharacterBody2D
 
 	public void Run()
 	{
+		if (Casting)
+		{
+			Velocity = Vector2.Zero;
+			return;
+		}
 		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down").Normalized();
 		if (direction != Vector2.Zero)
 		{
-			Velocity = direction * SPEED * AGILITY;
+			Velocity = direction * SPEED * AGILITY * MoveScale;
 		}
 		else
 		{
@@ -173,6 +179,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		}
 
 		if (attackAnimTimer > 0) return;
+		anim.SpeedScale = 1;
 		if (direction != Vector2.Zero) anim.Call("play_dir", "walk", direction);
 		else if (miningParticle.Emitting) anim.Call("play_dir", "work", miningParticle.GlobalPosition - GlobalPosition);
 		else anim.Call("play_dir", "idle", Vector2.Zero);
@@ -180,7 +187,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 
 	public void HandAction(double delta)
 	{
-		if (Input.IsMouseButtonPressed(MouseButton.Left) && !Grid.buildMode) 
+		if (Input.IsMouseButtonPressed(MouseButton.Left) && !Grid.buildMode && !Casting)
 		{
 			Vector2 clickPos = GetGlobalMousePosition();
 			Vector2I globalCell = Utils.GetGlobalCell(clickPos);

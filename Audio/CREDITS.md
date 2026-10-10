@@ -30,5 +30,14 @@ python3 Audio/tools/synth.py chop village_theme
 | `sfx/magic_beam.wav` | Магический луч гиганта | `synth.py`, `magic_beam()` | Собственная работа |
 | `sfx/ui_click.wav` | Нажатие любой кнопки | `synth.py`, `ui_click()` | Собственная работа |
 | `sfx/error.wav` | Не хватает ресурсов, нельзя строить | `synth.py`, `error()` | Собственная работа |
+| `sfx/fire_cast.wav` | Поджог: огненная вспышка | `synth.py`, `fire_cast()` | Собственная работа |
+| `sfx/burn.wav` | Треск горящего врага | `synth.py`, `burn()` | Собственная работа |
+| `sfx/meteor_fall.wav` | Метеорит летит вниз | `synth.py`, `meteor_fall()` | Собственная работа |
+| `sfx/meteor_impact.wav` | Падение метеорита | `synth.py`, `meteor_impact()` | Собственная работа |
+| `sfx/slam.wav` | Тяжёлый удар воина | `synth.py`, `slam()` | Собственная работа |
+| `sfx/summon.wav` | Друид призывает зверя | `synth.py`, `summon()` | Собственная работа |
+| `sfx/crow.wav` | Карканье ворона | `synth.py`, `crow()` | Собственная работа |
+| `sfx/growl.wav` | Рык волка и медведя | `synth.py`, `growl()` | Собственная работа |
+| `sfx/skill_learn.wav` | Выучена способность, выбран класс | `synth.py`, `skill_learn()` | Собственная работа |
 
 Если добавляешь чужой звук, допиши строку в таблицу: откуда файл, автор и лицензия. Подходят только лицензии, разрешающие коммерческое использование (CC0, CC BY с указанием автора).

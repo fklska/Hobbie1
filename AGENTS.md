@@ -35,7 +35,7 @@
 
 Выживание ведёт `Game/Survival.cs` (узел `Survival`, `Game.Survival`): его создаёт `StartWorld`, убирает `Cleanup`. День берётся из `DayNightCycle` героя (`day_length_minutes = 6`). Каждую ночь (`night_started`) приходит волна мобов из словаря `Survival.Mobs`, бюджет растёт с днём; каждую 5-ю ночь вместе с волной приходит каменный гигант. Мобы роняют монеты (`Stock["coins"]`) и артефакты (`Survival.Artifacts`), их подбирает герой (`Game/Loot/loot_pickup.tscn`). Вооружённые жители (`AI/Village/villager_combat.gd`) по ночам охраняют главное здание, безоружные убегают к нему от врагов. HUD выживания: `Game/survival_hud.tscn`.
 
-Партия сохраняется в `user://Runs/<имя мира>.json` на каждом рассвете, при выходе в меню и при закрытии окна, удаляется при победе или поражении. Код сохранения в `Game/GameManager.Survival.cs` (`SaveRun`, `HasRun`, `ContinueRun`), здания и экономика сохраняются через `SaveEconomy`/`LoadEconomy`. На время `ContinueRun` поднят флаг `Game.Restoring`, костёр тогда не ставится.
+Партия сохраняется в `user://Runs/<имя мира>.json` на каждом рассвете, при выходе в меню и при закрытии окна, удаляется при победе или поражении. Код сохранения в `Game/GameManager.Survival.cs` (`SaveRun`, `HasRun`, `ContinueRun`), здания и экономика сохраняются через `SaveEconomy`/`LoadEconomy`. На время `ContinueRun` поднят флаг `Game.Restoring`, костёр тогда не ставится. Класс героя и ранги способностей лежат в `hero` (`class`, `skills`).
 
 Здания наследуют `BuildSystem/scripts/building.gd` (`Building`: HP, уровень, `take_damage`, `heal`, сигнал `destroyed`, `get_center()`). Урон любому объекту наносится через `Game.Damage(target, amount)`. Группы: `village` (герой, жители, здания — цели мобов), `enemies` (мобы и гигант — цели героя, жителей и башен).
 
@@ -48,6 +48,16 @@
 - Кузница: инструменты (`ToolTier`, множитель `ToolSpeed` для добычи героя и `WorkSpeed` для жителей), доспех героя (`ArmorTier`, здоровье), оружие ближнего боя. Мастерская: оружие дальнего боя. Выкованное оружие лежит в арсенале (`Armory`, `TakeWeapon`, `ReturnWeapon`), статы для GDScript через `Game.GetWeaponStats(id)`. Урон героя `HeroDamage` берётся от `HeroWeapon`, здоровье `HeroMaxHealth` от доспеха, оба учитывают артефакты.
 - Сохранение экономики: `SaveEconomy()` / `LoadEconomy(data)` (здания с клетками, уровнями и HP, тиры, арсенал; склад сохраняется отдельно).
 
+## Классы героя
+
+- Данные: `Game/HeroClasses.cs` (`HeroClasses.Classes`): у класса название, `SpriteFrames` героя (`Art/hero/<класс>_frames.tres`), бонус здоровья, множитель урона обычной атаки (`AttackScale`), две ветки и навыки. У навыка цена каждого ранга (`Costs`), `Requires` (навык, который нужен раньше), `Slot` (0–2 = Q/R/C, −1 пассивный), перезарядка и текст рангов. Первый навык класса (`Innate`) изучен сразу.
+- Состояние: `Game/GameManager.Hero.cs` (`HeroClass`, `SkillRanks`, `Rank(id)`, `LearnLock`, `LearnSkill`, сигнал `HeroChanged`). Очков всего столько, сколько дней прошло (`Survival.Day`), свободные = всего минус цена изученных рангов, поэтому отдельно очки не сохраняются. `StartWorld` открывает выбор класса (`Game/ClassPicker.cs`, держит паузу), `ContinueRun` берёт класс из сохранения, а без него тоже открывает выбор.
+- HUD: `Game/hero_hud.tscn` (`HeroHud.cs`): три ячейки способностей справа внизу (`AbilitySlot.cs`, клик тоже применяет), кнопка и окно дерева (K, группа `closable_ui`). Иконки `UI/Icons/skills/<id>.png` рисует `make_skin.py`.
+- Применение: partial `Player/PlayerMainCharacter.Skills.cs` (`HandSkills`, `UseSlot`, `CooldownLeft`). С клавиши цель там, где курсор (враг рядом с курсором становится целью самонаведения), с клика по ячейке ближайший враг. Каст (`BeginCast`) останавливает героя и заполняет `ActionProgress`. Обычная атака идёт через `NextSwing()`: у воина серия быстрых слабых ударов с усиленным третьим, у мага и друида урон × `AttackScale`.
+- Эффекты: `Game/Skills/`. `spell_fx.tscn` проигрывает анимацию из `Art/effects/spell_frames.tres` и удаляется сам. `Burning` и `Stun` вешаются на цель статическим `apply(...)`, урон наносят через `take_damage` цели. `fireball.tscn` и `meteor.tscn` (тень и кольцо на земле, падение, взрыв, кратер, урон с затуханием, сжигает ресурсы в радиусе через `HarvestTile`). Огонь светится за счёт `self_modulate` > 1 и `Game/Skills/unshaded.tres`.
+- Призыв друида: `AI/Summons/summon.gd` (`Summon`, наследник `KinematicBodyEntity`), сцены `crow.tscn`, `spirit_wolf.tscn`, `bear.tscn`. Свой простой ИИ без `AIController2D`: держатся рядом с героем, бьют ближайшего врага, живут `lifetime` секунд. Группы `summons` и `summon_<вид>`, волк и медведь ещё и в `village` (мобы их бьют), ворона летает и целью не бывает.
+- Новый навык: запись в `HeroClasses.cs`, иконка в `SKILL_ICONS` в `make_skin.py`, ветка в `UseSlot` (активный) или чтение `Rank(id)` там, где он действует (пассивный).
+
 ## Структура
 
 | Папка | Что внутри |
@@ -58,11 +68,11 @@
 | `Resourses/` | Префабы ресурсов (деревья, камень, железо, золото) и слой окружения `v2/EnviromentLayer.tscn`. |
 | `Player/` | `Player.tscn`, `PlayerMainCharacter.cs`. Старый `Player/scripts/player.gd` (`class_name Player`) не удалять: этот тип использует `BaseClasses/ScriptClasses/weapon_item.gd`. |
 | `Game/` | `GameManager.cs` (состояние партии), `GameManager.Economy.cs` и `Economy.cs` (экономика), `GameManager.Survival.cs` и `Survival.cs` (выживание, сохранение партии), HUD `game_hud.tscn`. |
-| `AI/` | `Village/worker.tscn` — житель, `Enemies/` — мобы волн (`mob.gd`, гоблин, волк, скелет-лучник, орк) и стрела, `BaseClasses/Enemy/stone_giant.tscn` — босс, `RL/` — RL-контроллеры, модели и сцены обучения. Старое: `AI/training.tscn`, `AI/Prefabs/v2/`. |
+| `AI/` | `Village/worker.tscn` — житель, `Enemies/` — мобы волн (`mob.gd`, гоблин, волк, скелет-лучник, орк) и стрела, `BaseClasses/Enemy/stone_giant.tscn` — босс, `Summons/` — звери друида, `RL/` — RL-контроллеры, модели и сцены обучения. Старое: `AI/training.tscn`, `AI/Prefabs/v2/`. |
 | `BuildSystem/` | Сетка (`Grid.cs`), меню строительства (`UI/BuildMenu.cs`), сцены зданий `buildings/`, скрипты `scripts/` (`building.gd`, `tower.gd`). Спрайты зданий в `Art/buildings/`. |
 | `UI/` | Меню (`MainMenu/`), пауза, настройки и загрузка (`Overlay/`, настройки в `user://settings.cfg` через `GameSettings`), инвентарь (`UI/Inventory/*.cs`, хотбар на GDScript), тема `UI/theme.tres`, шрифт Kurland. Тема собирается из скина: `Skin/source/make_skin.py` рисует `Skin/*.png` и иконки `Icons/*.png`, `godot --headless --path . -s res://UI/Skin/source/build_theme.gd` пересобирает `theme.tres`. В сценах используй варианты темы (`PrimaryButton`, `HudPanel`, `HeaderLabel` и др.) вместо своих стилей. Окна в группе `closable_ui` закрываются по Esc раньше паузы. |
 | `Light/` | Смена дня и ночи: `DayNight/day_night.tscn` вложена в `Player.tscn`. `DayNightCycle` (`DayNightCycle.instance`, `hour`, `day`, сигналы `hour_changed`, `night_started`, `day_started`, `new_day`; статическое `DayNightCycle.night` от 0 до 1) задаёт палитру по часам, облака и туман рисует шейдер `sky.gdshader`. Ночной фонарь `night_lamp.tscn` вешается на здания из `BuildSystem/buildings/` автоматически, на другие узлы через группу `night_lamp_host` или вручную. `Debug/` — старая отладочная сцена. |
-| `Art/` | Своя графика игры: герой (`hero/`), мобы и гигант (`mobs/`), здания по уровням (`buildings/<id>_<уровень>.png`), ресурсы (`resources/`), оружие, стрела, монеты, артефакт (`items/`). `directional_sprite.gd` (`DirectionalSprite`) выбирает анимацию по направлению. Всё рисует генератор `tools/sprites/`. |
+| `Art/` | Своя графика игры: герой и классы (`hero/`), мобы и гигант (`mobs/`), звери друида (`summons/`), заклинания и взрывы (`effects/`), здания по уровням (`buildings/<id>_<уровень>.png`), ресурсы (`resources/`), оружие, стрела, монеты, артефакт (`items/`). `directional_sprite.gd` (`DirectionalSprite`) выбирает анимацию по направлению. Всё рисует генератор `tools/sprites/`. |
 | `Audio/` | Звук: автозагрузка `SoundManager.cs`, фоновая мелодия и джинглы в `music/`, звуки в `sfx/`, их генератор `tools/synth.py`, источники и лицензии в `CREDITS.md`. |
 | `Globals/` | `GenerationSettings.cs` (размер тайла 64, чанк 8 тайлов, путь сохранений), утилиты. |
 | `BaseClasses/` | Базовые GDScript-классы сущностей, предметов и оружия. |
@@ -154,7 +164,7 @@ godot --headless --path . --quit
 
 ## Input Map
 
-Действия заданы в `project.godot`: `ui_left/right/up/down` (WASD и стрелки), `LeftMouseButton`, `RightMouseButton`, `action` (E), `attack` (F), `inventory` (Tab), `HotBar` (1–4), `menu` (B), `zoom+`/`zoom-` (Z/X), `ESC`, `DEBUG` (Alt+9), `test` (L). В коде используй эти имена, новые добавляй туда же.
+Действия заданы в `project.godot`: `ui_left/right/up/down` (WASD и стрелки), `LeftMouseButton`, `RightMouseButton`, `action` (E), `attack` (F), `skill_1`/`skill_2`/`skill_3` (Q/R/C), `skills` (K), `inventory` (Tab), `HotBar` (1–4), `menu` (B), `zoom+`/`zoom-` (Z/X), `ESC`, `DEBUG` (Alt+9), `test` (L). В коде используй эти имена, новые добавляй туда же.
 
 Слои физики: 1 World, 2 Player, 3 Enemy, 4 Resourses, 5 Buildings, 6 Walls.
 

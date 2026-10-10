@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://cxncuo7pcav34" path="res://Game/HeroHud.cs" id="1_hud"]
+
+[node name="HeroHud" type="CanvasLayer"]
+layer = 3
+script = ExtResource("1_hud")

@@ -107,6 +107,8 @@ public partial class GameManager
 			{
 				["pos"] = Vec(Player.IsDead ? Survival.BaseCenter() : Player.GlobalPosition),
 				["hp"] = Player.IsDead ? Player.MaxHealth : Player.Health,
+				["class"] = HeroClass,
+				["skills"] = SaveHero()["skills"],
 			},
 			["survival"] = Survival.Capture(),
 		};
@@ -126,10 +128,11 @@ public partial class GameManager
 
 		var hero = data["hero"].AsGodotDictionary();
 		Player.GlobalPosition = World.Walkable(ToVector(hero["pos"]));
-		Player.Health = hero["hp"].AsSingle();
-		Player.Heal(0);
 
 		Survival.Restore(data["survival"].AsGodotDictionary());
+		LoadHero(hero);
+		Player.Health = Mathf.Min(hero["hp"].AsSingle(), Player.MaxHealth);
+		Player.Heal(0);
 		Survival.LoadAround(Player.GlobalPosition);
 		EmitSignal(SignalName.StockChanged);
 		EmitSignal(SignalName.ProgressChanged);
