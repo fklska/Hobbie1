@@ -114,22 +114,9 @@ public partial class GameManager : Node
 
 	public Node2D EntitiesRoot => World?.GetNode<Node2D>("Enviroment");
 
-	public static string KindOf(ResorseType type) => type switch
-	{
-		ResorseType.None => "",
-		ResorseType.Stone => "stone",
-		ResorseType.Iron => "iron",
-		ResorseType.Gold => "gold",
-		_ => "wood",
-	};
+	public static string KindOf(ResorseType type) => WorldResources.KindOf(type);
 
-	public static int YieldOf(ResorseType type) => type switch
-	{
-		ResorseType.GiantWood or ResorseType.GiantSnowWood => 3,
-		ResorseType.MediumWood or ResorseType.MediumSnowWood or ResorseType.Stone => 2,
-		ResorseType.None => 0,
-		_ => 1,
-	};
+	public static int YieldOf(ResorseType type) => WorldResources.YieldOf(type);
 
 	public string GetKindOf(ResorseType type) => KindOf(type);
 

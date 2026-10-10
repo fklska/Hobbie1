@@ -154,5 +154,16 @@ public enum ResorseType
     TropicWood,
     Stone,
     Iron,
-    Gold
+    Gold,
+    Birch,
+    SmallPine,
+    MediumPine,
+    GiantPine,
+    Banana,
+    Willow,
+    DeadTree,
+    Acacia,
+    Baobab,
+    Cactus,
+    Shrub
 }

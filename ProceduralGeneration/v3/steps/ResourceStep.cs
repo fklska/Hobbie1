@@ -17,6 +17,8 @@ public partial class ResourceStep : GenerationStep
 	[Export] public float IronClusters = 1f / 520f;
 	[Export] public float GoldClusters = 1f / 1400f;
 	[Export] public int ClusterSpacing = 7;
+	[Export] public int OasisRadius = 3;
+	[Export] public float OasisDensity = 0.3f;
 
 	public override void Execute(WorldGen gen)
 	{
@@ -36,6 +38,7 @@ public partial class ResourceStep : GenerationStep
 		private readonly Random rng;
 		private readonly int[] reachable;
 		private readonly int[] fromOcean;
+		private readonly int[] fromWater;
 		private readonly List<int> centers = new();
 		private readonly int landCells;
 
@@ -52,6 +55,7 @@ public partial class ResourceStep : GenerationStep
 			}
 			reachable = SpawnFinder.LargestComponent(gen.Width, gen.Height, blocked);
 			fromOcean = gen.Distance(i => gen.Surfaces[i] == WorldGen.Surface.Ocean, true, 3);
+			fromWater = gen.Distance(i => gen.IsWater(i), true, step.OasisRadius + 1);
 		}
 
 		private int Ring(int i) => Math.Max(Math.Abs(i % gen.Width - gen.Spawn.X), Math.Abs(i / gen.Width - gen.Spawn.Y));
@@ -91,10 +95,12 @@ public partial class ResourceStep : GenerationStep
 			foreach (int i in Shuffled())
 			{
 				if (!Free(i)) continue;
-				(float patch, float open) = TreeDensity(gen.Biome(i));
+				TileType biome = gen.Biome(i);
+				bool oasis = biome == TileType.Desert && fromWater[i] <= step.OasisRadius;
+				(float patch, float open) = oasis ? (step.OasisDensity, step.OasisDensity) : TreeDensity(biome);
 				float density = forest[i] > step.ForestLevel ? patch : open;
 				if (density <= 0 || rng.NextDouble() >= density || !Spaced(i)) continue;
-				gen.Resources[i] = (byte)TreeOf(gen.Biome(i));
+				gen.Resources[i] = (byte)(oasis ? ResorseType.PalmWood : TreeOf(biome));
 			}
 		}
 
@@ -216,23 +222,11 @@ public partial class ResourceStep : GenerationStep
 			TileType.Savanna => (0.15f, 0.03f),
 			TileType.Tundra => (0.1f, 0.02f),
 			TileType.Snow => (0.05f, 0f),
+			TileType.Desert => (0.05f, 0.01f),
 			_ => (0f, 0f),
 		};
 
-		private ResorseType TreeOf(TileType biome)
-		{
-			double r = rng.NextDouble();
-			return biome switch
-			{
-				TileType.Savanna => r < 0.2 ? ResorseType.GiantWood : r < 0.85 ? ResorseType.MediumWood : ResorseType.SmallWood,
-				TileType.TropicalForest => r < 0.8 ? ResorseType.TropicWood : r < 0.95 ? ResorseType.MediumWood : ResorseType.SmallWood,
-				TileType.Swamp => r < 0.5 ? ResorseType.TropicWood : r < 0.8 ? ResorseType.MediumWood : ResorseType.SmallWood,
-				TileType.Taiga => r < 0.4 ? ResorseType.GiantSnowWood : r < 0.85 ? ResorseType.MediumSnowWood : ResorseType.SmallSnowWood,
-				TileType.Tundra => r < 0.15 ? ResorseType.GiantSnowWood : r < 0.7 ? ResorseType.MediumSnowWood : ResorseType.SmallSnowWood,
-				TileType.Snow => r < 0.6 ? ResorseType.MediumSnowWood : ResorseType.SmallSnowWood,
-				_ => r < 0.4 ? ResorseType.GiantWood : r < 0.85 ? ResorseType.MediumWood : ResorseType.SmallWood,
-			};
-		}
+		private ResorseType TreeOf(TileType biome) => WorldResources.TreeOf(biome, rng.NextDouble());
 
 		private static float StoneWeight(TileType biome) => biome switch
 		{
