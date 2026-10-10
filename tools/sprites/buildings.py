@@ -1,6 +1,6 @@
 import numpy as np
 from sdf import norm, rot_axis
-from kit import Kit, t_planks, t_bricks, t_shingles, t_thatch, t_noise, t_rows, t_flame, lean_frame
+from kit import Kit, t_planks, t_bricks, t_shingles, t_thatch, t_noise, t_rows, t_flame, t_rock, lean_frame
 
 K = 0.9
 CELL = 64
@@ -946,6 +946,404 @@ def tower_3():
     return k
 
 
+# ---------------------------------------------------------------- gathering props
+
+ROCK = t_rock(cell=3.5, var=0.25)
+
+
+def stump(k, x, z, r=4.2, h=3.4, axe=False):
+    g = "stump%d" % int(x * 10 + z)
+    k.cyl([x, h / 2, z], r, h / 2, "log", rnd=0.5, group=g)
+    k.cyl([x, h + 0.1, z], r - 0.7, 0.2, "plank", group=g)
+    if axe:
+        tool_axe(k, [x + 0.6, h + 1.2, z + 0.4], norm([0.55, 1.0, 0.35]), group=g)
+
+
+def tool_axe(k, at, d, group, length=12.0):
+    at = np.asarray(at, float)
+    side = norm(np.cross(d, [0, 0, 1.0]))
+    k.cap(at, at + d * length, 0.6, "plank", group=group)
+    head = at + d * 1.2
+    k.box(head - side * 1.6, [2.2, 1.4, 0.5], "metal", R=lean_frame(d) @ RZ(np.pi / 2), rnd=0.2, group=group)
+
+
+def tool_pick(k, at, d, group, length=11.0):
+    at = np.asarray(at, float)
+    top = at + d * length
+    side = norm(np.cross(d, [0, 0, 1.0]))
+    k.cap(at, top, 0.6, "plank", group=group)
+    k.cap(top, top + side * 4.5 - d * 1.2, 0.9, "metal", r2=0.35, group=group)
+    k.cap(top, top - side * 4.5 - d * 1.2, 0.9, "metal", r2=0.35, group=group)
+
+
+def sawhorse(k, x, z, length=24, log=True, along_x=True, r=3.0):
+    g = "horse%d" % int(x * 10 + z)
+    a = np.array([1.0, 0, 0]) if along_x else np.array([0, 0, 1.0])
+    s = np.array([0, 0, 1.0]) if along_x else np.array([1.0, 0, 0])
+    c = np.array([x, 0, z], float)
+    for e in (-1, 1):
+        base = c + a * e * (length / 2 - 3)
+        for sx in (-1, 1):
+            k.cap(base + s * sx * 4 + [0, 0, 0], base - s * sx * 1.0 + [0, 9, 0], 0.8, "beam", group=g)
+    if log:
+        k.cap(c + [0, 9 + r, 0] - a * length / 2, c + [0, 9 + r, 0] + a * length / 2, r, "log", group=g)
+        for e in (-1, 1):
+            k.cyl(c + [0, 9 + r, 0] + a * e * (length / 2 + r * 0.7), r - 0.8, 0.25, "plank",
+                  R=RZ(np.pi / 2) if along_x else RX(np.pi / 2), group=g)
+
+
+def plank_stack(k, x, z, w=12, l=24, layers=4, along_x=False):
+    g = "planks%d" % int(x * 10 + z)
+    for i in range(layers):
+        off = (i % 2) * 1.2 - 0.6
+        if along_x:
+            k.box_mm([x - l / 2 + off, i * 1.7, z - w / 2], [x + l / 2 + off, i * 1.7 + 1.5, z + w / 2], "plank",
+                     tex=t_planks(3.0, vertical=True, seed=i + x), group=g)
+        else:
+            k.box_mm([x - w / 2, i * 1.7, z - l / 2 + off], [x + w / 2, i * 1.7 + 1.5, z + l / 2 + off], "plank",
+                     tex=t_planks(3.0, vertical=True, seed=i + x), group=g)
+
+
+def sawdust(k, x, z, rx=9, rz=6):
+    k.ell([x, -0.2, z], [rx, 0.9, rz], "wheat", tex=t_noise(0.25, 0.8, seed=x), group="ground")
+
+
+def saw_blade(k, c, r=9.0, along_x=True):
+    R = RX(np.pi / 2) if along_x else RZ(np.pi / 2)
+    k.cyl(c, r, 0.35, "steel", R=R, group="blade")
+    k.cyl(c, 1.6, 0.9, "metal", R=R, group="blade")
+
+
+def stone_block(k, x, z, s=(4.5, 3.5, 4.0), y=0.0, rot=0.0, mat="stone_warm"):
+    k.box([x, y + s[1], z], list(s), mat, R=RY(rot), rnd=0.5, tex=t_bricks(30, 30, gap=0.0, var=0.08, seed=x + z),
+          group="block%d" % int(x * 10 + z + y))
+
+
+def block_stack(k, x, z, mat="stone_warm"):
+    for i, (dx, dz, y) in enumerate(((-5, 0, 0), (5, 0, 0), (0, 0, 7.2))):
+        k.box([x + dx, y + 3.5, z + dz], [4.6, 3.5, 4.2], mat, rnd=0.5, tex=t_bricks(30, 30, gap=0.0, var=0.08, seed=i + x),
+              group="bstack%d" % int(x * 10 + z))
+
+
+def ore_pile(k, x, z, ore="rust", base="stone", r=7.0, seed=0):
+    rng = np.random.RandomState(seed + int(x * 7 + z))
+    g = "ore%d" % int(x * 10 + z)
+    k.ell([x, 0.5, z], [r, r * 0.55, r * 0.85], base, tex=ROCK, group=g)
+    for n in range(7):
+        a = rng.uniform(0, 2 * np.pi)
+        d = rng.uniform(0.2, 0.8)
+        k.ell([x + np.cos(a) * r * d, r * 0.45 * (1 - d * 0.6), z + np.sin(a) * r * 0.85 * d],
+              np.array([1.7, 1.3, 1.6]) * rng.uniform(0.8, 1.2), ore, R=RY(rng.uniform(0, 3)), group=g)
+
+
+def rails(k, x, z0, z1, gauge=3.2):
+    for sx in (-1, 1):
+        k.cap([x + sx * gauge, 0.9, z0], [x + sx * gauge, 0.9, z1], 0.45, "metal", group="rails")
+    zz = z0 + 1.5
+    while zz < z1:
+        k.box_mm([x - gauge - 2, -0.2, zz - 1.0], [x + gauge + 2, 0.7, zz + 1.0], "beam", group="rails")
+        zz += 5.0
+
+
+def mine_cart(k, x, z, ore="rust", base="stone", along_z=True):
+    g = "cart%d" % int(x * 10 + z)
+    hw, hl = (3.8, 5.4) if along_z else (5.4, 3.8)
+    k.box([x, 5.6, z], [hw, 2.8, hl], "plank", tex=t_planks(2.4, vertical=False, seed=x), rnd=0.3, group=g)
+    k.box([x, 8.2, z], [hw + 0.3, 0.45, hl + 0.3], "metal", group=g)
+    for sx in (-1, 1):
+        for sz in (-1, 1):
+            wc = [x + sx * (hw + 0.3), 2.2, z + sz * (hl - 1.8)] if along_z else [x + sx * (hw - 1.8), 2.2, z + sz * (hl + 0.3)]
+            k.cyl(wc, 2.2, 0.5, "metal", R=RZ(np.pi / 2) if along_z else RX(np.pi / 2), group=g)
+    k.ell([x, 8.6, z], [hw * 0.85, 2.2, hl * 0.85], base, tex=ROCK, group=g)
+    for i, (dx, dz) in enumerate(((-1.5, -1.8), (1.4, 0.6), (-0.3, 2.2), (1.8, -2.4))):
+        k.ell([x + dx, 10.2, z + dz], [1.4, 1.1, 1.3], ore, group=g)
+
+
+def lantern(k, x, z, h=16):
+    g = "lantern%d" % int(x * 10 + z)
+    k.cap([x, 0, z], [x, h, z], 0.8, "beam", group=g)
+    k.cap([x, h, z], [x + 4, h, z], 0.6, "beam", group=g)
+    k.box([x + 4, h - 3.2, z], [1.4, 1.8, 1.4], "glass_lit", group=g)
+    k.box([x + 4, h - 1.0, z], [1.8, 0.4, 1.8], "metal", group=g)
+
+
+def crane(k, x, z, h=36, reach=20, ang=0.6, load="stone_warm"):
+    g = "crane%d" % int(x * 10 + z)
+    d = np.array([np.cos(ang), 0, np.sin(ang)])
+    k.cap([x, 0, z], [x, h, z], 1.7, "log", group=g)
+    for a in (0.0, 2.1, 4.2):
+        f = np.array([np.cos(a), 0, np.sin(a)])
+        k.cap([x, 12, z], [x + f[0] * 9, 0, z + f[2] * 9], 1.0, "beam", group=g)
+    tip = np.array([x, h + 6, z]) + d * reach
+    k.cap([x, h - 12, z], tip, 1.1, "beam", group=g)
+    k.cap([x, h + 2, z], tip, 0.5, "rope", group=g)
+    k.sphere(tip, 1.4, "metal", group=g)
+    hook = tip - [0, h - 4, 0]
+    k.cap(tip, hook, 0.3, "rope", group=g)
+    if load:
+        k.box([hook[0], hook[1] - 3.5, hook[2]], [4.0, 3.2, 3.6], load, rnd=0.5, group=g)
+
+
+def headframe(k, x, z, h=40, w=14):
+    g = "headframe"
+    for sx in (-1, 1):
+        k.cap([x + sx * w, 0, z + 6], [x + sx * 3, h, z], 1.4, "beam", group=g)
+        k.cap([x + sx * w, 0, z - 6], [x + sx * 3, h, z], 1.4, "beam", group=g)
+    for y in (12, 24):
+        t = y / h
+        hw = w + (3 - w) * t
+        k.cap([x - hw, y, z + 6 * (1 - t)], [x + hw, y, z + 6 * (1 - t)], 0.9, "beam", group=g)
+        k.cap([x - hw, y, z - 6 * (1 - t)], [x + hw, y, z - 6 * (1 - t)], 0.9, "beam", group=g)
+    k.box_mm([x - 4.5, h - 1, z - 2], [x + 4.5, h + 1.4, z + 2], "beam", group=g)
+    k.add("torus", "metal", None, g, c=np.array([x, h + 6.5, z]), RR=6.0, r=0.8, R=RX(np.pi / 2))
+    for a in range(4):
+        q = a * np.pi / 4
+        k.cap([x - 6 * np.cos(q), h + 6.5 - 6 * np.sin(q), z], [x + 6 * np.cos(q), h + 6.5 + 6 * np.sin(q), z], 0.35, "metal", group=g)
+    k.cap([x + 6, h + 6.5, z], [x + 6, 4, z], 0.3, "rope", group=g)
+
+
+def shaft(k, x, z, w=12):
+    k.box_mm([x - w / 2 - 2, 0, z - w / 2 - 2], [x + w / 2 + 2, 3, z + w / 2 + 2], "beam", tex=t_planks(3.0, vertical=False), group="shaft")
+    k.box_mm([x - w / 2, 2, z - w / 2], [x + w / 2, 3.2, z + w / 2], "dark", group="shaft")
+
+
+def log_heap(k, x, z, rows=(3, 2, 1), length=13.0, r=2.8, ang=0.45):
+    a = np.array([np.cos(ang), 0, -np.sin(ang)])
+    b = np.array([np.sin(ang), 0, np.cos(ang)])
+    Re = lean_frame(a)
+    g = "heap%d" % int(x * 10 + z)
+    for row, cnt in enumerate(rows):
+        for j in range(cnt):
+            c = np.array([x, 0, z]) + b * (j - (cnt - 1) / 2) * 2 * r + [0, r + row * (2 * r - 0.9), 0]
+            L = length / 2 - row * 0.6 + (j % 2) * 0.7
+            k.cap(c - a * L, c + a * L, r, "log", group=g)
+            for sx in (1, -1):
+                k.cyl(c + sx * a * (L + r * 0.72), r - 0.7, 0.3, "plank", R=Re, group=g)
+
+
+def cliff(k, x0, x1, z0, z1, h, seed=0, steps=1, cut="stone"):
+    rng = np.random.RandomState(seed)
+    depth = (z1 - z0) / steps
+    for i in range(steps):
+        za, zb = z0 + depth * i, z0 + depth * (i + 1)
+        hh = h * (1 - i / steps)
+        n = max(2, int((x1 - x0) / 22))
+        xs = np.linspace(x0, x1, n + 1)
+        for j in range(n):
+            jit = rng.uniform(-0.12, 0.12) * hh
+            mat = cut if i > 0 or steps == 1 else "rock"
+            tex = ROCK if mat == "rock" else t_bricks(13, 7, gap=0.18, var=0.12, seed=seed + i * 7 + j, jitter=5)
+            k.box_mm([xs[j] - 1.5, 0, za], [xs[j + 1] + 1.5, hh + jit, zb], mat, rnd=1.4, tex=tex, group="cliff%d" % i)
+    for n in range(int((x1 - x0) / 16)):
+        cx = rng.uniform(x0 + 6, x1 - 6)
+        k.ell([cx, h + rng.uniform(-3, 1), z0 + rng.uniform(4, depth - 4)], [rng.uniform(6, 10), rng.uniform(3, 5), rng.uniform(5, 8)],
+              "rock", R=RY(rng.uniform(0, 3)), tex=ROCK, group="cliff0")
+    for n in range(int((x1 - x0) / 20)):
+        cx = rng.uniform(x0 + 6, x1 - 6)
+        k.ell([cx, h + rng.uniform(1, 3), z0 + rng.uniform(3, depth - 3)], [rng.uniform(3, 6), 1.6, rng.uniform(3, 5)],
+              "moss", tex=t_noise(0.2, 1.0, seed=n), group="cliff0")
+
+
+def mine_mouth(k, x, z, w=18, h=18, stone_frame=False):
+    k.box_mm([x - w / 2, 0, z - 1.0], [x + w / 2, h, z + 0.6], "dark", group="mouth")
+    k.cyl([x, h, z - 0.2], w / 2, 0.8, "dark", R=RX(np.pi / 2), group="mouth")
+    if stone_frame:
+        st = t_bricks(6, 4, seed=7, jitter=2)
+        for sx in (-1, 1):
+            k.box_mm([x + sx * (w / 2 + 3) - 3, 0, z - 1], [x + sx * (w / 2 + 3) + 3, h + 2, z + 3], "stone", tex=st, group="frame")
+        k.cyl([x, h + 1, z + 1], w / 2 + 6, 2.0, "stone", R=RX(np.pi / 2), tex=st, clips=[(np.array([0, -1.0, 0]), np.array([x, h, z]))], group="frame")
+        k.cyl([x, h, z + 1.4], w / 2 + 0.6, 2.2, "dark", R=RX(np.pi / 2), group="frame")
+        k.box_mm([x - 2.5, h + w / 2 + 2, z + 2.6], [x + 2.5, h + w / 2 + 6, z + 3.6], "stone_warm", group="frame")
+    else:
+        for sx in (-1, 1):
+            k.cap([x + sx * (w / 2 + 1.4), 0, z + 1.4], [x + sx * (w / 2 + 0.8), h + w / 2 + 1, z + 1.4], 1.8, "log", group="frame")
+        k.cap([x - w / 2 - 5, h + w / 2 + 2.4, z + 1.6], [x + w / 2 + 5, h + w / 2 + 2.4, z + 1.6], 2.1, "log", group="frame")
+        for sx in (-1, 1):
+            k.cap([x + sx * (w / 2 + 0.8), h + 1, z + 1.6], [x + sx * (w / 2 - 4.5), h + w / 2 + 1.5, z + 1.6], 1.0, "beam", group="frame")
+
+
+# ---------------------------------------------------------------- lumber mill (2x2)
+
+def lumber_mill_1():
+    k = Kit()
+    ground_patch(k, 8, 120, 28, 124, "dirt", oval=True)
+    sawdust(k, 70, 96, 18, 9)
+    posts(k, [(20, 38), (58, 38), (20, 60), (58, 60)], 24, 1.5)
+    shed_roof(k, 18, 60, 36, 62, 29, 24, "thatch", t_thatch(2.6, seed=3), over=2.5)
+    log_heap(k, 39, 52, (3, 2), 26, 2.6, 0.0)
+    log_heap(k, 96, 50, (3, 2, 1), 22, 3.0, 0.35)
+    sawhorse(k, 70, 92, 26)
+    k.box([70, 13.5, 92], [9.0, 2.6, 0.3], "steel", R=RZ(0.15), group="bucksaw")
+    k.cap([60, 12, 92], [61, 20, 92], 0.6, "plank", group="bucksaw")
+    stump(k, 30, 96, 4.8, 4.0, axe=True)
+    stump(k, 104, 86, 4.4, 3.4)
+    stump(k, 96, 110, 3.8, 3.0)
+    plank_stack(k, 42, 114, 12, 24, 3, along_x=True)
+    return k
+
+
+def lumber_mill_2():
+    k = Kit()
+    ground_patch(k, 6, 122, 24, 126, "dirt")
+    sawdust(k, 86, 100, 22, 10)
+    x0, x1, z0, z1 = 10, 60, 30, 70
+    top = log_cabin(k, x0, x1, z0, z1, 24)
+    gable_z(k, x0, x1, z0, z1, top, 16, "shingle", t_shingles(6, 3.4, seed=5), over=4, wall="plank", wall_tex=t_planks(3.4))
+    door(k, 35, z1 + 2.4, 10, 15, arch=False)
+    window(k, 50, 15, z1 + 2.4, 5, 5, shutters="plank")
+    log_heap(k, 96, 50, (4, 3, 2, 1), 28, 3.0, 0.3)
+    sawhorse(k, 86, 92, 36, r=3.4)
+    k.box([86, 16.5, 92], [0.35, 6.0, 11.5], "steel", group="pitsaw")
+    k.cap([86, 23, 80], [86, 26, 77], 0.7, "plank", group="pitsaw")
+    k.cap([86, 10, 104], [86, 7, 107], 0.7, "plank", group="pitsaw")
+    plank_stack(k, 28, 104, 12, 28, 5, along_x=True)
+    plank_stack(k, 54, 116, 12, 22, 3, along_x=True)
+    stump(k, 112, 112, 4.4, 3.6, axe=True)
+    return k
+
+
+def lumber_mill_3():
+    k = Kit()
+    ground_patch(k, 4, 124, 20, 126, "cobble", t_bricks(6, 4, 0.2, seed=13))
+    sawdust(k, 72, 102, 20, 8)
+    x0, x1, z0, z1 = 8, 84, 26, 66
+    k.box_mm([x0, 0, z0], [x1, 6, z1], "stone", tex=t_bricks(8, 4, seed=14, jitter=3), group="mill")
+    k.box_mm([x0, 6, z0], [x1, 32, z1], "plank", tex=t_planks(4.0, seed=15), group="mill")
+    for x in np.linspace(x0 + 1.5, x1 - 1.5, 5):
+        k.box_mm([x - 1.5, 6, z1 - 0.6], [x + 1.5, 32, z1 + 0.8], "beam", group="mill")
+    gable_x(k, x0, x1, z0, z1, 32, 18, "tile", t_shingles(5, 3, seed=17), over=4, wall="plank")
+    door(k, 26, z1 + 0.6, 14, 18, arch=False)
+    window(k, 62, 20, z1 + 0.6, 8, 7, shutters="plank")
+    chimney(k, 70, 40, 32, 62, "brick", 4.5)
+    k.box_mm([54, 0, 84], [110, 9, 100], "plank", tex=t_planks(3.0, vertical=False, seed=18), group="table")
+    for xx in (58, 106):
+        for zz in (86, 98):
+            k.cap([xx, 0, zz], [xx, 9, zz], 1.0, "beam", group="table")
+    saw_blade(k, [82, 10, 92], 10.0)
+    k.cap([56, 12.6, 92], [76, 12.6, 92], 3.4, "log", group="sawlog")
+    k.box_mm([88, 9, 88], [108, 10.4, 96], "plank", tex=t_planks(3.0, vertical=False, seed=19), group="sawlog2")
+    crane(k, 112, 44, 30, 14, 2.6, load=None)
+    log_heap(k, 102, 66, (3, 2, 1), 22, 3.0, 0.25)
+    plank_stack(k, 24, 104, 12, 30, 6, along_x=True)
+    plank_stack(k, 34, 120, 10, 24, 3, along_x=True)
+    barrel(k, 118, 116)
+    return k
+
+
+# ---------------------------------------------------------------- quarry (2x2)
+
+def quarry_1():
+    k = Kit()
+    ground_patch(k, 6, 122, 50, 124, "dirt", oval=True)
+    cliff(k, 10, 118, 20, 64, 30, seed=3, steps=2)
+    stone_block(k, 36, 84)
+    stone_block(k, 50, 96, (4.0, 3.0, 3.6), rot=0.4)
+    stone_block(k, 96, 86, (5.0, 3.8, 4.2), rot=-0.3)
+    block_stack(k, 74, 110)
+    for sx in (-1, 1):
+        k.cap([24 + sx * 4.5, 1.0, 102], [24 + sx * 4.5, 1.0, 120], 1.0, "beam", group="sledge")
+    k.box_mm([17, 2, 104], [31, 3, 118], "plank", tex=t_planks(2.5), group="sledge")
+    k.box([24, 6.8, 111], [4.4, 3.8, 4.2], "stone_warm", rnd=0.5, group="sledge")
+    tool_pick(k, [106, 0.5, 108], norm([-0.3, 1.0, 0.5]), "pick")
+    return k
+
+
+def quarry_2():
+    k = Kit()
+    ground_patch(k, 4, 124, 44, 126, "dirt")
+    cliff(k, 6, 122, 14, 66, 38, seed=4, steps=3)
+    crane(k, 98, 84, 34, 20, -2.2)
+    posts(k, [(12, 82), (40, 82), (12, 104), (40, 104)], 20, 1.4)
+    shed_roof(k, 10, 42, 80, 106, 24, 19, "shingle", t_shingles(6, 3.4, seed=8), over=3)
+    block_stack(k, 60, 112)
+    block_stack(k, 100, 114)
+    stone_block(k, 64, 88, (5.0, 3.8, 4.2), rot=0.3)
+    mine_cart(k, 80, 100, ore="stone_warm", base="stone_warm", along_z=False)
+    tool_pick(k, [118, 0.5, 98], norm([-0.4, 1.0, 0.4]), "pick")
+    return k
+
+
+def quarry_3():
+    k = Kit()
+    ground_patch(k, 4, 124, 40, 126, "cobble", t_bricks(6, 4, 0.2, seed=19))
+    cliff(k, 4, 124, 10, 64, 44, seed=5, steps=3)
+    x0, x1, z0, z1 = 8, 50, 74, 104
+    k.box_mm([x0, 0, z0], [x1, 22, z1], "stone_warm", tex=t_bricks(8, 4, seed=20, jitter=3), group="workshop")
+    gable_x(k, x0, x1, z0, z1, 22, 13, "tile", t_shingles(5, 3, seed=21), over=3, wall="stone_warm")
+    door(k, 29, z1 + 0.4, 10, 15)
+    wheel_c = np.array([94, 20, 86])
+    k.add("torus", "plank", None, "treadwheel", c=wheel_c, RR=15, r=1.5, R=RX(np.pi / 2))
+    k.add("torus", "plank", None, "treadwheel", c=wheel_c + [0, 0, 5], RR=15, r=1.5, R=RX(np.pi / 2))
+    for a in range(6):
+        q = a * np.pi / 6
+        dd = np.array([np.cos(q), np.sin(q), 0]) * 15
+        k.cap(wheel_c - dd + [0, 0, 2.5], wheel_c + dd + [0, 0, 2.5], 0.7, "beam", group="treadwheel")
+    k.cyl(wheel_c + [0, 0, 2.5], 1.8, 4.0, "beam", R=RX(np.pi / 2), group="treadwheel")
+    for sx in (-1, 1):
+        k.cap([94 + sx * 11, 0, 90], [94, 20, 90], 1.4, "beam", group="treadwheel")
+    crane(k, 66, 76, 38, 20, 2.3)
+    block_stack(k, 66, 114, "stone")
+    block_stack(k, 104, 114)
+    stone_block(k, 84, 106, (5.0, 3.8, 4.2), rot=0.5, mat="stone")
+    return k
+
+
+# ---------------------------------------------------------------- mine (2x2)
+
+def mine_1():
+    k = Kit()
+    ground_patch(k, 6, 122, 50, 124, "dirt", oval=True)
+    cliff(k, 12, 116, 22, 62, 34, seed=11, cut="rock")
+    mine_mouth(k, 54, 62)
+    rails(k, 54, 63, 114)
+    mine_cart(k, 54, 100)
+    ore_pile(k, 94, 90, seed=1)
+    ore_pile(k, 104, 108, "gold", "rock", 5.5, seed=2)
+    lantern(k, 26, 72)
+    tool_pick(k, [22, 0.5, 108], norm([0.3, 1.0, 0.5]), "pick")
+    crate(k, 82, 74, 4.0)
+    return k
+
+
+def mine_2():
+    k = Kit()
+    ground_patch(k, 4, 124, 46, 126, "dirt")
+    cliff(k, 4, 74, 16, 60, 38, seed=12, cut="rock")
+    mine_mouth(k, 38, 60)
+    rails(k, 38, 61, 118)
+    mine_cart(k, 38, 94)
+    shaft(k, 100, 66)
+    headframe(k, 100, 66, 38, 13)
+    ore_pile(k, 76, 106, seed=3)
+    ore_pile(k, 104, 110, "gold", "rock", 6.0, seed=4)
+    lantern(k, 14, 70)
+    barrel(k, 118, 92)
+    crate(k, 16, 106, 4.5)
+    return k
+
+
+def mine_3():
+    k = Kit()
+    ground_patch(k, 4, 124, 44, 126, "cobble", t_bricks(6, 4, 0.2, seed=22))
+    cliff(k, 4, 72, 12, 58, 44, seed=13, cut="rock")
+    mine_mouth(k, 36, 58, w=18, h=18, stone_frame=True)
+    rails(k, 36, 61, 120)
+    mine_cart(k, 36, 82)
+    mine_cart(k, 36, 108)
+    shaft(k, 100, 56)
+    headframe(k, 100, 56, 44, 14)
+    k.box_mm([80, 0, 82], [108, 16, 104], "stone", tex=t_bricks(6, 4, seed=23, jitter=2), group="smelter")
+    k.cone([94, 22, 93], 6, 11, 6.5, "stone", tex=t_bricks(6, 4, seed=24), group="smelter")
+    chimney(k, 94, 93, 26, 50, "brick", 4.0)
+    k.box_mm([89, 3, 103.6], [99, 11, 104.6], "ember", group="smelter")
+    k.add("custom", "fire", t_flame(4, 14), "flame", fn=_flame_sdf_y(94, 104, 3, 0.45))
+    ore_pile(k, 114, 114, seed=5)
+    ore_pile(k, 66, 112, "gold", "rock", 6.0, seed=6)
+    lantern(k, 14, 66)
+    return k
+
+FIXED = {"town_hall"}
+
 BUILDINGS = {
     "town_hall": ((2, 2), [town_hall_1, town_hall_2, town_hall_3, town_hall_4]),
     "house": ((1, 1), [house_1, house_2, house_3]),
@@ -957,4 +1355,7 @@ BUILDINGS = {
     "barracks": ((2, 2), [barracks_1, barracks_2, barracks_3]),
     "wall": ((1, 1), [wall_1, wall_2, wall_3]),
     "tower": ((1, 1), [tower_1, tower_2, tower_3]),
+    "lumber_mill": ((2, 2), [lumber_mill_1, lumber_mill_2, lumber_mill_3]),
+    "quarry": ((2, 2), [quarry_1, quarry_2, quarry_3]),
+    "mine": ((2, 2), [mine_1, mine_2, mine_3]),
 }

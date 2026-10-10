@@ -37,7 +37,6 @@ func equip(weapon: Dictionary):
 	weapon_sprite.visible = texture != null
 	if texture:
 		weapon_sprite.scale = Vector2.ONE * WEAPON_SIZE / maxf(texture.get_width(), texture.get_height())
-	body.tool.visible = true
 	target = null
 	queue_redraw()
 
@@ -54,7 +53,6 @@ func update(delta: float) -> bool:
 		_retarget = 0.4
 
 	if is_armed():
-		body.tool.visible = target == null
 		if target:
 			_fight()
 			return true

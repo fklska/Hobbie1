@@ -16,21 +16,42 @@ public partial class Grid : Node2D
 	public static bool buildMode = false;
 
 	public static string PendingBuilding;
+	public static int PendingTurn;
 	private static Texture2D ghostTexture;
 	private static Rect2 ghostRect;
+	private static bool rotateHinted;
+	private static readonly Dictionary<string, int> lastTurn = new();
 	private bool drawn;
 
 	public WorldScene WorldScene => GameManager.Instance?.World;
 
 	public static void StartPlacement(string buildingId)
 	{
-		Node building = GD.Load<PackedScene>(Economy.Buildings[buildingId].ScenePath).Instantiate();
-		Godot.Collections.Dictionary preview = building.Call("preview", GameManager.Instance.GetLevel(buildingId)).AsGodotDictionary();
-		building.Free();
 		PendingBuilding = buildingId;
+		PendingTurn = Economy.Buildings[buildingId].Fixed ? 0 : lastTurn.GetValueOrDefault(buildingId);
+		UpdateGhost();
+		buildMode = true;
+		if (rotateHinted || Economy.Buildings[buildingId].Fixed) return;
+		rotateHinted = true;
+		GameManager.Instance.Notify("R или колесо мыши поворачивают здание, ПКМ отменяет");
+	}
+
+	private static void UpdateGhost()
+	{
+		Node building = GD.Load<PackedScene>(Economy.Buildings[PendingBuilding].ScenePath).Instantiate();
+		Godot.Collections.Dictionary preview = building.Call("preview", GameManager.Instance.GetLevel(PendingBuilding), PendingTurn).AsGodotDictionary();
+		building.Free();
 		ghostTexture = preview.Count > 0 ? preview["texture"].As<Texture2D>() : null;
 		ghostRect = preview.Count > 0 ? preview["rect"].AsRect2() : default;
-		buildMode = true;
+	}
+
+	private void Rotate(int step)
+	{
+		if (Economy.Buildings[PendingBuilding].Fixed) return;
+		PendingTurn = Mathf.PosMod(PendingTurn + step, 4);
+		lastTurn[PendingBuilding] = PendingTurn;
+		UpdateGhost();
+		QueueRedraw();
 	}
 
 	public static void StopPlacement()
@@ -57,11 +78,23 @@ public partial class Grid : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (!buildMode || @event is not InputEventMouseButton mouse || !mouse.Pressed) return;
-
-		if (mouse.ButtonIndex == MouseButton.Left)
+		if (!buildMode) return;
+		if (@event.IsActionPressed("rotate_building", false, true))
 		{
-			if (GameManager.Instance.PlaceBuilding(PendingBuilding, pixelToCell(GetGlobalMousePosition()))) StopPlacement();
+			Rotate(1);
+			GetViewport().SetInputAsHandled();
+			return;
+		}
+		if (@event is not InputEventMouseButton mouse || !mouse.Pressed) return;
+
+		if (mouse.ButtonIndex is MouseButton.WheelUp or MouseButton.WheelDown)
+		{
+			Rotate(mouse.ButtonIndex == MouseButton.WheelUp ? 1 : -1);
+			GetViewport().SetInputAsHandled();
+		}
+		else if (mouse.ButtonIndex == MouseButton.Left)
+		{
+			if (GameManager.Instance.PlaceBuildingAt(PendingBuilding, pixelToCell(GetGlobalMousePosition()), PendingTurn)) StopPlacement();
 			GetViewport().SetInputAsHandled();
 		}
 		else if (mouse.ButtonIndex == MouseButton.Right)
@@ -116,9 +149,9 @@ public partial class Grid : Node2D
 	{
 		if (ghostTexture == null) return;
 
-		Vector2I footprint = Economy.Buildings[PendingBuilding].Footprint;
+		Vector2I footprint = Economy.Footprint(PendingBuilding, PendingTurn);
 		Vector2 origin = currentCell * cellSize;
-		bool ok = GameManager.Instance.CanPlace(PendingBuilding, currentCell);
+		bool ok = GameManager.Instance.CanPlaceAt(PendingBuilding, currentCell, PendingTurn);
 		Color tint = ok ? new Color(0.6f, 1f, 0.6f, 0.7f) : new Color(1f, 0.4f, 0.4f, 0.7f);
 		DrawRect(new Rect2(origin, footprint * cellSize), tint with { A = 0.25f });
 		DrawTextureRect(ghostTexture, new Rect2(origin + ghostRect.Position, ghostRect.Size), false, tint);

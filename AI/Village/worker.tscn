@@ -1,10 +1,10 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene format=3]
 
 [ext_resource type="PackedScene" uid="uid://ddl18dld7vkor" path="res://BaseClasses/ScenePrefabs/kinematic_body_selected_obj.tscn" id="1_base"]
 [ext_resource type="Script" path="res://AI/Village/worker.gd" id="2_worker"]
 [ext_resource type="Shader" uid="uid://dlxnpevc5xyq6" path="res://shaders/outline.gdshader" id="3_outline"]
-[ext_resource type="Texture2D" uid="uid://t1qt3bqwc0yw" path="res://AI/BaseClasses/Alias/Male4.png" id="4_sheet"]
-[ext_resource type="Texture2D" uid="uid://c75ewspb38miu" path="res://Items/Assets/axe 1.png" id="5_axe"]
+[ext_resource type="SpriteFrames" uid="uid://bs4kok3imixd1" path="res://Art/villagers/woodcutter/woodcutter_frames.tres" id="4_frames"]
+[ext_resource type="Script" uid="uid://b5lf67a02nlha" path="res://Art/directional_sprite.gd" id="5_dir"]
 [ext_resource type="Script" path="res://AI/RL/worker_controller.gd" id="6_ai"]
 [ext_resource type="Script" path="res://AI/Village/villager_combat.gd" id="7_combat"]
 
@@ -18,75 +18,6 @@ shader_parameter/inside = false
 shader_parameter/add_margins = false
 shader_parameter/enable = false
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle0"]
-atlas = ExtResource("4_sheet")
-region = Rect2(0, 48, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle1"]
-atlas = ExtResource("4_sheet")
-region = Rect2(32, 48, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle2"]
-atlas = ExtResource("4_sheet")
-region = Rect2(64, 48, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_idle3"]
-atlas = ExtResource("4_sheet")
-region = Rect2(96, 48, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk0"]
-atlas = ExtResource("4_sheet")
-region = Rect2(128, 0, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk1"]
-atlas = ExtResource("4_sheet")
-region = Rect2(160, 0, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk2"]
-atlas = ExtResource("4_sheet")
-region = Rect2(192, 0, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_walk3"]
-atlas = ExtResource("4_sheet")
-region = Rect2(224, 0, 32, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_worker"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_idle3")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_walk0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_walk1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_walk2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_walk3")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 8.0
-}]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_feet"]
 radius = 6.0
 
@@ -99,21 +30,16 @@ script = ExtResource("2_worker")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 material = SubResource("ShaderMaterial_outline")
-position = Vector2(0, 17)
-sprite_frames = SubResource("SpriteFrames_worker")
-animation = &"idle"
-autoplay = "idle"
-offset = Vector2(0, -17)
+position = Vector2(0, 18)
+sprite_frames = ExtResource("4_frames")
+animation = &"idle_s"
+autoplay = "idle_s"
+offset = Vector2(0, -20)
+script = ExtResource("5_dir")
 
-[node name="Tool" type="Sprite2D" parent="AnimatedSprite2D" index="0"]
-position = Vector2(-7, -13)
-scale = Vector2(0.06, 0.06)
-texture = ExtResource("5_axe")
-offset = Vector2(0, -170)
-
-[node name="Weapon" type="Sprite2D" parent="AnimatedSprite2D" index="1"]
+[node name="Weapon" type="Sprite2D" parent="AnimatedSprite2D" index="0"]
 visible = false
-position = Vector2(8, -11)
+position = Vector2(9, -14)
 offset = Vector2(0, -8)
 
 [node name="Carry" type="Label" parent="." index="1"]

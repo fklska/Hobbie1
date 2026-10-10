@@ -3,6 +3,15 @@
 [ext_resource type="Script" uid="uid://92gwd5ok7wtj" path="res://BuildSystem/scripts/building_parts.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b4lj7pdxk3bfa" path="res://Art/buildings/market_1_ground.png" id="2_ground"]
 [ext_resource type="Texture2D" uid="uid://tk0taqrd6h1v" path="res://Art/buildings/market_1_parts.png" id="3_atlas"]
+[ext_resource type="Texture2D" uid="uid://lpjeriqxd9cl" path="res://Art/buildings/market_1_r1_ground.png" id="r1_ground"]
+[ext_resource type="Texture2D" uid="uid://ivn590cf8dwc" path="res://Art/buildings/market_1_r1_parts.png" id="r1_atlas"]
+[ext_resource type="Texture2D" uid="uid://kiwqy3739t7b" path="res://Art/buildings/market_1_r1.png" id="r1_preview"]
+[ext_resource type="Texture2D" uid="uid://bqwohff0oc24z" path="res://Art/buildings/market_1_r2_ground.png" id="r2_ground"]
+[ext_resource type="Texture2D" uid="uid://blltvyzsebx7d" path="res://Art/buildings/market_1_r2_parts.png" id="r2_atlas"]
+[ext_resource type="Texture2D" uid="uid://bgb6fluksvgeo" path="res://Art/buildings/market_1_r2.png" id="r2_preview"]
+[ext_resource type="Texture2D" uid="uid://bq49t5epe66bh" path="res://Art/buildings/market_1_r3_ground.png" id="r3_ground"]
+[ext_resource type="Texture2D" uid="uid://b5ak28twloahn" path="res://Art/buildings/market_1_r3_parts.png" id="r3_atlas"]
+[ext_resource type="Texture2D" uid="uid://gfdq6om0sfji" path="res://Art/buildings/market_1_r3.png" id="r3_preview"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0"]
 atlas = ExtResource("3_atlas")
@@ -24,9 +33,94 @@ region = Rect2(96, 2, 14, 20)
 atlas = ExtResource("3_atlas")
 region = Rect2(112, 2, 10, 11)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1_0"]
+atlas = ExtResource("r1_atlas")
+region = Rect2(2, 2, 12, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1_1"]
+atlas = ExtResource("r1_atlas")
+region = Rect2(16, 2, 23, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1_2"]
+atlas = ExtResource("r1_atlas")
+region = Rect2(41, 2, 10, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1_3"]
+atlas = ExtResource("r1_atlas")
+region = Rect2(53, 2, 23, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1_4"]
+atlas = ExtResource("r1_atlas")
+region = Rect2(78, 2, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2_0"]
+atlas = ExtResource("r2_atlas")
+region = Rect2(2, 2, 10, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2_1"]
+atlas = ExtResource("r2_atlas")
+region = Rect2(14, 2, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2_2"]
+atlas = ExtResource("r2_atlas")
+region = Rect2(30, 2, 38, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2_3"]
+atlas = ExtResource("r2_atlas")
+region = Rect2(70, 2, 12, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2_4"]
+atlas = ExtResource("r2_atlas")
+region = Rect2(84, 2, 38, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3_0"]
+atlas = ExtResource("r3_atlas")
+region = Rect2(2, 2, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3_1"]
+atlas = ExtResource("r3_atlas")
+region = Rect2(18, 2, 10, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3_2"]
+atlas = ExtResource("r3_atlas")
+region = Rect2(30, 2, 23, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3_3"]
+atlas = ExtResource("r3_atlas")
+region = Rect2(55, 2, 23, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3_4"]
+atlas = ExtResource("r3_atlas")
+region = Rect2(80, 2, 12, 18)
+
+[sub_resource type="Resource" id="Resource_r1"]
+script = ExtResource("1_script")
+ground = ExtResource("r1_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_r1_0"), SubResource("AtlasTexture_r1_1"), SubResource("AtlasTexture_r1_2"), SubResource("AtlasTexture_r1_3"), SubResource("AtlasTexture_r1_4")])
+positions = PackedVector2Array(54, 5, 77, 0, 103, 85, 53, 50, 97, 90)
+sort_rows = PackedFloat32Array(22, 54.5, 97, 104.5, 108)
+preview = ExtResource("r1_preview")
+
+[sub_resource type="Resource" id="Resource_r2"]
+script = ExtResource("1_script")
+ground = ExtResource("r2_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_r2_0"), SubResource("AtlasTexture_r2_1"), SubResource("AtlasTexture_r2_2"), SubResource("AtlasTexture_r2_3"), SubResource("AtlasTexture_r2_4")])
+positions = PackedVector2Array(89, 10, 97, 8, 19, 12, 12, 53, 69, 36)
+sort_rows = PackedFloat32Array(20.5, 26, 47, 70, 71)
+preview = ExtResource("r2_preview")
+
+[sub_resource type="Resource" id="Resource_r3"]
+script = ExtResource("1_script")
+ground = ExtResource("r3_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_r3_0"), SubResource("AtlasTexture_r3_1"), SubResource("AtlasTexture_r3_2"), SubResource("AtlasTexture_r3_3"), SubResource("AtlasTexture_r3_4")])
+positions = PackedVector2Array(17, 8, 15, 23, 52, 0, 28, 50, 62, 95)
+sort_rows = PackedFloat32Array(26, 35, 54.5, 104.5, 112)
+preview = ExtResource("r3_preview")
+
 [resource]
 script = ExtResource("1_script")
 ground = ExtResource("2_ground")
 parts = Array[Texture2D]([SubResource("AtlasTexture_0"), SubResource("AtlasTexture_1"), SubResource("AtlasTexture_2"), SubResource("AtlasTexture_3"), SubResource("AtlasTexture_4")])
 positions = PackedVector2Array(104, 19, 21, 6, 71, 30, 17, 62, 29, 72)
 sort_rows = PackedFloat32Array(36, 45.5, 69.5, 80, 82.5)
+turns = Array[Resource]([SubResource("Resource_r1"), SubResource("Resource_r2"), SubResource("Resource_r3")])

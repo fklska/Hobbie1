@@ -10,7 +10,11 @@ public static class Economy
 		int Pop = 0, int Storage = 0, int Food = 0, int Militia = 0, int Damage = 0, float Range = 0,
 		int Tax = 0, float Sell = 0, float Buy = 0, string[] Requires = null);
 
-	public record BuildingInfo(string ScenePath, Vector2I Footprint, int[] MaxCount, string Description, Level[] Levels, bool Repeat = false);
+	public record BuildingInfo(string ScenePath, Vector2I Footprint, int[] MaxCount, string Description, Level[] Levels, bool Repeat = false, bool Fixed = false);
+
+	public record Profession(string Title, string Plural, string Description, string[] Kinds, string Building, string Frames, Dictionary<string, int> Cost);
+
+	public record Research(string Title, Dictionary<string, int> Cost, int Days, float Bonus);
 
 	public record WeaponInfo(string Title, WeaponKind Kind, int Damage, float Range, float Cooldown, float ProjectileSpeed,
 		Dictionary<string, int> Cost, string Building, int BuildingLevel, string Icon);
@@ -23,7 +27,6 @@ public static class Economy
 	public const int FoodPerWorker = 1;
 
 	public static readonly string[] Resources = { "wood", "stone", "iron", "gold", "food", Coins };
-	public static readonly string[] Gatherable = { "wood", "stone", "iron", "gold" };
 	public static readonly string[] Tradable = { "wood", "stone", "iron", "gold", "food" };
 
 	public static readonly Dictionary<string, string> ResourceTitles = new()
@@ -46,14 +49,46 @@ public static class Economy
 	};
 
 	public static readonly Dictionary<string, int> StartStock = C(("wood", 10), ("food", 15));
-	public static readonly Dictionary<string, int> HireCost = C(("food", 6));
+	public static readonly string[] BuildOrder = { "House", "Farm", "LumberMill", "Quarry", "Mine", "Storage", "Blacksmith", "Workshop", "Market", "Barracks", "Wall", "Tower" };
 
-	public static readonly string[] BuildOrder = { "House", "Farm", "Storage", "Blacksmith", "Workshop", "Market", "Barracks", "Wall", "Tower" };
+	public const string StartProfession = "woodcutter";
+
+	public static readonly Dictionary<string, Profession> Professions = new()
+	{
+		["woodcutter"] = new("Дровосек", "Дровосеки", "Рубит деревья и носит дерево в ближайшую лесопилку или в центр поселения", new[] { "wood" }, "LumberMill",
+			"res://Art/villagers/woodcutter/woodcutter_frames.tres", C(("food", 6))),
+		["stonemason"] = new("Каменотёс", "Каменотёсы", "Колет камень киркой и носит его в ближайшую каменоломню или в центр поселения", new[] { "stone" }, "Quarry",
+			"res://Art/villagers/stonemason/stonemason_frames.tres", C(("food", 6), ("wood", 5))),
+		["miner"] = new("Рудокоп", "Рудокопы", "Добывает железо и золото и носит руду в ближайший рудник или в центр поселения", new[] { "iron", "gold" }, "Mine",
+			"res://Art/villagers/miner/miner_frames.tres", C(("food", 8), ("wood", 10))),
+	};
+
+	public static readonly Dictionary<string, Research[]> Researches = new()
+	{
+		["LumberMill"] = new Research[]
+		{
+			new("Двуручный топор", C(("wood", 40), ("food", 20)), 2, 0.25f),
+			new("Лучковая пила", C(("wood", 80), ("stone", 30), (Coins, 20)), 3, 0.25f),
+			new("Двуручная пила", C(("wood", 120), ("iron", 25), (Coins, 50)), 4, 0.3f),
+		},
+		["Quarry"] = new Research[]
+		{
+			new("Клинья и кувалды", C(("wood", 40), ("stone", 30)), 2, 0.25f),
+			new("Подъёмный ворот", C(("wood", 90), ("stone", 50), (Coins, 20)), 3, 0.25f),
+			new("Добыча уступами", C(("wood", 100), ("stone", 120), ("iron", 25), (Coins, 50)), 4, 0.3f),
+		},
+		["Mine"] = new Research[]
+		{
+			new("Крепь штолен", C(("wood", 60), ("stone", 20)), 2, 0.25f),
+			new("Вагонетки", C(("wood", 80), ("iron", 30), (Coins, 30)), 3, 0.25f),
+			new("Глубокие шахты", C(("wood", 120), ("stone", 80), ("iron", 40), (Coins, 60)), 4, 0.3f),
+		},
+	};
 
 	public static readonly Dictionary<string, BuildingInfo> Buildings = new()
 	{
 		[Core] = new("res://BuildSystem/buildings/TownHall.tscn", new(2, 2), new[] { 1, 1, 1, 1 },
-			"Сердце поселения. Улучшение открывает новые постройки", new Level[]
+			"Сердце поселения: здесь нанимают жителей. Улучшение открывает новые постройки", new Level[]
 			{
 				new("Костёр", C(), 300, 1, Pop: 2, Storage: 60, Militia: 1),
 				new("Деревянная ратуша", C(("wood", 50), ("stone", 30)), 600, 1, Pop: 3, Storage: 120, Militia: 2,
@@ -62,7 +97,7 @@ public static class Economy
 					Requires: new[] { "Storage", "Blacksmith", "Market" }),
 				new("Замок", C(("wood", 250), ("stone", 300), ("iron", 100), ("gold", 30), (Coins, 200)), 1600, 3, Pop: 5, Storage: 300, Militia: 4,
 					Requires: new[] { "Workshop", "Barracks" }),
-			}),
+			}, Fixed: true),
 		["House"] = new("res://BuildSystem/buildings/house.tscn", new(1, 1), new[] { 1, 2, 3, 4 },
 			"Жильё для жителей", new Level[]
 			{
@@ -76,6 +111,27 @@ public static class Economy
 				new("Огород", C(("wood", 25)), 120, 1, Food: 4),
 				new("Ферма", C(("wood", 40), ("stone", 20)), 250, 2, Food: 7),
 				new("Большая ферма", C(("wood", 60), ("stone", 50), ("iron", 10)), 400, 3, Food: 10),
+			}),
+		["LumberMill"] = new("res://BuildSystem/buildings/lumber_mill.tscn", new(2, 2), new[] { 1, 2, 3, 4 },
+			"Дровосеки сдают сюда дерево. Улучшения ускоряют рубку", new Level[]
+			{
+				new("Лесоповал", C(("wood", 30)), 200, 1),
+				new("Лесопилка", C(("wood", 60), ("stone", 30)), 350, 2),
+				new("Пильная мельница", C(("wood", 100), ("stone", 60), ("iron", 15)), 550, 3),
+			}),
+		["Quarry"] = new("res://BuildSystem/buildings/quarry.tscn", new(2, 2), new[] { 1, 2, 2, 3 },
+			"Каменотёсы сдают сюда камень. Улучшения ускоряют добычу камня", new Level[]
+			{
+				new("Каменоломня", C(("wood", 40)), 250, 1),
+				new("Карьер", C(("wood", 70), ("stone", 40)), 450, 2),
+				new("Большой карьер", C(("wood", 100), ("stone", 100), ("iron", 20)), 700, 3),
+			}),
+		["Mine"] = new("res://BuildSystem/buildings/mine.tscn", new(2, 2), new[] { 1, 1, 2, 3 },
+			"Рудокопы сдают сюда железо и золото. Улучшения ускоряют добычу руды", new Level[]
+			{
+				new("Штольня", C(("wood", 50), ("stone", 20)), 250, 1),
+				new("Рудник", C(("wood", 80), ("stone", 60)), 450, 2),
+				new("Глубокий рудник", C(("wood", 120), ("stone", 120), ("iron", 30), (Coins, 40)), 700, 3),
 			}),
 		["Storage"] = new("res://BuildSystem/buildings/storage.tscn", new(2, 2), new[] { 1, 1, 2, 3 },
 			"Увеличивает запас ресурсов", new Level[]
@@ -159,6 +215,13 @@ public static class Economy
 		new("Кольчуга", C(("iron", 30), (Coins, 30)), 170, 2),
 		new("Латы", C(("iron", 70), ("gold", 5), (Coins, 80)), 230, 3),
 	};
+
+	public static Vector2I Footprint(string id, int turn) => turn % 2 == 0 ? Buildings[id].Footprint : new(Buildings[id].Footprint.Y, Buildings[id].Footprint.X);
+
+	public static string ProfessionOf(string kind) => Professions.FirstOrDefault(p => p.Value.Kinds.Contains(kind)).Key ?? StartProfession;
+
+	public static string DaysText(int days) => days % 10 == 1 && days % 100 != 11 ? $"{days} день"
+		: days % 10 is >= 2 and <= 4 && days % 100 is < 12 or > 14 ? $"{days} дня" : $"{days} дней";
 
 	public static Dictionary<string, int> C(params (string kind, int amount)[] items) => items.ToDictionary(i => i.kind, i => i.amount);
 

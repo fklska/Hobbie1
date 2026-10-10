@@ -193,25 +193,21 @@ public partial class BuildMenu : TabContainer
 	{
 		AddHeader(list, "Жители");
 		Card people = AddCard(list, null);
-		Button hire = AddButton(people.Buttons, game.HireWorker);
-		hire.Text = $"Нанять жителя ({Economy.CostText(Economy.HireCost)})";
-
-		HBoxContainer job = new();
-		job.AddChild(new Label { Text = "Жители добывают:" });
-		OptionButton jobOption = new() { SizeFlagsHorizontal = SizeFlags.ExpandFill, FocusMode = FocusModeEnum.None };
-		foreach (string kind in Economy.Gatherable) jobOption.AddItem(Economy.ResourceTitles[kind]);
-		jobOption.ItemSelected += index => game.SetWorkerJob(Economy.Gatherable[index]);
-		job.AddChild(jobOption);
-		list.AddChild(job);
+		Button hire = AddButton(people.Buttons, () =>
+		{
+			CloseMenu();
+			game.OpenHire();
+		});
+		hire.Text = "Нанять жителей";
+		hire.ThemeTypeVariation = "PrimaryButton";
 
 		refreshers.Add(() =>
 		{
 			people.Title.Text = $"Жители: {game.Workers.Count}/{game.PopulationCap}";
-			people.Info.Text = $"Еда: {game.GetStock("food")}, урожай +{game.FoodPerDay}, съедают {game.FoodUpkeep} каждое утро. " +
-				$"Налоги +{game.TaxPerDay} монет в день. Скорость работы ×{game.WorkSpeed:0.#}";
+			people.Info.Text = $"{string.Join(", ", Economy.Professions.Select(p => $"{p.Value.Plural.ToLower()} {game.ProfessionCount(p.Key)}"))}. " +
+				$"Еда: {game.GetStock("food")}, урожай +{game.FoodPerDay}, съедают {game.FoodUpkeep} каждое утро. Налоги +{game.TaxPerDay} монет в день. " +
+				"Нанимают в центре поселения, улучшения добычи в лесопилке, каменоломне и руднике";
 			SetLock(people, game.Hungry ? "Жители голодают и работают вдвое медленнее" : game.Workers.Count >= game.PopulationCap ? "Нет свободного жилья" : "");
-			hire.Disabled = game.Workers.Count >= game.PopulationCap || !game.CanAfford(Economy.HireCost);
-			jobOption.Selected = Array.IndexOf(Economy.Gatherable, game.WorkerJob);
 		});
 
 		AddHeader(list, "Ополчение");

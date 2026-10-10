@@ -3,6 +3,15 @@
 [ext_resource type="Script" uid="uid://92gwd5ok7wtj" path="res://BuildSystem/scripts/building_parts.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://mbrk965w2a3a" path="res://Art/buildings/barracks_3_ground.png" id="2_ground"]
 [ext_resource type="Texture2D" uid="uid://fni1dxhuu2cm" path="res://Art/buildings/barracks_3_parts.png" id="3_atlas"]
+[ext_resource type="Texture2D" uid="uid://nndfw89z0zv3" path="res://Art/buildings/barracks_3_r1_ground.png" id="r1_ground"]
+[ext_resource type="Texture2D" uid="uid://g425nvpyokop" path="res://Art/buildings/barracks_3_r1_parts.png" id="r1_atlas"]
+[ext_resource type="Texture2D" uid="uid://vo77o9v17t1l" path="res://Art/buildings/barracks_3_r1.png" id="r1_preview"]
+[ext_resource type="Texture2D" uid="uid://bq103pmgogu0g" path="res://Art/buildings/barracks_3_r2_ground.png" id="r2_ground"]
+[ext_resource type="Texture2D" uid="uid://bx4indi6s3dxz" path="res://Art/buildings/barracks_3_r2_parts.png" id="r2_atlas"]
+[ext_resource type="Texture2D" uid="uid://ouqm7vbptn64" path="res://Art/buildings/barracks_3_r2.png" id="r2_preview"]
+[ext_resource type="Texture2D" uid="uid://bs9h9z0wns761" path="res://Art/buildings/barracks_3_r3_ground.png" id="r3_ground"]
+[ext_resource type="Texture2D" uid="uid://mhghfbucid1q" path="res://Art/buildings/barracks_3_r3_parts.png" id="r3_atlas"]
+[ext_resource type="Texture2D" uid="uid://39eo4o6j095a" path="res://Art/buildings/barracks_3_r3.png" id="r3_preview"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0"]
 atlas = ExtResource("3_atlas")
@@ -12,9 +21,58 @@ region = Rect2(2, 2, 120, 118)
 atlas = ExtResource("3_atlas")
 region = Rect2(124, 2, 24, 26)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1_0"]
+atlas = ExtResource("r1_atlas")
+region = Rect2(2, 2, 7, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1_1"]
+atlas = ExtResource("r1_atlas")
+region = Rect2(11, 2, 76, 169)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2_0"]
+atlas = ExtResource("r2_atlas")
+region = Rect2(2, 2, 24, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2_1"]
+atlas = ExtResource("r2_atlas")
+region = Rect2(28, 2, 120, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3_0"]
+atlas = ExtResource("r3_atlas")
+region = Rect2(2, 2, 7, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3_1"]
+atlas = ExtResource("r3_atlas")
+region = Rect2(11, 2, 76, 169)
+
+[sub_resource type="Resource" id="Resource_r1"]
+script = ExtResource("1_script")
+ground = ExtResource("r1_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_r1_0"), SubResource("AtlasTexture_r1_1")])
+positions = PackedVector2Array(111, 113, 30, 0)
+sort_rows = PackedFloat32Array(152.5, 167)
+preview = ExtResource("r1_preview")
+
+[sub_resource type="Resource" id="Resource_r2"]
+script = ExtResource("1_script")
+ground = ExtResource("r2_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_r2_0"), SubResource("AtlasTexture_r2_1")])
+positions = PackedVector2Array(86, 15, 4, 0)
+sort_rows = PackedFloat32Array(40.5, 122)
+preview = ExtResource("r2_preview")
+
+[sub_resource type="Resource" id="Resource_r3"]
+script = ExtResource("1_script")
+ground = ExtResource("r3_ground")
+parts = Array[Texture2D]([SubResource("AtlasTexture_r3_0"), SubResource("AtlasTexture_r3_1")])
+positions = PackedVector2Array(10, 49, 22, 0)
+sort_rows = PackedFloat32Array(84.5, 167)
+preview = ExtResource("r3_preview")
+
 [resource]
 script = ExtResource("1_script")
 ground = ExtResource("2_ground")
 parts = Array[Texture2D]([SubResource("AtlasTexture_0"), SubResource("AtlasTexture_1")])
 positions = PackedVector2Array(4, 0, 18, 105)
 sort_rows = PackedFloat32Array(117.5, 130)
+turns = Array[Resource]([SubResource("Resource_r1"), SubResource("Resource_r2"), SubResource("Resource_r3")])

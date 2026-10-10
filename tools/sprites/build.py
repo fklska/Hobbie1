@@ -143,6 +143,16 @@ def mobs(names=None):
     return out
 
 
+def villagers(names=None):
+    import villagers as vl
+    out = {}
+    for name in ("woodcutter", "stonemason", "miner"):
+        if names and name not in names:
+            continue
+        out[name] = render_character(getattr(vl, name), f"Art/villagers/{name}", name, (64, 64), (32, 52))
+    return out
+
+
 def giant(only=None):
     import giant as g
     return render_character(g, "Art/mobs/stone_giant", "stone_giant", (128, 128), (64, 110), big={"death": 12, "melee": 8}, only=only)
@@ -209,16 +219,40 @@ def beam():
     return effects.giant_beam()
 
 
-def render_building(fn, fp, pad_top=220):
+class Turned:
+    def __init__(self, prim, R, src, dst):
+        self.prim, self.R, self.src, self.dst = prim, R, src, dst
+        self.mat, self.layer, self.group = prim.mat, prim.layer, prim.group
+        self.tex = None if prim.tex is None else (lambda p, n, v: prim.tex(self.local(p), n @ R, v))
+
+    def local(self, p):
+        return (p - self.dst) @ self.R + self.src
+
+    def dist(self, p):
+        return self.prim.dist(self.local(p))
+
+
+def turned(kit, turn, fp):
+    if turn == 0:
+        return kit.prims, kit.decals, fp
+    fp2 = (fp[1], fp[0]) if turn % 2 else fp
+    R = sdf.rot_axis([0, 1, 0], turn * np.pi / 2)
+    src = np.array([fp[0] * 32.0, 0, fp[1] * 32.0])
+    dst = np.array([fp2[0] * 32.0, 0, fp2[1] * 32.0])
+    decals = [(R @ (pt - src) + dst, color, tol) for pt, color, tol in kit.decals]
+    return [Turned(p, R, src, dst) for p in kit.prims], decals, fp2
+
+
+def render_building(fn, fp, pad_top=220, turn=0):
+    prims, decals, fp = turned(fn(), turn, fp)
     W, D = fp[0] * 64, fp[1] * 64
     cam = Camera("oblique", k=BK, w=W, h=D + pad_top, anchor=(0, pad_top))
-    kit = fn()
     sdf.set_light(sdf.BUILD_LIGHT)
-    draw = lambda prims: render(prims, MATS, cam, decals=kit.decals, line_depth=3.0, occluders=kit.prims)[0]
-    img = draw(kit.prims)
-    ground = [p for p in kit.prims if p.group == "ground"]
+    draw = lambda ps: render(ps, MATS, cam, decals=decals, line_depth=3.0, occluders=prims)[0]
+    img = draw(prims)
+    ground = [p for p in prims if p.group == "ground"]
     ground_img = draw(ground) if ground else np.zeros_like(img)
-    parts = [(draw(obj), front_z(obj, W, D) + pad_top) for obj in objects([p for p in kit.prims if p.group != "ground"], W, D)]
+    parts = [(draw(obj), front_z(obj, W, D) + pad_top) for obj in objects([p for p in prims if p.group != "ground"], W, D)]
     sdf.set_light(sdf.CHAR_LIGHT)
     a = img[:, :, 3] > 0
     rows = np.where(a.any(1))[0]
@@ -318,16 +352,19 @@ def buildings(names=None):
         if names and name not in names:
             continue
         for i, fn in enumerate(levels):
-            img, ground, parts = render_building(fn, fp)
             base = f"Art/buildings/{name}_{i + 1}"
-            gr.save_png(img, base + ".png")
-            atlas, regions = pack_parts(parts)
-            gr.building_parts(base, ground, atlas, regions)
+            views = []
+            for turn in range(1 if name in bd.FIXED else 4):
+                img, ground, parts = render_building(fn, fp, turn=turn)
+                rel = base if turn == 0 else f"{base}_r{turn}"
+                gr.save_png(img, rel + ".png")
+                views.append((rel, ground, *pack_parts(parts)))
+            gr.building_parts(base, views)
 
 
 BK = 0.9
 
-TARGETS = {"hero": hero, "classes": hero_classes, "summons": summons, "spells": spells, "buildings": buildings, "mobs": mobs, "giant": giant,
+TARGETS = {"hero": hero, "classes": hero_classes, "summons": summons, "spells": spells, "buildings": buildings, "mobs": mobs, "giant": giant, "villagers": villagers,
            "beam": beam, "weapons": weapons, "pickups": pickups, "resources": resources}
 
 TARGETS["nature"] = nature

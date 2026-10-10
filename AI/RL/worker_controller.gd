@@ -46,7 +46,7 @@ func _rays(body: Worker, bounds: Rect2) -> Array:
 	for i in RAY_COUNT:
 		var direction := Vector2.from_angle(body.heading + deg_to_rad(step / 2 - RAY_CONE / 2 + i * step))
 		var wall := _wall_distance(body.global_position - bounds.position, direction, bounds.size.x)
-		var resource: float = world.CastResourceRay(body.global_position, direction, RAY_LENGTH, Game.WorkerJob) if world else -1.0
+		var resource := _cast(world, body, direction) if world else -1.0
 		if resource >= 0.0 and (wall < 0.0 or resource <= wall):
 			result.append_array([0.0, 1.0, 1.0, resource / RAY_LENGTH])
 		elif wall >= 0.0:
@@ -54,6 +54,25 @@ func _rays(body: Worker, bounds: Rect2) -> Array:
 		else:
 			result.append_array([0.0, 0.0, 0.0, 1.0])
 	return result
+
+static func _cast(world, body: Worker, direction: Vector2) -> float:
+	var best := -1.0
+	for kind in body.kinds:
+		var distance: float = world.CastResourceRay(body.global_position, direction, RAY_LENGTH, kind)
+		if distance >= 0.0 and (best < 0.0 or distance < best):
+			best = distance
+	return best
+
+static func _nearest(world, body: Worker) -> Vector2i:
+	var best := Vector2i(-1, -1)
+	var best_distance := INF
+	for kind in body.kinds:
+		var cell: Vector2i = world.FindNearestResource(body.global_position, SEARCH_RADIUS, kind, body.area())
+		var distance := Worker.cell_center(cell).distance_squared_to(body.global_position)
+		if cell.x >= 0 and distance < best_distance:
+			best = cell
+			best_distance = distance
+	return best
 
 static func _wall_distance(local: Vector2, direction: Vector2, size: float) -> float:
 	var distance := INF
@@ -90,8 +109,8 @@ func heuristic_action() -> Dictionary:
 	var world = Game.World
 	if body.on_cell or world == null:
 		return {"rotate": 4}
-	if _target.x < 0 or Game.GetKindOf(world.GetResourceAt(_target)) != Game.WorkerJob:
-		_target = world.FindNearestResource(body.global_position, SEARCH_RADIUS, Game.WorkerJob, body.area())
+	if _target.x < 0 or not body.gathers(world.GetResourceAt(_target)):
+		_target = _nearest(world, body)
 		if _target.x < 0:
 			return {"rotate": 4}
 	var to_target := Worker.cell_center(_target) - body.global_position
