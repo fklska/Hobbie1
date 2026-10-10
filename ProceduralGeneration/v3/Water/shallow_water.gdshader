@@ -12,6 +12,9 @@ uniform float wave_width = 0.05;
 uniform vec4 foam_color : source_color = vec4(0.92, 1.0, 1.0, 1.0);
 uniform vec4 glint_color : source_color = vec4(0.62, 0.97, 1.0, 1.0);
 uniform vec4 trough_color : source_color = vec4(0.27, 0.87, 0.97, 1.0);
+uniform vec4 depth_color : source_color = vec4(0.25, 0.81, 0.95, 1.0);
+uniform float depth_start = 1.7;
+uniform float depth_full = 3.1;
 
 global uniform sampler2D water_field : filter_linear;
 global uniform vec2 water_field_size;
@@ -90,7 +93,10 @@ void fragment() {
 	float is_red = step(red_threshold, COLOR.r) * (1.0 - step(0.01, COLOR.g)) * (1.0 - step(0.01, COLOR.b));
 	vec4 base = mix(COLOR, texture(replacement_tex, world_pos * texture_scale), is_red);
 	vec2 p = (floor(world_pos / pixel_size) + 0.5) * pixel_size;
-	vec2 wave = waves(p, shore_distance(p));
+	float d = shore_distance(p);
+	float depth = d + (noise(p * 0.02) - 0.5) * 0.9 + (noise(p * 0.08) - 0.5) * 0.25;
+	base.rgb = mix(base.rgb, depth_color.rgb, (step(depth_start, depth) + step(depth_full, depth)) * 0.5 * is_red);
+	vec2 wave = waves(p, d);
 	vec2 trail = trails(p);
 	float glint = step(0.8, noise(p * vec2(0.03, 0.08) + vec2(TIME * 0.12, TIME * 0.04))) * step(0.5, noise(p * 0.01 - TIME * 0.05));
 	vec3 color = mix(base.rgb, glint_color.rgb, max(glint * 0.8, trail.y));
