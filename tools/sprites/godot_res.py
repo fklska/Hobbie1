@@ -141,20 +141,34 @@ def directional_character(out_dir, name, anims):
 PARTS_SCRIPT = "res://BuildSystem/scripts/building_parts.gd"
 
 
-def building_parts(base, ground, atlas, regions):
-    ground_uid = save_png(ground, base + "_ground.png")
-    atlas_uid = save_png(atlas, base + "_parts.png")
+def building_parts(base, views):
+    """views: [(rel, ground, atlas, regions)], the first one is the unturned building, the rest are turns 1..3."""
     rel = base + "_parts.tres"
     lines = [f'[gd_resource type="Resource" script_class="BuildingParts" format=3 uid="{uid_for(res_path(rel))}"]', "",
-             f'[ext_resource type="Script" uid="{uid_for(PARTS_SCRIPT)}" path="{PARTS_SCRIPT}" id="1_script"]',
-             f'[ext_resource type="Texture2D" uid="{ground_uid}" path="{res_path(base + "_ground.png")}" id="2_ground"]',
-             f'[ext_resource type="Texture2D" uid="{atlas_uid}" path="{res_path(base + "_parts.png")}" id="3_atlas"]', ""]
-    for k, ((x, y, w, h), _, _) in enumerate(regions):
-        lines += [f'[sub_resource type="AtlasTexture" id="AtlasTexture_{k}"]', 'atlas = ExtResource("3_atlas")',
-                  f"region = Rect2({x}, {y}, {w}, {h})", ""]
+             f'[ext_resource type="Script" uid="{uid_for(PARTS_SCRIPT)}" path="{PARTS_SCRIPT}" id="1_script"]']
+    subs, bodies = [], []
     num = lambda v: ("%g" % v)
-    lines += ["[resource]", 'script = ExtResource("1_script")', 'ground = ExtResource("2_ground")',
-              "parts = Array[Texture2D]([%s])" % ", ".join(f'SubResource("AtlasTexture_{k}")' for k in range(len(regions))),
-              "positions = PackedVector2Array(%s)" % ", ".join(f"{num(p[0])}, {num(p[1])}" for _, p, _ in regions),
-              "sort_rows = PackedFloat32Array(%s)" % ", ".join(num(r) for _, _, r in regions)]
+    for turn, (vrel, ground, atlas, regions) in enumerate(views):
+        tag = "" if turn == 0 else f"r{turn}_"
+        ids = ("2_ground", "3_atlas") if turn == 0 else (f"{tag}ground", f"{tag}atlas")
+        lines.append(f'[ext_resource type="Texture2D" uid="{save_png(ground, vrel + "_ground.png")}" path="{res_path(vrel + "_ground.png")}" id="{ids[0]}"]')
+        lines.append(f'[ext_resource type="Texture2D" uid="{save_png(atlas, vrel + "_parts.png")}" path="{res_path(vrel + "_parts.png")}" id="{ids[1]}"]')
+        body = [f'ground = ExtResource("{ids[0]}")',
+                "parts = Array[Texture2D]([%s])" % ", ".join(f'SubResource("AtlasTexture_{tag}{k}")' for k in range(len(regions))),
+                "positions = PackedVector2Array(%s)" % ", ".join(f"{num(p[0])}, {num(p[1])}" for _, p, _ in regions),
+                "sort_rows = PackedFloat32Array(%s)" % ", ".join(num(r) for _, _, r in regions)]
+        if turn > 0:
+            lines.append(f'[ext_resource type="Texture2D" uid="{uid_for(res_path(vrel + ".png"))}" path="{res_path(vrel + ".png")}" id="{tag}preview"]')
+            body.append(f'preview = ExtResource("{tag}preview")')
+        for k, ((x, y, w, h), _, _) in enumerate(regions):
+            subs += [f'[sub_resource type="AtlasTexture" id="AtlasTexture_{tag}{k}"]', f'atlas = ExtResource("{ids[1]}")',
+                     f"region = Rect2({x}, {y}, {w}, {h})", ""]
+        bodies.append(body)
+    lines.append("")
+    lines += subs
+    for turn, body in enumerate(bodies[1:], 1):
+        lines += [f'[sub_resource type="Resource" id="Resource_r{turn}"]', 'script = ExtResource("1_script")'] + body + [""]
+    lines += ["[resource]", 'script = ExtResource("1_script")'] + bodies[0]
+    if len(bodies) > 1:
+        lines.append("turns = Array[Resource]([%s])" % ", ".join(f'SubResource("Resource_r{t}")' for t in range(1, len(bodies))))
     open(os.path.join(ROOT, rel), "w").write("\n".join(lines) + "\n")
