@@ -13,7 +13,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 	[Export] public int STRENCH = 10;
 	[Export] public int INTELECT = 10;
 	[Export] public float SPEED = 20;
-	[Export] public ProgressBar ActionProgress;
+	[Export] public Godot.Range ActionProgress;
 
 	[ExportCategory("Combat")]
 	[Export] public int MaxHealth = 100;
@@ -80,6 +80,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		IsDead = true;
 		Velocity = Vector2.Zero;
 		DisableParticle(miningParticle);
+		ActionProgress.Value = 0;
 		anim.Call("play_dir", "death", Vector2.Zero, true);
 		GameManager.Instance.OnHeroDied();
 	}
