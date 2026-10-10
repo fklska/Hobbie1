@@ -184,7 +184,34 @@ def bow_held(b, hand, tdir, cross, RU, pose):
     pass
 
 
-TOOLS = {"sword": sword, "dagger": dagger, "pickaxe": pickaxe, "club": club, "bow": bow_held}
+def staff(b, hand, tdir, cross, RU, pose, top_mat="orb_fire"):
+    hand = np.asarray(hand, float)
+    top = hand + tdir * 19.0
+    b.cap(hand - tdir * 12.0, top, 0.75, "wood", r2=0.9, layer="weapon", group="weapon")
+    side = norm(np.cross(tdir, cross))
+    for s in (cross, -cross, side):
+        b.cap(top - tdir * 0.6, top + tdir * 2.6 + s * 1.6, 0.45, "robe_trim", r2=0.25, layer="weapon", group="claw")
+    b.sphere(top + tdir * 2.0, 1.9, top_mat, layer="weapon", group="orb")
+    b.tip = b.w(top + tdir * 2.0)
+
+
+def druid_staff(b, hand, tdir, cross, RU, pose):
+    hand = np.asarray(hand, float)
+    top = hand + tdir * 18.0
+    b.cap(hand - tdir * 12.0, top, 0.8, "wood", r2=1.0, layer="weapon", group="weapon")
+    side = norm(np.cross(tdir, cross))
+    hook = top + tdir * 2.4 + cross * 2.2
+    b.cap(top, top + tdir * 2.6 + cross * 0.4, 0.9, "wood", r2=0.8, layer="weapon", group="weapon")
+    b.cap(top + tdir * 2.6 + cross * 0.4, hook, 0.8, "wood", r2=0.6, layer="weapon", group="weapon")
+    b.cap(hook, hook - tdir * 1.6 + cross * 0.6, 0.6, "wood", r2=0.4, layer="weapon", group="weapon")
+    b.sphere(top + tdir * 1.4 + cross * 1.0, 1.25, "orb_leaf", layer="weapon", group="orb")
+    for k, (a, l) in enumerate(((0.6, 2.4), (-0.7, 2.2), (2.2, 2.0))):
+        d = norm(cross * np.cos(a) + side * np.sin(a) + tdir * 0.4)
+        b.ell(top + d * l * 0.7, [1.3, 0.45, 0.8], "leaf", Rl=axis_frame(d, side), layer="weapon", group="leaf%d" % k)
+    b.tip = b.w(top + tdir * 2.0)
+
+
+TOOLS = {"sword": sword, "dagger": dagger, "pickaxe": pickaxe, "club": club, "bow": bow_held, "staff": staff, "druid_staff": druid_staff}
 
 
 def bow_pose(b, RU, pose):
@@ -375,3 +402,39 @@ def anim_death(tool_dir=True):
                      tool_dir=[0.4, -0.6 - 0.4 * k, 1.0] if tool_dir else None,
                      fall=-f, fall_axis=(1, 0, 0), head_tilt=-0.2 * k, cape=0.1, lean=-0.1 * k))
     return out
+
+
+STAFF_DIR = [0.12, 1.0, 0.3]
+
+CAST = [
+    ([6.6, 17.0, 2.0], [0.1, 1.0, 0.3], [-6.8, 15.8, 0.4], 0.0),
+    ([5.6, 22.0, 4.0], [0.05, 1.0, 0.5], [-6.2, 19.0, 3.0], -0.04),
+    ([4.6, 28.5, 3.5], [0.0, 1.0, 0.2], [-5.6, 26.0, 4.0], -0.1),
+    ([4.4, 29.5, 3.0], [0.0, 1.0, 0.15], [-5.4, 27.0, 4.2], -0.12),
+    ([3.4, 25.0, 9.0], [0.0, 0.5, 1.0], [-3.8, 23.0, 8.5], 0.12),
+    ([5.4, 20.0, 6.0], [0.08, 0.85, 0.6], [-6.4, 17.5, 2.0], 0.05),
+]
+
+
+def anim_cast():
+    out = []
+    for i, (h, dr, lh, lean) in enumerate(CAST):
+        feet = {"R": np.array([2.9, 1.9, -1.2]), "L": np.array([-2.9, 1.9, 1.8])}
+        out.append(p(root=np.array([0, 0.3 if i in (2, 3) else 0, 0.2]), feet=feet,
+                     hands={"R": np.array(h), "L": np.array(lh)}, tool_dir=dr, lean=lean, cape=0.3 + 0.1 * (i in (2, 3))))
+    return out
+
+
+def anim_heavy_windup():
+    keys = [SMASH[0], ([2.2, 31.5, -1.6], [0.05, 1.0, -0.45], 0.1, -0.12), ([1.8, 33.0, -2.2], [0.05, 1.0, -0.75], 0.1, -0.2)]
+    out = []
+    for i, (h, dr, tw, lean) in enumerate(keys):
+        hr = np.array(h)
+        hl = hr - norm(dr) * 2.6 + np.array([-1.6, 0, 0])
+        feet = {"R": np.array([3.1, 1.9, -1.2]), "L": np.array([-3.1, 1.9, 2.0])}
+        out.append(p(root=np.array([0, 0, 0.4]), feet=feet, hands={"R": hr, "L": hl}, tool_dir=dr, twist=tw, lean=lean, cape=0.2))
+    return out
+
+
+def anim_heavy():
+    return anim_smash()[2:]

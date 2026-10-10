@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" uid="uid://de7585cx851m" path="res://Art/effects/spell_frames.tres" id="1_frames"]
+[ext_resource type="Script" uid="uid://bxqd6v166ro2w" path="res://Game/Skills/spell_fx.gd" id="2_script"]
+
+[node name="SpellFx" type="AnimatedSprite2D"]
+z_index = 3
+sprite_frames = ExtResource("1_frames")
+animation = &"fire_burst"
+script = ExtResource("2_script")

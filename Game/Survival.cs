@@ -154,6 +154,7 @@ public partial class Survival : Node
 			return;
 		}
 		game.Notify($"Рассвет. День {day} из {WinDay}");
+		game.OnSkillDawn();
 		game.SaveRun();
 		EmitSignal(SignalName.Changed);
 	}

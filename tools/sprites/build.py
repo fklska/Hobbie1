@@ -94,7 +94,34 @@ def check_clip(img, label):
 
 def hero(only=None):
     import hero as h
-    return render_character(h, "Art/hero", "hero", (64, 64), (32, 52), big={"death": 8}, only=only)
+    return render_character(h, "Art/hero", "hero", (64, 64), (32, 52), big={"death": 8, "heavy_windup": 10, "heavy": 10}, only=only)
+
+
+def hero_classes(names=None):
+    import hero_classes as hc
+    out = {}
+    for name in ("mage", "druid"):
+        if names and name not in names:
+            continue
+        out[name] = render_character(getattr(hc, name), "Art/hero", name, (64, 64), (32, 52), big={"death": 8, "cast": 10, "attack": 8})
+    return out
+
+
+SUMMONS = {
+    "crow": ("crow", (64, 64), (32, 52), {"death": 6, "attack": 6}),
+    "wolf": ("ally_wolf", (64, 64), (32, 46), {"death": 6}),
+    "bear": ("bear", (96, 96), (48, 74), {"death": 8, "attack": 8}),
+}
+
+
+def summons(names=None):
+    import beasts
+    out = {}
+    for name, (attr, size, anchor, big) in SUMMONS.items():
+        if names and name not in names:
+            continue
+        out[name] = render_character(getattr(beasts, attr), f"Art/summons/{name}", name, size, anchor, big=big)
+    return out
 
 
 MOBS = {
@@ -165,6 +192,11 @@ def resources(names=None):
         sdf.set_light(sdf.CHAR_LIGHT)
         check_clip(img, name)
         gr.save_png(img, f"Art/resources/{name}.png")
+
+
+def spells(names=None):
+    import spells as sp
+    return sp.build(names)
 
 
 def beam():
@@ -290,7 +322,7 @@ def buildings(names=None):
 
 BK = 0.9
 
-TARGETS = {"hero": hero, "buildings": buildings, "mobs": mobs, "giant": giant,
+TARGETS = {"hero": hero, "classes": hero_classes, "summons": summons, "spells": spells, "buildings": buildings, "mobs": mobs, "giant": giant,
            "beam": beam, "weapons": weapons, "pickups": pickups, "resources": resources}
 
 if __name__ == "__main__":

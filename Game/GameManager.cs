@@ -40,6 +40,7 @@ public partial class GameManager : Node
 		WorkerJob = "wood";
 		Ended = false;
 		ResetEconomy();
+		ResetHero();
 		Grid.StopPlacement();
 	}
 
@@ -73,6 +74,7 @@ public partial class GameManager : Node
 		root.AddChild(hud);
 		StartEconomy(spawn);
 		StartSurvival();
+		StartHero();
 
 		root.GetNodeOrNull<Control>("World/UI/Menu")?.Hide();
 		EmitSignal(SignalName.StockChanged);
@@ -98,13 +100,15 @@ public partial class GameManager : Node
 	private void Cleanup()
 	{
 		SaveRun();
-		foreach (Node node in new Node[] { Survival, hud, Player, World })
+		foreach (Node node in new Node[] { Survival, hud, heroHud, classPicker, Player, World })
 		{
 			if (!IsInstanceValid(node)) continue;
 			node.GetParent()?.RemoveChild(node);
 			node.QueueFree();
 		}
 		hud = null;
+		heroHud = null;
+		classPicker = null;
 		Survival = null;
 	}
 

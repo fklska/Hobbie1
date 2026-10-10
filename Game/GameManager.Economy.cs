@@ -103,7 +103,7 @@ public partial class GameManager
 
 	public int HeroDamage => Economy.Weapons[HeroWeapon].Damage + 4 * ArtifactCount("fang");
 
-	public int HeroMaxHealth => (int)Economy.Armor[ArmorTier].Value + 20 * ArtifactCount("stone_heart");
+	public int HeroMaxHealth => (int)Economy.Armor[ArmorTier].Value + 20 * ArtifactCount("stone_heart") + (ClassInfo?.BonusHealth ?? 0);
 
 	private int ArtifactCount(string id) => IsInstanceValid(Survival) ? Survival.Count(id) : 0;
 

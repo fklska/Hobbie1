@@ -647,7 +647,266 @@ def build_tool_icons():
     icon_pickaxe()
 
 
+SKILL_ICONS = os.path.join(ICONS, "skills")
+FIRE = ((154, 36, 16), (224, 82, 26), (255, 154, 46), (255, 213, 74), (255, 246, 196))
+STEEL3 = ((38, 64, 90), (94, 138, 176), (166, 203, 232), (238, 248, 255))
+LEAVES = ((26, 70, 40), (47, 114, 68), (110, 189, 122), (182, 240, 160))
+FLAME = [(0, 1), (0.3, 0.62), (0.62, 0.42), (0.58, 0.18), (0.32, 0), (-0.32, 0), (-0.58, 0.18), (-0.62, 0.4), (-0.36, 0.66), (-0.16, 0.5)]
+
+
+def skill_canvas():
+    img = Image.new("RGBA", (24, 24), CLEAR)
+    return img, ImageDraw.Draw(img), img.load()
+
+
+def skill_icon(name, img):
+    os.makedirs(SKILL_ICONS, exist_ok=True)
+    save(outlined(img), name, SKILL_ICONS)
+
+
+def flame(d, cx, by, h, w):
+    for k, sc in enumerate((1.0, 0.74, 0.5, 0.26)):
+        pts = [(cx + x * w * sc, by - y * h * (0.35 + 0.65 * sc)) for x, y in FLAME]
+        d.polygon(pts, fill=FIRE[k + 1] if k else FIRE[1])
+    d.polygon([(cx + x * w, by - y * h) for x, y in FLAME[4:6]], fill=FIRE[0])
+
+
+def icon_ignite():
+    img, d, px = skill_canvas()
+    flame(d, 12, 22, 20, 8)
+    for x, y in ((4, 8), (19, 5), (20, 12)):
+        px[x, y] = FIRE[3] + (255,)
+    skill_icon("ignite", img)
+
+
+def icon_pyre():
+    img, d, px = skill_canvas()
+    flame(d, 5, 22, 11, 4.5)
+    flame(d, 19, 22, 12, 4.5)
+    flame(d, 12, 22, 19, 7)
+    skill_icon("pyre", img)
+
+
+def icon_meteor():
+    img, d, px = skill_canvas()
+    for k, wd in enumerate((5, 3.6, 2.2, 1)):
+        d.polygon([(22, 1), (9 - wd, 15 - wd), (9 + wd, 15 + wd)], fill=FIRE[k + 1])
+    d.ellipse((2, 12, 13, 23), fill=(58, 44, 38))
+    d.ellipse((3, 13, 11, 20), fill=(92, 72, 62))
+    d.ellipse((4, 14, 8, 17), fill=(126, 104, 92))
+    d.line((6, 20, 10, 16), fill=FIRE[2])
+    d.point((9, 19), fill=FIRE[3])
+    skill_icon("meteor", img)
+
+
+def slash(d, x0, y0, x1, y1, w):
+    d.line((x0, y0, x1, y1), fill=STEEL3[1], width=w + 1)
+    d.line((x0, y0, x1, y1), fill=STEEL3[3], width=max(1, w - 1))
+
+
+def icon_combo():
+    img, d, px = skill_canvas()
+    for k in range(3):
+        slash(d, 3 + k * 5, 20 - k * 1, 12 + k * 5, 3 + k * 1, 2 - (k == 0))
+    skill_icon("combo", img)
+
+
+def icon_whirl():
+    img, d, px = skill_canvas()
+    d.arc((1, 3, 23, 21), 140, 420, fill=STEEL3[1], width=3)
+    d.arc((2, 4, 22, 20), 200, 400, fill=STEEL3[3], width=1)
+    d.arc((6, 7, 18, 17), 320, 560, fill=STEEL3[2], width=2)
+    d.polygon([(19, 16), (23, 13), (23, 19)], fill=STEEL3[3])
+    skill_icon("whirl", img)
+
+
+def icon_heavy():
+    img, d, px = skill_canvas()
+    d.rectangle((10, 1, 13, 15), fill=STEEL3[2])
+    d.line((11, 1, 11, 15), fill=STEEL3[3])
+    d.line((13, 2, 13, 15), fill=STEEL3[1])
+    d.polygon([(10, 15), (13, 15), (11.5, 18)], fill=STEEL3[2])
+    d.rectangle((6, 0, 17, 1), fill=(226, 172, 60))
+    for x0, y0, x1, y1 in ((2, 22, 7, 18), (21, 22, 16, 18), (5, 23, 9, 21), (18, 23, 14, 21)):
+        d.line((x0, y0, x1, y1), fill=(230, 212, 176))
+    d.rectangle((3, 22, 20, 23), fill=(140, 112, 82))
+    skill_icon("heavy", img)
+
+
+def icon_quake():
+    img, d, px = skill_canvas()
+    d.polygon([(0, 14), (24, 14), (24, 24), (0, 24)], fill=(110, 84, 58))
+    d.line((0, 14, 23, 14), fill=(160, 128, 92))
+    d.line([(12, 14), (10, 17), (13, 19), (11, 23)], fill=(30, 20, 16), width=2)
+    d.line([(10, 17), (5, 19), (2, 23)], fill=(30, 20, 16))
+    d.line([(13, 19), (18, 18), (22, 22)], fill=(30, 20, 16))
+    for (x, y, r) in ((5, 8, 2), (18, 6, 2), (12, 4, 1), (21, 11, 1), (2, 11, 1)):
+        d.ellipse((x - r, y - r, x + r, y + r), fill=(140, 112, 82))
+    d.arc((2, 9, 22, 19), 190, 350, fill=(230, 212, 176))
+    skill_icon("quake", img)
+
+
+def icon_crow():
+    img, d, px = skill_canvas()
+    d.polygon([(1, 6), (8, 10), (12, 13), (6, 13)], fill=(42, 39, 56))
+    d.polygon([(23, 6), (16, 10), (12, 13), (18, 13)], fill=(42, 39, 56))
+    d.polygon([(3, 7), (8, 10), (6, 11)], fill=(62, 58, 85))
+    d.polygon([(21, 7), (16, 10), (18, 11)], fill=(62, 58, 85))
+    d.ellipse((8, 9, 16, 20), fill=(26, 24, 36))
+    d.ellipse((9, 5, 15, 11), fill=(26, 24, 36))
+    d.polygon([(11, 10), (13, 10), (12, 14)], fill=(134, 128, 122))
+    d.polygon([(9, 19), (15, 19), (12, 23)], fill=(26, 24, 36))
+    px[10, 8] = (232, 220, 176, 255)
+    px[14, 8] = (232, 220, 176, 255)
+    skill_icon("crow", img)
+
+
+def icon_wolf():
+    img, d, px = skill_canvas()
+    fur, light, dark = (125, 102, 80), (210, 192, 170), (59, 46, 36)
+    d.polygon([(4, 2), (9, 7), (5, 10)], fill=fur)
+    d.polygon([(20, 2), (15, 7), (19, 10)], fill=fur)
+    d.polygon([(5, 4), (8, 7), (6, 8)], fill=dark)
+    d.polygon([(19, 4), (16, 7), (18, 8)], fill=dark)
+    d.polygon([(4, 9), (12, 5), (20, 9), (19, 15), (12, 22), (5, 15)], fill=fur)
+    d.polygon([(8, 14), (12, 12), (16, 14), (14, 20), (12, 22), (10, 20)], fill=light)
+    d.rectangle((11, 19, 13, 21), fill=dark)
+    for x in (8, 15):
+        d.rectangle((x, 11, x + 1, 11), fill=(156, 240, 122))
+    for x, y in ((6, 15), (18, 15), (12, 6)):
+        px[x, y] = dark + (255,)
+    skill_icon("wolf", img)
+
+
+def icon_bear():
+    img, d, px = skill_canvas()
+    fur, hi = (86, 54, 32), (145, 104, 69)
+    d.ellipse((5, 11, 19, 22), fill=fur)
+    d.ellipse((7, 12, 13, 16), fill=hi)
+    for x, y in ((2, 7), (7, 3), (13, 3), (18, 7)):
+        d.ellipse((x, y, x + 5, y + 6), fill=fur)
+        d.point((x + 2, y + 1), fill=hi)
+        d.line((x + 2, y - 1, x + 3, y), fill=(230, 220, 200))
+    skill_icon("bear", img)
+
+
+def icon_wild():
+    img, d, px = skill_canvas()
+    d.polygon([(3, 21), (6, 9), (13, 3), (21, 2), (20, 11), (14, 18)], fill=LEAVES[1])
+    d.polygon([(6, 18), (8, 10), (13, 5), (18, 4), (17, 10), (12, 16)], fill=LEAVES[2])
+    d.line((3, 21, 17, 6), fill=LEAVES[0])
+    for k in range(3):
+        d.line((9 + k * 4, 22, 15 + k * 4, 12), fill=(232, 220, 196), width=1)
+        d.line((10 + k * 4, 22, 16 + k * 4, 12), fill=(150, 30, 26))
+    skill_icon("wild", img)
+
+
+def icon_class_warrior():
+    img, d, px = skill_canvas()
+    d.polygon([(3, 5), (12, 3), (12, 21), (6, 17), (3, 11)], fill=(150, 58, 46))
+    d.polygon([(12, 3), (21, 5), (21, 11), (18, 17), (12, 21)], fill=(198, 96, 74))
+    d.line((12, 3, 12, 21), fill=(226, 172, 60))
+    d.line((3, 5, 12, 3), fill=(246, 210, 120))
+    d.line((12, 3, 21, 5), fill=(246, 210, 120))
+    slash(d, 2, 22, 21, 1, 2)
+    d.line((4, 16, 8, 20), fill=(226, 172, 60), width=2)
+    skill_icon("class_warrior", img)
+
+
+def icon_class_mage():
+    img, d, px = skill_canvas()
+    robe, robe_hi, trim = (69, 41, 122), (99, 64, 166), (210, 154, 51)
+    d.polygon([(12, 1), (17, 14), (7, 14)], fill=robe)
+    d.polygon([(12, 1), (14, 14), (10, 14)], fill=robe_hi)
+    d.polygon([(12, 1), (16, 4), (13, 6)], fill=robe)
+    d.ellipse((1, 13, 23, 20), fill=robe)
+    d.ellipse((3, 13, 21, 17), fill=robe_hi)
+    d.rectangle((7, 12, 17, 13), fill=trim)
+    d.point((15, 4), fill=(243, 211, 107))
+    d.point((10, 9), fill=(243, 211, 107))
+    flame(d, 19, 9, 8, 3)
+    skill_icon("class_mage", img)
+
+
+def icon_class_druid():
+    img, d, px = skill_canvas()
+    ant = (200, 184, 146)
+    for sx in (1, -1):
+        pts = [(12 + sx * 3, 14), (12 + sx * 6, 8), (12 + sx * 7, 2)]
+        d.line(pts, fill=ant, width=2)
+        d.line((12 + sx * 6, 8, 12 + sx * 10, 6), fill=ant, width=1)
+        d.line((12 + sx * 5, 11, 12 + sx * 9, 11), fill=ant, width=1)
+    d.polygon([(12, 22), (6, 16), (8, 11), (12, 9), (16, 11), (18, 16)], fill=LEAVES[1])
+    d.polygon([(12, 20), (8, 16), (9, 12), (12, 11)], fill=LEAVES[2])
+    d.line((12, 11, 12, 22), fill=LEAVES[0])
+    skill_icon("class_druid", img)
+
+
+def icon_skill_point():
+    img, d, px = skill_canvas()
+    import math
+    pts = []
+    for k in range(10):
+        r = 10.5 if k % 2 == 0 else 4.5
+        a = -math.pi / 2 + k * math.pi / 5
+        pts.append((12 + r * math.cos(a), 12.5 + r * math.sin(a)))
+    d.polygon(pts, fill=(214, 158, 46))
+    d.polygon([(12, 12.5)] + pts[7:10] + [pts[0]], fill=(252, 214, 98))
+    d.polygon([(12, 12.5), pts[0], pts[1], pts[2]], fill=(255, 236, 150))
+    skill_icon("skill_point", img)
+
+
+def icon_heat():
+    img, d, px = skill_canvas()
+    d.ellipse((3, 3, 21, 21), fill=FIRE[1])
+    d.ellipse((5, 5, 19, 19), fill=FIRE[2])
+    d.ellipse((8, 8, 16, 16), fill=FIRE[3])
+    d.ellipse((10, 10, 14, 14), fill=FIRE[4])
+    for k in range(8):
+        import math
+        a = k * math.pi / 4
+        x0, y0 = 12 + 10 * math.cos(a), 12 + 10 * math.sin(a)
+        x1, y1 = 12 + 12 * math.cos(a), 12 + 12 * math.sin(a)
+        d.line((x0, y0, x1, y1), fill=FIRE[3], width=2)
+    skill_icon("heat", img)
+
+
+def icon_focus():
+    img, d, px = skill_canvas()
+    glass, sand, wood = (166, 203, 232), (240, 196, 92), (128, 90, 38)
+    d.rectangle((5, 1, 18, 3), fill=wood)
+    d.rectangle((5, 20, 18, 22), fill=wood)
+    d.polygon([(7, 4), (16, 4), (12, 11), (11, 11)], fill=glass)
+    d.polygon([(11, 12), (12, 12), (16, 19), (7, 19)], fill=glass)
+    d.polygon([(9, 6), (14, 6), (12, 10), (11, 10)], fill=sand)
+    d.polygon([(11, 15), (12, 15), (15, 19), (8, 19)], fill=sand)
+    d.line((11, 11, 11, 15), fill=sand)
+    flame(d, 20, 23, 9, 3)
+    skill_icon("focus", img)
+
+
+def icon_bond():
+    img, d, px = skill_canvas()
+    red, dark = (214, 52, 52), (158, 28, 38)
+    d.ellipse((2, 4, 12, 14), fill=red)
+    d.ellipse((11, 4, 21, 14), fill=red)
+    d.polygon([(2, 10), (21, 10), (12, 21), (11, 21)], fill=red)
+    d.polygon([(12, 20), (21, 10), (21, 12), (13, 20)], fill=dark)
+    d.point((5, 7), fill=(255, 150, 150))
+    d.polygon([(13, 2), (20, 0), (22, 6), (16, 9)], fill=LEAVES[2])
+    d.line((14, 8, 20, 1), fill=LEAVES[0])
+    skill_icon("bond", img)
+
+
+def build_skill_icons():
+    for fn in (icon_ignite, icon_pyre, icon_meteor, icon_combo, icon_whirl, icon_heavy, icon_quake,
+               icon_crow, icon_wolf, icon_bear, icon_wild, icon_class_warrior, icon_class_mage,
+               icon_class_druid, icon_skill_point, icon_heat, icon_focus, icon_bond):
+        fn()
+
+
 if __name__ == "__main__":
     build_skin()
     build_icons()
     build_tool_icons()
+    build_skill_icons()

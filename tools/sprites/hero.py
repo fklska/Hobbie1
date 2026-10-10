@@ -38,6 +38,8 @@ ANIMS = {
     "idle": (hu.anim_idle, 5.0, True, "sword"),
     "walk": (hu.anim_walk, 13.0, True, "sword"),
     "attack": (hu.anim_slash, 14.0, False, "sword"),
+    "heavy_windup": (hu.anim_heavy_windup, 8.0, False, "sword"),
+    "heavy": (hu.anim_heavy, 12.0, False, "sword"),
     "work": (hu.anim_work, 11.0, True, "pickaxe"),
     "death": (hu.anim_death, 8.0, False, "sword"),
 }
