@@ -48,24 +48,6 @@ public static partial class GenerationUtils
         };
     }
 
-    public static int getResorseAtlacByType(ResorseType type)
-    {
-        return type switch
-        {
-            ResorseType.GiantWood => 0,
-            ResorseType.GiantSnowWood => 1,
-            ResorseType.MediumWood => 2,
-            ResorseType.MediumSnowWood => 3,
-            ResorseType.SmallWood => 4,
-            ResorseType.SmallSnowWood => 5,
-            ResorseType.Gold => 6,
-            ResorseType.Iron => 7,
-            ResorseType.Stone => 8,
-            ResorseType.TropicWood => 9,
-            _ => 0
-        };
-    }
-
     private static Random _random = new Random();
     public static string GenerateNameWorld()
     {

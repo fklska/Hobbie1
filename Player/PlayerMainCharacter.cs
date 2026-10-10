@@ -191,7 +191,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 		if (Input.IsMouseButtonPressed(MouseButton.Left) && !Grid.buildMode && !Casting)
 		{
 			Vector2 clickPos = GetGlobalMousePosition();
-			Vector2I globalCell = Utils.GetGlobalCell(clickPos);
+			Vector2I globalCell = WorldScene.ResourceCellAt(clickPos);
 
 			if (IsActionInValidRadius(clickPos))
 			{
@@ -258,7 +258,7 @@ public partial class PlayerMainCharacter : CharacterBody2D
 
 	public void UpdateFocusCell()
 	{
-		focusCell = Utils.GetGlobalCell(GetGlobalMousePosition());
+		focusCell = WorldScene.ResourceCellAt(GetGlobalMousePosition());
 		ActionProgress.Value = 0;
 	}
 }

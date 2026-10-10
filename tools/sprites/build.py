@@ -199,6 +199,11 @@ def spells(names=None):
     return sp.build(names)
 
 
+def nature(names=None):
+    import nature as nt
+    return nt.build(names)
+
+
 def beam():
     import effects
     return effects.giant_beam()
@@ -324,6 +329,8 @@ BK = 0.9
 
 TARGETS = {"hero": hero, "classes": hero_classes, "summons": summons, "spells": spells, "buildings": buildings, "mobs": mobs, "giant": giant,
            "beam": beam, "weapons": weapons, "pickups": pickups, "resources": resources}
+
+TARGETS["nature"] = nature
 
 if __name__ == "__main__":
     names = sys.argv[1:] or list(TARGETS)

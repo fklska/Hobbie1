@@ -1,98 +1,749 @@
 [gd_resource type="TileSet" format=3 uid="uid://b4356nalyihnr"]
 
-[ext_resource type="Texture2D" uid="uid://bae4ea1lulb2h" path="res://Resourses/AssetsV1/Wood_01.png" id="1_cikcv"]
-[ext_resource type="Texture2D" uid="uid://byfgujsix5bag" path="res://Resourses/AssetsV1/Wood_03.png" id="1_jqg7n"]
-[ext_resource type="Texture2D" uid="uid://b4638qrsp4fke" path="res://Resourses/AssetsV1/Wood_02.png" id="2_cikcv"]
-[ext_resource type="Texture2D" uid="uid://bbaxjrh1uolv8" path="res://Resourses/AssetsV1/Wood_Snow_01.png" id="2_pwobb"]
-[ext_resource type="Texture2D" uid="uid://cyj3c6ulsfdn4" path="res://Resourses/AssetsV1/Wood_Tropic_02.png" id="3_tlgnw"]
-[ext_resource type="Texture2D" uid="uid://dq04jsq171ced" path="res://Resourses/AssetsV1/Wood_Snow_02.png" id="4_nmipl"]
-[ext_resource type="Texture2D" uid="uid://bh50njmv1hvua" path="res://Resourses/AssetsV1/Wood_Snow_03.png" id="6_tlg38"]
-[ext_resource type="Texture2D" uid="uid://dyhaei55r6f4o" path="res://Resourses/AssetsV1/Gold.png" id="7_tlg38"]
-[ext_resource type="Texture2D" uid="uid://cl1hrk77f4nof" path="res://Resourses/AssetsV1/Iron.png" id="8_hgnpl"]
-[ext_resource type="Texture2D" uid="uid://dpk4p2wvanxrk" path="res://Resourses/AssetsV1/Stone.png" id="9_tlgnw"]
+[ext_resource type="Material" uid="uid://bixs9j34vjjs3" path="res://Resourses/v2/tree_material.tres" id="sway"]
+[ext_resource type="Texture2D" uid="uid://d34r7i6ifvz8" path="res://Art/resources/world/oak_small.png" id="1_oak_small"]
+[ext_resource type="Texture2D" uid="uid://mqvh388av6aa" path="res://Art/resources/world/oak.png" id="2_oak"]
+[ext_resource type="Texture2D" uid="uid://bqymmnrr2lnlx" path="res://Art/resources/world/oak_giant.png" id="3_oak_giant"]
+[ext_resource type="Texture2D" uid="uid://p0tuo91xjm5k" path="res://Art/resources/world/birch.png" id="4_birch"]
+[ext_resource type="Texture2D" uid="uid://wrnr98ciwm3f" path="res://Art/resources/world/pine_small.png" id="5_pine_small"]
+[ext_resource type="Texture2D" uid="uid://bfu7jau6ihsx7" path="res://Art/resources/world/pine.png" id="6_pine"]
+[ext_resource type="Texture2D" uid="uid://bw1yd4y9fyo7r" path="res://Art/resources/world/pine_giant.png" id="7_pine_giant"]
+[ext_resource type="Texture2D" uid="uid://bfl1ljhjcmzxo" path="res://Art/resources/world/fir_small.png" id="8_fir_small"]
+[ext_resource type="Texture2D" uid="uid://b0i06hquesxnz" path="res://Art/resources/world/fir.png" id="9_fir"]
+[ext_resource type="Texture2D" uid="uid://rfeyz3fy82jh" path="res://Art/resources/world/fir_giant.png" id="10_fir_giant"]
+[ext_resource type="Texture2D" uid="uid://bs1x1rffk0gqd" path="res://Art/resources/world/palm.png" id="11_palm"]
+[ext_resource type="Texture2D" uid="uid://f3ene6m01va9" path="res://Art/resources/world/jungle.png" id="12_jungle"]
+[ext_resource type="Texture2D" uid="uid://bkur5jqtzd457" path="res://Art/resources/world/banana.png" id="13_banana"]
+[ext_resource type="Texture2D" uid="uid://1tqwiovg029l" path="res://Art/resources/world/willow.png" id="14_willow"]
+[ext_resource type="Texture2D" uid="uid://dg0mjshm7mev" path="res://Art/resources/world/deadtree.png" id="15_deadtree"]
+[ext_resource type="Texture2D" uid="uid://75uaaqszymwc" path="res://Art/resources/world/acacia.png" id="16_acacia"]
+[ext_resource type="Texture2D" uid="uid://bt0g5sxycwbb5" path="res://Art/resources/world/baobab.png" id="17_baobab"]
+[ext_resource type="Texture2D" uid="uid://laueg3nnzq4g" path="res://Art/resources/world/cactus.png" id="18_cactus"]
+[ext_resource type="Texture2D" uid="uid://flmjjvextkt6" path="res://Art/resources/world/shrub.png" id="19_shrub"]
+[ext_resource type="Texture2D" uid="uid://bzzr0xsgcs4ii" path="res://Art/resources/world/stone_granite.png" id="20_stone_granite"]
+[ext_resource type="Texture2D" uid="uid://zg6pb118jzhv" path="res://Art/resources/world/stone_snow.png" id="21_stone_snow"]
+[ext_resource type="Texture2D" uid="uid://xgm5toexgfp3" path="res://Art/resources/world/stone_sand.png" id="22_stone_sand"]
+[ext_resource type="Texture2D" uid="uid://m4a0zt10es59" path="res://Art/resources/world/stone_moss.png" id="23_stone_moss"]
+[ext_resource type="Texture2D" uid="uid://vdkrdho5u4gs" path="res://Art/resources/world/iron_granite.png" id="24_iron_granite"]
+[ext_resource type="Texture2D" uid="uid://bkhhukxzohbm" path="res://Art/resources/world/iron_snow.png" id="25_iron_snow"]
+[ext_resource type="Texture2D" uid="uid://gq5nnvavkg2p" path="res://Art/resources/world/iron_sand.png" id="26_iron_sand"]
+[ext_resource type="Texture2D" uid="uid://57f6f21pomnn" path="res://Art/resources/world/iron_moss.png" id="27_iron_moss"]
+[ext_resource type="Texture2D" uid="uid://bxqpfc8wh6ctu" path="res://Art/resources/world/gold_granite.png" id="28_gold_granite"]
+[ext_resource type="Texture2D" uid="uid://bn6y857nmsdrk" path="res://Art/resources/world/gold_snow.png" id="29_gold_snow"]
+[ext_resource type="Texture2D" uid="uid://betnjd1bpqs1w" path="res://Art/resources/world/gold_sand.png" id="30_gold_sand"]
+[ext_resource type="Texture2D" uid="uid://0lnup1cps2sn" path="res://Art/resources/world/gold_moss.png" id="31_gold_moss"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pwobb"]
-texture = ExtResource("1_cikcv")
-texture_region_size = Vector2i(256, 256)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oak_small"]
+resource_name = "oak_small"
+texture = ExtResource("1_oak_small")
+texture_region_size = Vector2i(46, 68)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(5, 85)
-0:0/0/y_sort_origin = 20
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 16, 32, 16, 0, -16)
+0:0/0/texture_origin = Vector2i(0, 7)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 7)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 7)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 7)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hgnpl"]
-texture = ExtResource("2_pwobb")
-texture_region_size = Vector2i(256, 256)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oak"]
+resource_name = "oak"
+texture = ExtResource("2_oak")
+texture_region_size = Vector2i(72, 104)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(-5, 90)
-0:0/0/y_sort_origin = 16
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 16, 32, 16, 0, -16)
+0:0/0/texture_origin = Vector2i(0, 23)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 23)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 23)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 23)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tlgnw"]
-texture = ExtResource("2_cikcv")
-texture_region_size = Vector2i(128, 128)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oak_giant"]
+resource_name = "oak_giant"
+texture = ExtResource("3_oak_giant")
+texture_region_size = Vector2i(104, 154)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 45)
-0:0/0/y_sort_origin = 8
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.5, 7.5, 7.33816, 6.77369, -4, -16)
+0:0/0/texture_origin = Vector2i(0, 41)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 41)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 41)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 41)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5siqq"]
-texture = ExtResource("4_nmipl")
-texture_region_size = Vector2i(128, 128)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_birch"]
+resource_name = "birch"
+texture = ExtResource("4_birch")
+texture_region_size = Vector2i(56, 114)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 45)
-0:0/0/y_sort_origin = 9
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.9829, 9.59605, 15.2408, 9.59605, -0.564476, -5.08027)
+0:0/0/texture_origin = Vector2i(0, 30)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 30)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 30)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 30)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o4o2j"]
-texture = ExtResource("1_jqg7n")
-texture_region_size = Vector2i(32, 32)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pine_small"]
+resource_name = "pine_small"
+texture = ExtResource("5_pine_small")
+texture_region_size = Vector2i(46, 62)
 0:0/0 = 0
-0:0/0/y_sort_origin = 4
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -4, -8, 4, 8, 4, 8, -4)
+0:0/0/texture_origin = Vector2i(0, 3)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 3)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 3)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 3)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j67y5"]
-texture = ExtResource("6_tlg38")
-texture_region_size = Vector2i(32, 32)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pine"]
+resource_name = "pine"
+texture = ExtResource("6_pine")
+texture_region_size = Vector2i(66, 108)
 0:0/0 = 0
-0:0/0/y_sort_origin = 6
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 4, 8, -4, -8, 0)
+0:0/0/texture_origin = Vector2i(0, 21)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 21)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 21)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 21)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_obtwn"]
-texture = ExtResource("7_tlg38")
-texture_region_size = Vector2i(64, 64)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pine_giant"]
+resource_name = "pine_giant"
+texture = ExtResource("7_pine_giant")
+texture_region_size = Vector2i(92, 154)
 0:0/0 = 0
-0:0/0/y_sort_origin = 20
+0:0/0/texture_origin = Vector2i(0, 40)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 40)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 40)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 40)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_snks5"]
-texture = ExtResource("8_hgnpl")
-texture_region_size = Vector2i(64, 64)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fir_small"]
+resource_name = "fir_small"
+texture = ExtResource("8_fir_small")
+texture_region_size = Vector2i(46, 60)
 0:0/0 = 0
-0:0/0/y_sort_origin = 18
+0:0/0/texture_origin = Vector2i(0, 2)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 2)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 2)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 2)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d7oh5"]
-texture = ExtResource("9_tlgnw")
-texture_region_size = Vector2i(64, 64)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fir"]
+resource_name = "fir"
+texture = ExtResource("9_fir")
+texture_region_size = Vector2i(64, 104)
 0:0/0 = 0
-0:0/0/y_sort_origin = 18
+0:0/0/texture_origin = Vector2i(0, 19)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 19)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 19)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 19)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_21tx3"]
-texture = ExtResource("3_tlgnw")
-texture_region_size = Vector2i(128, 128)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fir_giant"]
+resource_name = "fir_giant"
+texture = ExtResource("10_fir_giant")
+texture_region_size = Vector2i(90, 148)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 45)
-0:0/0/y_sort_origin = 8
+0:0/0/texture_origin = Vector2i(0, 37)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 37)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 37)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 37)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_palm"]
+resource_name = "palm"
+texture = ExtResource("11_palm")
+texture_region_size = Vector2i(86, 104)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 23)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 23)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 23)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 23)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jungle"]
+resource_name = "jungle"
+texture = ExtResource("12_jungle")
+texture_region_size = Vector2i(122, 144)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 40)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 40)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 40)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 40)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_banana"]
+resource_name = "banana"
+texture = ExtResource("13_banana")
+texture_region_size = Vector2i(46, 44)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -2)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, -2)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, -2)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, -2)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_willow"]
+resource_name = "willow"
+texture = ExtResource("14_willow")
+texture_region_size = Vector2i(78, 104)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 20)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 20)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 20)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 20)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_deadtree"]
+resource_name = "deadtree"
+texture = ExtResource("15_deadtree")
+texture_region_size = Vector2i(62, 98)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 20)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 20)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 20)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 20)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_acacia"]
+resource_name = "acacia"
+texture = ExtResource("16_acacia")
+texture_region_size = Vector2i(128, 104)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 22)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 22)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 22)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 22)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, 12, 0, 6, 10, 12, 0, 18)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_baobab"]
+resource_name = "baobab"
+texture = ExtResource("17_baobab")
+texture_region_size = Vector2i(84, 118)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 23)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 23)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 23)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 23)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 12, 0, 3, 16, 12, 0, 21)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cactus"]
+resource_name = "cactus"
+texture = ExtResource("18_cactus")
+texture_region_size = Vector2i(46, 56)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 5)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 5)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 5)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 5)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_shrub"]
+resource_name = "shrub"
+texture = ExtResource("19_shrub")
+texture_region_size = Vector2i(46, 42)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -4)
+0:0/0/y_sort_origin = 14
+0:0/0/material = ExtResource("sway")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, -4)
+0:1/0/y_sort_origin = 14
+0:1/0/material = ExtResource("sway")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, -4)
+0:2/0/y_sort_origin = 14
+0:2/0/material = ExtResource("sway")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, -4)
+0:3/0/y_sort_origin = 14
+0:3/0/material = ExtResource("sway")
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6, 12, 0, 8, 6, 12, 0, 16)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stone_granite"]
+resource_name = "stone_granite"
+texture = ExtResource("20_stone_granite")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stone_snow"]
+resource_name = "stone_snow"
+texture = ExtResource("21_stone_snow")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stone_sand"]
+resource_name = "stone_sand"
+texture = ExtResource("22_stone_sand")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stone_moss"]
+resource_name = "stone_moss"
+texture = ExtResource("23_stone_moss")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iron_granite"]
+resource_name = "iron_granite"
+texture = ExtResource("24_iron_granite")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iron_snow"]
+resource_name = "iron_snow"
+texture = ExtResource("25_iron_snow")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iron_sand"]
+resource_name = "iron_sand"
+texture = ExtResource("26_iron_sand")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iron_moss"]
+resource_name = "iron_moss"
+texture = ExtResource("27_iron_moss")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gold_granite"]
+resource_name = "gold_granite"
+texture = ExtResource("28_gold_granite")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gold_snow"]
+resource_name = "gold_snow"
+texture = ExtResource("29_gold_snow")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gold_sand"]
+resource_name = "gold_sand"
+texture = ExtResource("30_gold_sand")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gold_moss"]
+resource_name = "gold_moss"
+texture = ExtResource("31_gold_moss")
+texture_region_size = Vector2i(56, 62)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 6)
+0:0/0/y_sort_origin = 12
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 6)
+0:1/0/y_sort_origin = 12
+0:2/0 = 0
+0:2/0/texture_origin = Vector2i(0, 6)
+0:2/0/y_sort_origin = 12
+0:3/0 = 0
+0:3/0/texture_origin = Vector2i(0, 6)
+0:3/0/y_sort_origin = 12
 
 [resource]
 tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 8
 physics_layer_0/collision_mask = 7
-sources/0 = SubResource("TileSetAtlasSource_pwobb")
-sources/1 = SubResource("TileSetAtlasSource_hgnpl")
-sources/2 = SubResource("TileSetAtlasSource_tlgnw")
-sources/3 = SubResource("TileSetAtlasSource_5siqq")
-sources/4 = SubResource("TileSetAtlasSource_o4o2j")
-sources/5 = SubResource("TileSetAtlasSource_j67y5")
-sources/6 = SubResource("TileSetAtlasSource_obtwn")
-sources/7 = SubResource("TileSetAtlasSource_snks5")
-sources/8 = SubResource("TileSetAtlasSource_d7oh5")
-sources/9 = SubResource("TileSetAtlasSource_21tx3")
+sources/0 = SubResource("TileSetAtlasSource_oak_small")
+sources/1 = SubResource("TileSetAtlasSource_oak")
+sources/2 = SubResource("TileSetAtlasSource_oak_giant")
+sources/3 = SubResource("TileSetAtlasSource_birch")
+sources/4 = SubResource("TileSetAtlasSource_pine_small")
+sources/5 = SubResource("TileSetAtlasSource_pine")
+sources/6 = SubResource("TileSetAtlasSource_pine_giant")
+sources/7 = SubResource("TileSetAtlasSource_fir_small")
+sources/8 = SubResource("TileSetAtlasSource_fir")
+sources/9 = SubResource("TileSetAtlasSource_fir_giant")
+sources/10 = SubResource("TileSetAtlasSource_palm")
+sources/11 = SubResource("TileSetAtlasSource_jungle")
+sources/12 = SubResource("TileSetAtlasSource_banana")
+sources/13 = SubResource("TileSetAtlasSource_willow")
+sources/14 = SubResource("TileSetAtlasSource_deadtree")
+sources/15 = SubResource("TileSetAtlasSource_acacia")
+sources/16 = SubResource("TileSetAtlasSource_baobab")
+sources/17 = SubResource("TileSetAtlasSource_cactus")
+sources/18 = SubResource("TileSetAtlasSource_shrub")
+sources/19 = SubResource("TileSetAtlasSource_stone_granite")
+sources/20 = SubResource("TileSetAtlasSource_stone_snow")
+sources/21 = SubResource("TileSetAtlasSource_stone_sand")
+sources/22 = SubResource("TileSetAtlasSource_stone_moss")
+sources/23 = SubResource("TileSetAtlasSource_iron_granite")
+sources/24 = SubResource("TileSetAtlasSource_iron_snow")
+sources/25 = SubResource("TileSetAtlasSource_iron_sand")
+sources/26 = SubResource("TileSetAtlasSource_iron_moss")
+sources/27 = SubResource("TileSetAtlasSource_gold_granite")
+sources/28 = SubResource("TileSetAtlasSource_gold_snow")
+sources/29 = SubResource("TileSetAtlasSource_gold_sand")
+sources/30 = SubResource("TileSetAtlasSource_gold_moss")
