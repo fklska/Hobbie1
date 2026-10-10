@@ -11,8 +11,10 @@ public partial class VillageHud : CanvasLayer
 	private GameManager game;
 	private PanelContainer hireWindow;
 	private VBoxContainer hireContent;
+	private VBoxContainer hireBottom;
 	private PanelContainer buildingPanel;
 	private VBoxContainer buildingContent;
+	private VBoxContainer buildingBottom;
 	private GameManager.PlacedBuilding selected;
 	private Node2D hovered;
 	private bool pointerFree;
@@ -27,13 +29,13 @@ public partial class VillageHud : CanvasLayer
 		root.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 		AddChild(root);
 
-		(hireWindow, hireContent) = AddWindow(root, Control.LayoutPreset.Center);
+		(hireWindow, hireContent, hireBottom) = AddWindow(root, Control.LayoutPreset.Center);
 		hireWindow.OffsetLeft = -460;
 		hireWindow.OffsetRight = 460;
 		hireWindow.OffsetTop = -260;
 		hireWindow.OffsetBottom = 260;
 
-		(buildingPanel, buildingContent) = AddWindow(root, Control.LayoutPreset.CenterRight);
+		(buildingPanel, buildingContent, buildingBottom) = AddWindow(root, Control.LayoutPreset.CenterRight);
 		buildingPanel.OffsetLeft = -500;
 		buildingPanel.OffsetRight = -20;
 		buildingPanel.OffsetTop = -270;
@@ -53,7 +55,7 @@ public partial class VillageHud : CanvasLayer
 		game.StockChanged -= Update;
 	}
 
-	private static (PanelContainer, VBoxContainer) AddWindow(Control root, Control.LayoutPreset preset)
+	private static (PanelContainer, VBoxContainer, VBoxContainer) AddWindow(Control root, Control.LayoutPreset preset)
 	{
 		PanelContainer window = new() { Visible = false };
 		window.AddToGroup("closable_ui");
@@ -61,12 +63,18 @@ public partial class VillageHud : CanvasLayer
 		window.GrowHorizontal = preset == Control.LayoutPreset.Center ? Control.GrowDirection.Both : Control.GrowDirection.Begin;
 		window.GrowVertical = Control.GrowDirection.Both;
 		root.AddChild(window);
-		ScrollContainer scroll = new() { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
-		window.AddChild(scroll);
+		VBoxContainer frame = new();
+		frame.AddThemeConstantOverride("separation", 8);
+		window.AddChild(frame);
+		ScrollContainer scroll = new() { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, SizeFlagsVertical = Control.SizeFlags.ExpandFill };
+		frame.AddChild(scroll);
 		VBoxContainer content = new() { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
 		content.AddThemeConstantOverride("separation", 8);
 		scroll.AddChild(content);
-		return (window, content);
+		VBoxContainer bottom = new();
+		bottom.AddThemeConstantOverride("separation", 8);
+		frame.AddChild(bottom);
+		return (window, content, bottom);
 	}
 
 	private void CloseOthers()
@@ -133,7 +141,7 @@ public partial class VillageHud : CanvasLayer
 
 	private GameManager.PlacedBuilding BuildingAt(Vector2 point)
 	{
-		bool resource = game.World.GetResourceAt(Grid.pixelToCell(point)) != ResorseType.None;
+		bool resource = game.World.GetResourceAt(game.World.ResourceCellAt(point)) != ResorseType.None;
 		GameManager.PlacedBuilding best = null;
 		float bestY = float.MinValue;
 		foreach (GameManager.PlacedBuilding p in game.Placed)
@@ -165,14 +173,15 @@ public partial class VillageHud : CanvasLayer
 		selected = null;
 	}
 
-	private void Clear(VBoxContainer content)
+	private void Clear(params VBoxContainer[] boxes)
 	{
 		updaters.Clear();
-		foreach (Node child in content.GetChildren())
-		{
-			content.RemoveChild(child);
-			child.QueueFree();
-		}
+		foreach (VBoxContainer box in boxes)
+			foreach (Node child in box.GetChildren())
+			{
+				box.RemoveChild(child);
+				child.QueueFree();
+			}
 	}
 
 	private static Label AddLabel(Container parent, string text = "", string variation = "", Color? color = null)
@@ -199,20 +208,22 @@ public partial class VillageHud : CanvasLayer
 
 	private static string Capitalize(string text) => text.Length == 0 ? text : char.ToUpper(text[0]) + text[1..];
 
-	private HBoxContainer AddFooter(VBoxContainer content, Action close)
+	private HBoxContainer AddFooter(VBoxContainer bottom, Action close)
 	{
 		HBoxContainer footer = new() { Alignment = BoxContainer.AlignmentMode.End };
 		footer.AddThemeConstantOverride("separation", 8);
-		content.AddChild(footer);
+		bottom.AddChild(footer);
 		AddButton(footer, close).Text = "Закрыть";
 		return footer;
 	}
 
-	private void AddUpgrade(VBoxContainer content, HBoxContainer footer, string id, string prefix)
+	private void AddUpgrade(VBoxContainer bottom, HBoxContainer footer, string id, string prefix)
 	{
-		Label lockLabel = AddLabel(content, color: LockColor);
-		content.MoveChild(lockLabel, footer.GetIndex());
+		Label lockLabel = AddLabel(bottom, color: LockColor);
+		bottom.MoveChild(lockLabel, footer.GetIndex());
 		Button upgrade = AddButton(footer, () => game.UpgradeBuilding(id));
+		upgrade.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+		upgrade.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
 		footer.MoveChild(upgrade, 0);
 		updaters.Add(() =>
 		{
@@ -230,7 +241,7 @@ public partial class VillageHud : CanvasLayer
 
 	private void BuildHire()
 	{
-		Clear(hireContent);
+		Clear(hireContent, hireBottom);
 		AddLabel(hireContent, "Нанять жителей", "HeaderLabel").HorizontalAlignment = HorizontalAlignment.Center;
 		Label info = AddLabel(hireContent, variation: "SubtleLabel");
 		Label lockLabel = AddLabel(hireContent, color: LockColor);
@@ -247,8 +258,8 @@ public partial class VillageHud : CanvasLayer
 		hireContent.AddChild(cards);
 		foreach (var (id, profession) in Economy.Professions) cards.AddChild(HireCard(id, profession));
 
-		HBoxContainer footer = AddFooter(hireContent, () => hireWindow.Visible = false);
-		AddUpgrade(hireContent, footer, Economy.Core, "Улучшить центр до");
+		HBoxContainer footer = AddFooter(hireBottom, () => hireWindow.Visible = false);
+		AddUpgrade(hireBottom, footer, Economy.Core, "Улучшить центр до");
 		Update();
 	}
 
@@ -286,7 +297,7 @@ public partial class VillageHud : CanvasLayer
 
 	private void BuildBuilding()
 	{
-		Clear(buildingContent);
+		Clear(buildingContent, buildingBottom);
 		string id = selected.Id;
 		Node2D node = selected.Node;
 		Economy.BuildingInfo info = Economy.Buildings[id];
@@ -319,8 +330,8 @@ public partial class VillageHud : CanvasLayer
 		var profession = Economy.Professions.FirstOrDefault(p => p.Value.Building == id);
 		if (profession.Value != null) AddResearch(id, profession.Key, profession.Value);
 
-		HBoxContainer footer = AddFooter(buildingContent, () => buildingPanel.Visible = false);
-		AddUpgrade(buildingContent, footer, id, "Улучшить до");
+		HBoxContainer footer = AddFooter(buildingBottom, () => buildingPanel.Visible = false);
+		AddUpgrade(buildingBottom, footer, id, "Улучшить до");
 		Update();
 	}
 
@@ -347,6 +358,7 @@ public partial class VillageHud : CanvasLayer
 			box.AddChild(bar);
 			Label status = AddLabel(box);
 			Button start = AddButton(box, () => game.StartResearch(id), true);
+			start.AutowrapMode = TextServer.AutowrapMode.WordSmart;
 			start.Text = $"Начать ({Economy.CostText(research.Cost)})";
 
 			updaters.Add(() =>
